@@ -1,0 +1,92 @@
+<div id="content">
+<div class="row">
+    <sa-big-breadcrumbs [items]="['Sales Channel', 'Detail']" icon="table" class="col-xs-12 col-sm-7 col-md-7 col-lg-8"></sa-big-breadcrumbs>
+  </div>
+
+    <div class="row">
+
+      <!-- NEW COL START -->
+      <article class="col-sm-12 col-md-12 col-lg-6">
+
+        <!-- Widget ID (each widget will need unique ID)-->
+        <div sa-widget [colorbutton]="false" [editbutton]="false" [custombutton]="false">
+          <!-- widget options:
+          usage: <div class="jarviswidget" id="wid-id-0" [editbutton]="false">
+
+          [colorbutton]="false"
+          [editbutton]="false"
+          [togglebutton]="false"
+          [deletebutton]="false"
+          [fullscreenbutton]="false"
+          [custombutton]="false"
+          [collapsed]="true"
+          [sortable]="false"
+
+          -->
+          <header>
+            <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+
+            <h2>Sales Channel </h2>
+
+          </header>
+
+          <!-- widget div-->
+          <div>
+
+            <!-- widget content -->
+            <div class="widget-body no-padding">
+
+              <form class="smart-form">
+                <header>
+                  {{ scDetail?.NewFrom ? 'Create' : 'Update' }} Sales Channel 
+                </header>
+
+                <fieldset>
+                  <section>
+                    <label class="label">Code <strong>*</strong></label>
+                    <label class="input">
+                      <input type="text" maxlength="10">
+                    </label>
+
+                  </section>
+                  
+                   <section>
+                    <label class="label">Description <strong>*</strong></label>
+                    <label class="input">
+                      <input type="text" maxlength="10">
+                    </label>
+
+                    <div class="note">
+                      Fields with <strong>asterix (*)</strong> is required
+                    </div>
+                  </section>
+
+                </fieldset>
+
+                
+
+                <footer>
+                  <button type="submit" class="btn btn-primary">
+                    {{ scDetail?.NewFrom == true ? 'Create' : 'Update' }}
+                  </button>
+                  <button type="button" class="btn btn-default" onclick="window.history.back();">
+                    Back
+                  </button>
+                </footer>
+              </form>
+
+            </div>
+            <!-- end widget content -->
+
+          </div>
+          <!-- end widget div -->
+
+        </div>
+        <!-- end widget -->
+
+      </article>
+      <!-- END COL -->
+
+    </div>
+    
+</div>
