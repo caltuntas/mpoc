@@ -6,7 +6,6 @@ import { MainLayoutComponent } from "./shared/layout/app-layouts/main-layout.com
 import { AuthLayoutComponent } from "./shared/layout/app-layouts/auth-layout.component";
 import { ModuleWithProviders } from "@angular/core";
 import { AuthGuard } from './+auth/auth-guard.service';
-import { LoginComponent } from './+auth/+login/login.component'
 
 export const routes: Routes = [
     {
@@ -63,12 +62,8 @@ export const routes: Routes = [
             }
         ]
     },
-    {
-        path: 'login',
-        component: LoginComponent
-    }
-    // { path: 'auth', component: AuthLayoutComponent, loadChildren: 'app/+auth/auth.module#AuthModule' },
-    // { path: '**', redirectTo: 'miscellaneous/error404' }
+    { path: 'auth', component: AuthLayoutComponent, loadChildren: 'app/+auth/auth.module#AuthModule' },
+    { path: '**', redirectTo: 'home' }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes, { useHash: true });
