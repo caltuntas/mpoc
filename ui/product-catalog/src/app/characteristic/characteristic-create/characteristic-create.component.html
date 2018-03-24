@@ -7,12 +7,14 @@
     <div class="row">
 
       <div class="col-sm-12">
-        <div sa-widget id="createCharacteristicWidget" [colorbutton]="false" [editbutton]="false" [deletebutton]="false" [sortable]="false">
+          <div sa-widget [editbutton]="false" [colorbutton]="false" [deletebutton]="false" >
+           
           <header>
             <h2>Characteristic Form </h2>
           </header>
           <div>
             <div class="widget-body">
+               
               <form (ngSubmit)="save(characteristic)" #characteristicForm="ngForm" class="form-horizontal">
                 <fieldset>
                   <div class="form-group" [class.has-error]="nameControl.invalid && nameControl.submitted ">

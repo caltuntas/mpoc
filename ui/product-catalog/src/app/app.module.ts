@@ -1,13 +1,8 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { FormsModule } from '@angular/forms';
-//import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-/*
- * Platform and Environment providers/directives/pipes
- */
 import { routing } from './app.routing'
 // App is our top level component
 import { AppComponent } from './app.component';
@@ -39,9 +34,6 @@ type StoreType = {
   disposeOldHosts: () => void
 };
 
-/**
- * `AppModule` is the main entry point into Angular2's bootstraping process
- */
 @NgModule({
   bootstrap: [ AppComponent ],
   declarations: [
@@ -49,7 +41,7 @@ type StoreType = {
     LoginComponent,
     //PageNotFoundComponent
   ],
-  imports: [ // import Angular's modules
+  imports: [ 
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -62,7 +54,7 @@ type StoreType = {
   ],
   exports: [
   ],
-  providers: [ // expose our Services and Providers into Angular's dependency injection
+  providers: [ 
     // ENV_PROVIDERS,
     APP_PROVIDERS,
     AuthGuard, 

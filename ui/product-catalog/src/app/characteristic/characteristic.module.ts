@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { routing } from './characteristic.routing';
 import { CommonModule } from '@angular/common';
-import {FormsModule} from "@angular/forms";
-import{ReactiveFormsModule} from "@angular/forms";
 // Module components
 import { CharacteristicCreateComponent } from './characteristic-create/characteristic-create.component';
 import { CharacteristicListComponent } from "./characteristic-list/characteristic-list.component";
@@ -25,9 +23,6 @@ import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.mo
     SmartadminDatatableModule,
     SmartadminValidationModule,
     SmartadminInputModule,
-    FormsModule,
-    ReactiveFormsModule
-
   ],
   declarations: [
     CharacteristicListComponent,
