@@ -16,4 +16,8 @@ export class OfferingService {
     createOffering(model) {
         return this.http.post(`/productoffering/createoffering`, model);
     }
+
+    deleteOffering(id){
+        return this.http.get('productoffering/delete/' + id);
+    }
 }
