@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CreateOfferingModel} from "../model/create-offering-model";
+import {OfferingService} from "../offering-service";
 
 @Component({
   selector: 'app-offering-create',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OfferingCreateComponent implements OnInit {
 
-  constructor() { }
+  model : CreateOfferingModel;
+
+  constructor(private offeringService : OfferingService) {
+      this.model = new CreateOfferingModel();
+  }
 
   ngOnInit() {
+  }
+
+  private onSubmit(){
+      console.log("form submitted");
+      console.log(this.model);
+      this.offeringService.createOffering(this.model).subscribe();
   }
 
 }
