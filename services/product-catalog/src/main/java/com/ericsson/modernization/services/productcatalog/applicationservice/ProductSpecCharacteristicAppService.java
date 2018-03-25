@@ -1,8 +1,6 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice;
 
-import com.ericsson.modernization.services.productcatalog.applicationservice.request.ProductOfferingCreateRequest;
 import com.ericsson.modernization.services.productcatalog.model.*;
-import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingRepository;
 import com.ericsson.modernization.services.productcatalog.repository.ProductSpecCharacteristicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
