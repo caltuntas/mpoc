@@ -3,6 +3,7 @@ import {OfferingComponent} from "./offering.component";
 import {ModuleWithProviders} from "@angular/core";
 import {OfferingListComponent} from "./offering-list/offering-list.component";
 import {OfferingCreateComponent} from "./offering-create/offering-create.component";
+import {OfferingEditComponent} from "./offering-edit/offering-edit.component";
 
 export const offeringRoutes: Routes = [
 
@@ -16,6 +17,12 @@ export const offeringRoutes: Routes = [
         path: 'offering-create',
         component: OfferingCreateComponent, data: {
             pageTitle: 'Create an offering'
+        }
+    },
+    {
+        path: 'offering-edit/:offeringId',
+        component: OfferingEditComponent, data: {
+            pageTitle: 'Edit the offering'
         }
     }
 

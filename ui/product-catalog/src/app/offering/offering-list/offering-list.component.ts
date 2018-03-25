@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {OfferingService} from "../offering-service";
+import {NavigationExtras, Router, Routes} from "@angular/router";
+import {Offering} from "../model/offering.model";
 
 @Component({
     selector: 'app-offering-list',
@@ -8,6 +10,10 @@ import {OfferingService} from "../offering-service";
     styleUrls: ['./offering-list.component.css']
 })
 export class OfferingListComponent implements OnInit {
+
+    offerings: Array<Offering> = [];
+    selectedOffering: Offering;
+
     options = {
         dom: "Bfrtip",
         ajax: (data, callback, settings) => {
@@ -15,6 +21,7 @@ export class OfferingListComponent implements OnInit {
                 .map((data: any) => (data.data || data))
                 .catch(this.handleError)
                 .subscribe((data) => {
+                    this.offerings = data;
                     callback({
                         aaData: data.slice(0, 100)
                     })
@@ -29,8 +36,7 @@ export class OfferingListComponent implements OnInit {
                     return `
                         <div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                             <i class='fa fa-gear fa-lg'></i></button>
-                            <ul class='dropdown-menu  ng-star-inserted'>
-                                <li><a class='sa-datatables-detail' offering-id='${fullRow.id}'>Detail</a></li>
+                            <ul class='dropdown-menu  ng-star-inserted'>                                
                                 <li><a class='sa-datatables-edit' offering-id='${fullRow.id}'>Edit</a></li>
                                 <li><a class='sa-datatables-delete' offering-id='${fullRow.id}'>Delete</a></li>
                             </ul>
@@ -55,6 +61,14 @@ export class OfferingListComponent implements OnInit {
 
     onEditOffering(offeringId) {
         console.log("edit offering:", offeringId);
+
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                "offeringId": offeringId
+            }
+        };
+
+        this.router.navigate(['/offering/offering-edit/' + offeringId]);
     }
 
     onDeleteOffering(offeringId) {
@@ -62,7 +76,7 @@ export class OfferingListComponent implements OnInit {
         this.offeringService.deleteOffering(offeringId).subscribe();
     }
 
-    constructor(private offeringService: OfferingService) {
+    constructor(private router: Router, private offeringService: OfferingService) {
     }
 
     ngOnInit() {
