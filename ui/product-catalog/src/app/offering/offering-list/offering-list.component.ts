@@ -38,10 +38,10 @@ export class OfferingListComponent implements OnInit {
         document.querySelector('body').addEventListener('click', (event) => {
             let target = <Element>event.target;
 
-            if (target.tagName.toLowerCase() === 'button' && $(target).hasClass('sa-datatables-edit')) {
+            if (target.tagName.toLowerCase() === 'button' && jQuery(target).hasClass('sa-datatables-edit')) {
                 this.onEditOffering(target.getAttribute('offering-id'));
             }
-            if (target.tagName.toLowerCase() === 'button' && $(target).hasClass('sa-datatables-delete')) {
+            if (target.tagName.toLowerCase() === 'button' && jQuery(target).hasClass('sa-datatables-delete')) {
                 this.onDeleteOffering(target.getAttribute('offering-id'));
             }
         });
