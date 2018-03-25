@@ -8,6 +8,7 @@ import {SmartadminValidationModule} from "../shared/forms/validation/smartadmin-
 import {SmartadminDatatableModule} from "../shared/ui/datatable/smartadmin-datatable.module";
 import { OfferingListComponent } from './offering-list/offering-list.component';
 import { OfferingCreateComponent } from './offering-create/offering-create.component';
+import { OfferingEditComponent } from './offering-edit/offering-edit.component';
 
 @NgModule({
     imports: [
@@ -18,7 +19,7 @@ import { OfferingCreateComponent } from './offering-create/offering-create.compo
         SmartadminValidationModule,
         SmartadminInputModule
     ],
-    declarations: [OfferingListComponent, OfferingCreateComponent]
+    declarations: [OfferingListComponent, OfferingCreateComponent, OfferingEditComponent]
 })
 export class OfferingModule {
 }
