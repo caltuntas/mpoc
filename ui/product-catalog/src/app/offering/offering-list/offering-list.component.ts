@@ -26,10 +26,15 @@ export class OfferingListComponent implements OnInit {
             {"data": "description"},
             {
                 render: (data, type, fullRow, meta) => {
-                    return `                              
-                              <button class="btn btn-xs btn-info sa-datatables-edit" offering-id="${fullRow.id}">edit</button>
-                              <button class="btn btn-xs btn-danger sa-datatables-delete" offering-id="${fullRow.id}">delete</button>
-                          `;
+                    return `
+                        <div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                            <i class='fa fa-gear fa-lg'></i></button>
+                            <ul class='dropdown-menu  ng-star-inserted'>
+                                <li><a class='sa-datatables-detail' offering-id='${fullRow.id}'>Detail</a></li>
+                                <li><a class='sa-datatables-edit' offering-id='${fullRow.id}'>Edit</a></li>
+                                <li><a class='sa-datatables-delete' offering-id='${fullRow.id}'>Delete</a></li>
+                            </ul>
+                        </div>`;
                 }
             }]
     };
@@ -38,10 +43,10 @@ export class OfferingListComponent implements OnInit {
         document.querySelector('body').addEventListener('click', (event) => {
             let target = <Element>event.target;
 
-            if (target.tagName.toLowerCase() === 'button' && jQuery(target).hasClass('sa-datatables-edit')) {
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit')) {
                 this.onEditOffering(target.getAttribute('offering-id'));
             }
-            if (target.tagName.toLowerCase() === 'button' && jQuery(target).hasClass('sa-datatables-delete')) {
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete')) {
                 this.onDeleteOffering(target.getAttribute('offering-id'));
             }
         });
@@ -63,6 +68,7 @@ export class OfferingListComponent implements OnInit {
     ngOnInit() {
 
     }
+
     private handleError(error: any) {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
