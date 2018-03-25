@@ -14,6 +14,8 @@ import { SmartadminDatatableModule } from "../shared/ui/datatable/smartadmin-dat
 import { SmartadminValidationModule } from "../shared/forms/validation/smartadmin-validation.module";
 import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.module";
 
+import { HttpModule } from "@angular/http";
+
 
 @NgModule({
   imports: [
@@ -23,6 +25,7 @@ import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.mo
     SmartadminDatatableModule,
     SmartadminValidationModule,
     SmartadminInputModule,
+    HttpModule
   ],
   declarations: [
     CharacteristicListComponent,
@@ -30,6 +33,10 @@ import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.mo
   ],
   providers: [
     CharacteristicService
+  ],
+  bootstrap: [
+    CharacteristicListComponent,
+    CharacteristicCreateComponent
   ]
 })
 export class CharacteristicModule { }
