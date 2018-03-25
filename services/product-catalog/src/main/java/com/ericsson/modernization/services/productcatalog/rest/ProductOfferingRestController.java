@@ -23,7 +23,13 @@ public class ProductOfferingRestController {
     }
 
     @RequestMapping(value = "/getallofferings", method = RequestMethod.GET)
-    public ResponseEntity<List<ProductOffering>> getAllOfferings(){
-        return new ResponseEntity<List<ProductOffering>>( productOfferingAppService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<ProductOffering>> getAllOfferings() {
+        return new ResponseEntity<List<ProductOffering>>(productOfferingAppService.findAll(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/deleteOffering/{offeringId}", method = RequestMethod.GET)
+    public ResponseEntity<String> deleteOffering(@PathVariable int offeringId) {
+        productOfferingAppService.delete(offeringId);
+        return new ResponseEntity<>("offering deleted", HttpStatus.OK);
     }
 }
