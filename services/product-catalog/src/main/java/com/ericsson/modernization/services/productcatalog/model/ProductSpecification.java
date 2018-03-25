@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public abstract class ProductSpecification extends EntityBase
+public class ProductSpecification extends EntityBase
         implements Description, ExternalId, IsReplicated, Versioned {
 
     private String name;
