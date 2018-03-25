@@ -25,24 +25,47 @@ export class OfferingListComponent implements OnInit {
             {"data": "name"},
             {"data": "description"},
             {
-                "orderable": false,
-                "defaultContent": "<div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle'"
-                + " data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
-                + "<i class='fa fa-gear fa-lg'></i></button><ul class='dropdown-menu  ng-star-inserted'>"
-                + "<li><a (click)='(null)'>Detail</a></li>"
-                + "<li><a (click)='(null)'>Edit</a></li>"
-                + "<li><a (click)='(null)'>Delete</a></li>"
-                + "</ul></div>"
-            }
-
-        ]
+                render: (data, type, fullRow, meta) => {
+                    return `                              
+                              <button class="btn btn-xs btn-info sa-datatables-edit" offering-id="${fullRow.id}">edit</button>
+                              <button class="btn btn-xs btn-danger sa-datatables-delete" offering-id="${fullRow.id}">delete</button>
+                          `;
+                }
+            }]
     };
 
-    constructor(private offeringService : OfferingService) {
+    ngAfterViewInit() {
+        document.querySelector('body').addEventListener('click', (event) => {
+            let target = <Element>event.target;
+
+            if (target.tagName.toLowerCase() === 'button' && $(target).hasClass('sa-datatables-edit')) {
+                this.onEditOffering(target.getAttribute('offering-id'));
+            }
+            if (target.tagName.toLowerCase() === 'button' && $(target).hasClass('sa-datatables-delete')) {
+                this.onDeleteOffering(target.getAttribute('offering-id'));
+            }
+        });
+    }
+
+
+    onEditOffering(offeringId) {
+        console.log("edit offering:", offeringId);
+    }
+
+    onDeleteOffering(offeringId) {
+        console.log("Delete offering", offeringId, "?");
+        this.offeringService.deleteOffering(offeringId).subscribe();
+    }
+
+    constructor(private offeringService: OfferingService) {
     }
 
     ngOnInit() {
 
+    }
+
+    onDelete() {
+        console.log("on delete");
     }
 
     private handleError(error: any) {
