@@ -73,7 +73,9 @@ export class OfferingListComponent implements OnInit {
 
     onDeleteOffering(offeringId) {
         console.log("Delete offering", offeringId, "?");
-        this.offeringService.deleteOffering(offeringId).subscribe();
+        this.offeringService.deleteOffering(offeringId).subscribe((data) => {
+            window.location.reload();
+        });
     }
 
     constructor(private router: Router, private offeringService: OfferingService) {
