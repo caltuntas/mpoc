@@ -1,6 +1,8 @@
-package com.ericsson.modernization.services.productcatalog.model;
+package com.ericsson.modernization.services.productcatalog.category;
 
 import javax.persistence.Entity;
+
+import com.ericsson.modernization.services.productcatalog.model.EntityBase;
 
 @Entity
 public class Category extends EntityBase {
