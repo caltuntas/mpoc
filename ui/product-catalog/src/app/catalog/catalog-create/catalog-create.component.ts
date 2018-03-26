@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { CatalogCreateModel } from './catalogCreateModel';
+import {Component, OnInit} from '@angular/core';
+import {CreateCatalogModel} from "../model/create-catalog-model";
+import {CatalogService} from "../catalog.service";
 
 @Component({
     selector: 'app-catalog-create',
@@ -7,18 +8,19 @@ import { CatalogCreateModel } from './catalogCreateModel';
 })
 export class CatalogCreateComponent implements OnInit {
 
-    submitted = false;
-    constructor() {
+    model: CreateCatalogModel;
 
+    constructor(private catalogService: CatalogService) {
+        this.model = new CreateCatalogModel();
     }
 
     ngOnInit() {
-
     }
 
-    onSubmit() {
-        this.submitted = true;
-        console.log('submitted')
+    public onSubmit() {
+        console.log("form submitted");
+        console.log(this.model);
+        this.catalogService.createCatalog(this.model).subscribe();
     }
 
 }
