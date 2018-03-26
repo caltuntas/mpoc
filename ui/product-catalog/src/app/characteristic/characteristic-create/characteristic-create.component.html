@@ -7,21 +7,20 @@
     <div class="row">
 
       <div class="col-sm-12">
-          <div sa-widget [editbutton]="false" [colorbutton]="false" [deletebutton]="false" >
-           
+        <div sa-widget [editbutton]="false" [colorbutton]="false" [deletebutton]="false">
+
           <header>
             <h2>Characteristic Form </h2>
           </header>
           <div>
             <div class="widget-body">
-               
-              <form (ngSubmit)="save(characteristic)" #characteristicForm="ngForm" class="form-horizontal">
+
+              <form (ngSubmit)="onSubmit()" #characteristicForm="ngForm" class="form-horizontal">
                 <fieldset>
                   <div class="form-group" [class.has-error]="nameControl.invalid && nameControl.submitted ">
                     <label class="col-xs-2 col-lg-3 control-label">Name</label>
                     <div class="col-xs-9 col-lg-6 ">
-                      <input id="name" required type="text" class="form-control" name="name" [(ngModel)]="characteristic.name" #nameControl="ngModel"
-                      />
+                      <input id="name" required type="text" class="form-control" name="name" [(ngModel)]="model.name" #nameControl="ngModel" />
                       <small *ngIf="nameControl.invalid && nameControl.submitted " class="help-block">Name is required</small>
                     </div>
                   </div>
@@ -30,13 +29,39 @@
                   <div class="form-group" [class.has-error]="descriptionControl.invalid && descriptionControl.submitted ">
                     <label class="col-xs-2 col-lg-3 control-label">Description</label>
                     <div class="col-xs-9 col-lg-6 ">
-                      <input id="description" required type="text" class="form-control" name="description" [(ngModel)]="characteristic.description"
-                        #descriptionControl="ngModel" />
+                      <input id="description" required type="text" class="form-control" name="description" [(ngModel)]="model.description" #descriptionControl="ngModel"
+                      />
                       <small *ngIf="descriptionControl.invalid && descriptionControl.submitted " class="help-block">Description is required</small>
                     </div>
                   </div>
                 </fieldset>
                 <fieldset>
+                    <div class="form-group" [class.has-error]="validForStartDateControl.invalid && validForStartDateControl.submitted && validForEndDateControl.invalid && validForEndDateControl.submitted ">
+                      <label class="col-xs-2 col-lg-3 control-label">Valid For:</label>
+                      <div class=" col-xs-5 col-lg-3">
+                        <div class="input-group">
+                          <input class="form-control" id="validForStartDate" name="validForStartDate" placeholder="From" type="date" [(ngModel)]="model.validForStartDate"
+                                 #validForStartDateControl="ngModel" required>
+                          <span class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                        </div>
+                        <small *ngIf="validForStartDateControl.invalid && validForStartDateControl.submitted" class="help-block">Valid For Start Date is required</small>
+                      </div>
+  
+                      <div class=" col-xs-5 col-lg-3">
+                        <div class="input-group">
+                          <input class="form-control" id="validForEndDate" name="validForEndDate" placeholder="To" type="date" [(ngModel)]="model.validForEndDate"
+                             #validForEndDateControl="ngModel" required>
+                          <span class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                        </div>
+                        <small *ngIf="validForEndDateControl.invalid && validForEndDateControl.submitted" class="help-block">Valid For End Date is required</small>
+                      </div>
+                    </div>
+                  </fieldset>
+                <!-- <fieldset>
                   <div class="form-group" [class.has-error]="valueTypeControl.invalid && valueTypeControl.submitted ">
                     <label class="col-xs-2 col-lg-3 control-label">Value Type</label>
                     <div class="col-xs-9 col-lg-6">
@@ -47,8 +72,19 @@
                       <small *ngIf="valueTypeControl.invalid && valueTypeControl.submitted " class="help-block">Value Type is required</small>
                     </div>
                   </div>
-                </fieldset>
+                </fieldset> -->
                 <fieldset>
+                    <div class="form-group">
+                      <label class="col-lg-3 control-label"> Characteristic Values</label>
+                      <div class="col-lg-6">
+  
+                        <label>Type and enter to add tag</label>
+                        <input smartTags class="form-control tagsinput" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput">
+  
+                      </div>
+                    </div>
+                  </fieldset>
+                <!-- <fieldset>
                   <div class="form-group" [class.has-error]="validForControl.invalid && validForControl.submitted  ">
                     <label class="col-xs-2 col-lg-3 control-label">Valid For:</label>
                     <div class=" col-xs-9 col-lg-6">
@@ -65,7 +101,7 @@
                       <small *ngIf="validForControl.invalid && validForControl.submitted  " class="help-block">Valid For is required</small>
                     </div>
                   </div>
-                </fieldset>
+                </fieldset> -->
                 <div class="form-actions">
                   <div class="row">
                     <div class="col-md-12">

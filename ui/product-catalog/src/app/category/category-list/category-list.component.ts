@@ -1,45 +1,44 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import {CatalogService} from "../catalog.service";
-import {NavigationExtras, Router, Routes} from "@angular/router";
-import {Catalog} from "../model/catalog.model";
+import {CreateCategoryModel} from '../model/create-category-model';
+import {Category} from '../model/category.model';
+import { CategoryService } from '../category.service';
+import { Router, NavigationExtras } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
-    selector: 'app-catalog-list',
-    templateUrl: './catalog-list.component.html'
+    selector: 'app-category-list',
+    templateUrl: './category-list.component.html'
 })
-export class CatalogListComponent implements OnInit {
+export class CategoryListComponent implements OnInit {
 
-    catalogs: Array<Catalog> = [];
-    selectedCatalog: Catalog;
+    public categories: Array<Category> = [];
 
     options = {
         dom: "Bfrtip",
         ajax: (data, callback, settings) => {
-            this.catalogService.getCatalogs()
-                .map((data: any) => (data.data || data))
+            this.categoryService.getAllCategories()
                 .catch(this.handleError)
                 .subscribe((data) => {
-                    this.catalogs = data;
                     callback({
-                        aaData: data.slice(0, 100)
+                        aaData: data
                     })
                 })
         },
         columns: [
             {"data": "id"},
+            {"data": "code"},
             {"data": "name"},
             {"data": "description"},
-            {"data": "validForStartDate"},
-            {"data": "validForEndDate"},
+            {"data": "parentId"},
+            {"data": "isRoot"},                        
             {
                 render: (data, type, fullRow, meta) => {
                     return `
                         <div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                             <i class='fa fa-gear fa-lg'></i></button>
                             <ul class='dropdown-menu  ng-star-inserted'>                                
-                                <li><a class='sa-datatables-edit' catalog-id='${fullRow.id}'>Edit</a></li>
-                                <li><a class='sa-datatables-delete' catalog-id='${fullRow.id}'>Delete</a></li>
+                                <li><a class='sa-datatables-edit' category-id='${fullRow.id}'>Edit</a></li>
+                                <li><a class='sa-datatables-delete' category-id='${fullRow.id}'>Delete</a></li>
                             </ul>
                         </div>`;
                 }
@@ -51,35 +50,35 @@ export class CatalogListComponent implements OnInit {
             let target = <Element>event.target;
 
             if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit')) {
-                this.onEditCatalog(target.getAttribute('catalog-id'));
+                this.onEdit(target.getAttribute('category-id'));
             }
             if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete')) {
-                this.onDeleteCatalog(target.getAttribute('catalog-id'));
+                this.onDelete(target.getAttribute('category-id'));
             }
         });
     }
 
 
-    onEditCatalog(catalogId) {
-        console.log("edit catalog:", catalogId);
+    onEdit(categoryId) {
+        console.log("edit category:", categoryId);
 
         let navigationExtras: NavigationExtras = {
             queryParams: {
-                "catalogId": catalogId
+                "categoryId": categoryId
             }
         };
 
-        this.router.navigate(['/catalog/catalog-edit/' + catalogId]);
+        this.router.navigate(['/category/' + categoryId]);
     }
 
-    onDeleteCatalog(catalogId) {
-        console.log("The catalog with id: ", catalogId, " will be deleted. Do you confirm?");
-        this.catalogService.deleteCatalog(catalogId).subscribe((data) => {
+    onDelete(categoryId) {
+        console.log("Delete category", categoryId, "?");
+        this.categoryService.delete(categoryId).subscribe((data) => {
             window.location.reload();
         });
     }
 
-    constructor(private router: Router, private catalogService: CatalogService) {
+    constructor(private router: Router, private categoryService: CategoryService) {
     }
 
     ngOnInit() {

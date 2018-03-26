@@ -1,7 +1,7 @@
 export class SalesChannel
 {
-   Id: number;
-   Code : string;
-   Name : string;
-   Description : string;
+   id: number;
+   code : string;
+   name : string;
+   description : string;
 }

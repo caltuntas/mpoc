@@ -1,6 +1,9 @@
 package com.ericsson.modernization.services.productcatalog.model;
 
 import javax.persistence.*;
+
+import com.ericsson.modernization.services.productcatalog.category.Category;
+
 import java.util.ArrayList;
 import java.util.List;
 

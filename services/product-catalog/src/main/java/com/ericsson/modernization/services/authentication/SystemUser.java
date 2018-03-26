@@ -1,4 +1,4 @@
-package com.ericsson.modernization.services.productcatalog.authentication;
+package com.ericsson.modernization.services.authentication;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;

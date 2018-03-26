@@ -1,9 +1,8 @@
-import {NgModule} from '@angular/core';
-import {ModuleWithProviders} from '@angular/core'
-import {RouterModule, Routes} from '@angular/router';
+import {Routes, RouterModule} from '@angular/router';
+import {CatalogComponent} from "./catalog.component";
 import { CatalogListComponent } from './catalog-list/catalog-list.component';
 import { CatalogCreateComponent } from './catalog-create/catalog-create.component';
-
+import { CatalogEditComponent} from "./catalog-edit/catalog-edit.component";
 
 export const routes: Routes = [
 
@@ -20,7 +19,14 @@ export const routes: Routes = [
         data: {
             pageTitle: 'Create Catalog'
         }
+    },
+    {
+        path: 'catalog-edit/:catalogId',
+        component: CatalogEditComponent, data: {
+            pageTitle: 'Edit the catalog'
+        }
     }
+
 ];
 
 

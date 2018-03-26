@@ -59,6 +59,10 @@ export const routes: Routes = [
             {
                 path: 'test',
                 loadChildren: 'app/test/test.module#TestModule'
+            },
+            {
+                path: 'category',
+                loadChildren: 'app/category/category.module#CategoryModule'
             }
         ]
     },

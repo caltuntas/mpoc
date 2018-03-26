@@ -6,6 +6,8 @@ import com.ericsson.modernization.services.productcatalog.model.TimePeriod;
 import com.ericsson.modernization.services.productcatalog.repository.SalesChannelRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class SalesChannelAppService {
         salesChannel.setCode(salesChannelRequest.getCode());
         salesChannel.setName(salesChannelRequest.getName());
         salesChannel.setDescription(salesChannelRequest.getDescription());
+        salesChannel.setDeleted(false);
 
         TimePeriod validFor = new TimePeriod();
         validFor.setValidForEndDate(salesChannelRequest.getValidForEndDate());
@@ -59,6 +62,14 @@ public class SalesChannelAppService {
     }
 
     public List<SalesChannel> findAll(){
+    	//SalesChannel ex = new SalesChannel();
+    	//ex.setDeleted(false);
+    	
+    	//ExampleMatcher exampleMatcher = ExampleMatcher.matching()
+        //        .withIgnoreNullValues()
+        //        .withIgnoreCase(); 
+    	
+    	//Example<SalesChannel> example = Example.of(ex,exampleMatcher);
         return salesChannelRepository.findAll();
     }
 }
