@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { productSpecificationCreateModel } from "../model/productSpecificationCreateModel";
 import { idNameModel } from "../model/idNameModel";
+import { productSpecCharUseModel } from "../model/productSpecCharUseModel";
 
 @Component({
   selector: "app-specification-create",
@@ -14,7 +15,10 @@ export class SpecificationCreateComponent implements OnInit {
     this.productSpec.statusList.push(new idNameModel(1, "spec -1"));
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+    this.productSpec.productSpecCharUses.filter(x=>x.isSelected==true).slice();
+  }
 
   submitted = false;
 
@@ -22,7 +26,9 @@ export class SpecificationCreateComponent implements OnInit {
     this.submitted = true;
     console.log("submitted");
   }
-
+  filterNonSelectedChars(cars:Array<productSpecCharUseModel>) {
+    return cars.filter(x=>x.isSelected!=true);
+  }
   removeCharUse(i: number) {
     let charUse = this.productSpec.productSpecCharUses[i];
     charUse.isSelected = false;
@@ -35,10 +41,12 @@ export class SpecificationCreateComponent implements OnInit {
 
   addCharUse() {
     if (this.selectedCharUse != 0) {
-      let charUse = this.productSpec.productSpecCharUses.find(
-        x => x.id == this.selectedCharUse
-      );
+      let charUse = this.productSpec.productSpecCharUses.find(x => x.id == this.selectedCharUse);
       charUse.isSelected = true;
     }
+  }
+
+  save(productSpec:productSpecificationCreateModel){
+console.log(productSpec);
   }
 }

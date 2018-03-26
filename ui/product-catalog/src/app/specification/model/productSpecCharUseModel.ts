@@ -1,15 +1,15 @@
 import { productSpecCharValueUseModel } from "./productSpecCharValueUseModel";
 
 export class productSpecCharUseModel {
-  constructor() {
+  constructor(id:number) {
     this.values = new Array<productSpecCharValueUseModel>();
     this.values.push(new productSpecCharValueUseModel());
     this.values.push(new productSpecCharValueUseModel());
     this.values.push(new productSpecCharValueUseModel());
     this.name = 'char use -1';
     this.charType = 'list';
-    this.isSelected = true;
-    this.id=1;
+ 
+    this.id=id;
   }
   public id:number
   public name: string;

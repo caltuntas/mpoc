@@ -6,7 +6,8 @@ export class productSpecificationCreateModel {
     this.statusList = new Array<idNameModel>();
     this.productTypeList = new Array<idNameModel>();
     this.productSpecCharUses = new Array<productSpecCharUseModel>();
-    this.productSpecCharUses.push(new productSpecCharUseModel());
+    this.productSpecCharUses.push(new productSpecCharUseModel(1));
+    this.productSpecCharUses.push(new productSpecCharUseModel(2));
   }
  ;
   public name: string;
