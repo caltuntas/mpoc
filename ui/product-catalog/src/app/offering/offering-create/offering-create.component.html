@@ -41,6 +41,52 @@
                                         </div>
                                     </div>
                                 </fieldset>
+                                <fieldset>
+                                    <div class="form-group"
+                                         [class.has-error]="validForStartDateControl.invalid && validForStartDateControl.submitted && validForEndDateControl.invalid && validForEndDateControl.submitted ">
+                                        <label class="col-xs-2 col-lg-3 control-label">Valid For:</label>
+                                        <div class=" col-xs-5 col-lg-3">
+                                            <div class="input-group">
+                                                <input class="form-control" id="validForStartDate"
+                                                       name="validForStartDate" placeholder="From" type="date"
+                                                       [(ngModel)]="model.validForStartDate"
+                                                       #validForStartDateControl="ngModel" required>
+                                                <span class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
+                                            </div>
+                                            <small *ngIf="validForStartDateControl.invalid && validForStartDateControl.submitted"
+                                                   class="help-block">Valid For Start Date is required
+                                            </small>
+                                        </div>
+
+                                        <div class=" col-xs-5 col-lg-3">
+                                            <div class="input-group">
+                                                <input class="form-control" id="validForEndDate" name="validForEndDate"
+                                                       placeholder="To" type="date" [(ngModel)]="model.validForEndDate"
+                                                       #validForEndDateControl="ngModel" required>
+                                                <span class="input-group-addon">
+                                                                 <i class="fa fa-calendar"></i>
+                                                             </span>
+                                            </div>
+                                            <small *ngIf="validForEndDateControl.invalid && validForEndDateControl.submitted"
+                                                   class="help-block">Valid For End Date is required
+                                            </small>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-xs-2 col-lg-3 control-label">Is Sellable?</label>
+                                        <div class="col-xs-9 col-lg-6 ">
+                                            <input id="isSellable" required type="checkbox" class="form-control"
+                                                   name="description" [(ngModel)]="model.isSellable"
+                                                   #isSellableControl="ngModel"/>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+
                                 <div class="form-actions">
                                     <div class="row">
                                         <div class="col-md-12">

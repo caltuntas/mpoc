@@ -32,6 +32,8 @@ export class OfferingListComponent implements OnInit {
             {"data": "id"},
             {"data": "name"},
             {"data": "description"},
+            {"data": "validFor.validForEndDate"},
+            {"data": "isSellable"},
             {
                 render: (data, type, fullRow, meta) => {
                     return `
@@ -43,7 +45,8 @@ export class OfferingListComponent implements OnInit {
                             </ul>
                         </div>`;
                 }
-            }]
+            }],
+
     };
 
     ngAfterViewInit() {
