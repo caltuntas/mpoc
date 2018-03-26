@@ -1,4 +1,4 @@
-package com.ericsson.modernization.services.productcatalog.authentication;
+package com.ericsson.modernization.services.authentication;
 
 
 //domain / value objects
