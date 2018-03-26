@@ -9,11 +9,11 @@ export class CategoryService {
     constructor(private http: HttpClientProvider) {
     }
 
-    getAllCategories(): Observable<Category[]> {
+    getAll(): Observable<Category[]> {
         return this.http.get(`/category`);
     }
 
-    createCategory(model) {
+    create(model) {
         return this.http.post(`/category`, model);
     }
 
