@@ -1,14 +1,13 @@
 import {NgModule} from '@angular/core';
-import {routing} from './catalog.routing';
+import {routing} from './category.routing';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 // Module components
-import {CatalogCreateComponent} from './catalog-create/catalog-create.component';
-import {CatalogListComponent} from './catalog-list/catalog-list.component';
-import {CatalogEditComponent } from './catalog-edit/catalog-edit.component';
+import {CategoryCreateComponent} from './category-create/category-create.component';
+import {CategoryListComponent} from './category-list/category-list.component';
 
 // Services
-import {CatalogService} from './catalog.service';
+import {CategoryService} from './category.service';
 
 
 // Theme modules
@@ -16,7 +15,6 @@ import {SmartadminModule} from '../shared/smartadmin.module';
 import {SmartadminDatatableModule} from '../shared/ui/datatable/smartadmin-datatable.module';
 import {SmartadminValidationModule} from '../shared/forms/validation/smartadmin-validation.module';
 import {SmartadminInputModule} from '../shared/forms/input/smartadmin-input.module';
-
 
 @NgModule({
     imports: [
@@ -30,13 +28,12 @@ import {SmartadminInputModule} from '../shared/forms/input/smartadmin-input.modu
 
     ],
     declarations: [
-        CatalogListComponent,
-        CatalogCreateComponent,
-        CatalogEditComponent
+        CategoryListComponent,
+        CategoryCreateComponent
     ],
     providers: [
-        CatalogService
+        CategoryService
     ]
 })
-export class CatalogModule {
+export class CategoryModule {
 }

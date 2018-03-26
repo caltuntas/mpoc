@@ -1,60 +1,45 @@
 <div id="content">
     <div class="row">
-        <sa-big-breadcrumbs [items]="['Catalog', 'New Catalog']" icon="pencil-square-o" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+        <sa-big-breadcrumbs [items]="['Category', 'New Category']" icon="pencil-square-o" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
     </div>
     <sa-widgets-grid>
         <div class="row">
             <div class="col-sm-12">
-                <div sa-widget id="createCatalogWidget" [colorbutton]="true" [editbutton]="false" [deletebutton]="false" [sortable]="false">
+                <div sa-widget id="createCategoryWidget" [colorbutton]="true" [editbutton]="false" [deletebutton]="false" [sortable]="false">
                     <header>
-                        <h2>Catalog Form </h2>
+                        <h2>Category Form </h2>
                     </header>
                     <div>
                         <div class="widget-body">
-                            <form (ngSubmit)="onSubmit()" #catalogForm="ngForm" class="form-horizontal">
+                            <form (ngSubmit)="onSubmit()" novalidate="novalidate" [saBootstrapValidator]="validatorOptions"
+                                  class="form-horizontal" >
                                 <fieldset>
-                                    <div class="form-group"
-                                         [class.has-error]="nameControl.invalid && nameControl.submitted ">
+                                    <div class="form-group">
                                         <label class="col-xs-2 col-lg-3 control-label">Name</label>
                                         <div class="col-xs-9 col-lg-6 ">
-                                            <input id="name" required type="text" class="form-control" name="name"
-                                                   [(ngModel)]="model.name" #nameControl="ngModel"
-                                            />
-                                            <small *ngIf="nameControl.invalid && nameControl.submitted "
-                                                   class="help-block">Name is required
-                                            </small>
+                                                <input type="text" class="form-control"/>
                                         </div>
                                     </div>
                                 </fieldset>
                                 <fieldset>
-                                    <div class="form-group"
-                                         [class.has-error]="descriptionControl.invalid && descriptionControl.submitted ">
+                                    <div class="form-group">
                                         <label class="col-xs-2 col-lg-3 control-label">Description</label>
                                         <div class="col-xs-9 col-lg-6 ">
-                                            <input id="description" required type="text" class="form-control"
-                                                   name="description" [(ngModel)]="model.description"
-                                                   #descriptionControl="ngModel"/>
-                                            <small *ngIf="descriptionControl.invalid && descriptionControl.submitted "
-                                                   class="help-block">Description is required
-                                            </small>
+                                            <input type="text" class="form-control" name="description" />
                                         </div>
                                     </div>
                                 </fieldset>
+
                                 <fieldset>
-                                    <div class="form-group" [class.has-error]="validForControl.invalid && validForControl.submitted  ">
-                                        <label class="col-xs-2 col-lg-3 control-label">Valid For:</label>
+                                    <div class="form-group">
+                                        <label class="col-xs-2 col-lg-3 control-label">Valid For Start Date:</label>
                                         <div class=" col-xs-9 col-lg-6">
                                             <div class="input-group">
-                                                <input type="text" name="validFor" placeholder="Select a date" class="form-control datepicker" id="validFor" name="validFor"
-                                                       [(ngModel)]="characteristic.validFor" #validForControl="ngModel" required [saUiDatepicker]="{  dateFormat: 'dd/mm/yy'}"
-                                                />
-
+                                                <input type="text" name="validForStartDate" placeholder="Select a date" class="form-control datepicker" [saUiDatepicker]="{  dateFormat: 'dd/mm/yyyyy'}">
                                                 <span class="input-group-addon">
-                          <i class="fa fa-calendar"></i>
-                        </span>
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
                                             </div>
-
-                                            <small *ngIf="validForControl.invalid && validForControl.submitted  " class="help-block">Valid For is required</small>
                                         </div>
                                     </div>
                                 </fieldset>
