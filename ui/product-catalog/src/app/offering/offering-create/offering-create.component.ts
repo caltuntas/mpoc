@@ -20,8 +20,6 @@ export class OfferingCreateComponent implements OnInit {
     }
 
     public onSubmit() {
-        console.log("form submitted");
-        console.log(this.model);
         this.offeringService.createOffering(this.model).subscribe( data => {
             this.router.navigate(['/offering/offering-list']);
         } );
