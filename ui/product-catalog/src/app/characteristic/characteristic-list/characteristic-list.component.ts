@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from "rxjs/Observable";
 import { CharacteristicService } from '../characteristic.service';
 
 
@@ -8,47 +9,46 @@ import { CharacteristicService } from '../characteristic.service';
 })
 export class CharacteristicListComponent implements OnInit {
 
-
-  constructor(service: CharacteristicService) {
-    service.getCharacteristics();
-  }
+  options = {
+    dom: "Bfrtip",
+    ajax: (data, callback, settings) => {
+      this.characteristicListService.getAllCharacteristics()
+        .map((data: any) => (data.data || data))
+        .catch(this.handleError)
+        .subscribe((data) => {
+          callback({
+            aaData: data.slice(0, 100)
+          })
+        })
+    },
+    columns: [
+      { "data": "id" },
+      { "data": "name" },
+      { "data": "description" },
+      {
+        "orderable": false,
+        "defaultContent": "<div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle'"
+          + " data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
+          + "<i class='fa fa-gear fa-lg'></i></button><ul class='dropdown-menu  ng-star-inserted'>"
+          + "<li><a (click)='(null)'>Detail</a></li>"
+          + "<li><a (click)='(null)'>Edit</a></li>"
+          + "<li><a (click)='(null)'>Delete</a></li>"
+          + "</ul></div>"
+      }
+    ]
+  };
 
   ngOnInit() {
   }
 
-  public options = {
-    "ajax": '/assets/api/tables/datatables.standard.json',
-    "iDisplayLength": 10,
-    "columns": [
-     { "data": "id" },
-      { "data": "name" },
-      { "data": "phone" },
-      { "data": "company" },
-      { "data": "zip" },
-      { "data": "city" },
-      { "data": "date" },
-      {"orderable":false,
-        "defaultContent":"<div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle'"
-        +" data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
-        +"<i class='fa fa-gear fa-lg'></i></button><ul class='dropdown-menu  ng-star-inserted'>"
-        +"<li><a (click)='(null)'>Detail</a></li>"
-        +"<li><a (click)='(null)'>Edit</a></li>"
-        +"<li><a (click)='(null)'>Delete</a></li>"
-        +"</ul></div>"
-    }
- 
+  constructor(private characteristicListService: CharacteristicService) { }
 
-        
-    ],
-    "order": [[1, 'asc']]
+  private handleError(error: any) {
+    let errMsg = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
   }
-
-  public lastColumn(d) {
-
-    return "";
-  }
-
-  
 
 
 }

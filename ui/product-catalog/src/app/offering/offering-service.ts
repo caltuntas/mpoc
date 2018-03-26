@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Offering} from "../model/offering.model";
+import {Offering} from "./model/offering.model";
 import {Observable} from "rxjs/Observable";
-import {HttpClientProvider} from "../../shared/httpclientprovider/http-client-provider";
+import {HttpClientProvider} from "../shared/httpclientprovider/http-client-provider";
 
 @Injectable()
-export class OfferingListService {
+export class OfferingService {
 
     constructor(private http: HttpClientProvider) {
     }
@@ -15,5 +15,9 @@ export class OfferingListService {
 
     createOffering(model) {
         return this.http.post(`/productoffering/createoffering`, model);
+    }
+
+    deleteOffering(id) {
+        return this.http.get('/productoffering/deleteOffering/' + id);
     }
 }

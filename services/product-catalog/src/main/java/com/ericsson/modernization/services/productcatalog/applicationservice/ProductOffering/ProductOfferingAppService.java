@@ -1,6 +1,6 @@
-package com.ericsson.modernization.services.productcatalog.applicationservice;
+package com.ericsson.modernization.services.productcatalog.applicationservice.ProductOffering;
 
-import com.ericsson.modernization.services.productcatalog.applicationservice.request.ProductOfferingCreateRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.ProductOffering.Request.ProductOfferingCreateRequest;
 import com.ericsson.modernization.services.productcatalog.model.Duration;
 import com.ericsson.modernization.services.productcatalog.model.ProductOffering;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecification;
@@ -17,7 +17,7 @@ public class ProductOfferingAppService {
     @Autowired
     private ProductOfferingRepository productOfferingRepository;
 
-    public void create(ProductOfferingCreateRequest productOfferingCreateRequest){
+    public ProductOffering create(ProductOfferingCreateRequest productOfferingCreateRequest){
 
         ProductOffering productOffering = new ProductOffering();
         productOffering.setName(productOfferingCreateRequest.getName());
@@ -44,7 +44,7 @@ public class ProductOfferingAppService {
         ProductSpecification productSpecification =  null; //TODO: servisler yazılınca get edilecek
         productOffering.setProductSpecification(productSpecification);
 
-        productOfferingRepository.save(productOffering);
+        return productOfferingRepository.save(productOffering);
     }
 
     public void delete(int productOfferingID){

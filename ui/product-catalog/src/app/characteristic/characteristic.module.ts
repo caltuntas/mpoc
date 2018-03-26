@@ -6,7 +6,7 @@ import { CharacteristicCreateComponent } from './characteristic-create/character
 import { CharacteristicListComponent } from "./characteristic-list/characteristic-list.component";
 
 //Services
-import { CharacteristicService } from './characteristic.service';
+// import { CharacteristicService } from './characteristic.service';
 
 // Theme modules
 import { SmartadminModule } from "../shared/smartadmin.module";
@@ -22,14 +22,18 @@ import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.mo
     SmartadminModule,
     SmartadminDatatableModule,
     SmartadminValidationModule,
-    SmartadminInputModule,
+    SmartadminInputModule
   ],
   declarations: [
     CharacteristicListComponent,
     CharacteristicCreateComponent
-  ],
-  providers: [
-    CharacteristicService
   ]
+  // providers: [
+  //   CharacteristicService
+  // ],
+  // bootstrap: [
+  //   CharacteristicListComponent,
+  //   CharacteristicCreateComponent
+  // ]
 })
 export class CharacteristicModule { }
