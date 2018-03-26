@@ -5,14 +5,19 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class CategoryService {
+
     constructor(private http: HttpClientProvider) {
     }
 
     getAllCategories(): Observable<Category[]> {
-        return this.http.get(`/category/getAll`);
+        return this.http.get(`/category`);
     }
 
     createCategory(model) {
-        return this.http.post(`/category/create`, model);
+        return this.http.post(`/category`, model);
+    }
+
+    delete(id: any): any {
+        throw new Error("Method not implemented.");
     }
 }
