@@ -11,7 +11,7 @@
           </header>
           <div>
             <div class="widget-body">
-              <form #characteristicForm="ngForm" class="form-horizontal">
+              <form #characteristicForm="ngForm" (ngSubmit)="save(productSpec)" class="form-horizontal">
                 <fieldset>
                   <div class="form-group" [class.has-error]="nameControl.invalid && nameControl.touched ">
                     <label class="col-xs-2 col-lg-3 control-label">Name</label>
@@ -50,7 +50,7 @@
                     <div class="col-xs-9 col-lg-6 ">
                       <select id="status" required class="form-control " [(ngModel)]="productSpec.status" name="status" #statusControl="ngModel">
                         <option value="">Choose</option>
-                        <option *ngFor="let status of productSpec.statusList" value="status.id">{{status.name}}</option>
+                        <option  *ngFor="let status of productSpec.statusList" value="status.id">{{status.name}}</option>
                       </select>
                       <small *ngIf="statusControl.invalid && statusControl.touched " class="help-block">Status is required</small>
                     </div>
@@ -71,46 +71,51 @@
                 </fieldset>
 
 
-                <fieldset>
-                  <div *ngFor="let charuse of productSpec.productSpecCharUses ; index as i">
-                    <div class="form-group" *ngIf="charuse.isSelected">
-                      <label class="col-xs-2 col-lg-3 control-label">Selected Characteristic</label>
-                      <label class="col-xs-9 col-lg-6">{{charuse.name}}</label>
-                      <button class="btn btn-danger" (click)="removeCharUse(i)">-</button>
-                    </div>
-                  </div>
 
-                </fieldset>
                 <fieldset>
                   <div class="form-group">
                     <label class="col-xs-2 col-lg-3 control-label">Characteristics</label>
                     <div class="col-xs-9 col-lg-6 ">
                       <select id="chars" class="form-control" name="chars" (change)="selectCharUse($event)">
                         <option value="">Choose</option>
-                        <option *ngFor="let charuse of productSpec.productSpecCharUses" value="{{charuse.id}}">{{charuse.name}}</option>
+                        <option *ngFor="let charuse of filterNonSelectedChars(productSpec.productSpecCharUses )" value="{{charuse.id}}">{{charuse.name}}</option>
                       </select>
                     </div>
-                    <input type="button" class="btn btn-success" (click)="addCharUse()" value="+">
+                    <button class="btn btn-success" (click)="addCharUse()"> <i class="glyphicon glyphicon-plus"></i></button>
                   </div>
                 </fieldset>
 
 
                 <fieldset>
-                  <div *ngFor="let charuse of productSpec.productSpecCharUses">
+
+                  <div *ngFor="let charuse of productSpec.productSpecCharUses ; index as i">
+                    <legend *ngIf="charuse.isSelected"></legend>
+                    <div class="form-group" *ngIf="charuse.isSelected">
+                      <label class="col-xs-2 col-lg-3 control-label">Selected Characteristic</label>
+                      <label class="col-xs-9 col-lg-6"><b> {{charuse.name}}</b></label>
+                      <button class="btn btn-danger" (click)="removeCharUse(i)"><i class="glyphicon glyphicon-minus"></i></button>
+                    </div>
+
                     <div class="form-group" *ngIf="charuse.isSelected">
                       <label class="col-xs-2 col-lg-3 control-label">{{charuse.name}} Characteristic Values</label>
-                      <label class="col-xs-9 col-lg-6">
-                        <div *ngFor="let item of charuse.values ">
-                          <label>
-                            <input type="checkbox" class="item" value="item.key" (change)="check(attr, item.key, $event)"/> {{item.name}}
-                          </label>
-                         
-                        </div>
+                      <div class="col-xs-9 col-lg-6">
+                        <label class="checkbox-inline" *ngFor="let item of charuse.values ">
+
+                          <input class="checkbox" type="checkbox" class="item" value="item.key" (change)="check(attr, item.key, $event)" /> {{item.name}}
+
+                        </label>
 
 
-                      </label>
+
+                      </div>
 
                     </div>
+                  </div>
+
+                </fieldset>
+                <fieldset>
+                  <div *ngFor="let charuse of productSpec.productSpecCharUses">
+
                   </div>
                 </fieldset>
 
@@ -119,9 +124,9 @@
                 <div class="form-actions">
                   <div class="row">
                     <div class="col-md-12">
-                      <button class="btn btn-default" type="submit">
-                        <i class="fa fa-eye"></i>
-                        Validate
+                      <button class="btn btn-default" [disabled]="!characteristicForm.valid" type="submit">
+                        <i class="fa fa-save"></i>
+                        Save
                       </button>
                     </div>
                   </div>

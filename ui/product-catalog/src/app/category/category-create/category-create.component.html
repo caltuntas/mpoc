@@ -11,13 +11,20 @@
                     </header>
                     <div>
                         <div class="widget-body">
-                            <form (ngSubmit)="onSubmit()" novalidate="novalidate" [saBootstrapValidator]="validatorOptions"
-                                  class="form-horizontal" >
+                            <form (ngSubmit)="onSubmit()" novalidate="novalidate" [saBootstrapValidator]="validatorOptions" class="form-horizontal">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-xs-2 col-lg-3 control-label">Code</label>
+                                        <div class="col-xs-9 col-lg-6 ">
+                                            <input type="text" class="form-control" name="code" />
+                                        </div>
+                                    </div>
+                                </fieldset>
                                 <fieldset>
                                     <div class="form-group">
                                         <label class="col-xs-2 col-lg-3 control-label">Name</label>
                                         <div class="col-xs-9 col-lg-6 ">
-                                                <input type="text" class="form-control"/>
+                                            <input type="text" class="form-control" name="name"/>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -29,31 +36,19 @@
                                         </div>
                                     </div>
                                 </fieldset>
-
                                 <fieldset>
                                     <div class="form-group">
-                                        <label class="col-xs-2 col-lg-3 control-label">Valid For Start Date:</label>
-                                        <div class=" col-xs-9 col-lg-6">
-                                            <div class="input-group">
-                                                <input type="text" name="validForStartDate" placeholder="Select a date" class="form-control datepicker" [saUiDatepicker]="{  dateFormat: 'dd/mm/yyyyy'}">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                            </div>
+                                        <label class="col-xs-2 col-lg-3 control-label">Parent Id</label>
+                                        <div class="col-xs-9 col-lg-6 ">
+                                            <input type="text" class="form-control" name="parentId" />
                                         </div>
                                     </div>
-                                </fieldset>
-
+                                </fieldset>                                
                                 <fieldset>
                                     <div class="form-group">
-                                        <label class="col-xs-2 col-lg-3 control-label">Valid For End Date:</label>
-                                        <div class=" col-xs-9 col-lg-6">
-                                            <div class="input-group">
-                                                <input type="text" name="validForEndDate" placeholder="Select a date" class="form-control datepicker" [saUiDatepicker]="{  dateFormat: 'dd/mm/yyyyy'}">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                            </div>
+                                        <label class="col-xs-2 col-lg-3 control-label">Is Root</label>
+                                        <div class="col-xs-9 col-lg-6 ">
+                                            <input type="text" class="form-control" name="isRoot" />
                                         </div>
                                     </div>
                                 </fieldset>
