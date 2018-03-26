@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CreateOfferingModel} from "../model/create-offering-model";
 import {OfferingService} from "../offering-service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-offering-create',
@@ -11,7 +12,7 @@ export class OfferingCreateComponent implements OnInit {
 
     model: CreateOfferingModel;
 
-    constructor(private offeringService: OfferingService) {
+    constructor(private router: Router, private offeringService: OfferingService) {
         this.model = new CreateOfferingModel();
     }
 
@@ -21,7 +22,9 @@ export class OfferingCreateComponent implements OnInit {
     public onSubmit() {
         console.log("form submitted");
         console.log(this.model);
-        this.offeringService.createOffering(this.model).subscribe();
+        this.offeringService.createOffering(this.model).subscribe( data => {
+            this.router.navigate(['/offering/offering-list']);
+        } );
     }
 
 }
