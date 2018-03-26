@@ -1,27 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CreateOfferingModel} from "../model/create-offering-model";
 import {OfferingService} from "../offering-service";
 
 @Component({
-  selector: 'app-offering-create',
-  templateUrl: './offering-create.component.html',
-  styleUrls: ['./offering-create.component.css']
+    selector: 'app-offering-create',
+    templateUrl: './offering-create.component.html',
+    styleUrls: ['./offering-create.component.css']
 })
 export class OfferingCreateComponent implements OnInit {
 
-  model : CreateOfferingModel;
+    model: CreateOfferingModel;
 
-  constructor(private offeringService : OfferingService) {
-      this.model = new CreateOfferingModel();
-  }
+    constructor(private offeringService: OfferingService) {
+        this.model = new CreateOfferingModel();
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
-  private onSubmit(){
-      console.log("form submitted");
-      console.log(this.model);
-      this.offeringService.createOffering(this.model).subscribe();
-  }
+    public onSubmit() {
+        console.log("form submitted");
+        console.log(this.model);
+        this.offeringService.createOffering(this.model).subscribe();
+    }
 
 }

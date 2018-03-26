@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {OfferingService} from "../offering-service";
+import {NavigationExtras, Router, Routes} from "@angular/router";
+import {Offering} from "../model/offering.model";
 
 @Component({
     selector: 'app-offering-list',
@@ -8,6 +10,10 @@ import {OfferingService} from "../offering-service";
     styleUrls: ['./offering-list.component.css']
 })
 export class OfferingListComponent implements OnInit {
+
+    offerings: Array<Offering> = [];
+    selectedOffering: Offering;
+
     options = {
         dom: "Bfrtip",
         ajax: (data, callback, settings) => {
@@ -15,6 +21,7 @@ export class OfferingListComponent implements OnInit {
                 .map((data: any) => (data.data || data))
                 .catch(this.handleError)
                 .subscribe((data) => {
+                    this.offerings = data;
                     callback({
                         aaData: data.slice(0, 100)
                     })
@@ -25,20 +32,53 @@ export class OfferingListComponent implements OnInit {
             {"data": "name"},
             {"data": "description"},
             {
-                "orderable": false,
-                "defaultContent": "<div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle'"
-                + " data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
-                + "<i class='fa fa-gear fa-lg'></i></button><ul class='dropdown-menu  ng-star-inserted'>"
-                + "<li><a (click)='(null)'>Detail</a></li>"
-                + "<li><a (click)='(null)'>Edit</a></li>"
-                + "<li><a (click)='(null)'>Delete</a></li>"
-                + "</ul></div>"
-            }
-
-        ]
+                render: (data, type, fullRow, meta) => {
+                    return `
+                        <div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                            <i class='fa fa-gear fa-lg'></i></button>
+                            <ul class='dropdown-menu  ng-star-inserted'>                                
+                                <li><a class='sa-datatables-edit' offering-id='${fullRow.id}'>Edit</a></li>
+                                <li><a class='sa-datatables-delete' offering-id='${fullRow.id}'>Delete</a></li>
+                            </ul>
+                        </div>`;
+                }
+            }]
     };
 
-    constructor(private offeringService : OfferingService) {
+    ngAfterViewInit() {
+        document.querySelector('body').addEventListener('click', (event) => {
+            let target = <Element>event.target;
+
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit')) {
+                this.onEditOffering(target.getAttribute('offering-id'));
+            }
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete')) {
+                this.onDeleteOffering(target.getAttribute('offering-id'));
+            }
+        });
+    }
+
+
+    onEditOffering(offeringId) {
+        console.log("edit offering:", offeringId);
+
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                "offeringId": offeringId
+            }
+        };
+
+        this.router.navigate(['/offering/offering-edit/' + offeringId]);
+    }
+
+    onDeleteOffering(offeringId) {
+        console.log("Delete offering", offeringId, "?");
+        this.offeringService.deleteOffering(offeringId).subscribe((data) => {
+            window.location.reload();
+        });
+    }
+
+    constructor(private router: Router, private offeringService: OfferingService) {
     }
 
     ngOnInit() {
@@ -51,5 +91,4 @@ export class OfferingListComponent implements OnInit {
         console.error(errMsg); // log to console instead
         return Observable.throw(errMsg);
     }
-
 }
