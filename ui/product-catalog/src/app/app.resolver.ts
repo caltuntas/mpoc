@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {HttpClientProvider} from './shared/httpclientprovider/http-client-provider';
 import {CataloglistService} from './catalog/catalog-list/catalog-list.service';
 import {OfferingService} from "./offering/offering-service";
+import { CharacteristicService } from './characteristic/characteristic.service';
 
 
 @Injectable()
@@ -22,5 +23,6 @@ export const APP_RESOLVER_PROVIDERS = [
     DataResolver,
     HttpClientProvider,
     OfferingService,
+    CharacteristicService,
     CataloglistService
 ];

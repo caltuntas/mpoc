@@ -1,9 +1,6 @@
 package com.ericsson.modernization.services.productcatalog.rest;
 
-import com.ericsson.modernization.services.productcatalog.applicationservice.ProductOfferingAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.ProductSpecCharacteristicAppService;
-import com.ericsson.modernization.services.productcatalog.applicationservice.request.ProductOfferingCreateRequest;
-import com.ericsson.modernization.services.productcatalog.model.ProductOffering;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharacteristic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

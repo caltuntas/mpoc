@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ProductSpecCharacteristicRepository extends  JpaRepository<ProductSpecCharacteristic, Integer> {
-
+    //List<ProductSpecCharacteristic> findAll();
 }

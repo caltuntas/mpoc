@@ -6,15 +6,13 @@ import { CharacteristicCreateComponent } from './characteristic-create/character
 import { CharacteristicListComponent } from "./characteristic-list/characteristic-list.component";
 
 //Services
-import { CharacteristicService } from './characteristic.service';
+// import { CharacteristicService } from './characteristic.service';
 
 // Theme modules
 import { SmartadminModule } from "../shared/smartadmin.module";
 import { SmartadminDatatableModule } from "../shared/ui/datatable/smartadmin-datatable.module";
 import { SmartadminValidationModule } from "../shared/forms/validation/smartadmin-validation.module";
 import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.module";
-
-import { HttpModule } from "@angular/http";
 
 
 @NgModule({
@@ -24,19 +22,18 @@ import { HttpModule } from "@angular/http";
     SmartadminModule,
     SmartadminDatatableModule,
     SmartadminValidationModule,
-    SmartadminInputModule,
-    HttpModule
+    SmartadminInputModule
   ],
   declarations: [
     CharacteristicListComponent,
     CharacteristicCreateComponent
-  ],
-  providers: [
-    CharacteristicService
-  ],
-  bootstrap: [
-    CharacteristicListComponent,
-    CharacteristicCreateComponent
   ]
+  // providers: [
+  //   CharacteristicService
+  // ],
+  // bootstrap: [
+  //   CharacteristicListComponent,
+  //   CharacteristicCreateComponent
+  // ]
 })
 export class CharacteristicModule { }
