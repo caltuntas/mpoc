@@ -26,6 +26,6 @@ export class SalesChannelService {
     }
 
     deleteSalesChannel(id) {
-        return this.http.get('/saleschannel/deletesaleschannel/' + id);
+        return this.http.get('/saleschannel/deletesaleschannel?id='+ id);
     }
 }

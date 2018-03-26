@@ -1,100 +1,84 @@
 <div id="content">
-<div class="row">
-    <sa-big-breadcrumbs [items]="['Sales Channel', 'Detail']" icon="table" class="col-xs-12 col-sm-7 col-md-7 col-lg-8"></sa-big-breadcrumbs>
-  </div>
-
     <div class="row">
-
-      <!-- NEW COL START -->
-      <article class="col-sm-12 col-md-12 col-lg-6">
-
-        <!-- Widget ID (each widget will need unique ID)-->
-        <div sa-widget [colorbutton]="false" [editbutton]="false" [custombutton]="false">
-          <!-- widget options:
-          usage: <div class="jarviswidget" id="wid-id-0" [editbutton]="false">
-
-          [colorbutton]="false"
-          [editbutton]="false"
-          [togglebutton]="false"
-          [deletebutton]="false"
-          [fullscreenbutton]="false"
-          [custombutton]="false"
-          [collapsed]="true"
-          [sortable]="false"
-
-          -->
-          <header>
-            <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-
-            <h2>Sales Channel </h2>
-
-          </header>
-
-          <!-- widget div-->
-          <div>
-
-            <!-- widget content -->
-            <div class="widget-body no-padding">
-
-              <form class="smart-form">
-                <header>
-                  {{ scDetail?.NewForm ? 'Create' : 'Update' }} Sales Channel 
-                </header>
-
-                <fieldset>
-                  <section>
-                    <label class="label">Code <strong>*</strong></label>
-                    <label class="input">
-                      <input [(ngModel)]="scDetail.SalesChannelInstance.code" name="Code"  type="text" maxlength="10">
-                    </label>
-
-                  </section>
-                  
-                  <section>
-                    <label class="label">Name <strong>*</strong></label>
-                    <label class="input">
-                      <input [(ngModel)]="scDetail.SalesChannelInstance.name" name="Name" type="text" maxlength="10">
-                    </label>
-
-                  </section>
-                  
-                   <section>
-                    <label class="label">Description </label>
-                    <label class="input">
-                      <input [(ngModel)]="scDetail.SalesChannelInstance.description" name="Description" type="text" maxlength="10">
-                    </label>
-
-                    <div class="note">
-                      Fields with <strong>asterix (*)</strong> is required
-                    </div>
-                  </section>
-
-                </fieldset>
-
-                
-
-                <footer>
-                  <button (click)="save(scDetail);" class="btn btn-primary">
-                    {{ scDetail?.NewForm == true ? 'Create' : 'Update' }}
-                  </button>
-                  <button type="button" class="btn btn-default" onclick="window.history.back();">
-                    Back
-                  </button>
-                </footer>
-              </form>
-
-            </div>
-            <!-- end widget content -->
-
-          </div>
-          <!-- end widget div -->
-
-        </div>
-        <!-- end widget -->
-
-      </article>
-      <!-- END COL -->
-
+        <sa-big-breadcrumbs [items]="['Sales Channel', scDetail?.NewForm ? 'Create' : 'Update' ]" icon="pencil-square-o"
+                            class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
     </div>
-    
+    <sa-widgets-grid>
+        <div class="row">
+            <div class="col-sm-12">
+                <div sa-widget [editbutton]="false" [colorbutton]="false" [deletebutton]="false">
+                    <header>
+                        <h2>{{ scDetail?.NewForm ? 'Create' : 'Update' }} Sales Channel </h2>
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                            <form (ngSubmit)="save(scDetail)" #offeringForm="ngForm" class="form-horizontal">
+                                <fieldset>
+                                    <div class="form-group"
+                                         [class.has-error]="nameControl.invalid && nameControl.submitted ">
+                                        <label class="col-xs-2 col-lg-3 control-label">Code</label>
+                                        <div class="col-xs-9 col-lg-6 ">
+                                            <input id="name" required type="text" class="form-control" name="name"
+                                                   [(ngModel)]="scDetail.SalesChannelInstance.code" #nameControl="ngModel"
+                                            />
+                                            <small *ngIf="nameControl.invalid && nameControl.submitted "
+                                                   class="help-block">Name is required
+                                            </small>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group"
+                                         [class.has-error]="nameControl.invalid && nameControl.submitted ">
+                                        <label class="col-xs-2 col-lg-3 control-label">Name</label>
+                                        <div class="col-xs-9 col-lg-6 ">
+                                            <input id="name" required type="text" class="form-control" name="name"
+                                                   [(ngModel)]="scDetail.SalesChannelInstance.name" #nameControl="ngModel"
+                                            />
+                                            <small *ngIf="nameControl.invalid && nameControl.submitted "
+                                                   class="help-block">Name is required
+                                            </small>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group"
+                                         [class.has-error]="descriptionControl.invalid && descriptionControl.submitted ">
+                                        <label class="col-xs-2 col-lg-3 control-label">Description</label>
+                                        <div class="col-xs-9 col-lg-6 ">
+                                            <input id="description" required type="text" class="form-control"
+                                                   name="description" [(ngModel)]="scDetail.SalesChannelInstance.description"
+                                                   #descriptionControl="ngModel"/>
+                                            <small *ngIf="descriptionControl.invalid && descriptionControl.submitted "
+                                                   class="help-block">Description is required
+                                            </small>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-success" type="submit">
+                                                <i class="fa fa-save"></i>
+                                                {{ scDetail?.NewForm == true ? 'Create' : 'Update' }}
+                                            </button>
+                                            <button type="button" class="btn btn-danger" onclick="window.history.back();">
+                                            <i class="fa fa-arrow-left"></i>
+                    							Back
+                  						</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </sa-widgets-grid>
 </div>
+
+
+
+
+
