@@ -1,9 +1,8 @@
-package com.ericsson.modernization.services.productcatalog.authentication;
+package com.ericsson.modernization.services.authentication;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service

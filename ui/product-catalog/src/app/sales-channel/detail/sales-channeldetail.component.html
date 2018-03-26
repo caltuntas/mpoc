@@ -38,22 +38,30 @@
 
               <form class="smart-form">
                 <header>
-                  {{ scDetail?.NewFrom ? 'Create' : 'Update' }} Sales Channel 
+                  {{ scDetail?.NewForm ? 'Create' : 'Update' }} Sales Channel 
                 </header>
 
                 <fieldset>
                   <section>
                     <label class="label">Code <strong>*</strong></label>
                     <label class="input">
-                      <input type="text" maxlength="10">
+                      <input [(ngModel)]="scDetail.SalesChannelInstance.code" name="Code"  type="text" maxlength="10">
+                    </label>
+
+                  </section>
+                  
+                  <section>
+                    <label class="label">Name <strong>*</strong></label>
+                    <label class="input">
+                      <input [(ngModel)]="scDetail.SalesChannelInstance.name" name="Name" type="text" maxlength="10">
                     </label>
 
                   </section>
                   
                    <section>
-                    <label class="label">Description <strong>*</strong></label>
+                    <label class="label">Description </label>
                     <label class="input">
-                      <input type="text" maxlength="10">
+                      <input [(ngModel)]="scDetail.SalesChannelInstance.description" name="Description" type="text" maxlength="10">
                     </label>
 
                     <div class="note">
@@ -66,8 +74,8 @@
                 
 
                 <footer>
-                  <button type="submit" class="btn btn-primary">
-                    {{ scDetail?.NewFrom == true ? 'Create' : 'Update' }}
+                  <button (click)="save(scDetail);" class="btn btn-primary">
+                    {{ scDetail?.NewForm == true ? 'Create' : 'Update' }}
                   </button>
                   <button type="button" class="btn btn-default" onclick="window.history.back();">
                     Back

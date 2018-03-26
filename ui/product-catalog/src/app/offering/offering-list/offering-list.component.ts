@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {OfferingService} from "../offering-service";
-import {NavigationExtras, Router, Routes} from "@angular/router";
+import {ActivatedRoute, NavigationExtras, Router, Routes} from "@angular/router";
 import {Offering} from "../model/offering.model";
+import {DatatableComponent} from "../../shared/ui/datatable/datatable.component";
 
 @Component({
     selector: 'app-offering-list',
@@ -12,18 +13,16 @@ import {Offering} from "../model/offering.model";
 export class OfferingListComponent implements OnInit {
 
     offerings: Array<Offering> = [];
-    selectedOffering: Offering;
+    refreshId : string;
 
     options = {
         dom: "Bfrtip",
         ajax: (data, callback, settings) => {
             this.offeringService.getOfferings()
-                .map((data: any) => (data.data || data))
                 .catch(this.handleError)
                 .subscribe((data) => {
-                    this.offerings = data;
                     callback({
-                        aaData: data.slice(0, 100)
+                        aaData: data
                     })
                 })
         },
@@ -56,29 +55,33 @@ export class OfferingListComponent implements OnInit {
                 this.onDeleteOffering(target.getAttribute('offering-id'));
             }
         });
+
     }
 
 
     onEditOffering(offeringId) {
         console.log("edit offering:", offeringId);
-
-        let navigationExtras: NavigationExtras = {
-            queryParams: {
-                "offeringId": offeringId
-            }
-        };
-
         this.router.navigate(['/offering/offering-edit/' + offeringId]);
     }
 
     onDeleteOffering(offeringId) {
         console.log("Delete offering", offeringId, "?");
         this.offeringService.deleteOffering(offeringId).subscribe((data) => {
-            window.location.reload();
+            this.reloadPage();
         });
     }
 
-    constructor(private router: Router, private offeringService: OfferingService) {
+    reloadPage() {
+        this.router.routeReuseStrategy.shouldReuseRoute = function(){return false;};
+        let currentUrl = this.router.url + '?';
+        this.router.navigateByUrl(currentUrl)
+            .then(() => {
+                this.router.navigated = false;
+                this.router.navigate([this.router.url]);
+            });
+    }
+
+    constructor(private router: Router, private route: ActivatedRoute, private offeringService: OfferingService) {
     }
 
     ngOnInit() {
