@@ -1,6 +1,6 @@
-package com.ericsson.modernization.services.productcatalog.applicationservice.ProductOffering.Response;
+package com.ericsson.modernization.services.productcatalog.applicationservice;
 
-public class ProductOfferingServiceResponse {
+public class CommonServiceResponse {
     private String message;
 
     public String getMessage() {
