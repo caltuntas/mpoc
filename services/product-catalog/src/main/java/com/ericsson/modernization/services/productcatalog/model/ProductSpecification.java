@@ -1,6 +1,8 @@
 
 package com.ericsson.modernization.services.productcatalog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -29,6 +31,7 @@ public class ProductSpecification extends EntityBase
     @Embedded
     private Duration returnPeriod;
     private String externalId;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "productSpecification")

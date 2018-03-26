@@ -1,7 +1,7 @@
-package com.ericsson.modernization.services.productcatalog.rest;
+package com.ericsson.modernization.services.productcatalog.rest.SalesChannel;
 
-import com.ericsson.modernization.services.productcatalog.applicationservice.SalesChannelAppService;
-import com.ericsson.modernization.services.productcatalog.applicationservice.request.SalesChannelRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.SalesChannel.SalesChannelAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.SalesChannel.request.SalesChannelRequest;
 import com.ericsson.modernization.services.productcatalog.model.SalesChannel;
 
 import org.springframework.beans.factory.annotation.Autowired;

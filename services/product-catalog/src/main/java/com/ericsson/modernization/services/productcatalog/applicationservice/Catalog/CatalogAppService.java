@@ -1,6 +1,6 @@
-package com.ericsson.modernization.services.productcatalog.applicationservice;
+package com.ericsson.modernization.services.productcatalog.applicationservice.Catalog;
 
-import com.ericsson.modernization.services.productcatalog.applicationservice.request.CatalogCreateRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.Catalog.request.CatalogCreateRequest;
 import com.ericsson.modernization.services.productcatalog.model.*;
 import com.ericsson.modernization.services.productcatalog.repository.CatalogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
