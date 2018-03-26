@@ -62,14 +62,6 @@ public class SalesChannelAppService {
     }
 
     public List<SalesChannel> findAll(){
-    	//SalesChannel ex = new SalesChannel();
-    	//ex.setDeleted(false);
-    	
-    	//ExampleMatcher exampleMatcher = ExampleMatcher.matching()
-        //        .withIgnoreNullValues()
-        //        .withIgnoreCase(); 
-    	
-    	//Example<SalesChannel> example = Example.of(ex,exampleMatcher);
-        return salesChannelRepository.findAll();
+        return salesChannelRepository.findAllByIsDeletedIsFalse();
     }
 }
