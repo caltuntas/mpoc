@@ -12,18 +12,15 @@ import {Offering} from "../model/offering.model";
 export class OfferingListComponent implements OnInit {
 
     offerings: Array<Offering> = [];
-    selectedOffering: Offering;
 
     options = {
         dom: "Bfrtip",
         ajax: (data, callback, settings) => {
             this.offeringService.getOfferings()
-                .map((data: any) => (data.data || data))
                 .catch(this.handleError)
                 .subscribe((data) => {
-                    this.offerings = data;
                     callback({
-                        aaData: data.slice(0, 100)
+                        aaData: data
                     })
                 })
         },
