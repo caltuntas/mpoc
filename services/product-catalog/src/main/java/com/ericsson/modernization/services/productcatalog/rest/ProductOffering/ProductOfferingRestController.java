@@ -28,31 +28,8 @@ public class ProductOfferingRestController {
     }
 
     @RequestMapping(value = "/getallofferings", method = RequestMethod.GET)
-    public ResponseEntity<List<ProductOfferingListResponse>> getAllOfferings() {
-        List<ProductOffering> productOfferings = productOfferingAppService.findAll();
-        List<ProductOfferingListResponse> productOfferingResponseList = new ArrayList<>();
-
-        for (ProductOffering productOffering : productOfferings) {
-            ProductOfferingListResponse response =
-                    new ProductOfferingListResponse
-                            (
-                                    productOffering.getId(),
-                                    productOffering.getName(),
-                                    productOffering.getValidFor() != null ? productOffering.getValidFor().getValidForStartDate() : null,
-                                    productOffering.getValidFor() != null ? productOffering.getValidFor().getValidForEndDate() : null,
-                                    productOffering.getDescription(),
-                                    productOffering.getExternalId(),
-                                    productOffering.getWarrantyPeriod() != null ? productOffering.getWarrantyPeriod().getPeriodValue() : 0,
-                                    productOffering.getWarrantyPeriod() != null ? productOffering.getWarrantyPeriod().getPeriodUnit() : 0,
-                                    productOffering.getReturnPeriod() != null ? productOffering.getReturnPeriod().getPeriodValue() : 0,
-                                    productOffering.getReturnPeriod() != null ? productOffering.getReturnPeriod().getPeriodUnit() : 0,
-                                    productOffering.getIsReplicated(),
-                                    productOffering.getIsSellable());
-
-            productOfferingResponseList.add(response);
-        }
-
-        return new ResponseEntity<>(productOfferingResponseList, HttpStatus.OK);
+    public ResponseEntity<List<ProductOffering>> getAllOfferings() {
+        return new ResponseEntity<>(productOfferingAppService.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/deleteOffering/{offeringId}", method = RequestMethod.GET)

@@ -3,6 +3,7 @@ package com.ericsson.modernization.services.productcatalog.model;
 import javax.persistence.*;
 
 import com.ericsson.modernization.services.productcatalog.category.Category;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,19 +41,22 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     private Boolean isSellable;
     private long versionNumber;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "productOffering")
     private List<ProductOfferingPrice> prices;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "productOffering")
     private List<ProdSpecCharValueUse> determinedProdSpecCharValueUses;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "productOffering")
     private List<UnsupportedProductSpecCharValueUseGroup> unsupportedProductSpecCharValueUseGroups;
-    
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<Category> category;
