@@ -11,7 +11,7 @@ export class SpecificationCreateComponent implements OnInit {
   productSpec: productSpecificationCreateModel;
   constructor() {
     this.productSpec = new productSpecificationCreateModel();
-    this.productSpec.statusList.push(new idNameModel(1, "asds"));
+    this.productSpec.statusList.push(new idNameModel(1, "spec -1"));
   }
 
   ngOnInit() {}

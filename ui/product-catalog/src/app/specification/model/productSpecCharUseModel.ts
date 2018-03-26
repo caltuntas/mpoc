@@ -6,7 +6,7 @@ export class productSpecCharUseModel {
     this.values.push(new productSpecCharValueUseModel());
     this.values.push(new productSpecCharValueUseModel());
     this.values.push(new productSpecCharValueUseModel());
-    this.name = 'asdfd';
+    this.name = 'char use -1';
     this.charType = 'list';
     this.isSelected = true;
     this.id=1;
