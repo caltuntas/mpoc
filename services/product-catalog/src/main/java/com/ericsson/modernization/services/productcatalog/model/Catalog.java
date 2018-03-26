@@ -1,8 +1,9 @@
 package com.ericsson.modernization.services.productcatalog.model;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Catalog extends EntityBase implements Description, ValidFor {
@@ -12,6 +13,12 @@ public class Catalog extends EntityBase implements Description, ValidFor {
     private String description;
     @ManyToOne
     private CatalogSpecification catalogSpecification;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "catalog")
+    private List<ProductOffering> productOfferings;
+
     private String externalId;
     private Boolean isReplicated;
     private long versionNumber;

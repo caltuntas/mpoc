@@ -1,11 +1,15 @@
 package com.ericsson.modernization.services.productcatalog.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Embeddable;
 import java.util.Date;
 
 @Embeddable
 public class TimePeriod {
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date validForStartDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date validForEndDate;
 
     public Date getValidForStartDate() {

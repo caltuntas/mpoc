@@ -36,7 +36,7 @@ public class ProductOfferingRestController {
     public ResponseEntity<CommonServiceResponse> deleteOffering(@PathVariable int offeringId) {
         productOfferingAppService.delete(offeringId);
         CommonServiceResponse response = new CommonServiceResponse();
-        response.setMessage("The offfering with id : " + offeringId + " is created");
+        response.setMessage("The offfering with id : " + offeringId + " is deleted");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

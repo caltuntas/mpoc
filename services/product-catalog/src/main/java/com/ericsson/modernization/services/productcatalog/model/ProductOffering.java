@@ -25,6 +25,8 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     private String externalId;
     @ManyToOne
     private ProductSpecification productSpecification;
+    @ManyToOne
+    private Catalog catalog;
     @AttributeOverrides({
             @AttributeOverride(name = "periodValue", column = @Column(name = "warrantyPeriodValue")),
             @AttributeOverride(name = "periodUnit", column = @Column(name = "warrantyPeriodUnit"))
@@ -172,5 +174,13 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     public void setUnsupportedProductSpecCharValueUseGroups(
             List<UnsupportedProductSpecCharValueUseGroup> unsupportedProductSpecCharValueUseGroups) {
         this.unsupportedProductSpecCharValueUseGroups = unsupportedProductSpecCharValueUseGroups;
+    }
+
+    public Catalog getCatalog() {
+        return catalog;
+    }
+
+    public void setCatalog(Catalog catalog) {
+        this.catalog = catalog;
     }
 }
