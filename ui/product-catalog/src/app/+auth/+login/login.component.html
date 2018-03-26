@@ -55,18 +55,14 @@
               <section> 
                 <label class="label">E-mail</label>
                 <label class="input"> <i class="icon-append fa fa-user"></i>
-                  <!-- <input type="email" name="email" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address">  -->
-                  <input type="email" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address" 
-                    id="username" name="username" [(ngModel)]="credentials.username">
+                  <input [(ngModel)]="username" type="email" name="email" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address" >
                   <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i>
                     Please enter email address/username</b></label>
               </section>
               <section>
                 <label class="label">Password</label>
                 <label class="input"> <i class="icon-append fa fa-lock"></i>
-                  <!-- <input type="password" name="password" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20" data-message="Please enter your email password"> -->
-                  <input type="password"  data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20" data-message="Please enter your email password"
-                    id="password" name="password" [(ngModel)]="credentials.password">
+                  <input [(ngModel)]="password" type="password" name="password" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20" data-message="Please enter your email password">
                   <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter
                     your password</b> </label>
 
@@ -81,16 +77,17 @@
               </section>
             </fieldset>
             <footer>
-              <!-- <button (click)="login($event)" class="btn btn-primary">
+              <button (click)="login($event)" class="btn btn-primary">
                 Sign in
-              </button> -->
-              <button (click)="login($event)" *ngIf="!authService.isLoggedIn" class="btn btn-primary">
+              </button>
+              <p><b>{{message}}</b></p>
+              <!-- <button (click)="login($event)" *ngIf="!authService.isLoggedIn" class="btn btn-primary">
                 Sign in
               </button>         
               <p>{{message}}</p>
               <p>
                 <button (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
-              </p>              
+              </p>     -->          
             </footer>
           </form>
         </div>
