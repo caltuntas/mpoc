@@ -1,4 +1,4 @@
-package com.ericsson.modernization.services.productcatalog.rest;
+package com.ericsson.modernization.services.productcatalog.rest.Catalog;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.Catalog.CatalogAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.Catalog.request.CatalogCreateRequest;

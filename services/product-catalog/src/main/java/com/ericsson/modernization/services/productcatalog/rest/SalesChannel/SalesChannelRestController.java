@@ -1,4 +1,4 @@
-package com.ericsson.modernization.services.productcatalog.rest;
+package com.ericsson.modernization.services.productcatalog.rest.SalesChannel;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.SalesChannel.SalesChannelAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.SalesChannel.request.SalesChannelRequest;
