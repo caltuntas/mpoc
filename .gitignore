@@ -42,3 +42,6 @@ testem.log
 Thumbs.db
 commit:e51a86
 initial commit
+/services/product-catalog/src/main/java/META-INF/MANIFEST.MF
+/ui/product-catalog/tslint.json
+/ui/product-catalog/tslint.json
