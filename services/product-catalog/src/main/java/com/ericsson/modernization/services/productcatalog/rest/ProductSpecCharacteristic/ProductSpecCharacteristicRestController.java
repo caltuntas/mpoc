@@ -37,4 +37,9 @@ public class ProductSpecCharacteristicRestController {
         response.setMessage("The product specification characteristic with id : " + characteristicId + " is created");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/getcharacteristicbyid/{characteristicId}", method = RequestMethod.GET)
+    public ResponseEntity<ProductSpecCharacteristic> getcharacteristicbyid(@PathVariable int characteristicId) {
+        return new ResponseEntity<ProductSpecCharacteristic>(productSpecCharacteristicAppService.findById(characteristicId), HttpStatus.OK);
+    }
 }

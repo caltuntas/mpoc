@@ -3,6 +3,7 @@ import {ModuleWithProviders} from "@angular/core"
 import {RouterModule, Routes} from "@angular/router";
 import { CharacteristicListComponent } from "./characteristic-list/characteristic-list.component";
 import { CharacteristicCreateComponent } from "./characteristic-create/characteristic-create.component";
+import { CharacteristicEditComponent } from './characteristic-edit/characteristic-edit.component';
 
 
 export const routes:Routes = [
@@ -20,7 +21,14 @@ export const routes:Routes = [
     data: {
       pageTitle: 'Create Characteristic'
   }
-  }
+  },
+
+    {
+        path: 'characteristic-edit/:characteristicId',
+        component: CharacteristicEditComponent, data: {
+            pageTitle: 'Edit the characteristic'
+        }
+    }
 ];
 
 

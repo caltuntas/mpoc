@@ -14,7 +14,7 @@ export class CharacteristicListComponent implements OnInit {
     dom: "Bfrtip",
     ajax: (data, callback, settings) => {
       this.characteristicListService.getAllCharacteristics()
-          .catch(this.handleError)
+          //.catch(this.handleError)
           .subscribe((data) => {
               callback({
                   aaData: data
@@ -81,12 +81,12 @@ export class CharacteristicListComponent implements OnInit {
 
   constructor(private router: Router, private characteristicListService: CharacteristicService) { }
 
-  private handleError(error: any) {
+  /*private handleError(error: any) {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg); // log to console instead
     return Observable.throw(errMsg);
-  }
+  }*/
 
 
 }

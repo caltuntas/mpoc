@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {CharacteristicListModel} from "./model/characteristicListModel";
 import {Observable} from "rxjs/Observable";
 import {HttpClientProvider} from "../shared/httpclientprovider/http-client-provider";
+import {CharacteristicEditModel} from './model/characteristicEditModel';
 
 @Injectable()
 export class CharacteristicService{
@@ -20,5 +21,9 @@ export class CharacteristicService{
 
     deleteCharacteristic(id) {
         return this.http.get('/productspeccharacteristic/deleteproductspeccharacteristic/' + id);
+    }
+
+    getCharacteristicById(id): Observable<CharacteristicEditModel> {
+        return this.http.get('/productspeccharacteristic/getcharacteristicbyid/' + id);
     }
 }
