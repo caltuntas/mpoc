@@ -61,7 +61,7 @@ export class CatalogListComponent implements OnInit {
 
 
     onEditCatalog(catalogId) {
-        console.log("edit offering:", catalogId);
+        console.log("edit catalog:", catalogId);
 
         let navigationExtras: NavigationExtras = {
             queryParams: {
