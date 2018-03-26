@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CharacateristicCreateModel } from './CharacateristicCreateModel';
+import { CharacteristicCreateModel} from '../model/CharacateristicCreateModel';
+import { CharacteristicService } from '../characteristic.service';
+import {moment} from 'ngx-bootstrap/chronos/test/chain';
 
 @Component({
   selector: 'app-characteristic-create',
@@ -8,14 +10,19 @@ import { CharacateristicCreateModel } from './CharacateristicCreateModel';
 
 export class CharacteristicCreateComponent implements OnInit {
 
-  
-  characteristic = new CharacateristicCreateModel() ;
-  valueTypes: string[] = ["String","List","Integer","Date"];
+  model: CharacteristicCreateModel;
+
+  constructor(private characteristicService: CharacteristicService) {
+    this.model = new CharacteristicCreateModel();
+  }
 
   ngOnInit() {
-  }
-  save(characteristic) {
-    console.log(characteristic);
+
   }
 
+  public onSubmit() {
+      //this.model.validForEndDate = moment().format("YYYY-MM-DD");
+      //this.model.validForStartDate = moment().format("YYYY-MM-DD");
+      this.characteristicService.createCharacteristic(this.model).subscribe();
+  }
 }

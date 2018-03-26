@@ -1,4 +1,4 @@
-export class characteristicListModel{
+export class CharacteristicListModel{
     public id:number;
     public name:string;
     public description:string;

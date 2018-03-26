@@ -2,6 +2,7 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { DateValueAccessorModule } from 'angular-date-value-accessor'
 
 import { routing } from './app.routing'
 // App is our top level component
@@ -34,7 +35,7 @@ type StoreType = {
   declarations: [
     AppComponent,
   ],
-  imports: [ 
+  imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -42,6 +43,7 @@ type StoreType = {
     CoreModule,
     SmartadminLayoutModule,
     routing,
+    DateValueAccessorModule
   ],
   exports: [
   ],
