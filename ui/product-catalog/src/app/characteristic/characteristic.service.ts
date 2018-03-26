@@ -17,4 +17,8 @@ export class CharacteristicService{
     getAllCharacteristics(): Observable<CharacteristicListModel[]> {
         return this.http.get(`/productspeccharacteristic/getallcharacteristics`);
     }
+
+    deleteCharacteristic(id) {
+        return this.http.get('/productspeccharacteristic/deleteproductspeccharacteristic/' + id);
+    }
 }

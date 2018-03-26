@@ -6,6 +6,7 @@ public class ProductSpecCharacteristicCreateRequest {
     private String name;
     private Date validForStartDate;
     private Date validForEndDate;
+    private int valueType;
     private String description;
     private String externalId;
 
@@ -31,6 +32,14 @@ public class ProductSpecCharacteristicCreateRequest {
 
     public void setValidForEndDate(Date validForEndDate) {
         this.validForEndDate = validForEndDate;
+    }
+
+    public int getValueType() {
+        return valueType;
+    }
+
+    public void setValueType(int valueType) {
+        this.valueType = valueType;
     }
 
     public String getDescription() {
