@@ -16,11 +16,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import {HttpClient} from "@angular/common/http";
 
 import { Router } from '@angular/router';
-import { AuthGuard } from './+auth/auth-guard.service'
-import { AuthService } from './+auth/auth.service'
-import { LoginRoutingModule } from './+auth/+login/login-routing.module';
-import { LoginComponent } from './+auth/+login/login.component';
-
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -38,8 +33,6 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    LoginComponent,
-    //PageNotFoundComponent
   ],
   imports: [ 
     BrowserModule,
@@ -49,25 +42,15 @@ type StoreType = {
     CoreModule,
     SmartadminLayoutModule,
     routing,
-    LoginRoutingModule,
-    FormsModule,
   ],
   exports: [
   ],
   providers: [ 
     // ENV_PROVIDERS,
     APP_PROVIDERS,
-    AuthGuard, 
-    AuthService,
-    // DialogService
   ]
 })
 export class AppModule {
   constructor(public appRef: ApplicationRef, public appState: AppState) {}
-
-// // Diagnostic only: inspect router configuration
-// constructor(router: Router ) {
-//   console.log('Routes: ', JSON.stringify(router.config, undefined, 2));
-// }
 }
 
