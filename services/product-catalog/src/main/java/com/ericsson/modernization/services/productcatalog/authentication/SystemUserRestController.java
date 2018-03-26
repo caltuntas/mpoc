@@ -25,10 +25,9 @@ public class SystemUserRestController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<SystemUser> login(@RequestBody LoginRequest loginRequest) {
-		System.out.println(loginRequest.getUsername() + " " + loginRequest.getPassword() + " " + loginRequest.toString());
-		SystemUser user = userService.findByUserNameAndPassword("admin", "12345");
+		SystemUser user = userService.findByUserNameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
 		if (user == null) {
-			return new ResponseEntity<SystemUser>(user, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<SystemUser>(user, HttpStatus.OK);
 		}
 		user.setPassword(null);
 		return new ResponseEntity<SystemUser>(user, HttpStatus.OK);
