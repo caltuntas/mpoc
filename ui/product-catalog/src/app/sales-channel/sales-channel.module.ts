@@ -1,8 +1,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import {salesChannelRouting} from './sales-channel.routing';
 import {SalesChannelComponent} from "./sales-channel.component";
 import {SalesChannelDetailComponent} from "./detail/sales-channeldetail.component";
+import {SalesChannelService} from "./sales-channel.service";
+
 
 // Theme modules
 import { SmartadminModule } from "../shared/smartadmin.module";
@@ -18,8 +21,10 @@ import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.mo
     SmartadminValidationModule,
     SmartadminInputModule,
     salesChannelRouting,
-    SmartadminModule
+    SmartadminModule,
+    FormsModule
   ],
-  declarations: [SalesChannelComponent,SalesChannelDetailComponent]
+  declarations: [SalesChannelComponent,SalesChannelDetailComponent],
+  providers: [SalesChannelService]
 })
 export class SalesChannelModule { }  

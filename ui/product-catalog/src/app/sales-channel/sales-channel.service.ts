@@ -10,10 +10,22 @@ export class SalesChannelService {
     }
 
     getSalesChannels(): Observable<SalesChannel[]> {
-        return this.http.get(`/saleschannel/getallsaleschannels`);
+        return this.http.get('/saleschannel/getallsaleschannels');
+    }
+  
+    getSalesChannel(id): Observable<SalesChannel> {
+        return this.http.get('/saleschannel/getsaleschannel?id='+ id);
     }
 
-//    createOffering(model) {
-//        return this.http.post(`/productoffering/createoffering`, model);
-//    }
+    createSalesChannel(model) {
+        return this.http.post('/saleschannel/createsaleschannel', model);
+    }
+  
+    updateSalesChannel(model) {
+        return this.http.post('/saleschannel/updatesaleschannel', model);
+    }
+
+    deleteSalesChannel(id) {
+        return this.http.get('/saleschannel/deletesaleschannel/' + id);
+    }
 }
