@@ -50,7 +50,7 @@
                     <div class="col-xs-9 col-lg-6 ">
                       <select id="status" required class="form-control " [(ngModel)]="productSpec.status" name="status" #statusControl="ngModel">
                         <option value="">Choose</option>
-                        <option *ngFor="let status of productSpec.statusList" value="status.id">{{status.name}}</option>
+                        <option  *ngFor="let status of productSpec.statusList" value="status.id">{{status.name}}</option>
                       </select>
                       <small *ngIf="statusControl.invalid && statusControl.touched " class="help-block">Status is required</small>
                     </div>

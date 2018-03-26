@@ -16,7 +16,7 @@ export class CategoryListComponent implements OnInit {
     options = {
         dom: "Bfrtip",
         ajax: (data, callback, settings) => {
-            this.categoryService.getAllCategories()
+            this.categoryService.getAll()
                 .catch(this.handleError)
                 .subscribe((data) => {
                     callback({
