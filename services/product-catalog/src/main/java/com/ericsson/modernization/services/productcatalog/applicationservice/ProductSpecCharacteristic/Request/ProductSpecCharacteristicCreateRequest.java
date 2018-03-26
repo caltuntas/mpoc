@@ -1,4 +1,4 @@
-package com.ericsson.modernization.services.productcatalog.applicationservice.request;
+package com.ericsson.modernization.services.productcatalog.applicationservice.ProductSpecCharacteristic.Request;
 
 import java.util.Date;
 

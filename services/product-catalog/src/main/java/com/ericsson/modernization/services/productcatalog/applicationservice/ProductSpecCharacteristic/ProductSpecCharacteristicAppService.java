@@ -1,4 +1,4 @@
-package com.ericsson.modernization.services.productcatalog.applicationservice;
+package com.ericsson.modernization.services.productcatalog.applicationservice.ProductSpecCharacteristic;
 
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharacteristic;
 import com.ericsson.modernization.services.productcatalog.repository.ProductSpecCharacteristicRepository;
