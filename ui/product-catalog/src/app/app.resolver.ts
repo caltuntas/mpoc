@@ -2,7 +2,7 @@ import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/rou
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {HttpClientProvider} from './shared/httpclientprovider/http-client-provider';
-import {CataloglistService} from './catalog/catalog-list/catalog-list.service';
+import {CatalogService} from './catalog/catalog.service';
 import {OfferingService} from "./offering/offering-service";
 import { CharacteristicService } from './characteristic/characteristic.service';
 
@@ -24,5 +24,5 @@ export const APP_RESOLVER_PROVIDERS = [
     HttpClientProvider,
     OfferingService,
     CharacteristicService,
-    CataloglistService
+    CatalogService
 ];

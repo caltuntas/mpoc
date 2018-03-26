@@ -6,8 +6,12 @@ export class Catalog {
     public validForStartDate: string;
     public validForEndDate: string;
 
-    constructor(parameters: { id: string, name: string, description: string, deleted: boolean, validForStartDate: string, validForEndDate: string }) {
-        const {id, name, description, deleted, validForStartDate, validForEndDate} = parameters;
+    constructor(id: string,
+                name: string,
+                description: string,
+                deleted: boolean,
+                validForStartDate: string,
+                validForEndDate: string) {
         this.id = id;
         this.name = name;
         this.description = description;

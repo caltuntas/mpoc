@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 // Module components
 import {CatalogCreateComponent} from './catalog-create/catalog-create.component';
 import {CatalogListComponent} from './catalog-list/catalog-list.component';
+import {CatalogEditComponent } from './catalog-edit/catalog-edit.component';
 
 // Services
 import {CatalogService} from './catalog.service';
@@ -30,7 +31,8 @@ import {SmartadminInputModule} from '../shared/forms/input/smartadmin-input.modu
     ],
     declarations: [
         CatalogListComponent,
-        CatalogCreateComponent
+        CatalogCreateComponent,
+        CatalogEditComponent
     ],
     providers: [
         CatalogService
