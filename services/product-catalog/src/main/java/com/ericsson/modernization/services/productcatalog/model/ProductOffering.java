@@ -46,23 +46,16 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     private long versionNumber;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "productOffering")
+    @OneToMany(mappedBy = "productOffering")
     private List<ProductOfferingPrice> prices;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "productOffering")
+    @OneToMany(mappedBy = "productOffering")
     private List<ProdSpecCharValueUse> determinedProdSpecCharValueUses;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "productOffering")
+    @OneToMany(mappedBy = "productOffering")
     private List<UnsupportedProductSpecCharValueUseGroup> unsupportedProductSpecCharValueUseGroups;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "productOffering")
     private List<Category> category;
 
     public List<Category> getCategory() {

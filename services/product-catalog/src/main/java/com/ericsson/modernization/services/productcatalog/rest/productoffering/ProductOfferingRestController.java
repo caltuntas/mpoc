@@ -3,6 +3,7 @@ package com.ericsson.modernization.services.productcatalog.rest.productoffering;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.ProductOfferingAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCreateRequest;
 import com.ericsson.modernization.services.productcatalog.applicationservice.CommonServiceResponse;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.ProductOfferingListModel;
 import com.ericsson.modernization.services.productcatalog.model.ProductOffering;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class ProductOfferingRestController {
     }
 
     @RequestMapping(value = "/getallofferings", method = RequestMethod.GET)
-    public ResponseEntity<List<ProductOffering>> getAllOfferings() {
+    public ResponseEntity<List<ProductOfferingListModel>> getAllOfferings() {
         return new ResponseEntity<>(productOfferingAppService.findAll(), HttpStatus.OK);
     }
 

@@ -21,9 +21,7 @@ public class ProductSpecCharacteristic extends EntityBase
     @Embedded
     private TimePeriod validFor;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "productSpecCharacteristic")
+    @OneToMany(mappedBy = "productSpecCharacteristic")
     private List<ProductSpecCharacteristicValue> productSpecCharacteristicValues;
 
     private Boolean isReplicated;

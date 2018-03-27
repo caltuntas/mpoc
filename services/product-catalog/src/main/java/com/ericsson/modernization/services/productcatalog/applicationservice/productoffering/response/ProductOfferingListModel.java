@@ -1,48 +1,51 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
-public class ProductOfferingListResponse {
+public class ProductOfferingListModel {
     private int id;
     private String name;
     private Date validForStartDate;
     private Date validForEndDate;
     private String description;
-    private String externalId;
     private long warrantyPeriodValue;
     private int warrantyPeriodUnit;
     private long returnPeriodValue;
     private int returnPeriodUnit;
-    private Boolean isReplicated;
-    private Boolean isSellable;
+    private Boolean isReplicated = false;
+    private Boolean isSellable = false;
+    private String productSpesificationCode;
+    private String catalogCode;
 
-    public ProductOfferingListResponse() {
-    }
-
-    public ProductOfferingListResponse(
+    public ProductOfferingListModel(
             int id,
             String name,
-            Date validForStartDate,
-            Date validForEndDate,
             String description,
-            String externalId,
+            String productSpesificationCode,
+            String catalogCode,
+            Boolean isReplicated,
+            Boolean isSellable,
+            @JsonFormat(pattern="yyyy-MM-dd")
+            Date validForStartDate,
+            @JsonFormat(pattern="yyyy-MM-dd")
+            Date validForEndDate,
             long warrantyPeriodValue,
             int warrantyPeriodUnit,
             long returnPeriodValue,
-            int returnPeriodUnit,
-            Boolean isReplicated,
-            Boolean isSellable) {
-
+            int returnPeriodUnit) {
         setId(id);
         setName(name);
         setDescription(description);
-        setExternalId(externalId);
+        setProductSpesificationCode(productSpesificationCode);
+        setCatalogCode(catalogCode);
         setReplicated(isReplicated);
-        setReturnPeriodUnit(returnPeriodUnit);
-        setReturnPeriodValue(returnPeriodValue);
-        setSellable(isSellable);
-        setValidForEndDate(validForEndDate);
+        setIsSellable(isSellable);
         setValidForStartDate(validForStartDate);
+        setValidForEndDate(validForEndDate);
+        setReturnPeriodValue(returnPeriodValue);
+        setReturnPeriodUnit(returnPeriodUnit);
         setWarrantyPeriodUnit(warrantyPeriodUnit);
         setWarrantyPeriodValue(warrantyPeriodValue);
     }
@@ -77,14 +80,6 @@ public class ProductOfferingListResponse {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getExternalId() {
-        return externalId;
-    }
-
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
     }
 
     public long getWarrantyPeriodValue() {
@@ -127,11 +122,11 @@ public class ProductOfferingListResponse {
         isReplicated = replicated;
     }
 
-    public Boolean getSellable() {
+    public Boolean getIsSellable() {
         return isSellable;
     }
 
-    public void setSellable(Boolean sellable) {
+    public void setIsSellable(Boolean sellable) {
         isSellable = sellable;
     }
 
@@ -141,6 +136,22 @@ public class ProductOfferingListResponse {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getProductSpesificationCode() {
+        return productSpesificationCode;
+    }
+
+    public void setProductSpesificationCode(String productSpesificationCode) {
+        this.productSpesificationCode = productSpesificationCode;
+    }
+
+    public String getCatalogCode() {
+        return catalogCode;
+    }
+
+    public void setCatalogCode(String catalogCode) {
+        this.catalogCode = catalogCode;
     }
 }
 
