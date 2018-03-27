@@ -43,7 +43,8 @@ export class CharacteristicListComponent implements OnInit {
                                 <li><a class='sa-datatables-delete' characteristic-id='${fullRow.id}'>Delete</a></li>
                             </ul>
                         </div>`;
-            }
+            },
+            'orderable': false
         }]
   };
 
