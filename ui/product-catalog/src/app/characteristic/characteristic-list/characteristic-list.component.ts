@@ -21,15 +21,18 @@ export class CharacteristicListComponent implements OnInit {
       this.characteristicListService.getAllCharacteristics()
           //.catch(this.handleError)
           .subscribe((data) => {
+              console.log("deneme",data);
               callback({
                   aaData: data
-              })
+              });
           })
     },
     columns: [
         {"data": "id"},
         {"data": "name"},
         {"data": "description"},
+        {"data": "validFor.validForStartDate"},
+        {"data": "validFor.validForEndDate"},
         {
             render: (data, type, fullRow, meta) => {
                 return `
