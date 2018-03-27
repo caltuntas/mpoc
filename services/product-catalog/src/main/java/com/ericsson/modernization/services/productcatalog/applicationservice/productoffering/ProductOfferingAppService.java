@@ -45,7 +45,7 @@ public class ProductOfferingAppService {
         validFor.setValidForStartDate(productOfferingCreateRequest.getValidForStartDate());
         productOffering.setValidFor(validFor);
 
-        //ProductSpecification specification = productSpecificationAppService.
+        //productspecification specification = productSpecificationAppService.
 
 
         //productOffering.setProductSpecification(productSpecification);
