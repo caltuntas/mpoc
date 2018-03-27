@@ -43,7 +43,7 @@
                     </div>
                   </div>
                 </fieldset>
-
+<!-- 
                 <fieldset>
                   <div class="form-group" [class.has-error]="statusControl.invalid && statusControl.touched ">
                     <label class="col-xs-2 col-lg-3 control-label">Status</label>
@@ -55,9 +55,9 @@
                       <small *ngIf="statusControl.invalid && statusControl.touched " class="help-block">Status is required</small>
                     </div>
                   </div>
-                </fieldset>
+                </fieldset> -->
 
-                <fieldset>
+                <!-- <fieldset>
                   <div class="form-group" [class.has-error]="productTypeControl.invalid && productTypeControl.touched ">
                     <label class="col-xs-2 col-lg-3 control-label">Product Type</label>
                     <div class="col-xs-9 col-lg-6 ">
@@ -68,9 +68,7 @@
                       <small *ngIf="productTypeControl.invalid && productTypeControl.touched " class="help-block">Product Type is required</small>
                     </div>
                   </div>
-                </fieldset>
-
-
+                </fieldset> -->
 
                 <fieldset>
                   <div class="form-group">
@@ -78,7 +76,7 @@
                     <div class="col-xs-9 col-lg-6 ">
                       <select id="chars" class="form-control" name="chars" (change)="selectCharUse($event)">
                         <option value="">Choose</option>
-                        <option *ngFor="let charuse of filterNonSelectedChars(productSpec.productSpecCharUses )" value="{{charuse.id}}">{{charuse.name}}</option>
+                        <option *ngFor="let characteristic of filterNonSelectedChars(characteristics)" value="{{characteristic.id}}">{{characteristic.name}}</option>
                       </select>
                     </div>
                     <button class="btn btn-success" (click)="addCharUse()"> <i class="glyphicon glyphicon-plus"></i></button>
@@ -88,20 +86,20 @@
 
                 <fieldset>
 
-                  <div *ngFor="let charuse of productSpec.productSpecCharUses ; index as i">
-                    <legend *ngIf="charuse.isSelected"></legend>
-                    <div class="form-group" *ngIf="charuse.isSelected">
+                  <div *ngFor="let characteristic of characteristics ; index as i">
+                    <legend *ngIf="characteristic.isSelected"></legend>
+                    <div class="form-group" *ngIf="characteristic.isSelected">
                       <label class="col-xs-2 col-lg-3 control-label">Selected Characteristic</label>
-                      <label class="col-xs-9 col-lg-6"><b> {{charuse.name}}</b></label>
+                      <label class="col-xs-9 col-lg-6"><b> {{characteristic.name}}</b></label>
                       <button class="btn btn-danger" (click)="removeCharUse(i)"><i class="glyphicon glyphicon-minus"></i></button>
                     </div>
 
-                    <div class="form-group" *ngIf="charuse.isSelected">
-                      <label class="col-xs-2 col-lg-3 control-label">{{charuse.name}} Characteristic Values</label>
+                    <div class="form-group" *ngIf="characteristic.isSelected">
+                      <label class="col-xs-2 col-lg-3 control-label">{{characteristic.name}} Values</label>
                       <div class="col-xs-9 col-lg-6">
-                        <label class="checkbox-inline" *ngFor="let item of charuse.values ">
+                        <label class="checkbox-inline" *ngFor="let charValue of characteristic.values ">
 
-                          <input class="checkbox" type="checkbox" class="item" value="item.key" (change)="check(attr, item.key, $event)" /> {{item.name}}
+                          <input class="checkbox" type="checkbox" class="item" value="item.key" (change)="check(characteristic, charValue, $event)" /> {{charValue.name}}
 
                         </label>
 
@@ -113,6 +111,7 @@
                   </div>
 
                 </fieldset>
+                
                 <fieldset>
                   <div *ngFor="let charuse of productSpec.productSpecCharUses">
 

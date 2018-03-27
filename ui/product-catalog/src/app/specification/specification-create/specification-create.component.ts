@@ -2,51 +2,80 @@ import { Component, OnInit } from "@angular/core";
 import { productSpecificationCreateModel } from "../model/productSpecificationCreateModel";
 import { idNameModel } from "../model/idNameModel";
 import { productSpecCharUseModel } from "../model/productSpecCharUseModel";
+import { productSpecCharModel } from "../model/productSpecCharModel";
+import { productSpecCharValueModel } from "../model/productSpecCharValueModel";
+import { specificationService } from "../specification.service";
 
 @Component({
   selector: "app-specification-create",
   templateUrl: "./specification-create.component.html"
 })
 export class SpecificationCreateComponent implements OnInit {
+  
+  
+
+  constructor(private service: specificationService) {
+
+  }
+
   selectedCharUse: number = 0;
   productSpec: productSpecificationCreateModel;
-  constructor() {
-    this.productSpec = new productSpecificationCreateModel();
-    this.productSpec.statusList.push(new idNameModel(1, "spec -1"));
-  }
+  characteristics: Array<productSpecCharModel>;
 
   ngOnInit() {
-
-    this.productSpec.productSpecCharUses.filter(x=>x.isSelected==true).slice();
+    this.service.getCharacteristics().subscribe((data) => {
+      this.characteristics=<Array<productSpecCharModel>>data;
+    });
+    this.characteristics.filter(x => x.isSelected == true).slice();
+   
+   
   }
 
-  submitted = false;
-
-  onSubmit() {
-    this.submitted = true;
-    console.log("submitted");
-  }
-  filterNonSelectedChars(cars:Array<productSpecCharUseModel>) {
-    return cars.filter(x=>x.isSelected!=true);
+  filterNonSelectedChars(cars: Array<productSpecCharModel>) {
+    return cars.filter(x => x.isSelected != true);
   }
   removeCharUse(i: number) {
-    let charUse = this.productSpec.productSpecCharUses[i];
-    charUse.isSelected = false;
+    let characteristic = this.characteristics[i];
+    characteristic.isSelected = false;
+    this.productSpec.productSpecCharUses
+      .filter(x => x.id == characteristic.id)
+      .slice();
   }
 
   selectCharUse($event) {
     this.selectedCharUse = $event.target.value;
-    console.log($event.target.value);
   }
 
   addCharUse() {
     if (this.selectedCharUse != 0) {
-      let charUse = this.productSpec.productSpecCharUses.find(x => x.id == this.selectedCharUse);
+      let charUse = this.characteristics.find(
+        x => x.id == this.selectedCharUse
+      );
       charUse.isSelected = true;
+      this.productSpec.productSpecCharUses.push(
+        new productSpecCharUseModel(charUse.id)
+      );
+    }
+  }
+  check(characteristic:productSpecCharModel, value: productSpecCharValueModel, $event){
+    if($event.target.checked){
+
+      characteristic.values.find(x=>x.id==value.id).isSelected=true;
+      this.productSpec.productSpecCharUses.find(
+        x => x.id == characteristic.id
+      ).values.push(value.id);
+      
+      
+    }else{
+    
+      characteristic.values.find(x=>x.id==value.id).isSelected=false;
+      this.productSpec.productSpecCharUses.find(
+        x => x.id == characteristic.id
+      ).values.filter(x=>value.id).slice();
     }
   }
 
-  save(productSpec:productSpecificationCreateModel){
-console.log(productSpec);
+  save(productSpec: productSpecificationCreateModel) {
+    console.log(productSpec);
   }
 }

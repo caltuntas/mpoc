@@ -25,8 +25,8 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     private String externalId;
     @ManyToOne
     private ProductSpecification productSpecification;
-    @ManyToOne
-    private ProductOfferingTerm productOfferingTerm;
+    //@ManyToOne
+    //private ProductOfferingTerm productOfferingTerm;
 
     @ManyToOne
     private Catalog catalog;
