@@ -21,7 +21,7 @@ export class CharacteristicListComponent implements OnInit {
       this.characteristicListService.getAllCharacteristics()
           //.catch(this.handleError)
           .subscribe((data) => {
-              console.log("deneme",data);
+              //console.log("deneme",data);
               callback({
                   aaData: data
               });
@@ -74,12 +74,12 @@ export class CharacteristicListComponent implements OnInit {
 
 
     onEditCharacteristic(characteristicId) {
-        console.log("Edit characteristic:", characteristicId);
+        //console.log("Edit characteristic:", characteristicId);
         this.router.navigate(['/characteristic/characteristic-edit/' + characteristicId]);
     }
 
     onDeleteCharacteristic(characteristicId) {
-        console.log("Delete characteristic", characteristicId, "?");
+        //console.log("Delete characteristic", characteristicId, "?");
         this.characteristicListService.deleteCharacteristic(characteristicId).subscribe((data) => {
             this.reloadOfferingListTable();
         });

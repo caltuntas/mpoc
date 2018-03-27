@@ -7,4 +7,5 @@ export class CharacteristicCreateModel {
     public valueType: number;
     public validForStartDate: string;
     public validForEndDate: string;
+    public charValueString: string;
 }
