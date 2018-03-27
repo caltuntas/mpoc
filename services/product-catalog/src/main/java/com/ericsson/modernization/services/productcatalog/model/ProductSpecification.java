@@ -37,9 +37,7 @@ public class ProductSpecification extends EntityBase
     private Duration returnPeriod;
     private String externalId;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "productSpecification")
+    @OneToMany(mappedBy = "productSpecification")
     private List<ProductSpecCharUse> productSpecCharUses;
     private String article;
     private Boolean isReplicated;

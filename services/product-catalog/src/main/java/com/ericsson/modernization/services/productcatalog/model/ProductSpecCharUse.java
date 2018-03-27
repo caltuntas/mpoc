@@ -33,9 +33,7 @@ public ProductSpecCharUse()
     private ProductSpecCharacteristic productSpecCharacteristic;
     @ManyToOne
     private ProductSpecification productSpecification;
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "productSpecCharUse")
+    @OneToMany(mappedBy = "productSpecCharUse")
     private List<ProdSpecCharValueUse> productSpecCharValueUses;
     @Embedded
     private TimePeriod validFor;
