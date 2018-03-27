@@ -13,6 +13,7 @@ public class ProductOfferingCreateRequest {
     private String description;
     private String externalId;
     private int productSpecificationId;
+    private int catalogId;
     private Boolean isReplicated;
     private Boolean isSellable;
 
@@ -110,5 +111,13 @@ public class ProductOfferingCreateRequest {
 
     public void setProductSpecificationId(int productSpecificationId) {
         this.productSpecificationId = productSpecificationId;
+    }
+
+    public int getCatalogId() {
+        return catalogId;
+    }
+
+    public void setCatalogId(int catalogId) {
+        this.catalogId = catalogId;
     }
 }

@@ -1,11 +1,9 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering;
 
+import com.ericsson.modernization.services.productcatalog.applicationservice.catalog.CatalogAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCreateRequest;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.ProductSpecificationAppService;
-import com.ericsson.modernization.services.productcatalog.model.Duration;
-import com.ericsson.modernization.services.productcatalog.model.ProductOffering;
-import com.ericsson.modernization.services.productcatalog.model.ProductSpecification;
-import com.ericsson.modernization.services.productcatalog.model.TimePeriod;
+import com.ericsson.modernization.services.productcatalog.model.*;
 import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +19,8 @@ public class ProductOfferingAppService {
     private ProductOfferingRepository productOfferingRepository;
     @Autowired
     private ProductSpecificationAppService productSpecificationAppService;
+    @Autowired
+    private CatalogAppService catalogAppService;
 
     public ProductOffering create(ProductOfferingCreateRequest createRequest){
 
@@ -48,6 +48,9 @@ public class ProductOfferingAppService {
 
         ProductSpecification specification = productSpecificationAppService.findById(createRequest.getProductSpecificationId());
         productOffering.setProductSpecification(specification);
+
+        Catalog catalog = catalogAppService.findById(createRequest.getCatalogId());
+        productOffering.setCatalog(catalog);
 
         return productOfferingRepository.save(productOffering);
     }
