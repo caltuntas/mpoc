@@ -19,7 +19,7 @@ export class AuthService {
   constructor(public router: Router, private http: HttpClientProvider) {  }
 
   login(model) {
-    this.http.post(`/systemuser/login`, model).subscribe((user)=>{
+    this.http.post(`/auth/login`, model).subscribe((user)=>{
       if (user) {
         this.user = user;
         this.isLoggedIn = true;
