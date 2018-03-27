@@ -26,6 +26,10 @@ public class ProductSpecCharacteristic extends EntityBase
             mappedBy = "productSpecCharacteristic")
     private List<ProductSpecCharacteristicValue> productSpecCharacteristicValues;
 
+    public void addValue(ProductSpecCharacteristicValue productSpecCharacteristicValue){
+        this.productSpecCharacteristicValues.add(productSpecCharacteristicValue);
+    }
+
     private Boolean isReplicated;
 
     private long versionNumber;

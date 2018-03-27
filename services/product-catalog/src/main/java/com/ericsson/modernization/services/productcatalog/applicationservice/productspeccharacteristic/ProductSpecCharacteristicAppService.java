@@ -2,11 +2,14 @@ package com.ericsson.modernization.services.productcatalog.applicationservice.pr
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.request.ProductSpecCharacteristicCreateRequest;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharacteristic;
+import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharacteristicValue;
 import com.ericsson.modernization.services.productcatalog.model.TimePeriod;
 import com.ericsson.modernization.services.productcatalog.repository.ProductSpecCharacteristicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -14,6 +17,7 @@ public class ProductSpecCharacteristicAppService {
 
     @Autowired
     private ProductSpecCharacteristicRepository productSpecCharacteristicRepository;
+    private ProductSpecCharacteristicValue productSpecCharacteristicValue;
 
     public ProductSpecCharacteristic create(ProductSpecCharacteristicCreateRequest productSpecCharacteristicCreateRequest) {
         ProductSpecCharacteristic productSpecCharacteristic = new ProductSpecCharacteristic();
@@ -25,6 +29,16 @@ public class ProductSpecCharacteristicAppService {
         validFor.setValidForStartDate(productSpecCharacteristicCreateRequest.getValidForStartDate());
         validFor.setValidForEndDate(productSpecCharacteristicCreateRequest.getValidForEndDate());
         productSpecCharacteristic.setValidFor(validFor);
+
+        List<String> items = Arrays.asList(productSpecCharacteristicCreateRequest.getCharValueString().split("\\s*,\\s*"));
+        ArrayList<ProductSpecCharacteristicValue> pscvList = new ArrayList<ProductSpecCharacteristicValue>();
+
+        for (String item : items) {
+            ProductSpecCharacteristicValue pscv = new ProductSpecCharacteristicValue();
+            pscv.setValue(item);
+            pscv.setProductSpecCharacteristic(productSpecCharacteristic);
+            productSpecCharacteristic.addValue(pscv);
+        }
 
         return productSpecCharacteristicRepository.save(productSpecCharacteristic);
     }

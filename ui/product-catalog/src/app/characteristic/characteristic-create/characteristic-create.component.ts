@@ -35,10 +35,10 @@ export class CharacteristicCreateComponent implements OnInit {
     }
 
     public onSubmit() {
+        this.model.charValueString = jQuery('#charValueString').val();
         this.characteristicService.createCharacteristic(this.model).subscribe(data => {
+            console.log("deneme",this.model);
             this.router.navigate(['/characteristic/characteristic-list']);
-            this.model.charValueString = jQuery('#charValueString').val();
-            //console.log("deneme",this.model);
         });
     }
 }

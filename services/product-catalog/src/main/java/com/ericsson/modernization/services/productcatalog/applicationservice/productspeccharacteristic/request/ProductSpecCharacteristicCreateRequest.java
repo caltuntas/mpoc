@@ -9,6 +9,16 @@ public class ProductSpecCharacteristicCreateRequest {
     private int valueType;
     private String description;
     private String externalId;
+    private String charValueString;
+
+
+    public String getCharValueString() {
+        return charValueString;
+    }
+
+    public void setCharValueString(String charValueString) {
+        this.charValueString = charValueString;
+    }
 
     public String getName() {
         return name;
