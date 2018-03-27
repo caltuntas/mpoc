@@ -68,4 +68,8 @@ public class ProductSpecificationAppService {
         )).collect(Collectors.toList());
     }
 
+    public ProductSpecification findById(int id){
+        return productSpecificationRepository.findByIdAndIsDeletedIsFalse(id);
+    }
+
 }
