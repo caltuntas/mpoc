@@ -16,31 +16,31 @@ import java.util.List;
 //https://blog.mwaysolutions.com/2014/06/05/10-best-practices-for-better-restful-api/
 public class CategoryRestController {
 	@Autowired
-	private CategoryAppService categoryAppService;
+	private CategoryAppService appService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> getAll() {
-		List<Category> categories = categoryAppService.findAll();
+		List<Category> categories = appService.findAll();
 		return new ResponseEntity<>(categories, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<String> createCategory(@RequestBody CategoryCreateRequest createRequest) {
-		Category category = categoryAppService.create(createRequest);
+	public ResponseEntity<String> createCategory(@RequestBody CategoryCreateRequest request) {
+		Category category = appService.create(request);
 		String message = "A category with id : " + category.getId() + " is created";
-		return new ResponseEntity<>(message, HttpStatus.OK);
+		return new ResponseEntity<>(message, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateCategory(@PathVariable int id, @RequestBody CategoryCreateRequest request) {
-		//categoryAppService.update(id);
+		//appService.update(id);
 		String message = "The category with id : " + id + " is updated.";
-		return new ResponseEntity<>(message, HttpStatus.OK);
+		return new ResponseEntity<>(message, HttpStatus.NO_CONTENT);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteCategory(@PathVariable int id) {
-		categoryAppService.delete(id);
+		appService.delete(id);
 		String message = "The category with id : " + id + " is deleted.";
 		return new ResponseEntity<>(message, HttpStatus.OK);
 	}
