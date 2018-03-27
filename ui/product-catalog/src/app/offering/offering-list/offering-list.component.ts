@@ -32,8 +32,18 @@ export class OfferingListComponent implements OnInit {
             {"data": "id"},
             {"data": "name"},
             {"data": "description"},
-            {"data": "validFor.validForEndDate"},
+            {"data": "validFor.validForEndDate",
+                "render": function (data, type, full, meta) {
+                    return data == null ? "" : data;
+                }
+            },
             {"data": "isSellable"},
+            {
+                "data": "productSpecification.name",
+                "render": function (data, type, full, meta) {
+                    return data == null ? "" : data;
+                }
+            },
             {
                 render: (data, type, fullRow, meta) => {
                     return `
