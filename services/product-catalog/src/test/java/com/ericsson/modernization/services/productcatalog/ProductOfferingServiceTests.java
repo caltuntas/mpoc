@@ -1,7 +1,7 @@
 package com.ericsson.modernization.services.productcatalog;
 
-import com.ericsson.modernization.services.productcatalog.applicationservice.ProductOffering.Request.ProductOfferingCreateRequest;
-import com.ericsson.modernization.services.productcatalog.applicationservice.ProductOffering.ProductOfferingAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCreateRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.ProductOfferingAppService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
