@@ -81,8 +81,8 @@
                       <label class="col-lg-3 control-label"> Characteristic Values</label>
                       <div class="col-lg-6">
   
-                        <label>Type and enter to add tag</label>
-                        <input smartTags class="form-control tagsinput" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput">
+                        <label>Type and enter to add characteristic value</label>
+                        <input smartTags class="form-control tagsinput" value="ADSL, StatikIP" data-role="tagsinput">
   
                       </div>
                     </div>
@@ -102,58 +102,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </sa-widgets-grid>
-
-  <sa-widgets-grid>
-    <div class="row">
-      <div class="col-sm-12">
-        <div sa-widget [colorbutton]="false" [editbutton]="false" [deletebutton]="false" [sortable]="false" color="vdf">
-
-          <header>
-            <h2>Characteristic Value Form</h2>
-          </header>
-
-          <div>
-
-            <div class="widget-body">
-
-              <form id="productForm" (ngSubmit)="onSubmit()" novalidate="novalidate" [saBootstrapValidator]="validatorOptions" class="form-horizontal">
-
-
-                <fieldset>
-                  <div class="form-group">
-                    <label class="col-lg-3 control-label"> Characteristic Values</label>
-                    <div class="col-lg-5">
-
-                      <label>Type and enter to add tag</label>
-                      <input smartTags class="form-control tagsinput" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput">
-
-                    </div>
-                  </div>
-                </fieldset>
-
-
-                <div class="form-actions">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <button class="btn btn-default" type="submit">
-                        <i class="fa fa-eye"></i>
-                        Validate
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
     </div>
   </sa-widgets-grid>
 
