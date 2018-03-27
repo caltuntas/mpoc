@@ -3,6 +3,7 @@ import {SalesChannelService} from './sales-channel.service'
 import {Observable} from "rxjs/Observable";
 import {SalesChannel} from "./detail/sales-channel"
 import {NavigationExtras, Router, Routes} from "@angular/router";
+import {NotificationComponent} from "../shared/utils/NotificationComponent";
 
 @Component({
   selector: 'app-salesChannel',
@@ -29,6 +30,7 @@ export class SalesChannelComponent implements OnInit {
                       { "data": "code" },
                       { "data": "name" },
                      { 
+                      "className": "centerCell",
                        "orderable":false,
                        "render": (data, type, fullRow, meta) => {
                          return `
@@ -44,7 +46,7 @@ export class SalesChannelComponent implements OnInit {
                 "order": [[1, 'asc']]
   }
   
-  constructor(private router: Router,private scService: SalesChannelService) { }
+  constructor(private router: Router,private scService: SalesChannelService,private notificationComponent: NotificationComponent) { }
 
   ngOnInit() {
     //this.getSalesChannels();
@@ -70,38 +72,36 @@ export class SalesChannelComponent implements OnInit {
   onEditSalesCh(scid) {
         console.log("edit sales ch:", scid);
 
-        let navigationExtras: NavigationExtras = {
-            queryParams: {
-                "offeringId": scid
-            }
-        };
+//        let navigationExtras: NavigationExtras = {
+//            queryParams: {
+//                "offeringId": scid
+//            }
+//        };
 
         this.router.navigate(['/sales-channel/detail/' + scid]);
     }
 
     onDeleteSalesCh(scid) {
         console.log("Delete salesch", scid, "?");
+      
         this.scService.deleteSalesChannel(scid).subscribe((data) => {
-            window.location.reload();
+          
+          this.notificationComponent.showNotification("Delete","Deleted successfully");
+          
+            this.reloadPage();
         });
     }
   
   
-//  public options = {
-//    //"ajax": {"url": 'http://localhost:8080/saleschannel/getallsaleschannels', "dataSrc": "tableData"},//'/assets/api/tables/salechannels.json',
-//    "data" : this.scs,
-//    "iDisplayLength": 15,
-//    "columns": [
-//     { "data": "id" },
-//      { "data": "code" },
-//      { "data": "description" },
-//      {"orderable":false,
-//        "render": function (data, type, full, meta) {return " <a routerlink='/detail/"+full.id+"' href='#/sales-channel/detail/"+full.id+"' class='btn btn-primary'><i class='fa fa-edit'></i> </a><a (click)='(null)' class='btn btn-danger'><i class='fa fa-remove'></i> </a>";}
-//        }
-// 
-//    ],
-//    "order": [[1, 'asc']]
-//  }
+  reloadPage() {
+        this.router.routeReuseStrategy.shouldReuseRoute = function(){return false;};
+        let currentUrl = this.router.url + '?';
+        this.router.navigateByUrl(currentUrl)
+            .then(() => {
+                this.router.navigated = false;
+                this.router.navigate([this.router.url]);
+            });
+    }
 
   public lastColumn(d) {
 

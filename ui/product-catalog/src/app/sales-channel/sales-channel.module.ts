@@ -5,7 +5,7 @@ import {salesChannelRouting} from './sales-channel.routing';
 import {SalesChannelComponent} from "./sales-channel.component";
 import {SalesChannelDetailComponent} from "./detail/sales-channeldetail.component";
 import {SalesChannelService} from "./sales-channel.service";
-
+import {NotificationComponent} from "../shared/utils/NotificationComponent";
 
 // Theme modules
 import { SmartadminModule } from "../shared/smartadmin.module";
@@ -25,6 +25,6 @@ import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.mo
     FormsModule
   ],
   declarations: [SalesChannelComponent,SalesChannelDetailComponent],
-  providers: [SalesChannelService]
+  providers: [SalesChannelService,NotificationComponent]
 })
 export class SalesChannelModule { }  
