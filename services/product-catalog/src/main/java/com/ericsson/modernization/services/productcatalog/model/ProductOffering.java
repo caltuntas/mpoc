@@ -26,6 +26,9 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     @ManyToOne
     private ProductSpecification productSpecification;
     @ManyToOne
+    private ProductOfferingTerm productOfferingTerm;
+
+    @ManyToOne
     private Catalog catalog;
     @AttributeOverrides({
             @AttributeOverride(name = "periodValue", column = @Column(name = "warrantyPeriodValue")),
