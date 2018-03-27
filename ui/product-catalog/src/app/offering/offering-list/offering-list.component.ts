@@ -32,7 +32,8 @@ export class OfferingListComponent implements OnInit {
             {"data": "id"},
             {"data": "name"},
             {"data": "description"},
-            {"data": "validFor.validForEndDate",
+            {
+                "data": "validFor.validForEndDate",
                 "render": function (data, type, full, meta) {
                     return data == null ? "" : data;
                 }
@@ -45,13 +46,29 @@ export class OfferingListComponent implements OnInit {
                 }
             },
             {
+                "data": "catalog.name",
+                "render": function (data, type, full, meta) {
+                    return data == null ? "" : data;
+                }
+            },
+            {
                 render: (data, type, fullRow, meta) => {
                     return `
                         <div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                             <i class='fa fa-gear fa-lg'></i></button>
                             <ul class='dropdown-menu  ng-star-inserted'>                                
-                                <li><a class='sa-datatables-edit' offering-id='${fullRow.id}'>Edit</a></li>
-                                <li><a class='sa-datatables-delete' offering-id='${fullRow.id}'>Delete</a></li>
+                                <li>
+                                    <a class='sa-datatables-edit' offering-id='${fullRow.id}'>
+                                        <i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs" style="color:cornflowerblue"></i>
+                                            Edit
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class='sa-datatables-delete' offering-id='${fullRow.id}'>
+                                        <i class="fa fa-fw fa-ban text-muted hidden-md hidden-sm hidden-xs" style="color:red"></i>
+                                            Delete
+                                    </a>
+                                </li>
                             </ul>
                         </div>`;
                 }

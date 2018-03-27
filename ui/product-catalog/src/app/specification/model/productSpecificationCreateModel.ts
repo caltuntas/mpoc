@@ -4,7 +4,7 @@ import { productSpecCharUseModel } from "./productSpecCharUseModel";
 
 export class productSpecificationCreateModel {
  constructor(){
-   this.productSpecCharUses=new  Array<productSpecCharUseModel>();
+   this.selectedCharacteristics=new  Array<productSpecCharUseModel>();
  }
  
    name: string;
@@ -15,6 +15,6 @@ export class productSpecificationCreateModel {
   // public productType: number;
   // public productTypeList: Array<idNameModel>;
   //public isReplicated: boolean;
-   productSpecCharUses: Array<productSpecCharUseModel>;
+  selectedCharacteristics: Array<productSpecCharUseModel>;
    
 }

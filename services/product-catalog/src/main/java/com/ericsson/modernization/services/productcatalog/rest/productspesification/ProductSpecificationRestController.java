@@ -6,6 +6,7 @@ import com.ericsson.modernization.services.productcatalog.applicationservice.pro
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.ProductSpecificationAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.request.ProductSpecificationCreateRequest;
 
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProductSpecListModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +30,12 @@ public class ProductSpecificationRestController {
     }
 
     @RequestMapping(value = "/getCharacteristics", method = RequestMethod.GET)
-    public List<ProdSpecCharListResponse> createOffering() {
+    public List<ProdSpecCharListResponse> getCharacteristics() {
        return productSpecificationAppService.getCharacteristics();
 
     }
-    //@RequestMapping(value = "/getallofferings", method = RequestMethod.GET)
-    //public ResponseEntity<List<productoffering>> getAllOfferings(){
-      //  return new ResponseEntity<List<productoffering>>( productOfferingAppService.findAll(), HttpStatus.OK);
-    //}
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    public ResponseEntity<List<ProductSpecListModel>> getAllOfferings(){
+        return new ResponseEntity<List<ProductSpecListModel>>( productSpecificationAppService.getSpecs(), HttpStatus.OK);
+    }
 }

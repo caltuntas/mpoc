@@ -108,6 +108,26 @@
                                     </div>
                                 </fieldset>
 
+                                <fieldset>
+                                    <div class="form-group"
+                                         [class.has-error]="selectCatalogControl.invalid && selectCatalogControl.submitted ">
+                                        <label class="col-xs-2 col-lg-3 control-label">Catalog</label>
+                                        <div class="col-xs-9 col-lg-6">
+                                            <select select2 class="select2 form-control" id="catalogs"
+                                                    name="catalogs"
+                                                    required [(ngModel)]="model.catalogId"
+                                                    (change)="onChange($event)" #selectCatalogControl="ngModel">
+                                                <option *ngFor="let catalog of catalogs" [value]="catalog.id">
+                                                    {{catalog.name}}
+                                                </option>
+                                            </select>
+                                            <small *ngIf="selectCatalogControl.invalid && selectCatalogControl.submitted "
+                                                   class="help-block">Catalog is required
+                                            </small>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
 
                                 <div class="form-actions">
                                     <div class="row">

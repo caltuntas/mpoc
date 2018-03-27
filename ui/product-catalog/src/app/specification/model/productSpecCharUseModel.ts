@@ -2,8 +2,8 @@ export class productSpecCharUseModel{
     constructor(id:number)
     {
         this.id=id;
-        this.values=new Array<number>();
+        this.selectedValueIds=new Array<number>();
     }
     id:number;
-    values:Array<number>;
+    selectedValueIds:Array<number>;
 }

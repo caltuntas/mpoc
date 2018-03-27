@@ -4,13 +4,16 @@ package com.ericsson.modernization.services.productcatalog.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 public class ProductSpecification extends EntityBase
         implements Description, ExternalId, IsReplicated, Versioned {
-
+    public ProductSpecification() {
+        productSpecCharUses = new ArrayList<ProductSpecCharUse>();
+    }
 
     private String name;
     private String code;
@@ -43,9 +46,10 @@ public class ProductSpecification extends EntityBase
 
     private long versionNumber;
 
-    public void addCharUse(ProductSpecCharUse charuse){
+    public void addCharUse(ProductSpecCharUse charuse) {
         this.productSpecCharUses.add(charuse);
     }
+
     public String getName() {
         return name;
     }

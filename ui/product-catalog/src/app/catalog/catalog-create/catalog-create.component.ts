@@ -13,6 +13,11 @@ export class CatalogCreateComponent implements OnInit {
 
     constructor(private router: Router, private catalogService: CatalogService) {
         this.model = new CreateCatalogModel();
+        var currentDate = new Date();
+        var startDate = new Date();
+        var endDate = new Date(currentDate.setMonth(currentDate.getMonth() + 1));
+        this.model.validForStartDate = startDate.toISOString().split("T")[0]; // 2014-05-23
+        this.model.validForEndDate = endDate.toISOString().split("T")[0]; // 2014-05-23
     }
 
     ngOnInit() {

@@ -28,6 +28,7 @@ import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.mo
     SmartadminInputModule,
     FormsModule
 
+
   ],
   declarations: [
     SpecificationListComponent,

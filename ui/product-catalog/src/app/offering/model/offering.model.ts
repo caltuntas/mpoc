@@ -6,5 +6,5 @@ export class Offering {
     public description: string;
     public validForStartDate: string;
     public validForEndDate: string;
-    public spesification : OfferingSpecModel;
+    public spesification: OfferingSpecModel;
 }
