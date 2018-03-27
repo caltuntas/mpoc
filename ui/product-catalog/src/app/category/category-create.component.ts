@@ -13,12 +13,12 @@ export class CategoryCreateComponent implements OnInit {
   id: string;
   gunStart: number;
   gunEnd: number;
-
   parents: Array<OfferingSpecModel> = [
-    { "id": 1, "name": "isortagim", "description": "dede" },
-    { "id": 2, "name": "vodafonenet", "description": "dede" },
-    { "id": 3, "name": "ADSL", "description": "dede" },
+    {"id": "1", "name": "isortagim", "description": "isortagim"},
+    {"id": "2", "name": "vodafonenet", "description": "vodafonenet"},
+    {"id": "3", "name": "ADSL", "description": "ADSL"}
   ];
+
   constructor(private route: ActivatedRoute, private router: Router, private service: CategoryService) {
     this.model = new Category();
     this.model.isRoot = false;
