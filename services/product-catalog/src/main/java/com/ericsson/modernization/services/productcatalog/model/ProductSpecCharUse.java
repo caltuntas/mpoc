@@ -91,6 +91,10 @@ public class ProductSpecCharUse extends EntityBase
         this.productSpecCharValueUses = productSpecCharValueUses;
     }
 
+    public void addProductSpecCharValueUse(ProdSpecCharValueUse productSpecCharValueUse) {
+      this.productSpecCharValueUses.add(productSpecCharValueUse);
+    }
+
     public TimePeriod getValidFor() {
         return validFor;
     }

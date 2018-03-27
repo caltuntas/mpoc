@@ -18,6 +18,8 @@ public class ProductOfferingAppService {
 
     @Autowired
     private ProductOfferingRepository productOfferingRepository;
+    //@Autowired
+    //private ProductSpecificationAppService productSpecificationAppService;
 
     public ProductOffering create(ProductOfferingCreateRequest productOfferingCreateRequest){
 
@@ -43,8 +45,10 @@ public class ProductOfferingAppService {
         validFor.setValidForStartDate(productOfferingCreateRequest.getValidForStartDate());
         productOffering.setValidFor(validFor);
 
-        ProductSpecification productSpecification =  null; //TODO: servisler yazılınca get edilecek
-        productOffering.setProductSpecification(productSpecification);
+        //ProductSpecification specification = productSpecificationAppService.
+
+
+        //productOffering.setProductSpecification(productSpecification);
 
         return productOfferingRepository.save(productOffering);
     }

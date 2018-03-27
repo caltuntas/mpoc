@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {HttpClientProvider} from './shared/httpclientprovider/http-client-provider';
 import {CatalogService} from './catalog/catalog.service';
 import {CharacteristicService} from './characteristic/characteristic.service';
-import {OfferingService} from "./shared/service/offering-service";
+import {OfferingService} from "./offering/offering.service";
 
 
 @Injectable()

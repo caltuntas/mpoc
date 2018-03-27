@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SpecificationService } from '../specification.service';
+import { specificationService } from '../specification.service';
 
 @Component({
   selector: 'app-specification-list',
@@ -8,8 +8,8 @@ import { SpecificationService } from '../specification.service';
 export class SpecificationListComponent implements OnInit {
 
 
-  constructor(service: SpecificationService) {
-    service.getSpecifications();
+  constructor(service: specificationService) {
+   // service.getSpecifications();
   }
 
   ngOnInit() {

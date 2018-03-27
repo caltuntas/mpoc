@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {HttpClientProvider} from "../httpclientprovider/http-client-provider";
-import {Offering} from "../model/offering/offering.model";
+import {Offering} from "./model/offering.model";
+import {HttpClientProvider} from "../shared/httpclientprovider/http-client-provider";
 
 @Injectable()
 export class OfferingService {
