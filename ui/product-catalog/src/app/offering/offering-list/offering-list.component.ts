@@ -1,9 +1,9 @@
 import {ChangeDetectorRef, Component, ComponentFactoryResolver, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {Router} from "@angular/router";
-import {Offering} from "../../shared/model/offering/offering.model";
+import {Offering} from "../model/offering.model";
 import {DatatableComponent} from "../../shared/ui/datatable/datatable.component";
-import {OfferingService} from "../../shared/service/offering-service";
+import {OfferingService} from "../offering.service";
 
 @Component({
     selector: 'app-offering-list',
