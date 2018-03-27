@@ -74,8 +74,10 @@ export class CategoryListComponent implements OnInit {
     onDelete(categoryId) {
         console.log("Delete category", categoryId, "?");
         this.categoryService.delete(categoryId).subscribe((data) => {
-            window.location.reload();
+            window.location.reload();//TODO : Syf burada hata verdiği için aşağıda tekrar yapıyorum.
         });
+        //this.categoryService.delete(categoryId).subscribe();
+        window.location.reload();
     }
 
     constructor(private router: Router, private categoryService: CategoryService) {

@@ -18,6 +18,12 @@ public class CategoryRestController {
 	@Autowired
 	private CategoryAppService categoryAppService;
 
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<Category>> getAll() {
+		List<Category> categories = categoryAppService.findAll();
+		return new ResponseEntity<>(categories, HttpStatus.OK);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> createCategory(@RequestBody CategoryCreateRequest createRequest) {
 		Category category = categoryAppService.create(createRequest);
@@ -25,13 +31,14 @@ public class CategoryRestController {
 		return new ResponseEntity<>(message, HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Category>> getAll() {
-		List<Category> categories = categoryAppService.findAll();
-		return new ResponseEntity<>(categories, HttpStatus.OK);
-	}
-
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<String> updateCategory(@PathVariable int id, @RequestBody CategoryCreateRequest request) {
+		//categoryAppService.update(id);
+		String message = "The category with id : " + id + " is updated.";
+		return new ResponseEntity<>(message, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteCategory(@PathVariable int id) {
 		categoryAppService.delete(id);
 		String message = "The category with id : " + id + " is deleted.";
