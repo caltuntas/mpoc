@@ -12,6 +12,7 @@ export class CategoryCreateComponent implements OnInit {
 
   constructor(private router: Router, private service: CategoryService) {
     this.model = new Category();
+    this.model.isRoot = false;
   }
 
   ngOnInit() {}

@@ -53,9 +53,9 @@
                                 </fieldset>
                                 <fieldset>
                                     <div class="form-group" [class.has-error]="isRootControl.invalid && isRootControl.submitted ">
-                                        <label class="col-xs-2 col-lg-3 control-label">Is Root</label>
+                                        <label class="col-xs-2 col-lg-3 control-label">Is Root?</label>
                                         <div class="col-xs-9 col-lg-6 ">
-                                            <input id="isRoot" type="text" class="form-control" name="isRoot" [(ngModel)]="model.isRoot" #isRootControl="ngModel" />
+                                            <input id="isRoot" type="checkbox" class="form-control" name="isRoot" [(ngModel)]="model.isRoot" #isRootControl="ngModel"/>
                                         </div>
                                     </div>
                                 </fieldset>
