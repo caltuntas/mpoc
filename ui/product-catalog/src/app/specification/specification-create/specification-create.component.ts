@@ -73,7 +73,7 @@ export class SpecificationCreateComponent implements OnInit {
     }
   }
 
-  save(productSpec: productSpecificationCreateModel) {
+  saveForm(productSpec: productSpecificationCreateModel) {
     console.log(productSpec,"dfg");
   //  this.service.createSpec(productSpec);
   }
