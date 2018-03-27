@@ -6,5 +6,5 @@ export class productSpecCharModel {
    name: string;
    valueType: number;
    isSelected:boolean;
-   values: Array<productSpecCharValueModel>;
+   values: productSpecCharValueModel[];
 }

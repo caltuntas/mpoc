@@ -24,7 +24,7 @@ export class CatalogListComponent implements OnInit {
                 .subscribe((data) => {
                     this.catalogs = data;
                     callback({
-                        aaData: data.slice(0, 100)
+                        aaData: data
                     })
                 })
         },

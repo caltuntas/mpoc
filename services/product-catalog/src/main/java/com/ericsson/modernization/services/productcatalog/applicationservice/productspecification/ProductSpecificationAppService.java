@@ -4,6 +4,7 @@ import com.ericsson.modernization.services.productcatalog.applicationservice.pro
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.request.ProductSpecificationValueItemModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProdSpecCharListResponse;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProdSpecCharValueModel;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProductSpecListModel;
 import com.ericsson.modernization.services.productcatalog.model.*;
 import com.ericsson.modernization.services.productcatalog.repository.ProductSpecCharacteristicRepository;
 import com.ericsson.modernization.services.productcatalog.repository.ProductSpecCharacteristicValueRepository;
@@ -60,12 +61,23 @@ public class ProductSpecificationAppService {
     }
 
     public List<ProdSpecCharListResponse> getCharacteristics() {
-        return characteristicRepository.findAllByIsDeletedIsFalse().stream().map(x ->
-                new ProdSpecCharListResponse(x.getId(), x.getName(), x.getValueType(),
-                x.getProductSpecCharacteristicValues().stream().map(
-                        y -> new ProdSpecCharValueModel(y.getId(), y.getValue())).
-                        collect(Collectors.toList())
-        )).collect(Collectors.toList());
+        return characteristicRepository.findAllByIsDeletedIsFalse().stream()
+                .map(x -> new ProdSpecCharListResponse(x.getId(), x.getName(), x.getValueType(), x.getProductSpecCharacteristicValues().stream()
+                        .map(y -> new ProdSpecCharValueModel(y.getId(), y.getValue())).
+                                collect(Collectors.toList())
+                )).collect(Collectors.toList());
     }
 
+
+    public List<ProductSpecListModel> getSpecs() {
+        return productSpecificationRepository.findAll().stream()
+                .map(x -> new ProductSpecListModel(x.getId(), x.getName(), x.getCode(), x.getDescription(), x.getCreateUserDate())).collect(Collectors.toList());
+
+
+    }
+
+    public ProductSpecification findById(int id) {
+        return productSpecificationRepository.findByIdAndIsDeletedIsFalse(id);
+
+    }
 }

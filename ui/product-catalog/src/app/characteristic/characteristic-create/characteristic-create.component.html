@@ -68,7 +68,7 @@
                       <select class="form-control" id="valueType" name="valueType" required [(ngModel)]="model.valueType" (change)="onChange($event)" #valueTypeControl="ngModel">
                         <option value="1">List</option>
                         <option value="2">Integer</option>
-                        <option value="3" selected="selected">String</option>
+                        <option value="3">String</option>
                         <option value="4">DateTime</option>
                         <!-- <option *ngFor="let item of valueTypes" [value]="item"> {{item}}</option> -->
                       </select>
@@ -82,7 +82,7 @@
                       <div class="col-lg-6">
   
                         <label>Type and enter to add characteristic value</label>
-                        <input smartTags class="form-control tagsinput" value="ADSL, StatikIP" data-role="tagsinput">
+                        <input id="charValueString" smartTags class="form-control tagsinput" name="charValueString">
   
                       </div>
                     </div>

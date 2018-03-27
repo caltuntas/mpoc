@@ -25,7 +25,7 @@ public class CategoryRestController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<String> createCategory(@RequestBody CategoryCreateRequest request) {
+	public ResponseEntity<String> create(@RequestBody CategoryCreateRequest request) {
 		Category category = appService.create(request);
 		String message = "A category with id : " + category.getId() + " is created";
 		return new ResponseEntity<>(message, HttpStatus.CREATED);

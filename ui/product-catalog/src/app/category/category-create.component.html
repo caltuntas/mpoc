@@ -44,10 +44,16 @@
                                     </div>
                                 </fieldset>
                                 <fieldset>
-                                    <div class="form-group" [class.has-error]="parentControl.invalid && parentControl.submitted ">
+                                    <div class="form-group" [class.has-error]="parentIdControl.invalid && parentIdControl.submitted ">
                                         <label class="col-xs-2 col-lg-3 control-label">Parent</label>
-                                        <div class="col-xs-9 col-lg-6 ">
-                                            <input id="parent" type="text" class="form-control" name="parent" [(ngModel)]="model.parent" #parentControl="ngModel" />
+                                        <div class="col-xs-9 col-lg-6">
+                                            <select class="form-control" id="parentId" name="parentId" required [(ngModel)]="model.parentId" (change)="onChange($event)" #parentIdControl="ngModel">
+                                                <option>--please select--</option>
+                                                <option *ngFor="let parent of parents" [value]="parent.id">
+                                                    {{parent.name}}
+                                                </option>
+                                            </select>
+                                            <small *ngIf="parentIdControl.invalid && parentIdControl.submitted " class="help-block">Parent is required</small>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -55,7 +61,8 @@
                                     <div class="form-group" [class.has-error]="isRootControl.invalid && isRootControl.submitted ">
                                         <label class="col-xs-2 col-lg-3 control-label">Is Root?</label>
                                         <div class="col-xs-9 col-lg-6 ">
-                                            <input id="isRoot" type="checkbox" class="form-control" name="isRoot" [(ngModel)]="model.isRoot" #isRootControl="ngModel"/>
+                                            <input id="isRoot" type="checkbox" class="form-control" name="isRoot" [(ngModel)]="model.isRoot" #isRootControl="ngModel"
+                                            />
                                         </div>
                                     </div>
                                 </fieldset>
