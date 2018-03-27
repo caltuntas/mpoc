@@ -1,7 +1,7 @@
 package com.ericsson.modernization.services.productcatalog;
 
-        import com.ericsson.modernization.services.productcatalog.applicationservice.Catalog.CatalogAppService;
-        import com.ericsson.modernization.services.productcatalog.applicationservice.Catalog.request.CatalogCreateRequest;
+        import com.ericsson.modernization.services.productcatalog.applicationservice.catalog.CatalogAppService;
+        import com.ericsson.modernization.services.productcatalog.applicationservice.catalog.request.CatalogCreateRequest;
         import org.junit.Test;
         import org.junit.runner.RunWith;
         import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class ProductCatalogServiceApplicationTests {
     @Test
     public void createCatalog() {
         CatalogCreateRequest createRequest = new CatalogCreateRequest();
-        createRequest.setName("HM Catalog Test 1");
+        createRequest.setName("HM catalog Test 1");
         createRequest.setDescription("Test instance record");
         createRequest.setReplicated(false);
 
