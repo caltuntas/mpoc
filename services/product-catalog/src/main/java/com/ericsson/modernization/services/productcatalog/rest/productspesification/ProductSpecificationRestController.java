@@ -1,10 +1,10 @@
 
-package com.ericsson.modernization.services.productcatalog.rest.ProductSpesification;
+package com.ericsson.modernization.services.productcatalog.rest.productspesification;
 
-import com.ericsson.modernization.services.productcatalog.applicationservice.ProductSpecification.Response.ProdSpecCharListResponse;
-import com.ericsson.modernization.services.productcatalog.applicationservice.ProductSpecification.ProductSpecificationAppService;
-import com.ericsson.modernization.services.productcatalog.applicationservice.ProductSpecification.Request.ProductSpecificationCreateRequest;
 
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.ProductSpecificationAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.request.ProductSpecificationCreateRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProdSpecCharListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

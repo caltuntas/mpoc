@@ -1,6 +1,5 @@
-package com.ericsson.modernization.services.productcatalog.applicationservice.ProductSpecification.Request;
+package com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.request;
 
-import com.ericsson.modernization.services.productcatalog.applicationservice.ProductSpecification.Request.ProductSpecificationValueItemModel;
 
 import java.util.List;
 
