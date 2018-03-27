@@ -23,7 +23,7 @@ public class CategoryAppService {
         category.setName(request.getName());
         category.setCode(request.getCode());
         category.setDescription(request.getDescription());
-        category.setParentId(category.getParentId());
+        category.setParentId(request.getParentId());
         category.setIsRoot(request.getIsRoot());
 /*
         TimePeriod validFor = new TimePeriod();
