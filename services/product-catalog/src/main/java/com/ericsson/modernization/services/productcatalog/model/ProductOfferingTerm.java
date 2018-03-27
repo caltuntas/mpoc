@@ -1,5 +1,8 @@
 package com.ericsson.modernization.services.productcatalog.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class ProductOfferingTerm extends EntityBase implements Description, ValidFor {
 
     private int term;

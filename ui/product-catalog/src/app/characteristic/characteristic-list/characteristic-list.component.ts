@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import { CharacteristicService } from '../characteristic.service';
 import {Router, ActivatedRoute} from '@angular/router';
+import {DatatableComponent} from '../../shared/ui/datatable/datatable.component';
 
 
 @Component({
@@ -10,21 +11,28 @@ import {Router, ActivatedRoute} from '@angular/router';
 })
 export class CharacteristicListComponent implements OnInit {
 
+    reRenderTable: boolean;
+
+    @ViewChild(DatatableComponent) characteristicTable: DatatableComponent;
+
   options = {
     dom: "Bfrtip",
     ajax: (data, callback, settings) => {
       this.characteristicListService.getAllCharacteristics()
           //.catch(this.handleError)
           .subscribe((data) => {
+              console.log("deneme",data);
               callback({
                   aaData: data
-              })
+              });
           })
     },
     columns: [
         {"data": "id"},
         {"data": "name"},
         {"data": "description"},
+        {"data": "validFor.validForStartDate"},
+        {"data": "validFor.validForEndDate"},
         {
             render: (data, type, fullRow, meta) => {
                 return `
@@ -62,24 +70,20 @@ export class CharacteristicListComponent implements OnInit {
     onDeleteCharacteristic(characteristicId) {
         console.log("Delete characteristic", characteristicId, "?");
         this.characteristicListService.deleteCharacteristic(characteristicId).subscribe((data) => {
-            this.reloadPage();
+            this.reloadOfferingListTable();
         });
     }
 
-    reloadPage() {
-        this.router.routeReuseStrategy.shouldReuseRoute = function(){return false;};
-        let currentUrl = this.router.url + '?';
-        this.router.navigateByUrl(currentUrl)
-            .then(() => {
-                this.router.navigated = false;
-                this.router.navigate([this.router.url]);
-            });
+    reloadOfferingListTable() {
+        this.reRenderTable = true;
+        this.cdRef.detectChanges();
+        this.reRenderTable = false;
     }
 
   ngOnInit() {
   }
 
-  constructor(private router: Router, private characteristicListService: CharacteristicService) { }
+  constructor(private router: Router, private characteristicListService: CharacteristicService, private cdRef: ChangeDetectorRef) { }
 
   /*private handleError(error: any) {
     let errMsg = (error.message) ? error.message :

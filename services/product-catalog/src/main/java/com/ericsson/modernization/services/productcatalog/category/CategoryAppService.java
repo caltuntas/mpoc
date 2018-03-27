@@ -6,43 +6,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ericsson.modernization.services.productcatalog.category.request.CategoryCreateRequest;
+import com.ericsson.modernization.services.productcatalog.model.Category;
+import com.ericsson.modernization.services.productcatalog.repository.CategoryRepository;
+
 @Transactional
 @Service
 public class CategoryAppService {
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryRepository repository;
 
-    public Category create(CategoryCreateRequest categoryCreateRequest){
+    public Category create(CategoryCreateRequest request){
 
         Category category = new Category();
-        category.setName(categoryCreateRequest.getName());
-        category.setCode(categoryCreateRequest.getCode());
-        category.setDescription(categoryCreateRequest.getDescription());
+        category.setName(request.getName());
+        category.setCode(request.getCode());
+        category.setDescription(request.getDescription());
         category.setParentId(category.getParentId());
-        category.setIsRoot(categoryCreateRequest.getIsRoot());
+        category.setIsRoot(request.getIsRoot());
 /*
         TimePeriod validFor = new TimePeriod();
-        validFor.setValidForEndDate(categoryCreateRequest.getValidForEndDate());
-        validFor.setValidForStartDate(categoryCreateRequest.getValidForStartDate());
+        validFor.setValidForEndDate(request.getValidForEndDate());
+        validFor.setValidForStartDate(request.getValidForStartDate());
         category.setValidFor(validFor);
 */
-        return categoryRepository.save(category);
+        return repository.save(category);
     }
 
-    public void delete(int categoryID){
-        Category category = categoryRepository.findById(categoryID).get();
+    public void delete(int id){
+        Category category = repository.findById(id).get();
         if(category != null){
             category.setDeleted(true);
-            categoryRepository.save(category);
+            repository.save(category);
         }
     }
 
     public Category findById(int id){
-        return categoryRepository.findByIdAndIsDeletedIsFalse(id);
+        return repository.findByIdAndIsDeletedIsFalse(id);
     }
 
     public List<Category> findAll(){
-        return categoryRepository.findAllByIsDeletedIsFalse();
+        return repository.findAllByIsDeletedIsFalse();
     }
 }
