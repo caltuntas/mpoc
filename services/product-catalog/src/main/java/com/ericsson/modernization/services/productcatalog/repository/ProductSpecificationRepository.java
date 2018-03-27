@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ProductSpecificationRepository  extends JpaRepository<ProductOffering, Integer> {
+public interface ProductSpecificationRepository  extends JpaRepository<ProductSpecification, Integer> {
     ProductSpecification findByIdAndIsDeletedIsFalse(int id);
     List<ProductSpecification> findAllByIsDeletedIsFalse();
 }

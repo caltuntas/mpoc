@@ -23,7 +23,6 @@ public class CatalogAppService {
         catalog.setIsReplicated(catalogCreateRequest.getReplicated());
 
 
-
         TimePeriod validFor = new TimePeriod();
         validFor.setValidForEndDate(catalogCreateRequest.getValidForEndDate());
         validFor.setValidForStartDate(catalogCreateRequest.getValidForStartDate());

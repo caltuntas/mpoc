@@ -17,7 +17,7 @@
       <article class="col-sm-12">
 
 
-        <div sa-widget [editbutton]="false" [colorbutton]="false" [deletebutton]="false" color="vdf">
+        <div sa-widget [editbutton]="false" [deletebutton]="false" color="vdf">
           <header>
             <span class="widget-icon">
               <i class="fa fa-table"></i>
@@ -30,12 +30,27 @@
               <sa-datatable [options]="options" paginationLength="true" tableClass="table table-striped table-bordered table-hover" width="100%" *ngIf="!reRenderTable">
                 <thead>
                   <tr>
-                    <th >ID</th>
-                    <th >Name</th>
-                    <th >Description</th>
-                    <th >ValidForStartDate</th>
-                    <th >ValidForEndDate</th>
-                    <th >Action</th>
+                    <th >
+                      <i class="fa fa-fw fa-key text-muted hidden-md hidden-sm hidden-xs"></i>
+                      ID
+                    </th>
+                    <th >
+                      <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>
+                      Name
+                    </th>
+                    <th >
+                      <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>
+                      Description
+                    </th>
+                    <th >
+                      <i class="fa fa-fw fa-calendar-o text-muted hidden-md hidden-sm hidden-xs"></i>
+                      Valid For Start Date
+                    </th>
+                    <th >
+                      <i class="fa fa-fw fa-calendar-o text-muted hidden-md hidden-sm hidden-xs"></i>
+                      Valid For End Date
+                    </th>
+                    <th ></th>
                   </tr>
                 </thead>
                 <!-- <thead class="thead-inverse">
