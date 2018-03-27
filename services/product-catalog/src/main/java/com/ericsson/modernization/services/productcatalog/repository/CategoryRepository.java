@@ -1,7 +1,9 @@
-package com.ericsson.modernization.services.productcatalog.category;
+package com.ericsson.modernization.services.productcatalog.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.ericsson.modernization.services.productcatalog.model.Category;
 
 import java.util.List;
 

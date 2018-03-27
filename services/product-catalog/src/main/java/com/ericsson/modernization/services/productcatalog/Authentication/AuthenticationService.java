@@ -1,4 +1,4 @@
-package com.ericsson.modernization.services.productcatalog.authentication;
+package com.ericsson.modernization.services.productcatalog.Authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-@RequestMapping("/authentication")
+@RequestMapping("/auth")
 public class AuthenticationService {
 	@Autowired
 	private SystemUserAppService userService;

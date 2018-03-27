@@ -1,4 +1,4 @@
-package com.ericsson.modernization.services.productcatalog.authentication;
+package com.ericsson.modernization.services.productcatalog.Authentication;
 
 import java.util.List;
 
@@ -17,16 +17,6 @@ public class SystemUserRestController {
 
 	@Autowired
 	private SystemUserAppService userService;
-
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<SystemUser> login(@RequestBody LoginRequest loginRequest) {
-		SystemUser user = userService.findByUserNameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
-		if (user == null) {
-			return new ResponseEntity<SystemUser>(user, HttpStatus.OK);
-		}
-		user.setPassword(null);
-		return new ResponseEntity<SystemUser>(user, HttpStatus.OK);
-	}
 
 	@RequestMapping()
 	public ResponseEntity<List<SystemUser>> getAllUsers() {

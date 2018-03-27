@@ -1,11 +1,22 @@
-package com.ericsson.modernization.services.productcatalog.category;
+package com.ericsson.modernization.services.productcatalog.model;
 
-public class CategoryCreateRequest {
-    private String code;
-    private String name;
-    private String description;
+import javax.persistence.Entity;
+
+@Entity
+public class Category extends EntityBase {
+	private int id;
+	private String code;
+	private String name;
+	private String description;
 	private int parentId;
 	private Boolean isRoot;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getCode() {
 		return code;
 	}
@@ -36,4 +47,7 @@ public class CategoryCreateRequest {
 	public void setIsRoot(Boolean isRoot) {
 		this.isRoot = isRoot;
 	}
+
+
+
 }

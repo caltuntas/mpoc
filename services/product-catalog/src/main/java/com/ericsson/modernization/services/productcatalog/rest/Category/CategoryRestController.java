@@ -1,9 +1,13 @@
-package com.ericsson.modernization.services.productcatalog.category;
+package com.ericsson.modernization.services.productcatalog.rest.Category;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.ericsson.modernization.services.productcatalog.Category.CategoryAppService;
+import com.ericsson.modernization.services.productcatalog.Category.request.CategoryCreateRequest;
+import com.ericsson.modernization.services.productcatalog.model.Category;
 
 import java.util.List;
 
