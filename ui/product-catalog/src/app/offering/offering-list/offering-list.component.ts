@@ -32,7 +32,8 @@ export class OfferingListComponent implements OnInit {
             {"data": "id"},
             {"data": "name"},
             {"data": "description"},
-            {"data": "validFor.validForEndDate",
+            {
+                "data": "validFor.validForEndDate",
                 "render": function (data, type, full, meta) {
                     return data == null ? "" : data;
                 }
@@ -40,6 +41,12 @@ export class OfferingListComponent implements OnInit {
             {"data": "isSellable"},
             {
                 "data": "productSpecification.name",
+                "render": function (data, type, full, meta) {
+                    return data == null ? "" : data;
+                }
+            },
+            {
+                "data": "catalog.name",
                 "render": function (data, type, full, meta) {
                     return data == null ? "" : data;
                 }
