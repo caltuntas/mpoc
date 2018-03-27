@@ -1,4 +1,4 @@
-package com.ericsson.modernization.services.authentication;
+package com.ericsson.modernization.services.productcatalog.authentication;
 
 import java.util.List;
 

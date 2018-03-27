@@ -1,6 +1,7 @@
-package com.ericsson.modernization.services.authentication;
+package com.ericsson.modernization.services.productcatalog.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+@SpringBootApplication
 @RestController
-@RequestMapping("/systemuser")
-public class SystemUserRestController {
-
+@RequestMapping("/authentication")
+public class AuthenticationService {
 	@Autowired
 	private SystemUserAppService userService;
 
@@ -25,14 +26,13 @@ public class SystemUserRestController {
 		return new ResponseEntity<SystemUser>(user, HttpStatus.OK);
 	}
 /*
-	@RequestMapping("/getallusers")
-	public ResponseEntity<List<SystemUser>> getAllUsers() {
-		return new ResponseEntity<List<SystemUser>>(userService.findAll(), HttpStatus.OK);
+	@RequestMapping("/api/Authentication/Login")
+	public String Login(String userName, String password) {
+		return "myToken";
 	}
 
-	@RequestMapping("/users/{id}")
-	public ResponseEntity<SystemUser> getUser(@PathVariable String id) {
-		return new ResponseEntity<SystemUser>(userService.findById(Integer.parseInt(id)), HttpStatus.OK);
+	@RequestMapping("/api/Authentication/Logout")
+	public String Logout(String userName) {
+		return "Logout";
 	}*/
-
 }
