@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {OfferingService} from "../../shared/service/offering-service";
+import {OfferingService} from "../offering.service";
 import {Router} from "@angular/router";
 import {SpesificationModel} from "../../shared/model/spesification/spesification.model";
-import {CreateOfferingModel} from "../../shared/model/offering/create-offering-model";
+import {CreateOfferingModel} from "../model/create-offering-model";
 
 @Component({
     selector: 'app-offering-create',
