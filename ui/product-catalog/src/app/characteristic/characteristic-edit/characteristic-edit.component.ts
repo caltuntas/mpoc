@@ -25,12 +25,6 @@ export class CharacteristicEditComponent implements OnInit {
             .subscribe(res => {
                 console.log(res);
                 this.model = res;
-                this.gunStart = Number(this.model.validFor.validForStartDate);
-                this.model.validFor.validForStartDate = moment(this.gunStart).format("DD.MM.YYYY");
-                this.gunEnd = Number(this.model.validFor.validForEndDate);
-                this.model.validFor.validForEndDate = moment(this.gunEnd).format("DD.MM.YYYY");
-                console.log("dene1",this.model.validFor.validForStartDate);
-                console.log("dene1",this.model.validFor.validForEndDate);
             });
     }
 
