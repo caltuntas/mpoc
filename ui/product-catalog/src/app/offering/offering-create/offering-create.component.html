@@ -86,6 +86,21 @@
                                     </div>
                                 </fieldset>
 
+                                <fieldset>
+                                    <legend>Spesification</legend>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Select Spesification</label>
+                                        <div class="col-md-10">
+                                            <select class="form-control input-lg">
+                                                <option *ngFor="let spec of spesifications"
+                                                        [value]="spec.name"
+                                                        [attr.selected]="passenger.Title==spec.Text ? true : null">
+                                                    {{title.Text}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
 
                                 <div class="form-actions">
                                     <div class="row">
@@ -97,6 +112,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </form>
                         </div>
                     </div>

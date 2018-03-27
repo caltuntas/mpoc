@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {CreateOfferingModel} from "../model/create-offering-model";
-import {OfferingService} from "../offering-service";
+import {OfferingService} from "../../shared/service/offering-service";
 import {Router} from "@angular/router";
+import {SpesificationModel} from "../../shared/model/spesification/spesification.model";
+import {CreateOfferingModel} from "../../shared/model/offering/create-offering-model";
 
 @Component({
     selector: 'app-offering-create',
@@ -11,6 +12,7 @@ import {Router} from "@angular/router";
 export class OfferingCreateComponent implements OnInit {
 
     model: CreateOfferingModel;
+    spesifications: Array<SpesificationModel> = [];
 
     constructor(private router: Router, private offeringService: OfferingService) {
         this.model = new CreateOfferingModel();
@@ -20,9 +22,9 @@ export class OfferingCreateComponent implements OnInit {
     }
 
     public onSubmit() {
-        this.offeringService.createOffering(this.model).subscribe( data => {
+        this.offeringService.createOffering(this.model).subscribe(data => {
             this.router.navigate(['/offering/offering-list']);
-        } );
+        });
     }
 
 }

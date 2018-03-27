@@ -3,14 +3,13 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {HttpClientProvider} from './shared/httpclientprovider/http-client-provider';
 import {CatalogService} from './catalog/catalog.service';
-import {OfferingService} from "./offering/offering-service";
-import { CharacteristicService } from './characteristic/characteristic.service';
+import {CharacteristicService} from './characteristic/characteristic.service';
+import {OfferingService} from "./shared/service/offering-service";
 
 
 @Injectable()
 export class DataResolver implements Resolve<any> {
     constructor() {
-
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
