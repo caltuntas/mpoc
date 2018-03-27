@@ -13,10 +13,10 @@ export class CharacteristicCreateComponent implements OnInit {
 
   model: CharacteristicCreateModel;
   showCharacteristicField: boolean;
-  //selectedType = 3;
 
   constructor(private router: Router, private characteristicService: CharacteristicService) {
     this.model = new CharacteristicCreateModel();
+    this.model.valueType = 3;
     this.showCharacteristicField = false;
   }
 
@@ -34,7 +34,6 @@ export class CharacteristicCreateComponent implements OnInit {
 
 
   ngOnInit() {
-
   }
 
   public onSubmit() {
