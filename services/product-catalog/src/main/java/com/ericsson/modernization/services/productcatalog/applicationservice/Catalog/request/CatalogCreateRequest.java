@@ -1,14 +1,15 @@
-package com.ericsson.modernization.services.productcatalog.applicationservice.ProductSpecCharacteristic.Request;
+package com.ericsson.modernization.services.productcatalog.applicationservice.Catalog.request;
 
 import java.util.Date;
 
-public class ProductSpecCharacteristicCreateRequest {
+public class CatalogCreateRequest {
     private String name;
     private Date validForStartDate;
     private Date validForEndDate;
-    private int valueType;
     private String description;
     private String externalId;
+    private int catalogSpecificationId;
+    private Boolean isReplicated;
 
     public String getName() {
         return name;
@@ -34,14 +35,6 @@ public class ProductSpecCharacteristicCreateRequest {
         this.validForEndDate = validForEndDate;
     }
 
-    public int getValueType() {
-        return valueType;
-    }
-
-    public void setValueType(int valueType) {
-        this.valueType = valueType;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -57,4 +50,21 @@ public class ProductSpecCharacteristicCreateRequest {
     public void setExternalId(String externalId) {
         this.externalId = externalId;
     }
+
+    public int getCatalogSpecificationId() {
+        return catalogSpecificationId;
+    }
+
+    public void setCatalogSpecificationId(int productSpecificationId) {
+        catalogSpecificationId = catalogSpecificationId;
+    }
+
+    public Boolean getReplicated() {
+        return isReplicated;
+    }
+
+    public void setReplicated(Boolean replicated) {
+        isReplicated = replicated;
+    }
+
 }

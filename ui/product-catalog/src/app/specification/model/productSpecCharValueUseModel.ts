@@ -1,7 +1,7 @@
 export class productSpecCharValueUseModel{
     constructor (){
         
-        this.name="asd";
+        this.name="value 1";
         this.isSelected=true;
     }
     

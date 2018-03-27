@@ -21,12 +21,14 @@
                         <h2>Offering List</h2>
                     </header>
                     <div>
-                        <sa-datatable [options]="options" tableClass="table table-striped table-bordered table-hover">
+                        <sa-datatable [options]="options" paginationLength="true" tableClass="table table-striped table-bordered table-hover" width="100%" *ngIf="!reRenderTable">
                             <thead>
                             <tr>
                                 <th>id</th>
                                 <th>name</th>
                                 <th>desc</th>
+                                <th>valid to</th>
+                                <th>is sellable?</th>
                             </tr>
                             </thead>
                         </sa-datatable>

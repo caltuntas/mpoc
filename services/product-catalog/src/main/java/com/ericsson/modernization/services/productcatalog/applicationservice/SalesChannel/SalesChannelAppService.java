@@ -1,13 +1,11 @@
-package com.ericsson.modernization.services.productcatalog.applicationservice;
+package com.ericsson.modernization.services.productcatalog.applicationservice.SalesChannel;
 
-import com.ericsson.modernization.services.productcatalog.applicationservice.request.SalesChannelRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.SalesChannel.request.SalesChannelRequest;
 import com.ericsson.modernization.services.productcatalog.model.SalesChannel;
 import com.ericsson.modernization.services.productcatalog.model.TimePeriod;
 import com.ericsson.modernization.services.productcatalog.repository.SalesChannelRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {OfferingService} from "../offering-service";
-import {ActivatedRoute, NavigationExtras, Router, Routes} from "@angular/router";
+import {Router} from "@angular/router";
 import {Offering} from "../model/offering.model";
 import {DatatableComponent} from "../../shared/ui/datatable/datatable.component";
 
@@ -13,7 +13,9 @@ import {DatatableComponent} from "../../shared/ui/datatable/datatable.component"
 export class OfferingListComponent implements OnInit {
 
     offerings: Array<Offering> = [];
-    refreshId : string;
+    reRenderTable = false;
+
+    @ViewChild(DatatableComponent) offeringTable: DatatableComponent;
 
     options = {
         dom: "Bfrtip",
@@ -30,6 +32,8 @@ export class OfferingListComponent implements OnInit {
             {"data": "id"},
             {"data": "name"},
             {"data": "description"},
+            {"data": "validFor.validForEndDate"},
+            {"data": "isSellable"},
             {
                 render: (data, type, fullRow, meta) => {
                     return `
@@ -41,7 +45,8 @@ export class OfferingListComponent implements OnInit {
                             </ul>
                         </div>`;
                 }
-            }]
+            }],
+
     };
 
     ngAfterViewInit() {
@@ -58,7 +63,6 @@ export class OfferingListComponent implements OnInit {
 
     }
 
-
     onEditOffering(offeringId) {
         console.log("edit offering:", offeringId);
         this.router.navigate(['/offering/offering-edit/' + offeringId]);
@@ -67,21 +71,17 @@ export class OfferingListComponent implements OnInit {
     onDeleteOffering(offeringId) {
         console.log("Delete offering", offeringId, "?");
         this.offeringService.deleteOffering(offeringId).subscribe((data) => {
-            this.reloadPage();
+            this.reloadOfferingListTable();
         });
     }
 
-    reloadPage() {
-        this.router.routeReuseStrategy.shouldReuseRoute = function(){return false;};
-        let currentUrl = this.router.url + '?';
-        this.router.navigateByUrl(currentUrl)
-            .then(() => {
-                this.router.navigated = false;
-                this.router.navigate([this.router.url]);
-            });
+    reloadOfferingListTable() {
+        this.reRenderTable = true;
+        this.cdRef.detectChanges();
+        this.reRenderTable = false;
     }
 
-    constructor(private router: Router, private route: ActivatedRoute, private offeringService: OfferingService) {
+    constructor(private router: Router, private offeringService: OfferingService, private cdRef: ChangeDetectorRef) {
     }
 
     ngOnInit() {

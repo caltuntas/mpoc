@@ -19,6 +19,7 @@ public class ProductSpecCharacteristicAppService {
         ProductSpecCharacteristic productSpecCharacteristic = new ProductSpecCharacteristic();
         productSpecCharacteristic.setName(productSpecCharacteristicCreateRequest.getName());
         productSpecCharacteristic.setDescription(productSpecCharacteristicCreateRequest.getDescription());
+        productSpecCharacteristic.setValueType(productSpecCharacteristicCreateRequest.getValueType());
 
         TimePeriod validFor = new TimePeriod();
         validFor.setValidForStartDate(productSpecCharacteristicCreateRequest.getValidForStartDate());
@@ -28,7 +29,19 @@ public class ProductSpecCharacteristicAppService {
         return productSpecCharacteristicRepository.save(productSpecCharacteristic);
     }
 
+    public void delete(int productSpecCharacteristicID){
+        ProductSpecCharacteristic productSpecCharacteristic = productSpecCharacteristicRepository.findById(productSpecCharacteristicID).get();
+        if(productSpecCharacteristic != null) {
+            productSpecCharacteristic.setDeleted(true);
+            productSpecCharacteristicRepository.save(productSpecCharacteristic);
+        }
+    }
+
+    public ProductSpecCharacteristic findById(int id){
+        return productSpecCharacteristicRepository.findByIdAndIsDeletedIsFalse(id);
+    }
+
     public List<ProductSpecCharacteristic> findAll() {
-        return productSpecCharacteristicRepository.findAll();
+        return productSpecCharacteristicRepository.findAllByIsDeletedIsFalse();
     }
 }

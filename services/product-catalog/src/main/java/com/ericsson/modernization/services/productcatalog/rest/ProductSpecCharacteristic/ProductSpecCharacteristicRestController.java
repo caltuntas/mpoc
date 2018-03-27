@@ -29,4 +29,17 @@ public class ProductSpecCharacteristicRestController {
     public ResponseEntity<List<ProductSpecCharacteristic>> getallcharacteristics(){
         return new ResponseEntity<List<ProductSpecCharacteristic>>(productSpecCharacteristicAppService.findAll(), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/deleteproductspeccharacteristic/{characteristicId}", method = RequestMethod.GET)
+    public ResponseEntity<ProductSpecCharacteristicServiceResponse> deleteproductspeccharacteristic(@PathVariable int characteristicId) {
+        productSpecCharacteristicAppService.delete(characteristicId);
+        ProductSpecCharacteristicServiceResponse response = new ProductSpecCharacteristicServiceResponse();
+        response.setMessage("The product specification characteristic with id : " + characteristicId + " is created");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getcharacteristicbyid/{characteristicId}", method = RequestMethod.GET)
+    public ResponseEntity<ProductSpecCharacteristic> getcharacteristicbyid(@PathVariable int characteristicId) {
+        return new ResponseEntity<ProductSpecCharacteristic>(productSpecCharacteristicAppService.findById(characteristicId), HttpStatus.OK);
+    }
 }

@@ -61,20 +61,23 @@
                       </div>
                     </div>
                   </fieldset>
-                <!-- <fieldset>
+                <fieldset>
                   <div class="form-group" [class.has-error]="valueTypeControl.invalid && valueTypeControl.submitted ">
                     <label class="col-xs-2 col-lg-3 control-label">Value Type</label>
                     <div class="col-xs-9 col-lg-6">
-                      <select class="form-control" id="valueType" name="valueType" required [(ngModel)]="characteristic.valueType" #valueTypeControl="ngModel">
-                        <option value="">Choose a value type</option>
-                        <option *ngFor="let item of valueTypes" [value]="item"> {{item}}</option>
+                      <select class="form-control" id="valueType" name="valueType" required [(ngModel)]="model.valueType" (change)="onChange($event)" #valueTypeControl="ngModel">
+                        <option value="1">List</option>
+                        <option value="2">Integer</option>
+                        <option value="3" selected="selected">String</option>
+                        <option value="4">DateTime</option>
+                        <!-- <option *ngFor="let item of valueTypes" [value]="item"> {{item}}</option> -->
                       </select>
                       <small *ngIf="valueTypeControl.invalid && valueTypeControl.submitted " class="help-block">Value Type is required</small>
                     </div>
                   </div>
-                </fieldset> -->
+                </fieldset>
                 <fieldset>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="showCharacteristicField">
                       <label class="col-lg-3 control-label"> Characteristic Values</label>
                       <div class="col-lg-6">
   
@@ -84,24 +87,6 @@
                       </div>
                     </div>
                   </fieldset>
-                <!-- <fieldset>
-                  <div class="form-group" [class.has-error]="validForControl.invalid && validForControl.submitted  ">
-                    <label class="col-xs-2 col-lg-3 control-label">Valid For:</label>
-                    <div class=" col-xs-9 col-lg-6">
-                      <div class="input-group">
-                        <input type="text" name="validFor" placeholder="Select a date" class="form-control datepicker" id="validFor" name="validFor"
-                          [(ngModel)]="characteristic.validFor" #validForControl="ngModel" required [saUiDatepicker]="{  dateFormat: 'dd/mm/yy'}"
-                        />
-
-                        <span class="input-group-addon">
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </div>
-
-                      <small *ngIf="validForControl.invalid && validForControl.submitted  " class="help-block">Valid For is required</small>
-                    </div>
-                  </div>
-                </fieldset> -->
                 <div class="form-actions">
                   <div class="row">
                     <div class="col-md-12">

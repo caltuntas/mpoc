@@ -3,6 +3,7 @@ package com.ericsson.modernization.services.productcatalog.model;
 import javax.persistence.*;
 
 import com.ericsson.modernization.services.productcatalog.category.Category;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,11 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     private String externalId;
     @ManyToOne
     private ProductSpecification productSpecification;
+    @ManyToOne
+    private ProductOfferingTerm productOfferingTerm;
+
+    @ManyToOne
+    private Catalog catalog;
     @AttributeOverrides({
             @AttributeOverride(name = "periodValue", column = @Column(name = "warrantyPeriodValue")),
             @AttributeOverride(name = "periodUnit", column = @Column(name = "warrantyPeriodUnit"))
@@ -40,19 +46,22 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     private Boolean isSellable;
     private long versionNumber;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "productOffering")
     private List<ProductOfferingPrice> prices;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "productOffering")
     private List<ProdSpecCharValueUse> determinedProdSpecCharValueUses;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "productOffering")
     private List<UnsupportedProductSpecCharValueUseGroup> unsupportedProductSpecCharValueUseGroups;
-    
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<Category> category;
@@ -168,5 +177,13 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     public void setUnsupportedProductSpecCharValueUseGroups(
             List<UnsupportedProductSpecCharValueUseGroup> unsupportedProductSpecCharValueUseGroups) {
         this.unsupportedProductSpecCharValueUseGroups = unsupportedProductSpecCharValueUseGroups;
+    }
+
+    public Catalog getCatalog() {
+        return catalog;
+    }
+
+    public void setCatalog(Catalog catalog) {
+        this.catalog = catalog;
     }
 }
