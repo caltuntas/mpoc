@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CreateCategoryModel} from '../model/create-category-model';
-import {Category} from '../model/category.model';
-import { CategoryService } from '../category.service';
+import {CreateCategoryModel} from '../create-category-model';
+import {Category} from './category.model';
+import { CategoryService } from './category.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
@@ -16,7 +16,7 @@ export class CategoryListComponent implements OnInit {
     options = {
         dom: "Bfrtip",
         ajax: (data, callback, settings) => {
-            this.categoryService.getAll()
+            this.service.getAll()
                 .catch(this.handleError)
                 .subscribe((data) => {
                     callback({
@@ -24,6 +24,7 @@ export class CategoryListComponent implements OnInit {
                     })
                 })
         },
+        "iDisplayLength": 15,
         columns: [
             {"data": "id"},
             {"data": "code"},
@@ -58,29 +59,21 @@ export class CategoryListComponent implements OnInit {
         });
     }
 
-
     onEdit(categoryId) {
-        console.log("edit category:", categoryId);
-
-        let navigationExtras: NavigationExtras = {
-            queryParams: {
-                "categoryId": categoryId
-            }
-        };
-
+        console.log("Edit category:", categoryId);
         this.router.navigate(['/category/' + categoryId]);
     }
 
     onDelete(categoryId) {
         console.log("Delete category", categoryId, "?");
-        this.categoryService.delete(categoryId).subscribe((data) => {
+        this.service.delete(categoryId).subscribe((data) => {
             window.location.reload();//TODO : Syf burada hata verdiği için aşağıda tekrar yapıyorum.
         });
-        //this.categoryService.delete(categoryId).subscribe();
+        //this.service.delete(categoryId).subscribe();
         window.location.reload();
     }
 
-    constructor(private router: Router, private categoryService: CategoryService) {
+    constructor(private router: Router, private service: CategoryService) {
     }
 
     ngOnInit() {

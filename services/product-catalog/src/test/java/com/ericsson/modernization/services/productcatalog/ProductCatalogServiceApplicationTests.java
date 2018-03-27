@@ -13,16 +13,4 @@ package com.ericsson.modernization.services.productcatalog;
 public class ProductCatalogServiceApplicationTests {
 
 
-    @Autowired
-    private CatalogAppService catalogAppService;
-
-    @Test
-    public void createCatalog() {
-        CatalogCreateRequest createRequest = new CatalogCreateRequest();
-        createRequest.setName("HM catalog Test 1");
-        createRequest.setDescription("Test instance record");
-        createRequest.setReplicated(false);
-
-        catalogAppService.create(createRequest);
-    }
 }

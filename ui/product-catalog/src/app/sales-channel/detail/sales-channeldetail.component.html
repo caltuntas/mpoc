@@ -6,7 +6,7 @@
     <sa-widgets-grid>
         <div class="row">
             <div class="col-sm-12">
-                <div sa-widget [editbutton]="false" [colorbutton]="false" [deletebutton]="false">
+                <div sa-widget [editbutton]="false" [colorbutton]="false" [deletebutton]="false" color="vdf">
                     <header>
                         <h2>{{ scDetail?.NewForm ? 'Create' : 'Update' }} Sales Channel </h2>
                     </header>
@@ -62,7 +62,7 @@
                                                 <i class="fa fa-save"></i>
                                                 {{ scDetail?.NewForm == true ? 'Create' : 'Update' }}
                                             </button>
-                                            <button type="button" class="btn btn-danger" onclick="window.history.back();">
+                                            <button type="button" class="btn btn-danger" (click)="routeToSClist();">
                                             <i class="fa fa-arrow-left"></i>
                     							Back
                   						</button>

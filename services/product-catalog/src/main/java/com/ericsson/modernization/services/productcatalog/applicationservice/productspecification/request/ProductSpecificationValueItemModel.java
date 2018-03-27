@@ -1,4 +1,4 @@
-package com.ericsson.modernization.services.productcatalog.applicationservice.ProductSpecification.Request;
+package com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.request;
 
 import java.util.List;
 
