@@ -6,14 +6,6 @@ import {OfferingCreateComponent} from "./offering-create/offering-create.compone
 import {OfferingEditComponent} from "./offering-edit/offering-edit.component";
 
 export const offeringRoutes: Routes = [
-
-
-    {
-        path: '',
-        component: OfferingListComponent, data: {
-            pageTitle: 'Offerings'
-        }
-    },
     {
         path: 'offering-list',
         component: OfferingListComponent, data: {
