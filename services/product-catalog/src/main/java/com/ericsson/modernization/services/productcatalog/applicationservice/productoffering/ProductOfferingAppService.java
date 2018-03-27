@@ -1,6 +1,7 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCreateRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.ProductSpecificationAppService;
 import com.ericsson.modernization.services.productcatalog.model.Duration;
 import com.ericsson.modernization.services.productcatalog.model.ProductOffering;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecification;
@@ -18,33 +19,35 @@ public class ProductOfferingAppService {
 
     @Autowired
     private ProductOfferingRepository productOfferingRepository;
+    @Autowired
+    private ProductSpecificationAppService productSpecificationAppService;
 
-    public ProductOffering create(ProductOfferingCreateRequest productOfferingCreateRequest){
+    public ProductOffering create(ProductOfferingCreateRequest createRequest){
 
         ProductOffering productOffering = new ProductOffering();
-        productOffering.setName(productOfferingCreateRequest.getName());
-        productOffering.setIsSellable(productOfferingCreateRequest.getSellable());
-        productOffering.setDescription(productOfferingCreateRequest.getDescription());
+        productOffering.setName(createRequest.getName());
+        productOffering.setIsSellable(createRequest.getSellable());
+        productOffering.setDescription(createRequest.getDescription());
         productOffering.setExternalId(productOffering.getExternalId());
-        productOffering.setIsReplicated(productOfferingCreateRequest.getReplicated());
+        productOffering.setIsReplicated(createRequest.getReplicated());
 
         Duration returnPeriod = new Duration();
-        returnPeriod.setPeriodValue(productOfferingCreateRequest.getReturnPeriodValue());
-        returnPeriod.setPeriodUnit(productOfferingCreateRequest.getReturnPeriodUnit());
+        returnPeriod.setPeriodValue(createRequest.getReturnPeriodValue());
+        returnPeriod.setPeriodUnit(createRequest.getReturnPeriodUnit());
         productOffering.setReturnPeriod(returnPeriod);
 
         Duration warrantyPeriod = new Duration();
-        warrantyPeriod.setPeriodValue(productOfferingCreateRequest.getWarrantyPeriodValue());
-        warrantyPeriod.setPeriodUnit(productOfferingCreateRequest.getWarrantyPeriodUnit());
+        warrantyPeriod.setPeriodValue(createRequest.getWarrantyPeriodValue());
+        warrantyPeriod.setPeriodUnit(createRequest.getWarrantyPeriodUnit());
         productOffering.setWarrantyPeriod(warrantyPeriod);
 
         TimePeriod validFor = new TimePeriod();
-        validFor.setValidForEndDate(productOfferingCreateRequest.getValidForEndDate());
-        validFor.setValidForStartDate(productOfferingCreateRequest.getValidForStartDate());
+        validFor.setValidForEndDate(createRequest.getValidForEndDate());
+        validFor.setValidForStartDate(createRequest.getValidForStartDate());
         productOffering.setValidFor(validFor);
 
-        ProductSpecification productSpecification =  null; //TODO: servisler yazılınca get edilecek
-        productOffering.setProductSpecification(productSpecification);
+        ProductSpecification specification = productSpecificationAppService.findById(createRequest.getProductSpecificationId());
+        productOffering.setProductSpecification(specification);
 
         return productOfferingRepository.save(productOffering);
     }

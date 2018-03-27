@@ -29,7 +29,8 @@ import {SmartadminInputModule} from '../shared/forms/input/smartadmin-input.modu
     ],
     declarations: [
         CategoryListComponent,
-        CategoryCreateComponent
+        CategoryCreateComponent,
+        //CategoryEditComponent
     ],
     providers: [
         CategoryService

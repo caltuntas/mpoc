@@ -1,9 +1,9 @@
 import {ChangeDetectorRef, Component, ComponentFactoryResolver, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {OfferingService} from "../offering-service";
 import {Router} from "@angular/router";
 import {Offering} from "../model/offering.model";
 import {DatatableComponent} from "../../shared/ui/datatable/datatable.component";
+import {OfferingService} from "../offering.service";
 
 @Component({
     selector: 'app-offering-list',
@@ -32,8 +32,18 @@ export class OfferingListComponent implements OnInit {
             {"data": "id"},
             {"data": "name"},
             {"data": "description"},
-            {"data": "validFor.validForEndDate"},
+            {"data": "validFor.validForEndDate",
+                "render": function (data, type, full, meta) {
+                    return data == null ? "" : data;
+                }
+            },
             {"data": "isSellable"},
+            {
+                "data": "productSpecification.name",
+                "render": function (data, type, full, meta) {
+                    return data == null ? "" : data;
+                }
+            },
             {
                 render: (data, type, fullRow, meta) => {
                     return `

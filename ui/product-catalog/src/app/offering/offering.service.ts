@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Offering} from "./model/offering.model";
 import {Observable} from "rxjs/Observable";
+import {Offering} from "./model/offering.model";
 import {HttpClientProvider} from "../shared/httpclientprovider/http-client-provider";
 
 @Injectable()

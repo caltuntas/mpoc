@@ -17,7 +17,11 @@ export class CategoryService {
         return this.http.post(`/category`, model);
     }
 
+    edit(id: any, model): any {
+        return this.http.put(`/category/`, id);
+    }
+
     delete(id: any): any {
-        throw new Error("Method not implemented.");
+        return this.http.delete(`/category/`+ id);
     }
 }

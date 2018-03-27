@@ -7,7 +7,7 @@ import { SpecificationCreateComponent } from './specification-create/specificati
 import { SpecificationListComponent } from "./specification-list/specification-list.component";
 
 //Services
-import { SpecificationService } from './specification.service';
+import { specificationService } from './specification.service';
 
 
 // Theme modules
@@ -34,7 +34,7 @@ import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.mo
     SpecificationCreateComponent
   ],
   providers: [
-    SpecificationService
+    specificationService
   ]
 })
 export class SpecificationModule { }

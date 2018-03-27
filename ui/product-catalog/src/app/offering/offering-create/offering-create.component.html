@@ -27,6 +27,7 @@
                                         </div>
                                     </div>
                                 </fieldset>
+
                                 <fieldset>
                                     <div class="form-group"
                                          [class.has-error]="descriptionControl.invalid && descriptionControl.submitted ">
@@ -41,10 +42,11 @@
                                         </div>
                                     </div>
                                 </fieldset>
+
                                 <fieldset>
                                     <div class="form-group"
                                          [class.has-error]="validForStartDateControl.invalid && validForStartDateControl.submitted && validForEndDateControl.invalid && validForEndDateControl.submitted ">
-                                        <label class="col-xs-2 col-lg-3 control-label">Valid For:</label>
+                                        <label class="col-xs-2 col-lg-3 control-label">Valid From:</label>
                                         <div class=" col-xs-5 col-lg-3">
                                             <div class="input-group">
                                                 <input class="form-control" id="validForStartDate"
@@ -59,7 +61,6 @@
                                                    class="help-block">Valid For Start Date is required
                                             </small>
                                         </div>
-
                                         <div class=" col-xs-5 col-lg-3">
                                             <div class="input-group">
                                                 <input class="form-control" id="validForEndDate" name="validForEndDate"
@@ -75,6 +76,7 @@
                                         </div>
                                     </div>
                                 </fieldset>
+
                                 <fieldset>
                                     <div class="form-group">
                                         <label class="col-xs-2 col-lg-3 control-label">Is Sellable?</label>
@@ -83,6 +85,26 @@
                                                    name="description" [(ngModel)]="model.isSellable"
                                                    #isSellableControl="ngModel"/>
                                         </div>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <div class="form-group"
+                                         [class.has-error]="selectSpecControl.invalid && selectSpecControl.submitted ">
+                                                <label class="col-xs-2 col-lg-3 control-label">Spesification</label>
+                                                <div class="col-xs-9 col-lg-6">
+                                                    <select select2 class="select2 form-control" id="spesification"
+                                                            name="spesification"
+                                                            required [(ngModel)]="model.productSpecificationId"
+                                                            (change)="onChange($event)" #selectSpecControl="ngModel">
+                                                        <option *ngFor="let spec of spesifications" [value]="spec.id">
+                                                            {{spec.name}}
+                                                        </option>
+                                                    </select>
+                                                    <small *ngIf="selectSpecControl.invalid && selectSpecControl.submitted "
+                                                           class="help-block">Spesification is required
+                                                    </small>
+                                                </div>
                                     </div>
                                 </fieldset>
 
@@ -97,6 +119,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </form>
                         </div>
                     </div>
