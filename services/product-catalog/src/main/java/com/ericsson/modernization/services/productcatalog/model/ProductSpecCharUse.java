@@ -11,13 +11,13 @@ import java.util.List;
 public class ProductSpecCharUse extends EntityBase
         implements Description, ValidFor, ExternalId, IsReplicated, Versioned {
 
-
+public ProductSpecCharUse()
+{
+    this.productSpecCharValueUses=new ArrayList<ProdSpecCharValueUse>();
+}
     public final int Type_None = 0;
     public final int Type_Stock = 1;
 
-    public ProductSpecCharUse() {
-        productSpecCharValueUses = new ArrayList<ProdSpecCharValueUse>();
-    }
 
     private String name;
     private String description;

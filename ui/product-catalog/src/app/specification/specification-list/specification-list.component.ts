@@ -1,45 +1,119 @@
-import { Component, OnInit } from '@angular/core';
-import { specificationService } from '../specification.service';
+import {
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  OnInit,
+  ViewChild
+} from "@angular/core";
+import { Observable } from "rxjs/Observable";
+import { Router } from "@angular/router";
+import { specificationService } from "../specification.service";
+import { DatatableComponent } from "../../shared/ui/datatable/datatable.component";
+import { productSpecCharModel } from "../model/productSpecCharModel";
 
 @Component({
-  selector: 'app-specification-list',
-  templateUrl: './specification-list.component.html'
+  selector: "app-specification-list",
+  templateUrl: "./specification-list.component.html"
 })
 export class SpecificationListComponent implements OnInit {
+  speces: Array<productSpecCharModel> = [];
+  reRenderTable = false;
 
+  @ViewChild(DatatableComponent) specTable: DatatableComponent;
 
-  constructor(service: specificationService) {
-   // service.getSpecifications();
-  }
+  options = {
+    dom: "Bfrtip",
+    ajax: (data, callback, settings) => {
+      this.service
+        .getSpecifications()
+        .catch(this.handleError)
+        .subscribe(data => {
+          callback({
+            aaData: data
+          });
+        });
+    },
+    columns: [
+      { data: "id" },
+      { data: "name" },
+      { data: "code" },
+      { data: "description" },
 
-  ngOnInit() {
-  }
-
-  public options = {
-    "ajax": '/assets/api/tables/datatables.standard.json',
-    "iDisplayLength": 15,
-    "columns": [
-     { "data": "id" },
-      { "data": "name" },
-      { "data": "phone" },
-      { "data": "company" },
-      { "data": "zip" },
-      { "data": "city" },
-      { "data": "date" },
-      {"orderable":false,
-        "defaultContent":"   <a (click)='(null)' class='btn btn-primary'><i class='fa fa-edit'></i> Edit</a>"}
- 
+      {
+        data: "createTime",
+        render: function(data, type, full, meta) {
+          return data == null ? "" : data;
+        }
+      },
+      {
+        render: (data, type, fullRow, meta) => {
+          return `
+                    <div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                        <i class='fa fa-gear fa-lg'></i></button>
+                        <ul class='dropdown-menu  ng-star-inserted'>                                
+                            <li><a class='sa-datatables-edit' spec-id='${
+                              fullRow.id
+                            }'>Edit</a></li>
+                            <li><a class='sa-datatables-delete' spec-id='${
+                              fullRow.id
+                            }'>Delete</a></li>
+                        </ul>
+                    </div>`;
+        }
+      }
     ],
-    "order": [[1, 'asc']]
+     order: [[ 0, "desc" ]]
+  };
+
+  ngAfterViewInit() {
+    document.querySelector("body").addEventListener("click", event => {
+      let target = <Element>event.target;
+
+      if (
+        target.tagName.toLowerCase() === "a" &&
+        jQuery(target).hasClass("sa-datatables-edit")
+      ) {
+        this.onEditSpec(target.getAttribute("spec-id"));
+      }
+      if (
+        target.tagName.toLowerCase() === "a" &&
+        jQuery(target).hasClass("sa-datatables-delete")
+      ) {
+        this.onDeleteSpec(target.getAttribute("spec-id"));
+      }
+    });
   }
 
-  public lastColumn(d) {
-
-    return "";
+  onEditSpec(specId) {
+    console.log("edit spec:", specId);
+    //this.router.navigate(['/offering/offering-edit/' + offeringId]);
   }
 
+  onDeleteSpec(specId) {
+    console.log("Delete spec", specId, "?");
+    // this.ser.deleteOffering(offeringId).subscribe((data) => {
+    //     this.reloadOfferingListTable();
+    // });
+  }
+  reloadOfferingListTable() {
+    this.reRenderTable = true;
+    this.cdRef.detectChanges();
+    this.reRenderTable = false;
+  }
 
+  constructor(
+    private router: Router,
+    private service: specificationService,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
+  ngOnInit() {}
 
+  private handleError(error: any) {
+    let errMsg = error.message
+      ? error.message
+      : error.status ? `${error.status} - ${error.statusText}` : "Server error";
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
+  }
 }
-
