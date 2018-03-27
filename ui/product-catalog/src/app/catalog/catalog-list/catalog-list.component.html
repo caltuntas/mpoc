@@ -11,30 +11,60 @@
     </div>
 
     <sa-widgets-grid>
+
+
         <div class="row">
             <article class="col-sm-12">
-                <div sa-widget [editbutton]="false" color="darken">
+
+
+                <div sa-widget [editbutton]="false" [deletebutton]="false" color="vdf">
                     <header>
-                        <span class="widget-icon">
-                        <i class="fa fa-table"></i>
-                        </span>
-                        <h2>Catalog List</h2>
+            <span class="widget-icon">
+              <i class="fa fa-table"></i>
+            </span>
+                        <h2>Characteristic List</h2>
                     </header>
                     <div>
-                        <sa-datatable [options]="options" tableClass="table table-striped table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Valid For Start Date</th>
-                                <th>Valid For End Date</th>
-                            </tr>
-                            </thead>
-                        </sa-datatable>
+                        <div class="widget-body no-padding">
+
+                            <sa-datatable [options]="options" paginationLength="true"
+                                          tableClass="table table-striped table-bordered table-hover" width="100%"
+                                          *ngIf="!reRenderTable">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <i class="fa fa-fw fa-key text-muted hidden-md hidden-sm hidden-xs"></i>
+                                        ID
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>
+                                        Name
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>
+                                        Description
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-fw fa-calendar-o text-muted hidden-md hidden-sm hidden-xs"></i>
+                                        Valid For Start Date
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-fw fa-calendar-o text-muted hidden-md hidden-sm hidden-xs"></i>
+                                        Valid For End Date
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                            </sa-datatable>
+
+
+                        </div>
                     </div>
                 </div>
+
             </article>
+
         </div>
+
     </sa-widgets-grid>
 </div>

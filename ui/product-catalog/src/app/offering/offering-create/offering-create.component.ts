@@ -12,7 +12,7 @@ import {OfferingSpecModel} from "../model/offering-spec-model";
 export class OfferingCreateComponent implements OnInit {
 
     model: CreateOfferingModel;
-    spesifications: Array<OfferingSpecModel> = [];
+    spesifications: Array<OfferingSpecModel> = [{"id": 1, "name": "name", "description": "dede"}];
 
     constructor(private router: Router, private offeringService: OfferingService) {
         this.model = new CreateOfferingModel();

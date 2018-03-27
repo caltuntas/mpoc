@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {CatalogEditModel} from '../model/catalogEditModel';
+import {CatalogService} from '../catalog.service';
 
 @Component({
     selector: 'app-catalog-edit',
@@ -8,12 +10,25 @@ import {ActivatedRoute} from "@angular/router";
 export class CatalogEditComponent implements OnInit {
 
     catalogId: string;
+    model: CatalogEditModel;
 
-    constructor(private route: ActivatedRoute) {
+    constructor(private router: Router, private route: ActivatedRoute, private catalogService: CatalogService) {
     }
 
     ngOnInit() {
         this.catalogId = this.route.snapshot.paramMap.get('catalogId');
+
+        this.catalogService.getCatalogById(Number(this.catalogId))
+            .subscribe(res => {
+                console.log(res);
+                this.model = res;
+            });
+    }
+
+    public onSubmit() {
+        this.catalogService.updateCatalog(this.model).subscribe(data => {
+            this.router.navigate(['/catalog/catalog-list']);
+        });
     }
 
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CreateCatalogModel} from "../model/create-catalog-model";
 import {CatalogService} from "../catalog.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-catalog-create',
@@ -10,7 +11,7 @@ export class CatalogCreateComponent implements OnInit {
 
     model: CreateCatalogModel;
 
-    constructor(private catalogService: CatalogService) {
+    constructor(private router: Router, private catalogService: CatalogService) {
         this.model = new CreateCatalogModel();
     }
 
@@ -18,9 +19,8 @@ export class CatalogCreateComponent implements OnInit {
     }
 
     public onSubmit() {
-        console.log("form submitted");
-        console.log(this.model);
-        this.catalogService.createCatalog(this.model).subscribe();
+        this.catalogService.createCatalog(this.model).subscribe(data => {
+            this.router.navigate(['/catalog/catalog-list']);
+        });
     }
-
 }

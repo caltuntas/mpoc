@@ -20,6 +20,13 @@ export const routes: Routes = [
         data: {
             pageTitle: 'Create Category'
         }
+    },
+
+    {
+        path: 'category-edit/:categoryId',
+        /*component: CategoryEditComponent, */data: {
+            pageTitle: 'Edit the category'
+        }
     }
 ];
 

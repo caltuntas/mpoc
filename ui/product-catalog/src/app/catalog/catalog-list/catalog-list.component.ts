@@ -1,15 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {CatalogService} from "../catalog.service";
 import {NavigationExtras, Router, Routes} from "@angular/router";
 import {Catalog} from "../model/catalog.model";
+import {DatatableComponent} from "../../shared/ui/datatable/datatable.component";
 
 @Component({
     selector: 'app-catalog-list',
     templateUrl: './catalog-list.component.html'
 })
 export class CatalogListComponent implements OnInit {
-
+    reRenderTable: boolean;
+    @ViewChild(DatatableComponent) catalogTable: DatatableComponent;
     catalogs: Array<Catalog> = [];
     selectedCatalog: Catalog;
 
@@ -30,8 +32,18 @@ export class CatalogListComponent implements OnInit {
             {"data": "id"},
             {"data": "name"},
             {"data": "description"},
-            {"data": "validForStartDate"},
-            {"data": "validForEndDate"},
+            {
+                "data": "validFor.validForStartDate",
+                "render": function (data, type, full, meta) {
+                    return data == null ? "" : data;
+                }
+            },
+            {
+                "data": "validFor.validForEndDate",
+                "render": function (data, type, full, meta) {
+                    return data == null ? "" : data;
+                }
+            },
             {
                 render: (data, type, fullRow, meta) => {
                     return `
@@ -59,27 +71,28 @@ export class CatalogListComponent implements OnInit {
         });
     }
 
+    constructor(private router: Router, private catalogService: CatalogService, private cdRef: ChangeDetectorRef) {
+    }
 
     onEditCatalog(catalogId) {
         console.log("edit catalog:", catalogId);
-
-        let navigationExtras: NavigationExtras = {
-            queryParams: {
-                "catalogId": catalogId
-            }
-        };
-
         this.router.navigate(['/catalog/catalog-edit/' + catalogId]);
+        this.catalogService.updateCatalog(catalogId).subscribe((data) => {
+            this.reloadCatalogListTable();
+        });
     }
 
     onDeleteCatalog(catalogId) {
         console.log("The catalog with id: ", catalogId, " will be deleted. Do you confirm?");
         this.catalogService.deleteCatalog(catalogId).subscribe((data) => {
-            window.location.reload();
+            this.reloadCatalogListTable();
         });
     }
 
-    constructor(private router: Router, private catalogService: CatalogService) {
+    reloadCatalogListTable() {
+        this.reRenderTable = true;
+        this.cdRef.detectChanges();
+        this.reRenderTable = false;
     }
 
     ngOnInit() {
