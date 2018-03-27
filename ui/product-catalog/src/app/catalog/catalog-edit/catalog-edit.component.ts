@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CatalogEditModel} from '../model/catalogEditModel';
 import {CatalogService} from '../catalog.service';
+import {ValidDateModel} from "../model/validDateModel";
 
 @Component({
     selector: 'app-catalog-edit',
@@ -13,6 +14,8 @@ export class CatalogEditComponent implements OnInit {
     model: CatalogEditModel;
 
     constructor(private router: Router, private route: ActivatedRoute, private catalogService: CatalogService) {
+        this.model = new CatalogEditModel();
+        this.model.validFor = new ValidDateModel();
     }
 
     ngOnInit() {

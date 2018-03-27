@@ -88,14 +88,6 @@ public class ProductOfferingCreateRequest {
         this.externalId = externalId;
     }
 
-    public int getProductSpecificationId() {
-        return productSpecificationId;
-    }
-
-    public void setProductSpecificationId(int productSpecificationId) {
-        productSpecificationId = productSpecificationId;
-    }
-
     public Boolean getReplicated() {
         return isReplicated;
     }
@@ -110,5 +102,13 @@ public class ProductOfferingCreateRequest {
 
     public void setSellable(Boolean sellable) {
         isSellable = sellable;
+    }
+
+    public int getProductSpecificationId() {
+        return productSpecificationId;
+    }
+
+    public void setProductSpecificationId(int productSpecificationId) {
+        this.productSpecificationId = productSpecificationId;
     }
 }

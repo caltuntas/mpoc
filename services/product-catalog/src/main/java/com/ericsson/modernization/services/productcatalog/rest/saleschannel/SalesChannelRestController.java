@@ -2,6 +2,7 @@ package com.ericsson.modernization.services.productcatalog.rest.saleschannel;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.saleschannel.SalesChannelAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.saleschannel.request.SalesChannelRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.saleschannel.response.SalesChannelServiceResponse;
 import com.ericsson.modernization.services.productcatalog.model.SalesChannel;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,19 @@ public class SalesChannelRestController {
     private SalesChannelAppService salesChannelAppService;
 
     @RequestMapping(value = "/createsaleschannel", method = RequestMethod.POST)
-    public ResponseEntity<String> createSalesChannel(@RequestBody SalesChannelRequest createRequest) {
+    public ResponseEntity<SalesChannelServiceResponse> createSalesChannel(@RequestBody SalesChannelRequest createRequest) {
     	salesChannelAppService.create(createRequest);
-        return new ResponseEntity<>("created succesfully", HttpStatus.OK);
+    	SalesChannelServiceResponse resp = new SalesChannelServiceResponse();
+    	resp.setMessage("created succesfully");
+        return new ResponseEntity<SalesChannelServiceResponse>(resp, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/updatesaleschannel", method = RequestMethod.POST)
-    public ResponseEntity<String> updateSalesChannel(@RequestBody SalesChannelRequest createRequest) {
+    public ResponseEntity<SalesChannelServiceResponse> updateSalesChannel(@RequestBody SalesChannelRequest createRequest) {
     	salesChannelAppService.update(createRequest);
-        return new ResponseEntity<>("updated succesfully", HttpStatus.OK);
+    	SalesChannelServiceResponse resp = new SalesChannelServiceResponse();
+    	resp.setMessage("updated succesfully");
+        return new ResponseEntity<SalesChannelServiceResponse>(resp, HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -43,8 +48,10 @@ public class SalesChannelRestController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/deletesaleschannel", method = RequestMethod.GET)
-    public ResponseEntity<String> deleteSalesChannel(@RequestParam(required=true) int id){
+    public ResponseEntity<SalesChannelServiceResponse> deleteSalesChannel(@RequestParam(required=true) int id){
     	salesChannelAppService.delete(id);
-    	return new ResponseEntity<>("updated succesfully", HttpStatus.OK);
+    	SalesChannelServiceResponse resp = new SalesChannelServiceResponse();
+    	resp.setMessage("deleted succesfully");
+    	return new ResponseEntity<SalesChannelServiceResponse>(resp, HttpStatus.OK);
     }
 }

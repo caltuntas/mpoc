@@ -64,14 +64,20 @@ public class ProductSpecificationAppService {
         return characteristicRepository.findAllByIsDeletedIsFalse().stream()
                 .map(x -> new ProdSpecCharListResponse(x.getId(), x.getName(), x.getValueType(), x.getProductSpecCharacteristicValues().stream()
                         .map(y -> new ProdSpecCharValueModel(y.getId(), y.getValue())).
-                        collect(Collectors.toList())
-        )).collect(Collectors.toList());
+                                collect(Collectors.toList())
+                )).collect(Collectors.toList());
     }
 
 
-    public List<ProductSpecListModel> getSpecs(){
+    public List<ProductSpecListModel> getSpecs() {
         return productSpecificationRepository.findAll().stream()
-                .map(x->new ProductSpecListModel(x.getId(),x.getName(),x.getCode(),x.getDescription(),x.getCreateUserDate())).collect(Collectors.toList());
+                .map(x -> new ProductSpecListModel(x.getId(), x.getName(), x.getCode(), x.getDescription(), x.getCreateUserDate())).collect(Collectors.toList());
+
+
     }
 
+    public ProductSpecification findById(int id) {
+        return productSpecificationRepository.findByIdAndIsDeletedIsFalse(id);
+
+    }
 }

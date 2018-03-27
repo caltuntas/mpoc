@@ -96,3 +96,9 @@ svg {
   display: inline-block;
 }
 
+
+.centerCell{
+	text-align: center;
+	float: none;
+}
+
