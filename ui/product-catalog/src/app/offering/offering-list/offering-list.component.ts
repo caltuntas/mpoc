@@ -1,7 +1,6 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {Router} from "@angular/router";
-import {Offering} from "../model/offering.model";
 import {DatatableComponent} from "../../shared/ui/datatable/datatable.component";
 import {OfferingService} from "../offering.service";
 
@@ -10,12 +9,9 @@ import {OfferingService} from "../offering.service";
     templateUrl: './offering-list.component.html',
     styleUrls: ['./offering-list.component.css']
 })
-export class OfferingListComponent implements OnInit {
+export class OfferingListComponent implements OnInit, OnDestroy {
 
-    offerings: Array<Offering> = [];
     reRenderTable = false;
-
-    @ViewChild(DatatableComponent) offeringTable: DatatableComponent;
 
     options = {
         dom: "Bfrtip",
@@ -32,25 +28,10 @@ export class OfferingListComponent implements OnInit {
             {"data": "id"},
             {"data": "name"},
             {"data": "description"},
-            {
-                "data": "validFor.validForEndDate",
-                "render": function (data, type, full, meta) {
-                    return data == null ? "" : data;
-                }
-            },
+            {"data": "validForEndDate"},
             {"data": "isSellable"},
-            {
-                "data": "productSpecification.name",
-                "render": function (data, type, full, meta) {
-                    return data == null ? "" : data;
-                }
-            },
-            {
-                "data": "catalog.name",
-                "render": function (data, type, full, meta) {
-                    return data == null ? "" : data;
-                }
-            },
+            {"data": "productSpesificationCode"},
+            {"data": "catalogCode"},
             {
                 render: (data, type, fullRow, meta) => {
                     return `
@@ -58,13 +39,15 @@ export class OfferingListComponent implements OnInit {
                             <i class='fa fa-gear fa-lg'></i></button>
                             <ul class='dropdown-menu  ng-star-inserted'>                                
                                 <li>
-                                    <a class='sa-datatables-edit' offering-id='${fullRow.id}'>
+                                
+                                    <a class="sa-datatables-edit"  offering-id='${fullRow.id}'>
                                         <i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs" style="color:cornflowerblue"></i>
                                             Edit
                                     </a>
+                                    
                                 </li>
                                 <li>
-                                    <a class='sa-datatables-delete' offering-id='${fullRow.id}'>
+                                    <a class="sa-datatables-delete"  offering-id='${fullRow.id}'>
                                         <i class="fa fa-fw fa-ban text-muted hidden-md hidden-sm hidden-xs" style="color:red"></i>
                                             Delete
                                     </a>
@@ -75,6 +58,11 @@ export class OfferingListComponent implements OnInit {
             }],
 
     };
+
+    constructor(private router: Router,
+                private offeringService: OfferingService,
+                private cdRef: ChangeDetectorRef) {
+    }
 
     ngAfterViewInit() {
         document.querySelector('body').addEventListener('click', (event) => {
@@ -87,7 +75,6 @@ export class OfferingListComponent implements OnInit {
                 this.onDeleteOffering(target.getAttribute('offering-id'));
             }
         });
-
     }
 
     onEditOffering(offeringId) {
@@ -104,15 +91,18 @@ export class OfferingListComponent implements OnInit {
 
     reloadOfferingListTable() {
         this.reRenderTable = true;
-        this.cdRef.detectChanges();
+        if (!this.cdRef['destroyed']) {
+            this.cdRef.detectChanges();
+        }
         this.reRenderTable = false;
-    }
-
-    constructor(private router: Router, private offeringService: OfferingService, private cdRef: ChangeDetectorRef) {
     }
 
     ngOnInit() {
 
+    }
+
+    ngOnDestroy() {
+        this.cdRef.detach();
     }
 
     private handleError(error: any) {
