@@ -5,6 +5,8 @@ import { SalesChannelDetail } from './sales-channeldetail';
 import {SalesChannelService} from '../sales-channel.service'
 import {Observable} from "rxjs/Observable";
 import {SalesChannel} from "./sales-channel"
+import {NavigationExtras, Router, Routes} from "@angular/router";
+import {NotificationComponent} from "../../shared/utils/NotificationComponent";
 
 
 
@@ -16,7 +18,7 @@ export class SalesChannelDetailComponent implements OnInit {
   
   public scDetail: SalesChannelDetail = {NewForm: false, SalesChannelInstance : {id: null, code: null, name: null, description: null}}
   
-  constructor(route: ActivatedRoute, private scService: SalesChannelService) { 
+  constructor(private router: Router,route: ActivatedRoute, private scService: SalesChannelService, private notificationComponent: NotificationComponent) { 
     const id = route.snapshot.params.id;
     this.scDetail.NewForm = id == null || id == undefined;
     if(!this.scDetail.NewForm){
@@ -28,29 +30,41 @@ export class SalesChannelDetailComponent implements OnInit {
     
     if(!this.scDetail.NewForm)
     {
-      console.log("before");
-      console.log(this.scDetail);
       this.scService.getSalesChannel(this.scDetail.SalesChannelInstance.id).subscribe(details => this.scDetail.SalesChannelInstance = details);
-      console.log("after");
-      console.log(this.scDetail);
+
     }
   }
 
   
   save(detail)
   {
-    console.log("form submitted");
-    console.log(this.scDetail);
+
       if(this.scDetail.NewForm)
       {
-        this.scService.createSalesChannel(detail.SalesChannelInstance).subscribe();
+        this.scService.createSalesChannel(detail.SalesChannelInstance).subscribe(data => {
+
+          this.notificationComponent.showNotification("Create","Created successfully");
+          
+          this.routeToSClist();
+        } );
         console.log("new service called");
       }else
       {
-        this.scService.updateSalesChannel(detail.SalesChannelInstance).subscribe();
-        console.log("update new service called");
+        this.scService.updateSalesChannel(detail.SalesChannelInstance).subscribe(data => {
+
+          this.notificationComponent.showNotification("Update","Updated successfully");
+          
+          this.routeToSClist();
+          
+          
+        } );
+
       }
       
+  }
+  
+  routeToSClist(){
+    this.router.navigate(['/sales-channel']);
   }
   
 }

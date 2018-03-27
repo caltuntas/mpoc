@@ -12,7 +12,8 @@ import {OfferingSpecModel} from "../model/offering-spec-model";
 export class OfferingCreateComponent implements OnInit {
 
     model: CreateOfferingModel;
-    spesifications: Array<OfferingSpecModel> = [{"id": 1, "name": "name", "description": "dede"}];
+    spesifications: Array<OfferingSpecModel> = [{"id": "1", "name": "adsl", "description": "adsl"},
+                                                {"id": "2", "name": "fiber", "description": "fiber"}];
 
     constructor(private router: Router, private offeringService: OfferingService) {
         this.model = new CreateOfferingModel();
@@ -22,6 +23,8 @@ export class OfferingCreateComponent implements OnInit {
     }
 
     public onSubmit() {
+        this.model.productSpecificationId = jQuery("#spesification").val();
+        console.log(this.model)
         this.offeringService.createOffering(this.model).subscribe(data => {
             this.router.navigate(['/offering/offering-list']);
         });
