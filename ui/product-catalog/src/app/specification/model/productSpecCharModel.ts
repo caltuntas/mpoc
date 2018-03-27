@@ -4,7 +4,7 @@ export class productSpecCharModel {
   
    id:number
    name: string;
-   charType: string;
+   valueType: number;
    isSelected:boolean;
    values: Array<productSpecCharValueModel>;
 }

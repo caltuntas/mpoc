@@ -94,7 +94,7 @@
                       <button class="btn btn-danger" (click)="removeCharUse(i)"><i class="glyphicon glyphicon-minus"></i></button>
                     </div>
 
-                    <div class="form-group" *ngIf="characteristic.isSelected">
+                    <div class="form-group" *ngIf="characteristic.isSelected&& characteristic.valueType==1">
                       <label class="col-xs-2 col-lg-3 control-label">{{characteristic.name}} Values</label>
                       <div class="col-xs-9 col-lg-6">
                         <label class="checkbox-inline" *ngFor="let charValue of characteristic.values ">
@@ -123,7 +123,7 @@
                 <div class="form-actions">
                   <div class="row">
                     <div class="col-md-12">
-                      <button class="btn btn-default" [disabled]="!characteristicForm.valid" type="submit">
+                      <button class="btn btn-default" [disabled]="!characteristicForm.valid" (click)="save()">
                         <i class="fa fa-save"></i>
                         Save
                       </button>

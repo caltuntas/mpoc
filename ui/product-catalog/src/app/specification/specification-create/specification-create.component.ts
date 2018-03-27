@@ -15,7 +15,7 @@ export class SpecificationCreateComponent implements OnInit {
   
 
   constructor(private service: specificationService) {
-
+    this.productSpec=new productSpecificationCreateModel();
   }
 
   selectedCharUse: number = 0;
@@ -26,9 +26,8 @@ export class SpecificationCreateComponent implements OnInit {
     this.service.getCharacteristics().subscribe((data) => {
       this.characteristics=<Array<productSpecCharModel>>data;
     });
-    this.characteristics.filter(x => x.isSelected == true).slice();
-   
-   
+    
+   console.log(this.productSpec);
   }
 
   filterNonSelectedChars(cars: Array<productSpecCharModel>) {
@@ -36,46 +35,46 @@ export class SpecificationCreateComponent implements OnInit {
   }
   removeCharUse(i: number) {
     let characteristic = this.characteristics[i];
+    console.log(i);
+    console.log(characteristic);
     characteristic.isSelected = false;
-    this.productSpec.productSpecCharUses
-      .filter(x => x.id == characteristic.id)
-      .slice();
+    console.log( this.productSpec.productSpecCharUses);
+    this.productSpec.productSpecCharUses=this.productSpec.productSpecCharUses.filter(x => x.id == characteristic.id).slice()
+    console.log( this.productSpec.productSpecCharUses);
   }
 
   selectCharUse($event) {
     this.selectedCharUse = $event.target.value;
+    console.log(this.selectedCharUse);
+    
   }
 
   addCharUse() {
     if (this.selectedCharUse != 0) {
-      let charUse = this.characteristics.find(
-        x => x.id == this.selectedCharUse
-      );
+      let charUse = this.characteristics.find(x => x.id == this.selectedCharUse);
       charUse.isSelected = true;
-      this.productSpec.productSpecCharUses.push(
-        new productSpecCharUseModel(charUse.id)
-      );
+      this.productSpec.productSpecCharUses.push(new productSpecCharUseModel(charUse.id));
+      console.log(this.productSpec.productSpecCharUses);
     }
   }
   check(characteristic:productSpecCharModel, value: productSpecCharValueModel, $event){
     if($event.target.checked){
 
       characteristic.values.find(x=>x.id==value.id).isSelected=true;
-      this.productSpec.productSpecCharUses.find(
-        x => x.id == characteristic.id
-      ).values.push(value.id);
+      let charuse=this.productSpec.productSpecCharUses.find(x => x.id == characteristic.id);
+      charuse.values.push(value.id);
       
       
-    }else{
-    
+    }
+    else{    
       characteristic.values.find(x=>x.id==value.id).isSelected=false;
-      this.productSpec.productSpecCharUses.find(
-        x => x.id == characteristic.id
-      ).values.filter(x=>value.id).slice();
+      this.productSpec.productSpecCharUses.find(x => x.id == characteristic.id).values
+      = this.productSpec.productSpecCharUses.find(x => x.id == characteristic.id).values.filter(x=>value.id).slice();
     }
   }
 
   save(productSpec: productSpecificationCreateModel) {
-    console.log(productSpec);
+    console.log(productSpec,"dfg");
+  //  this.service.createSpec(productSpec);
   }
 }

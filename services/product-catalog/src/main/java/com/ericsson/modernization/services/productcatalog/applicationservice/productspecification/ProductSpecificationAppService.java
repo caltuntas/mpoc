@@ -62,8 +62,11 @@ public class ProductSpecificationAppService {
     }
 
     public List<ProdSpecCharListResponse> getCharacteristics() {
-        return characteristicRepository.findAllByIsDeletedIsFalse().stream().map(x -> new ProdSpecCharListResponse(x.getId(), x.getName(), x.getValueType(),
-                x.getProductSpecCharacteristicValues().stream().map(y -> new ProdSpecCharValueModel(y.getId(), y.getValue())).collect(Collectors.toList())
+        return characteristicRepository.findAllByIsDeletedIsFalse().stream().map(x ->
+                new ProdSpecCharListResponse(x.getId(), x.getName(), x.getValueType(),
+                x.getProductSpecCharacteristicValues().stream().map(
+                        y -> new ProdSpecCharValueModel(y.getId(), y.getValue())).
+                        collect(Collectors.toList())
         )).collect(Collectors.toList());
     }
 

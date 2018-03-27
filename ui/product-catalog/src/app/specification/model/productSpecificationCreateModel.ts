@@ -3,16 +3,18 @@ import { idNameModel } from "./idNameModel";
 import { productSpecCharUseModel } from "./productSpecCharUseModel";
 
 export class productSpecificationCreateModel {
+ constructor(){
+   this.productSpecCharUses=new  Array<productSpecCharUseModel>();
+ }
  
- 
-  public name: string;
-  public code: string;
-  public description: string;
+   name: string;
+   code: string;
+   description: string;
   // public status: number;
   // public statusList: Array<idNameModel>;
   // public productType: number;
   // public productTypeList: Array<idNameModel>;
   //public isReplicated: boolean;
-  public productSpecCharUses: Array<productSpecCharUseModel>;
+   productSpecCharUses: Array<productSpecCharUseModel>;
    
 }
