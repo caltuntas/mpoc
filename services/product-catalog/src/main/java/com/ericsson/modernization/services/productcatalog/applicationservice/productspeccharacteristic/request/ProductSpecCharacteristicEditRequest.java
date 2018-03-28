@@ -3,12 +3,30 @@ package com.ericsson.modernization.services.productcatalog.applicationservice.pr
 import java.util.Date;
 
 public class ProductSpecCharacteristicEditRequest {
+    private int ID;
     private String name;
     private Date validForStartDate;
     private Date validForEndDate;
     private int valueType;
     private String description;
     private String externalId;
+    private String charValueString;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getCharValueString() {
+        return charValueString;
+    }
+
+    public void setCharValueString(String charValueString) {
+        this.charValueString = charValueString;
+    }
 
     public String getName() {
         return name;

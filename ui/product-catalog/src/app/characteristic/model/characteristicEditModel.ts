@@ -6,4 +6,5 @@ export class CharacteristicEditModel {
     public description: string;
     public valueType: number;
     public validFor: ValidDateModel;
+    public charValueString: string;
 }

@@ -13,47 +13,31 @@ export class CategoryCreateComponent implements OnInit {
   id: string;
   gunStart: number;
   gunEnd: number;
-  parents: Array<OfferingSpecModel> = [
-    {"id": "1", "name": "isortagim", "description": "isortagim"},
-    {"id": "2", "name": "vodafonenet", "description": "vodafonenet"},
-    {"id": "3", "name": "ADSL", "description": "ADSL"}
-  ];
-
+  parents: Array<Category>;
   constructor(private route: ActivatedRoute, private router: Router, private service: CategoryService) {
     this.model = new Category();
-    this.model.isRoot = false;
   }
 
-  ngOnInit() {/*
-    this.id = this.router.snapshot.paramMap.get('id');
-
-    this.service.get(Number(this.id))
-      .subscribe(res => {
-        console.log(res);
-        this.model = res;
-      });*/
+  ngOnInit() {
+    if (this.route.snapshot.params.id) {
+      this.service.get(this.route.snapshot.params.id)
+        .subscribe(data => this.model = data);
+    }
+    this.service.getAll().subscribe(data => {
+      this.parents = <Array<Category>>data;
+    });
   }
 
-  onChange($event) { }
+  //onChange($event) { }
   onSubmit() {
-    // this.service.create(this.model).subscribe(data => {
-    //   console.log('\n', data, '\n\n');
-    //   this.router.navigate(['/category/category-list']);
-    // });
-
-    //this.service.create(this.model).subscribe();
-    //this.router.navigate(['/category/category-list']);
+    this.model.parentId = jQuery("#parentId").val();
     if (this.route.snapshot.params.id == null) {
       this.service.create(this.model).subscribe();
-      console.log("new service called");
     } else {
       this.service.update(this.route.snapshot.params.id, this.model).subscribe();
-      console.log("update new service called");
     }
     this.router.navigate(['/category']);
   }
-
-
 
 }
 

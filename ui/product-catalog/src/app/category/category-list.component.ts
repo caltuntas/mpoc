@@ -19,6 +19,7 @@ export class CategoryListComponent implements OnInit {
             this.service.getAll()
                 .catch(this.handleError)
                 .subscribe((data) => {
+                    this.categories = <Array<Category>>data;
                     callback({
                         aaData: data
                     })
@@ -27,11 +28,10 @@ export class CategoryListComponent implements OnInit {
         "iDisplayLength": 15,
         columns: [
             {"data": "id"},
+            {"data": "parent"},
             {"data": "code"},
             {"data": "name"},
             {"data": "description"},
-            {"data": "parentId"},
-            {"data": "isRoot"},                        
             {
                 render: (data, type, fullRow, meta) => {
                     return `
@@ -62,6 +62,7 @@ export class CategoryListComponent implements OnInit {
     onEdit(categoryId) {
         console.log("Edit category:", categoryId);
         this.router.navigate(['/category/' + categoryId]);
+        
     }
 
     onDelete(categoryId) {
