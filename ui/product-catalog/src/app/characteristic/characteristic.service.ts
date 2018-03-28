@@ -3,9 +3,10 @@ import {CharacteristicListModel} from "./model/characteristicListModel";
 import {Observable} from "rxjs/Observable";
 import {HttpClientProvider} from "../shared/httpclientprovider/http-client-provider";
 import {CharacteristicEditModel} from './model/characteristicEditModel';
+import {ProdSpecCharValueUseListModel} from "./model/prod-spec-char-value-use-list.model";
 
 @Injectable()
-export class CharacteristicService{
+export class CharacteristicService {
 
     constructor(private http: HttpClientProvider) {
     }
@@ -29,5 +30,9 @@ export class CharacteristicService{
 
     updateCharacteristic(model) {
         return this.http.post('/productspeccharacteristic/updateproductspeccharacteristic/', model);
+    }
+
+    getSpecCharValueUses(specId): Observable<ProdSpecCharValueUseListModel[]> {
+        return this.http.get('/productspeccharacteristic/getspeccharvalueuselist/' + specId);
     }
 }
