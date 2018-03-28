@@ -5,6 +5,7 @@ import {HttpClientProvider} from './shared/httpclientprovider/http-client-provid
 import {CatalogService} from './catalog/catalog.service';
 import {CharacteristicService} from './characteristic/characteristic.service';
 import {OfferingService} from "./offering/offering.service";
+import {specificationService} from "./specification/specification.service";
 
 
 @Injectable()
@@ -23,5 +24,6 @@ export const APP_RESOLVER_PROVIDERS = [
     HttpClientProvider,
     OfferingService,
     CharacteristicService,
-    CatalogService
+    CatalogService,
+    specificationService
 ];

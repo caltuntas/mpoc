@@ -10,10 +10,11 @@ import {
     animate
 } from '@angular/animations'
 import {CreateOfferingModel} from "../model/create-offering-model";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {specificationService} from "../../specification/specification.service";
 import {CatalogService} from "../../catalog/catalog.service";
 import {Catalog} from "../../catalog/model/catalog.model";
+import {OfferingService} from "../offering.service";
 
 @Component({
     selector: 'app-offering-edit',
@@ -32,23 +33,13 @@ import {Catalog} from "../../catalog/model/catalog.model";
         ])
     ]
 })
-export class OfferingEditComponent implements OnInit {
+export class OfferingEditComponent implements OnInit, DoCheck {
 
     specs: Array<specificationListModel> = [];
     catalogs: Array<Catalog> = [];
 
-    constructor(private route: ActivatedRoute,
-                private catalogService: CatalogService) {
-        this.model = new CreateOfferingModel();
-    }
-
-    ngOnInit() {
-        this.catalogService.getCatalogs().subscribe((catalogs) => {
-            this.catalogs = catalogs;
-        })
-    }
-
     public model: CreateOfferingModel;
+    private lastModel;
 
     public steps = [
         {
@@ -74,6 +65,13 @@ export class OfferingEditComponent implements OnInit {
         },
         {
             key: 'step4',
+            title: 'Documents',
+            valid: true,
+            checked: false,
+            submitted: false,
+        },
+        {
+            key: 'step5',
             title: 'Save Form',
             valid: true,
             checked: false,
@@ -83,8 +81,26 @@ export class OfferingEditComponent implements OnInit {
 
     public activeStep = this.steps[0];
 
-    setActiveStep(steo) {
-        this.activeStep = steo
+    constructor(private route: ActivatedRoute,
+                private router: Router,
+                private offeringService: OfferingService,
+                private catalogService: CatalogService,
+                private specService: specificationService) {
+        this.model = new CreateOfferingModel();
+    }
+
+    ngOnInit() {
+        this.catalogService.getCatalogs().subscribe((catalogs) => {
+            this.catalogs = catalogs;
+        });
+
+        this.specService.getSpecifications().subscribe((specs) => {
+            this.specs = specs;
+        })
+    }
+
+    setActiveStep(step) {
+        this.activeStep = step;
     }
 
     prevStep() {
@@ -114,27 +130,39 @@ export class OfferingEditComponent implements OnInit {
         }
     }
 
+    onSpecChanged(event) {
+        this.model.productSpecificationId = jQuery("#specSelect").val();
+    }
+
+    onCatalogChanged(event) {
+        this.model.catalogId = jQuery("#catalogSelect").val();
+    }
 
     onWizardComplete(data) {
         console.log('basic wizard complete', data)
     }
 
+    public onSubmit() {
+        this.offeringService.createOffering(this.model).subscribe(data => {
+            this.router.navigate(['/offering/offering-list']);
+        });
+    }
 
-    private lastModel;
 
     // custom change detection
-    /*ngDoCheck() {
+    ngDoCheck() {
         if (!this.lastModel) {
             // backup model to compare further with
             this.lastModel = Object.assign({}, this.model)
         } else {
             if (Object.keys(this.model).some(it => this.model[it] != this.lastModel[it])) {
                 // change detected
-                this.steps.find(it => it.key == 'step1').valid = !!(this.model.email && this.model.firstname && this.model.lastname);
-                this.steps.find(it => it.key == 'step2').valid = !!(this.model.country && this.model.city && this.model.postal);
+                this.steps.find(it => it.key == 'step1').valid = !!(this.model.name && this.model.description);
+                this.steps.find(it => it.key == 'step2').valid = !!(this.model.productSpecificationId);
+                this.steps.find(it => it.key == 'step3').valid = !!(this.model.catalogId);
                 this.lastModel = Object.assign({}, this.model)
             }
         }
-    }*/
+    }
 
 }
