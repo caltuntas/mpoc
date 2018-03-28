@@ -1,15 +1,17 @@
 package com.ericsson.modernization.services.productcatalog.rest.productspeccharacteristic;
 
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProdSpecCharValueUseAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProductSpecCharacteristicAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.request.ProductSpecCharacteristicCreateRequest;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.request.ProductSpecCharacteristicEditRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.response.ProdSpecCharValueUseListModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.response.ProductSpecCharacteristicServiceResponse;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharacteristic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
 
 import java.util.List;
 
@@ -18,6 +20,9 @@ import java.util.List;
 public class ProductSpecCharacteristicRestController {
     @Autowired
     private ProductSpecCharacteristicAppService productSpecCharacteristicAppService;
+    @Autowired
+    private ProdSpecCharValueUseAppService prodSpecCharValueUseAppService;
+
 
     @RequestMapping(value = "/createproductspeccharacteristic", method = RequestMethod.POST)
     public ResponseEntity<ProductSpecCharacteristicServiceResponse> createProductSpecCharacteristic(@RequestBody ProductSpecCharacteristicCreateRequest productSpecCharacteristicCreateRequest) {
@@ -28,7 +33,7 @@ public class ProductSpecCharacteristicRestController {
     }
 
     @RequestMapping(value = "/getallcharacteristics", method = RequestMethod.GET)
-    public ResponseEntity<List<ProductSpecCharacteristic>> getallcharacteristics(){
+    public ResponseEntity<List<ProductSpecCharacteristic>> getallcharacteristics() {
         return new ResponseEntity<List<ProductSpecCharacteristic>>(productSpecCharacteristicAppService.findAll(), HttpStatus.OK);
     }
 
@@ -52,4 +57,10 @@ public class ProductSpecCharacteristicRestController {
         response.setMessage("The product specification characteristic with id : " + productSpecCharacteristic.getId() + "is updated");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/getspeccharvalueuselist/{specId}", method = RequestMethod.GET)
+    public ResponseEntity<List<ProdSpecCharValueUseListModel>> getSpecCharValueUseList(@PathVariable int specId) {
+        return new ResponseEntity<>(prodSpecCharValueUseAppService.getProdSpecCharValueUses(specId), HttpStatus.OK);
+    }
+
 }
