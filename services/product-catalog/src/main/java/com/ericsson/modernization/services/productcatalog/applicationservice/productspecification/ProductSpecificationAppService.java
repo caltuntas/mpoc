@@ -4,6 +4,7 @@ import com.ericsson.modernization.services.productcatalog.applicationservice.pro
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.request.ProductSpecificationValueItemModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProdSpecCharListResponse;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProdSpecCharValueModel;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProductSpecDetailForEditResponse;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProductSpecListModel;
 import com.ericsson.modernization.services.productcatalog.model.*;
 import com.ericsson.modernization.services.productcatalog.repository.ProductSpecCharacteristicRepository;
@@ -49,7 +50,9 @@ public class ProductSpecificationAppService {
 
                 ProductSpecCharacteristicValue val = characteristicValueRepository.findById(selectedValue);
                 ProdSpecCharValueUse valueUse = new ProdSpecCharValueUse();
+
                 valueUse.setProductSpecCharacteristicValue(val);
+                val.AddValueUse(valueUse);
                 valueUse.setProductSpecCharUse(charuse);
                 charuse.addProductSpecCharValueUse(valueUse);
             }
@@ -80,4 +83,19 @@ public class ProductSpecificationAppService {
         return productSpecificationRepository.findByIdAndIsDeletedIsFalse(id);
 
     }
+
+    public ProductSpecDetailForEditResponse getSpecForEdit(int id) {
+        ProductSpecification spec = productSpecificationRepository.findById(id).get();
+        ProductSpecDetailForEditResponse model = new ProductSpecDetailForEditResponse();
+        model.id = spec.getId();
+        model.name = spec.getName();
+        model.code = spec.getCode();
+        model.description = spec.getDescription();
+        model.selectedCharacteristics = spec.getProductSpecCharUses().stream()
+                .map(x -> new ProductSpecificationValueItemModel(x.getId(),
+                        x.getProductSpecCharValueUses().stream().map(y -> y.getProductSpecCharacteristicValue().getId()).collect(Collectors.toList()))).collect(Collectors.toList());
+        return model;
+    }
+
 }
+
