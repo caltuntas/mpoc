@@ -48,8 +48,10 @@ public class ProductSpecificationAppService {
             charuse.setProductSpecification(productSpecification);
             charuse.setProductSpecCharacteristic(characteristic);
             charuse.setCreateUserDate(new Date());
-            //charuse.setCharacteristicType(1);
+            charuse.setCharacteristicType(1);
+            charuse.setVersionNumber(1);
             charuse.setUpdateUserDate(new Date());
+
 
             charUseRepository.save(charuse);
 
