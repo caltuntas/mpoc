@@ -1,15 +1,19 @@
 package com.ericsson.modernization.services.productcatalog.rest.category;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.ericsson.modernization.services.productcatalog.category.CategoryAppService;
-import com.ericsson.modernization.services.productcatalog.category.request.CategoryCreateRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.category.CategoryAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.category.request.CategoryCreateRequest;
 import com.ericsson.modernization.services.productcatalog.model.Category;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/category")
@@ -24,6 +28,12 @@ public class CategoryRestController {
 		return new ResponseEntity<>(categories, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Category> getById(@PathVariable int id) {
+		Category category = appService.findById(id);
+		return new ResponseEntity<>(category, HttpStatus.OK);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> create(@RequestBody CategoryCreateRequest request) {
 		Category category = appService.create(request);
@@ -33,7 +43,7 @@ public class CategoryRestController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateCategory(@PathVariable int id, @RequestBody CategoryCreateRequest request) {
-		//appService.update(id);
+		appService.update(request);
 		String message = "The category with id : " + id + " is updated.";
 		return new ResponseEntity<>(message, HttpStatus.NO_CONTENT);
 	}
