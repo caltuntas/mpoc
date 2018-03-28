@@ -19,6 +19,7 @@ export class CategoryListComponent implements OnInit {
             this.service.getAll()
                 .catch(this.handleError)
                 .subscribe((data) => {
+                    this.categories = <Array<Category>>data;
                     callback({
                         aaData: data
                     })
@@ -62,6 +63,7 @@ export class CategoryListComponent implements OnInit {
     onEdit(categoryId) {
         console.log("Edit category:", categoryId);
         this.router.navigate(['/category/' + categoryId]);
+        
     }
 
     onDelete(categoryId) {

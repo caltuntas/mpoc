@@ -20,7 +20,7 @@ export const routes: Routes = [
         }
     },
     {
-        path: '/:id',
+        path: ':id',
         component: CategoryCreateComponent, data: {
             pageTitle: 'Edit the category'
         }
