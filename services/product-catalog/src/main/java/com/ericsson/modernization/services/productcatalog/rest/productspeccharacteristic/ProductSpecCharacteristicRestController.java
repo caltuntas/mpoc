@@ -45,11 +45,11 @@ public class ProductSpecCharacteristicRestController {
         return new ResponseEntity<ProductSpecCharacteristic>(productSpecCharacteristicAppService.findById(characteristicId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/updateproductspeccharacteristic", method = RequestMethod.POST)
+/*    @RequestMapping(value = "/updateproductspeccharacteristic", method = RequestMethod.POST)
     public ResponseEntity<ProductSpecCharacteristicServiceResponse> updateProductSpecCharacteristic(@RequestBody ProductSpecCharacteristicEditRequest productSpecCharacteristicEditRequest) {
         ProductSpecCharacteristic productSpecCharacteristic = productSpecCharacteristicAppService.updateCharacteristic(productSpecCharacteristicEditRequest);
         ProductSpecCharacteristicServiceResponse response = new ProductSpecCharacteristicServiceResponse();
         response.setMessage("The product specification characteristic with id : " + productSpecCharacteristic.getId() + "is updated");
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+    }*/
 }
