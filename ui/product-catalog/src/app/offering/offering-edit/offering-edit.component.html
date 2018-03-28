@@ -1,3 +1,198 @@
-<h2>
-    offering with id : {{offeringId}} is ready to be edited!
-</h2>
+<div sa-widget [editbutton]="false" [deletebutton]="false" color="darken">
+    <header>
+        <span class="widget-icon"> <i class="fa fa-check"></i> </span>
+
+        <h2>Very Basic Wizard Example </h2>
+
+    </header>
+
+    <!-- widget div-->
+    <div>
+
+        <!-- widget content -->
+        <div class="widget-body">
+
+            <div class="row">
+                <form novalidate="novalidate">
+                    <div class="col-sm-12">
+                        <div class="form-bootstrapWizard clearfix">
+                            <ul class="bootstrapWizard">
+                                <li *ngFor="let pane of steps; let i = index" [class.active]="activeStep == pane">
+                                    <a (click)="setActiveStep(pane)"> <span class="step">
+                    <span *ngIf="!pane.checked">{{i + 1}}</span>
+                    <i class="fa fa-check" *ngIf="pane.checked"></i>
+                  </span> <span class="title">{{pane.title}}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane" [class.active]="activeStep.key == 'step1'">
+                                <br>
+
+                                <h3><strong>Step 1 </strong> - Basic Information</h3>
+
+                                <div class="row">
+
+                                    <div class="smart-form">
+                                        <div class="col-sm-1">
+
+                                        </div>
+                                        <div class="col-sm-9">
+
+                                            <fieldset>
+                                                <section class="col col-6">
+                                                    <label class="input"> <i class="icon-append fa fa-user"></i>
+                                                        <input [(ngModel)]="model.name" type="text" name="offeringName"
+                                                               placeholder="Offering Name"/>
+                                                        <b class="tooltip tooltip-bottom-right">Type offering name
+                                                            here</b> </label>
+                                                </section>
+
+
+                                                <section class="col col-6">
+                                                    <label class="input"> <i class="icon-append fa fa-user"></i>
+                                                        <input [(ngModel)]="model.name" type="text"
+                                                               name="offeringDescription"
+                                                               placeholder="Offering Description"/>
+                                                        <b class="tooltip tooltip-bottom-right">Type offering
+                                                            description here</b> </label>
+                                                </section>
+
+                                                <section class="col col-6">
+                                                    <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                                        <input type="text" name="validForStartDate"
+                                                               id="validForStartDate"
+                                                               [saUiDatepicker]="{maxRestrict:'#startdate'}"
+                                                               placeholder="First Valid Date"/>
+                                                    </label>
+                                                </section>
+
+                                                <section class="col col-6">
+                                                    <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                                        <input type="text" name="validForEndDate" id="validForEndDate"
+                                                               [saUiDatepicker]="{maxRestrict:'#startdate'}"
+                                                               placeholder="Last Valid Date"/>
+                                                    </label>
+                                                </section>
+
+                                                <section class="col col-6">
+                                                    <label class="toggle">
+                                                        <input type="checkbox" name="checkbox-toggle" checked="checked">
+                                                        <i data-swchon-text="ON" data-swchoff-text="OFF"></i>Is
+                                                        Sellable?</label>
+                                                </section>
+
+                                                <section class="col col-6">
+                                                    <label class="toggle">
+                                                        <input type="checkbox" name="checkbox-toggle" checked="checked">
+                                                        <i data-swchon-text="ON" data-swchoff-text="OFF"></i>Is
+                                                        Replicated?</label>
+                                                </section>
+
+                                            </fieldset>
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="tab-pane" [class.active]="activeStep.key == 'step2'">
+                                <br>
+
+                                <h3><strong>Step 2</strong> - Billing Information</h3>
+                                <div class="row">
+
+                                    <div class="smart-form">
+                                        <div class="col-sm-2">
+
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <fieldset>
+                                                <section class="col col-9">
+                                                    <select select2 style="width:100%" data-select-search="true" id="specs"
+                                                            name="catalogs"
+                                                            required [(ngModel)]="model.productSpecificationId"
+                                                            (change)="onChange($event)" #selectSpecControl="ngModel">
+                                                        <option *ngFor="let spec of specs" [value]="spec.id">
+                                                            {{spec.name}}
+                                                        </option>
+                                                    </select>
+                                                </section>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" [class.active]="activeStep.key == 'step3'">
+                                <br>
+
+                                <h3><strong>Step 3</strong> - Catalog</h3>
+                                <div class="row">
+
+                                    <div class="smart-form">
+                                        <div class="col-sm-2">
+
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <fieldset>
+                                                <section class="col col-9">
+                                                    <select select2 style="width:100%" data-select-search="true" id="catalogs"
+                                                            name="catalogs"
+                                                            required [(ngModel)]="model.catalogId"
+                                                            (change)="onChange($event)" #selectCatalogControl="ngModel">
+                                                        <option *ngFor="let catalog of catalogs" [value]="catalog.id">
+                                                            {{catalog.name}}
+                                                        </option>
+                                                    </select>
+                                                </section>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" [class.active]="activeStep.key == 'step4'">
+                                <br>
+
+                                <h3><strong>Step 4</strong> - Save Form</h3>
+                                <br>
+
+                                <h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Complete</strong></h1>
+                                <h4 class="text-center">Click next to finish</h4>
+                                <br>
+                                <br>
+                            </div>
+
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <ul class="pager wizard no-margin">
+                                            <li class="previous">
+                                                <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0"
+                                                   class="btn btn-lg btn-default"> Previous
+                                                </a>
+                                            </li>
+                                            <li class="next">
+                                                <a (click)="nextStep()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken"> Next
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <!-- end widget content -->
+
+    </div>
+    <!-- end widget div -->
+
+</div>
