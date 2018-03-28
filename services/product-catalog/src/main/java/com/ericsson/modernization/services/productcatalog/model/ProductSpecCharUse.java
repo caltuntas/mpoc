@@ -26,9 +26,13 @@ public class ProductSpecCharUse extends EntityBase {
         this.productSpecCharacteristic = productSpecCharacteristic;
     }
 
+    public ProductSpecCharacteristic getProductSpecCharacteristic(){
+        return this.productSpecCharacteristic;
+    }
     public ProductSpecification getProductSpecification() {
         return productSpecification;
     }
+
 
     public void setProductSpecification(ProductSpecification productSpecification) {
         this.productSpecification = productSpecification;

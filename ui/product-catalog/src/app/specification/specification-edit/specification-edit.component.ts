@@ -5,43 +5,75 @@ import { productSpecCharUseModel } from "../model/productSpecCharUseModel";
 import { productSpecCharModel } from "../model/productSpecCharModel";
 import { productSpecCharValueModel } from "../model/productSpecCharValueModel";
 import { specificationService } from "../specification.service";
-import {Router, ActivatedRoute} from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { productSpecEditModel } from "../model/productSpecEditModel";
+
+import { Http } from "@angular/http";
+
+import { forkJoin } from "rxjs/observable/forkJoin";
+import { environment } from "../../../environments/environment";
+
 @Component({
   selector: "app-specification-edit",
   templateUrl: "./specification-edit.component.html"
 })
 export class SpecificationEditComponent implements OnInit {
-  constructor(private router: Router, private route: ActivatedRoute, private service: specificationService) { 
-  }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private service: specificationService,
+    private http: Http
+  ) {}
 
   selectedChar: number = 0;
-  id:string;
+  id: string;
   productSpec: productSpecEditModel;
   characteristics: Array<productSpecCharModel>;
 
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get("id");
 
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.service.getSpecificationForEdit(this.id).subscribe(data => {
-      this.productSpec = <productSpecEditModel>data;
-      this.service.getCharacteristics().subscribe(data => {
-        this.characteristics = <Array<productSpecCharModel>>data;
+    this.getCharacteristics();
 
-        this.productSpec.selectedCharacteristics.forEach(selectedChar => {
-          this.characteristics.find(x=>x.id==selectedChar.id).isSelected=true;
-          selectedChar.selectedValueIds.forEach(selectedValueId => {
-            this.characteristics.find(x=>x.id==selectedChar.id).values.find(x=>x.id==selectedValueId).isSelected=true;
-          });
+    let chars = this.http.get(
+      environment.productCatalogRootUrl + "/productspec/getCharacteristics"
+    );
+
+    let prod = this.http.get(
+      environment.productCatalogRootUrl +
+        "/productspec/getSpecForEdit/" +
+        this.id
+    );
+
+    forkJoin([chars, prod]).subscribe(results => {
+      this.characteristics = <Array<productSpecCharModel>>results[0].json();
+      this.productSpec = <productSpecEditModel>results[1].json();
+
+      this.productSpec.selectedCharacteristics.forEach(selectedChar => {
+        this.characteristics.find(
+          x => x.id == selectedChar.id
+        ).isSelected = true;
+        selectedChar.selectedValueIds.forEach(selectedValueId => {
+          this.characteristics
+            .find(x => x.id == selectedChar.id)
+            .values.find(x => x.id == selectedValueId).isSelected = true;
         });
-
-        console.log(this.productSpec);
-        console.log(this.characteristics);
       });
     });
-   
+  }
 
-   
+  getCharacteristics() {
+    this.http
+      .get(`http://localhost:8080/productspec/getCharacteristics`)
+      .subscribe(data => {
+        this.characteristics = <Array<productSpecCharModel>>data.json();
+      });
+  }
+
+  private extractData(res: Response) {
+    let body = res.json();
+    console.log(body);
+    return body;
   }
 
   filterNonSelectedChars(cars: Array<productSpecCharModel>) {
@@ -62,9 +94,7 @@ export class SpecificationEditComponent implements OnInit {
 
   addCharUse() {
     if (this.selectedChar != 0) {
-      let charUse = this.characteristics.find(
-        x => x.id == this.selectedChar
-      );
+      let charUse = this.characteristics.find(x => x.id == this.selectedChar);
       charUse.isSelected = true;
       this.productSpec.selectedCharacteristics.push(
         new productSpecCharUseModel(charUse.id)
@@ -94,12 +124,9 @@ export class SpecificationEditComponent implements OnInit {
   }
 
   saveForm(productSpec: productSpecificationCreateModel) {
-
-
     this.service.createSpec(this.productSpec).subscribe(data => {
       console.log(data);
-     
-  });
-  this.router.navigate(['/specification/specification-list']);
+    });
+    this.router.navigate(["/specification/specification-list"]);
   }
 }
