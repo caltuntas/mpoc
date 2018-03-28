@@ -58,20 +58,13 @@ export class OfferingEditComponent implements OnInit, DoCheck {
         },
         {
             key: 'step3',
-            title: 'Catalog',
-            valid: true,
-            checked: false,
-            submitted: false,
-        },
-        {
-            key: 'step4',
             title: 'Documents',
             valid: true,
             checked: false,
-            submitted: false,
-        },
+            submitted: false,        },
+
         {
-            key: 'step5',
+            key: 'step4',
             title: 'Save Form',
             valid: true,
             checked: false,
