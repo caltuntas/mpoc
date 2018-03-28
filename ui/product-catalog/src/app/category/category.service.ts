@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class CategoryService {
 
-    public path: string = `/category`;
+    public path: string = `/categories`;
 
     constructor(private http: HttpClientProvider) { }
 
