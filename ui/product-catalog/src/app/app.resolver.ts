@@ -6,6 +6,8 @@ import {CatalogService} from './catalog/catalog.service';
 import {CharacteristicService} from './characteristic/characteristic.service';
 import {OfferingService} from "./offering/offering.service";
 import {specificationService} from "./specification/specification.service";
+import { HomeService } from './home/home.service';
+import { DocumentService } from './document/document.service';
 
 
 @Injectable()
@@ -25,5 +27,7 @@ export const APP_RESOLVER_PROVIDERS = [
     OfferingService,
     CharacteristicService,
     CatalogService,
-    specificationService
+    specificationService,
+    HomeService,
+    DocumentService
 ];

@@ -1,8 +1,19 @@
-<div sa-widget [editbutton]="false" [deletebutton]="false" color="darken">
-    <header>
-        <span class="widget-icon"> <i class="fa fa-check"></i> </span>
+<div sa-widget [editbutton]="false" [deletebutton]="false">
+    <!-- widget options:
+    usage: <div sa-widget [editbutton]="false">
 
-        <h2>Offering text will be here..</h2>
+    [colorbutton]="false"
+    [editbutton]="false"
+    [togglebutton]="false"
+    [deletebutton]="false"
+    [fullscreenbutton]="false"
+    [custombutton]="false"
+    [collapsed]="true"
+    [sortable]="false"
+
+    -->
+    <header>
+        <h2>Offering Text will be here..</h2>
 
     </header>
 
@@ -10,27 +21,54 @@
     <div>
 
         <!-- widget content -->
-        <div class="widget-body">
+        <div class="widget-body fuelux">
+            <fuel-ux-wizard (complete)="onWizardComplete($event)">
+                <div class="wizard">
+                    <div class="steps-container">
+                        <ul class="steps">
+                            <li data-step="1" class="active">
+                                <span class="badge badge-info">1</span>Basic Info<span class="chevron"></span>
+                            </li>
+                            <li data-step="2">
+                                <span class="badge">2</span>Spesification<span class="chevron"></span>
+                            </li>
+                            <li data-step="3">
+                                <span class="badge">3</span>Price<span class="chevron"></span>
+                            </li>
+                            <li data-step="4">
+                                <span class="badge">4</span>Catalog<span class="chevron"></span>
+                            </li>
+                            <li data-step="5">
+                                <span class="badge">5</span>Segment<span class="chevron"></span>
+                            </li>
+                            <li data-step="6">
+                                <span class="badge">6</span>Category<span class="chevron"></span>
+                            </li>
+                            <li data-step="7">
+                                <span class="badge">7</span>Sale Channel<span class="chevron"></span>
+                            </li>
+                            <li data-step="8">
+                                <span class="badge">8</span>Document<span class="chevron"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="actions">
+                        <button type="button" class="btn btn-sm btn-primary btn-prev">
+                            <i class="fa fa-arrow-left"></i>Prev
+                        </button>
+                        <button type="button" class="btn btn-sm btn-success btn-next" data-last="Finish">
+                            Next<i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="step-content">
+                    <form class="form-horizontal">
 
-            <div class="row">
-                <form novalidate="novalidate">
-                    <div class="col-sm-12">
-                        <div class="form-bootstrapWizard clearfix">
-                            <ul class="bootstrapWizard">
-                                <li *ngFor="let pane of steps; let i = index" [class.active]="activeStep == pane">
-                                    <a (click)="setActiveStep(pane)"> <span class="step">
-                    <span *ngIf="!pane.checked">{{i + 1}}</span>
-                    <i class="fa fa-check" *ngIf="pane.checked"></i>
-                  </span> <span class="title">{{pane.title}}</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tab-content">
-                            <div class="tab-pane" [class.active]="activeStep.key == 'step1'">
-                                <br>
+                        <div class="step-pane active" data-step="1">
+                            <h3><strong>Step 1 </strong> - Validation states</h3>
 
-                                <h3><strong>Step 1 </strong> - Basic Information</h3>
+                            <!-- wizard form starts here -->
+                            <fieldset>
 
                                 <div class="row">
 
@@ -89,25 +127,11 @@
                                                         <i data-swchon-text="ON" data-swchoff-text="OFF"></i>Is
                                                         Replicated?</label>
                                                 </section>
-
-                                                <section class="col col-2">
-                                                    <label class="toggle">Catalog:</label>
-                                                </section>
-
-                                                <section class="col col-10">
-                                                    <select select2 style="width:100%" data-select-search="true"
-                                                            id="catalogs"
-                                                            name="catalogSelect"
-                                                            required [(ngModel)]="model.catalogId"
-                                                            (ngModelChange)="onCatalogChanged($event)"
-                                                            #selectCatalogControl="ngModel">
-                                                        <option *ngFor="let catalog of catalogs" [value]="catalog.id">
-                                                            {{catalog.name}}
-                                                        </option>
-                                                    </select>
-                                                </section>
-
                                             </fieldset>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
 
                                         </div>
 
@@ -115,95 +139,109 @@
 
                                 </div>
 
-                            </div>
-                            <div class="tab-pane" [class.active]="activeStep.key == 'step2'">
-                                <br>
 
-                                <h3><strong>Step 2</strong> - Spesification & Characteristics</h3>
-                                <div class="row">
-
-                                    <div class="smart-form">
-                                        <div class="col-sm-2">
-
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <fieldset>
-                                                <section class="col col-9">
-                                                    <select select2 style="width:100%" data-select-search="true"
-                                                            id="specs"
-                                                            name="specSelect"
-                                                            required [(ngModel)]="model.productSpecificationId"
-                                                            (ngModelChange)="onSpecChanged($event)"
-                                                            #selectSpecControl="ngModel">
-                                                        <option *ngFor="let spec of specs" [value]="spec.id">
-                                                            {{spec.name}}
-                                                        </option>
-                                                    </select>
-                                                </section>
-
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane" [class.active]="activeStep.key == 'step3'">
-                                <br>
-
-                                <h3><strong>Step 3</strong> - Documents</h3>
-                                <div class="row">
-
-                                    <div class="smart-form">
-                                        <div class="col-sm-2">
-
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <fieldset>
-
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane" [class.active]="activeStep.key == 'step4'">
-                                <br>
-
-                                <h3><strong>Step 5</strong> - Save Form</h3>
-                                <br>
-
-                                <h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Complete</strong>
-                                </h1>
-                                <h4 class="text-center">Click next to finish</h4>
-                                <br>
-                                <br>
-                            </div>
-
-                            <div class="form-actions">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <ul class="pager wizard no-margin">
-                                            <li class="previous">
-                                                <a (click)="prevStep()"
-                                                   [class.disabled]="steps.indexOf(activeStep) == 0"
-                                                   class="btn btn-lg btn-default"> Previous
-                                                </a>
-                                            </li>
-                                            <li class="next">
-                                                <a (click)="nextStep()"
-                                                   [class.disabled]="activeStep.submitted && !activeStep.valid"
-                                                   class="btn btn-lg txt-color-darken"> Next
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            </fieldset>
 
                         </div>
-                    </div>
-                </form>
-            </div>
 
+                        <div class="step-pane" data-step="2">
+                            <h3><strong>Step 2 </strong> - Alerts</h3>
+
+                            <alert type="warning" dismissible="true">
+                                <i class="fa-fw fa fa-warning"></i>
+                                <strong>Warning</strong> Your monthly traffic is reaching limit.
+                            </alert>
+
+                            <alert type="success" dismissible="true">
+                                <i class="fa-fw fa fa-check"></i>
+                                <strong>Success</strong> The page has been added.
+                            </alert>
+
+                            <alert type="info" dismissible="true">
+                                <i class="fa-fw fa fa-info"></i>
+                                <strong>Info!</strong> You have 198 unread messages.
+                            </alert>
+
+                            <alert type="danger" dismissible="true">
+                                <i class="fa-fw fa fa-times"></i>
+                                <strong>Error!</strong> The daily cronjob has failed.
+                            </alert>
+
+                        </div>
+
+                        <div class="step-pane" data-step="3">
+                            <h3><strong>Step 3 </strong> - Wizard continued</h3>
+                            <br>
+                            <br>
+
+                            <h1 class="text-center text-primary"> This will be your Step 3 </h1>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+
+                        <div class="step-pane" data-step="4">
+                            <h3><strong>Step 4 </strong> - Wizard continued...</h3>
+                            <br>
+                            <br>
+
+                            <div class="row">
+
+                                <div class="smart-form">
+                                    <div class="col-sm-1">
+
+                                    </div>
+                                    <div class="col-sm-9">
+
+                                        <fieldset>
+
+                                            <section class="col col-2">
+                                                <label class="toggle">Catalog:</label>
+                                            </section>
+
+                                            <section class="col col-10">
+                                                <select select2 style="width:100%" data-select-search="true"
+                                                        id="catalogs"
+                                                        name="catalogSelect"
+                                                        required [(ngModel)]="model.catalogId"
+                                                        (ngModelChange)="onCatalogChanged($event)"
+                                                        #selectCatalogControl="ngModel">
+                                                    <option *ngFor="let catalog of catalogs" [value]="catalog.id">
+                                                        {{catalog.name}}
+                                                    </option>
+                                                </select>
+                                            </section>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+
+                        <div class="step-pane" data-step="5">
+                            <h3><strong>Step 5 </strong> - Finished!</h3>
+                            <br>
+                            <br>
+
+                            <h1 class="text-center text-success"><i class="fa fa-check"></i> Congratulations!
+                                <br>
+                                <small>Click finish to end wizard</small>
+                            </h1>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+
+                    </form>
+                </div>
+            </fuel-ux-wizard>
         </div>
         <!-- end widget content -->
 

@@ -15,6 +15,7 @@ import {CoreModule} from "./core/core.module";
 import {SmartadminLayoutModule} from "./shared/layout/layout.module";
 import { ModalModule } from 'ngx-bootstrap/modal';
 import {HttpClient} from "@angular/common/http";
+
 import { Router } from '@angular/router';
 
 // Application wide providers
@@ -42,14 +43,13 @@ type StoreType = {
     CoreModule,
     SmartadminLayoutModule,
     routing,
-    DateValueAccessorModule,
+    DateValueAccessorModule
   ],
   exports: [
   ],
   providers: [ 
     // ENV_PROVIDERS,
     APP_PROVIDERS,
-    
   ]
 })
 export class AppModule {

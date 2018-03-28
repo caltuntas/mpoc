@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { ModuleWithProviders } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router';
 import { CategoryListComponent } from './category-list.component';
-import { CategoryEditComponent } from './category-edit.component';
+import { CategoryCreateComponent } from './category-create.component';
+
 
 export const routes: Routes = [
     {
@@ -13,14 +14,14 @@ export const routes: Routes = [
     },
     {
         path: 'new',
-        component: CategoryEditComponent,
+        component: CategoryCreateComponent,
         data: {
             pageTitle: 'Create Category'
         }
     },
     {
         path: ':id',
-        component: CategoryEditComponent, data: {
+        component: CategoryCreateComponent, data: {
             pageTitle: 'Edit the category'
         }
     }

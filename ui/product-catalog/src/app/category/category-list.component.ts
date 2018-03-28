@@ -35,23 +35,13 @@ export class CategoryListComponent implements OnInit {
             {
                 render: (data, type, fullRow, meta) => {
                     return `
-                    <div class='btn-group dropdown show pull-right'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                        <i class='fa fa-gear fa-lg'></i></button>
-                        <ul class='dropdown-menu  ng-star-inserted'>                                
-                            <li>
-                                <a class='sa-datatables-edit' characteristic-id='${fullRow.id}'>
-                                    <i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs" style="color:cornflowerblue"></i>
-                                    Edit
-                                </a>
-                            </li>
-                            <li>
-                                <a class='sa-datatables-delete' characteristic-id='${fullRow.id}'>
-                                    <i class="fa fa-fw fa-ban text-muted hidden-md hidden-sm hidden-xs" style="color:red"></i>
-                                    Delete
-                                </a>
-                            </li>
-                        </ul>
-                    </div>`;
+                        <div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                            <i class='fa fa-gear fa-lg'></i></button>
+                            <ul class='dropdown-menu  ng-star-inserted'>                                
+                                <li><a class='sa-datatables-edit' category-id='${fullRow.id}'>Edit</a></li>
+                                <li><a class='sa-datatables-delete' category-id='${fullRow.id}'>Delete</a></li>
+                            </ul>
+                        </div>`;
                 }
             }]
     };

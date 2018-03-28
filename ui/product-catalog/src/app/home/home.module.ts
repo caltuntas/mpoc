@@ -4,6 +4,7 @@ import { homeRouting } from './home.routing';
 import { SmartadminModule } from "../shared/smartadmin.module";
 import { HomeComponent } from "./home.component";
 import { ChartsModule } from 'ng2-charts';
+import { MorrisGraphModule } from "../shared/graphs/morris-graph/morris-graph.module";
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ChartsModule } from 'ng2-charts';
     CommonModule,
     homeRouting,
     SmartadminModule,
-    ChartsModule
+    ChartsModule, 
+    MorrisGraphModule
   ],
   declarations: [HomeComponent]
 })

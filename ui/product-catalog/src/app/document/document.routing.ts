@@ -1,6 +1,7 @@
 import {Routes, RouterModule } from '@angular/router';
-import {DocumentComponent} from "./document.component";
 import {ModuleWithProviders} from "@angular/core";
+import {DocumentComponent} from "./document.component";
+import {DocumentDetailComponent} from "./detail/document-detail.component";
 
 export const documentRoutes: Routes = [
     {
@@ -9,7 +10,9 @@ export const documentRoutes: Routes = [
         data: {
             pageTitle: 'Document'
         }
-    }
+    },
+  { path: 'detail/:id', component: DocumentDetailComponent },
+  { path: 'detail', component: DocumentDetailComponent }
 ];
 
 export const documentRouting: ModuleWithProviders = RouterModule.forChild(documentRoutes);

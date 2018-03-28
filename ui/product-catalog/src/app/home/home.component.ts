@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { JsonApiService } from "../core/api/json-api.service";
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 //import { Color } from 'ng2-charts';
@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HomeService } from "./home.service";
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-home',
@@ -15,24 +16,64 @@ import { Observable } from 'rxjs/Observable';
 
 export class HomeComponent implements OnInit, OnDestroy {
 
-  private chartjsData: any;
-  private homeService;
+  private chartjsData: any[];
 
-  //constructor(private jsonApiService: JsonApiService) { }
-  //constructor(private router: Router, private homeService: HomeService) { }
 
-  ngOnInit() {
+  public dataOfferingsSegment: number[];
+  public labelsOfferingsSegment: string[];
+  public datasetsOfferingsSegment: any[];
 
-    this.homeService = HomeService;
+
+
+
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+
+  private updateChart() {
+    this.chart.ngOnChanges({});
+  }
+
+  constructor(private router: Router, private homeService: HomeService) {
+
+
+    this.dataOfferingsSegment = [23, 43];
+    this.labelsOfferingsSegment = ["EBN", "CBN"];
+
+
+
+
     this.homeService.getChartsData().subscribe((data) => {
-         this.chartjsData = data;
-       });
+      this.chartjsData = data;
 
-    // this.jsonApiService.fetch('/graphs/chartjs.json').subscribe((data) => {
-    //   this.chartjsData = data;
-    // })
+
+      var asd = this.chartjsData.filter(function getName(element, index, array) { return (element.name == "dataOfferingsSegment"); });
+
+      this.dataOfferingsSegment = asd[0].data;
+      this.labelsOfferingsSegment = asd[0].labels;
+
+
+      this.datasetsOfferingsSegment = [
+        {
+          labels: this.labelsOfferingsSegment,
+          data: this.dataOfferingsSegment,
+          backgroundColor: this.backgroundColorOfferings,
+          hoverBackgroundColor: this.hoverBackgroundColorOfferings
+        }];
+
+
+
+
+
+
+
+    });
 
   }
+
+
+
+  ngOnChanges() { }
+
+  ngOnInit() { }
 
   ngOnDestroy() { }
 
@@ -45,14 +86,56 @@ export class HomeComponent implements OnInit, OnDestroy {
   //   .catch(this.handleError)
   //   .subscribe((data) => {})
 
-  dataOfferingsSegment: number[] = [145, 365];
-  labelsOfferingsSegment: string[] = ['Ebl', 'Cbl'];
+  donutdemo = [{"value":70,"label":"foo"},{"value":15,"label":"bar"},{"value":10,"label":"baz"},{"value":5,"label":"A really really long label"}];
+  donutLabels = ['foo', 'bar', 'baz', 'A really really long label'];
+
+  backgroundColorOfferings: string[] = ["#FF6384", "#36A2EB", "#FFCE56"];
+  hoverBackgroundColorOfferings: string[] = ["#FF6384", "#36A2EB", "#FFCE56"];
 
   dataOfferingsSalesChannel: number[] = [78, 562, 1654];
   labelsOfferingsSalesChannel: string[] = ['Ivr', 'Online', 'Channel'];
 
-  backgroundColorOfferings: string[] = ["#FF6384", "#36A2EB", "#FFCE56"];
-  hoverBackgroundColorOfferings: string[] = ["#FF6384", "#36A2EB", "#FFCE56"];
+
+  @ViewChild('mycanvas') canvas: ElementRef;
+  ctx = this.canvas;
+
+  datasetsOfferingsSalesChannel: any[] = [
+    {
+      labels: this.dataOfferingsSalesChannel,
+      data: this.dataOfferingsSalesChannel,
+      backgroundColor: this.backgroundColorOfferings,
+      hoverBackgroundColor: this.hoverBackgroundColorOfferings
+    }];
+
+  optionsOfferingsSalesChannel = {
+    circumference: Math.PI,
+    rotation: Math.PI,
+    animation: {
+      onComplete: function () {
+        this.doit(this.ctx);
+      }
+    }
+  }
+
+  public doit(ctx) {
+    //   Chart.types.Doughnut.prototype.draw.apply(this, arguments);
+
+       var width = this.canvas.nativeElement.clientWidth,
+           height = this.canvas.nativeElement.clientHeight;
+
+       var fontSize = (height / 250).toFixed(2);
+       ctx.font = fontSize + "em Verdana";
+       ctx.textBaseline = "middle";
+       ctx.fillStyle = "blue";
+
+       var text = "Pass Rate 82%",
+           textX = Math.round((width - ctx.measureText(text).width) / 2),
+           textY = height -10;
+
+       ctx.fillText(text, textX, textY);
+       ctx.restore();
+   }
+
 
   dataOfferings: number[] = [51, 498];
   labelsOfferings: string[] = ['Satışa Kapalı', 'Satışa Açık'];
@@ -65,21 +148,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       hoverBackgroundColor: this.hoverBackgroundColorOfferings
     }];
 
-  datasetsOfferingsSegment: any[] = [
-    {
-      labels: this.labelsOfferings,
-      data: this.dataOfferingsSegment,
-      backgroundColor: this.backgroundColorOfferings,
-      hoverBackgroundColor: this.hoverBackgroundColorOfferings
-    }];
 
-  datasetsOfferingsSalesChannel: any[] = [
-    {
-      labels: this.labelsOfferings,
-      data: this.dataOfferingsSalesChannel,
-      backgroundColor: this.backgroundColorOfferings,
-      hoverBackgroundColor: this.hoverBackgroundColorOfferings
-    }];
+
 
   public barChartLegend: boolean = true;
 

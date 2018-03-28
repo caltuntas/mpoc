@@ -1,12 +1,12 @@
 export class HomeChartsData {
     public name: string;
-    public dataSet: string;
-    public labels: string;
+    public dataSet: any[];
+    public labels: any[];
 
     constructor(
         name : string,
-        dataSet: string,
-        labels : string
+        dataSet: any[],
+        labels : any[]
     )
     {
         this.name = name;
