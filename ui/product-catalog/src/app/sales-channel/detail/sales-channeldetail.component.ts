@@ -47,7 +47,6 @@ export class SalesChannelDetailComponent implements OnInit {
           
           this.routeToSClist();
         } );
-        console.log("new service called");
       }else
       {
         this.scService.updateSalesChannel(detail.SalesChannelInstance).subscribe(data => {
