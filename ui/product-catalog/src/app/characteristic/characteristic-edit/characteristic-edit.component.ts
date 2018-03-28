@@ -12,8 +12,7 @@ export class CharacteristicEditComponent implements OnInit {
 
     characteristicId: string;
     model: CharacteristicEditModel;
-    gunStart: number;
-    gunEnd: number;
+    showCharacteristicField: boolean;
 
     constructor(private route: ActivatedRoute, private characteristicService: CharacteristicService) {
     }
@@ -26,6 +25,16 @@ export class CharacteristicEditComponent implements OnInit {
                 console.log(res);
                 this.model = res;
             });
+    }
+
+    onChange($event) {
+
+        if ($event.target.value == 1) {
+            this.showCharacteristicField = true;
+        }
+        else {
+            this.showCharacteristicField = false;
+        }
     }
 
 }

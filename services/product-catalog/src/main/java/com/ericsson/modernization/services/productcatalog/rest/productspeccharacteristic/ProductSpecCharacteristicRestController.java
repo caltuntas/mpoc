@@ -2,12 +2,14 @@ package com.ericsson.modernization.services.productcatalog.rest.productspecchara
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProductSpecCharacteristicAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.request.ProductSpecCharacteristicCreateRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.request.ProductSpecCharacteristicEditRequest;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.response.ProductSpecCharacteristicServiceResponse;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharacteristic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
 
@@ -42,4 +44,12 @@ public class ProductSpecCharacteristicRestController {
     public ResponseEntity<ProductSpecCharacteristic> getcharacteristicbyid(@PathVariable int characteristicId) {
         return new ResponseEntity<ProductSpecCharacteristic>(productSpecCharacteristicAppService.findById(characteristicId), HttpStatus.OK);
     }
+
+/*    @RequestMapping(value = "/updateproductspeccharacteristic", method = RequestMethod.POST)
+    public ResponseEntity<ProductSpecCharacteristicServiceResponse> updateProductSpecCharacteristic(@RequestBody ProductSpecCharacteristicEditRequest productSpecCharacteristicEditRequest) {
+        ProductSpecCharacteristic productSpecCharacteristic = productSpecCharacteristicAppService.updateCharacteristic(productSpecCharacteristicEditRequest);
+        ProductSpecCharacteristicServiceResponse response = new ProductSpecCharacteristicServiceResponse();
+        response.setMessage("The product specification characteristic with id : " + productSpecCharacteristic.getId() + "is updated");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }*/
 }

@@ -43,7 +43,7 @@ export class SalesChannelComponent implements OnInit {
                             </div>`;
                 }
                 }],
-                "order": [[1, 'asc']]
+                "order": [[0, 'desc']]
   }
   
   constructor(private router: Router,private scService: SalesChannelService,private notificationComponent: NotificationComponent) { }
