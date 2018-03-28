@@ -38,25 +38,22 @@ export class SpecificationListComponent implements OnInit {
       { data: "name" },
       { data: "code" },
       { data: "description" },
-
-      {
-        data: "createTime",
-        render: function(data, type, full, meta) {
-          return data == null ? "" : data;
-        }
-      },
+      {data: "createTime"},
       {
         render: (data, type, fullRow, meta) => {
           return `
-                    <div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                    <div class='btn-group dropdown pull-right show'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                         <i class='fa fa-gear fa-lg'></i></button>
                         <ul class='dropdown-menu  ng-star-inserted'>                                
-                            <li><a class='sa-datatables-edit' spec-id='${
-                              fullRow.id
-                            }'>Edit</a></li>
-                            <li><a class='sa-datatables-delete' spec-id='${
-                              fullRow.id
-                            }'>Delete</a></li>
+                            <li>  
+                              <a class='sa-datatables-edit-specification' spec-id='${fullRow.id}'>
+                              <i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs" style="color:cornflowerblue"></i>
+                              Edit</a>
+                        </li>
+                            <li> <a class='sa-datatables-delete-specification' spec-id='${fullRow.id}'>
+                            <i class="fa fa-fw fa-ban text-muted hidden-md hidden-sm hidden-xs" style="color:red"></i>
+                            Delete
+                        </a></li>
                         </ul>
                     </div>`;
         }
@@ -71,13 +68,13 @@ export class SpecificationListComponent implements OnInit {
 
       if (
         target.tagName.toLowerCase() === "a" &&
-        jQuery(target).hasClass("sa-datatables-edit")
+        jQuery(target).hasClass("sa-datatables-edit-specification")
       ) {
         this.onEditSpec(target.getAttribute("spec-id"));
       }
       if (
         target.tagName.toLowerCase() === "a" &&
-        jQuery(target).hasClass("sa-datatables-delete")
+        jQuery(target).hasClass("sa-datatables-delete-specification")
       ) {
         this.onDeleteSpec(target.getAttribute("spec-id"));
       }
@@ -107,7 +104,7 @@ export class SpecificationListComponent implements OnInit {
   ) {}
 
   ngOnInit() {}
-
+  
   private handleError(error: any) {
     let errMsg = error.message
       ? error.message

@@ -34,12 +34,12 @@
                 </fieldset>
 
                 <fieldset>
-                  <div class="form-group" [class.has-error]="codeControl.invalid && codeControl.touched ">
+                  <div class="form-group" [class.has-error]="descriptionControl.invalid && descriptionControl.touched ">
                     <label class="col-xs-2 col-lg-3 control-label">Description</label>
                     <div class="col-xs-9 col-lg-6 ">
                       <input id="description" type="text" class="form-control" [(ngModel)]="productSpec.description" #descriptionControl="ngModel"
                         name="description" />
-                      <small *ngIf="codeControl.invalid && codeControl.touched " class="help-block">Code is required</small>
+                      <small *ngIf="descriptionControl.invalid && descriptionControl.touched " class="help-block">Description is required</small>
                     </div>
                   </div>
                 </fieldset>
@@ -82,7 +82,7 @@
 
                           <input class="checkbox" [checked]="charValue.isSelected" type="checkbox" class="item" value="{{charValue.id}}" (change)="check(characteristic, charValue, $event)"
                           /> {{charValue.name}}
-                      </label>
+                        </label>
 
 
 
@@ -104,7 +104,13 @@
                 <div class="form-actions">
                   <div class="row">
                     <div class="col-md-12">
-                      <button class="btn btn-default" [disabled]="!characteristicForm.valid" (click)="saveForm()">
+
+                      <button class="btn btn-danger" routerLink="/specification/list">
+                        <i class="fa fa-arrow-circle-left"></i>
+                        Cancel
+                      </button>
+
+                      <button class="btn btn-success" [disabled]="!characteristicForm.valid" (click)="saveForm()">
                         <i class="fa fa-save"></i>
                         Save
                       </button>

@@ -78,6 +78,6 @@ export class SpecificationCreateComponent implements OnInit {
     this.service.createSpec(this.productSpec).subscribe(data => {
       console.log(data);
     });
-    this.router.navigate(["/list"]);
+    this.router.navigate(["/specification/list"]);
   }
 }
