@@ -47,6 +47,8 @@ public class ProductSpecificationAppService {
             ProductSpecCharUse charuse = new ProductSpecCharUse();
             charuse.setProductSpecification(productSpecification);
             charuse.setProductSpecCharacteristic(characteristic);
+            charuse.setCreateUserDate(new Date());
+
             charUseRepository.save(charuse);
 
             for (int selectedValue : selectedChar.selectedValueIds) {
