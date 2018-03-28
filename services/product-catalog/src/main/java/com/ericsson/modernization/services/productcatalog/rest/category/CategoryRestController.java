@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ericsson.modernization.services.productcatalog.applicationservice.CommonServiceResponse;
 import com.ericsson.modernization.services.productcatalog.applicationservice.category.CategoryAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.category.request.CategoryCreateRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.category.response.CategoryListModel;
 import com.ericsson.modernization.services.productcatalog.model.Category;
 
 @RestController
@@ -21,13 +23,19 @@ import com.ericsson.modernization.services.productcatalog.model.Category;
 public class CategoryRestController {
 	@Autowired
 	private CategoryAppService appService;
-
+/*
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> getAll() {
 		List<Category> categories = appService.findAll();
 		return new ResponseEntity<>(categories, HttpStatus.OK);
-	}
+	}*/
 	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoryListModel>> getAll() {
+		List<CategoryListModel> categories = appService.findAllWithModel();
+		return new ResponseEntity<>(categories, HttpStatus.OK);
+	}
+		
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Category> getById(@PathVariable int id) {
 		Category category = appService.findById(id);
@@ -40,7 +48,7 @@ public class CategoryRestController {
 		String message = "A category with id : " + category.getId() + " is created";
 		return new ResponseEntity<>(message, HttpStatus.CREATED);
 	}
-
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateCategory(@PathVariable int id, @RequestBody CategoryCreateRequest request) {
 		appService.update(request);
