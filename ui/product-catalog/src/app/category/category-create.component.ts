@@ -13,10 +13,9 @@ export class CategoryCreateComponent implements OnInit {
   id: string;
   gunStart: number;
   gunEnd: number;
-  parents : Array<Category>;
+  parents: Array<Category>;
   constructor(private route: ActivatedRoute, private router: Router, private service: CategoryService) {
     this.model = new Category();
-    this.model.isRoot = false;
   }
 
   ngOnInit() {
@@ -29,8 +28,9 @@ export class CategoryCreateComponent implements OnInit {
     });
   }
 
-  onChange($event) { }
+  //onChange($event) { }
   onSubmit() {
+    this.model.parentId = jQuery("#parentId").val();
     if (this.route.snapshot.params.id == null) {
       this.service.create(this.model).subscribe();
     } else {

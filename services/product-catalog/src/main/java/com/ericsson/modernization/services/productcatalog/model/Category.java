@@ -10,7 +10,6 @@ public class Category extends EntityBase {
     private String name;
     private String description;
     private int parentId;
-    private Boolean isRoot;
     @ManyToOne
     private ProductOffering productOffering;
 
@@ -52,22 +51,6 @@ public class Category extends EntityBase {
 
     public void setParentId(int parentId) {
         this.parentId = parentId;
-    }
-
-    public Boolean getIsRoot() {
-        return getRoot();
-    }
-
-    public void setIsRoot(Boolean isRoot) {
-        this.setRoot(isRoot);
-    }
-
-    public Boolean getRoot() {
-        return isRoot;
-    }
-
-    public void setRoot(Boolean root) {
-        isRoot = root;
     }
 
     public ProductOffering getProductOffering() {

@@ -5,24 +5,43 @@ import { productSpecCharUseModel } from "../model/productSpecCharUseModel";
 import { productSpecCharModel } from "../model/productSpecCharModel";
 import { productSpecCharValueModel } from "../model/productSpecCharValueModel";
 import { specificationService } from "../specification.service";
-import { Router } from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
+import { productSpecEditModel } from "../model/productSpecEditModel";
 @Component({
-  selector: "app-specification-create",
-  templateUrl: "./specification-create.component.html"
+  selector: "app-specification-edit",
+  templateUrl: "./specification-edit.component.html"
 })
-export class SpecificationCreateComponent implements OnInit {
-  constructor(private router: Router, private service: specificationService) {
-    this.productSpec = new productSpecificationCreateModel();
+export class SpecificationEditComponent implements OnInit {
+  constructor(private router: Router, private route: ActivatedRoute, private service: specificationService) { 
   }
 
-  selectedCharUse: number = 0;
-  productSpec: productSpecificationCreateModel;
+  selectedChar: number = 0;
+  id:string;
+  productSpec: productSpecEditModel;
   characteristics: Array<productSpecCharModel>;
 
   ngOnInit() {
-    this.service.getCharacteristics().subscribe(data => {
-      this.characteristics = <Array<productSpecCharModel>>data;
+
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.service.getSpecificationForEdit(this.id).subscribe(data => {
+      this.productSpec = <productSpecEditModel>data;
+      this.service.getCharacteristics().subscribe(data => {
+        this.characteristics = <Array<productSpecCharModel>>data;
+
+        this.productSpec.selectedCharacteristics.forEach(selectedChar => {
+          this.characteristics.find(x=>x.id==selectedChar.id).isSelected=true;
+          selectedChar.selectedValueIds.forEach(selectedValueId => {
+            this.characteristics.find(x=>x.id==selectedChar.id).values.find(x=>x.id==selectedValueId).isSelected=true;
+          });
+        });
+
+        console.log(this.productSpec);
+        console.log(this.characteristics);
+      });
     });
+   
+
+   
   }
 
   filterNonSelectedChars(cars: Array<productSpecCharModel>) {
@@ -37,14 +56,14 @@ export class SpecificationCreateComponent implements OnInit {
   }
 
   selectCharUse($event) {
-    this.selectedCharUse = $event.target.value;
-    console.log(this.selectedCharUse);
+    this.selectedChar = $event.target.value;
+    console.log(this.selectedChar);
   }
 
   addCharUse() {
-    if (this.selectedCharUse != 0) {
+    if (this.selectedChar != 0) {
       let charUse = this.characteristics.find(
-        x => x.id == this.selectedCharUse
+        x => x.id == this.selectedChar
       );
       charUse.isSelected = true;
       this.productSpec.selectedCharacteristics.push(
@@ -74,10 +93,13 @@ export class SpecificationCreateComponent implements OnInit {
     }
   }
 
-  saveForm() {
+  saveForm(productSpec: productSpecificationCreateModel) {
+
+
     this.service.createSpec(this.productSpec).subscribe(data => {
       console.log(data);
-    });
-    this.router.navigate(["/list"]);
+     
+  });
+  this.router.navigate(['/specification/specification-list']);
   }
 }

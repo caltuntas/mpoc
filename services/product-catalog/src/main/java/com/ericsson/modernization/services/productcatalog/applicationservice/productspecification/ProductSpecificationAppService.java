@@ -4,13 +4,12 @@ import com.ericsson.modernization.services.productcatalog.applicationservice.pro
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.request.ProductSpecificationValueItemModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProdSpecCharListResponse;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProdSpecCharValueModel;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProductSpecDetailForEditResponse;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProductSpecListModel;
 import com.ericsson.modernization.services.productcatalog.model.*;
-import com.ericsson.modernization.services.productcatalog.repository.ProductSpecCharacteristicRepository;
-import com.ericsson.modernization.services.productcatalog.repository.ProductSpecCharacteristicValueRepository;
+import com.ericsson.modernization.services.productcatalog.repository.*;
 
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecification;
-import com.ericsson.modernization.services.productcatalog.repository.ProductSpecificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +26,10 @@ public class ProductSpecificationAppService {
     private ProductSpecCharacteristicRepository characteristicRepository;
     @Autowired
     private ProductSpecCharacteristicValueRepository characteristicValueRepository;
+    @Autowired
+    ProductSpecCharUseRepository charUseRepository;
+    @Autowired
+    ProdSpecCharValueUseRepository charValueUseRepository;
 
     public void create(ProductSpecificationCreateRequest request) {
 
@@ -37,27 +40,26 @@ public class ProductSpecificationAppService {
         // productSpecification.setProductType(request.productType);
         //productSpecification.setStatus(request.status);
         productSpecification.setCreateUserDate(new Date());
-
+        productSpecificationRepository.save(productSpecification);
 
         for (ProductSpecificationValueItemModel selectedChar : request.selectedCharacteristics) {
             ProductSpecCharacteristic characteristic = characteristicRepository.findByIdAndIsDeletedIsFalse(selectedChar.id);
             ProductSpecCharUse charuse = new ProductSpecCharUse();
             charuse.setProductSpecification(productSpecification);
             charuse.setProductSpecCharacteristic(characteristic);
+            charUseRepository.save(charuse);
 
             for (int selectedValue : selectedChar.selectedValueIds) {
 
                 ProductSpecCharacteristicValue val = characteristicValueRepository.findById(selectedValue);
                 ProdSpecCharValueUse valueUse = new ProdSpecCharValueUse();
+
                 valueUse.setProductSpecCharacteristicValue(val);
                 valueUse.setProductSpecCharUse(charuse);
-                charuse.addProductSpecCharValueUse(valueUse);
+                charValueUseRepository.save((valueUse));
             }
-
-            productSpecification.addCharUse(charuse);
         }
 
-        productSpecificationRepository.save(productSpecification);
     }
 
     public List<ProdSpecCharListResponse> getCharacteristics() {
@@ -80,4 +82,19 @@ public class ProductSpecificationAppService {
         return productSpecificationRepository.findByIdAndIsDeletedIsFalse(id);
 
     }
+
+    public ProductSpecDetailForEditResponse getSpecForEdit(int id) {
+        ProductSpecification spec = productSpecificationRepository.findById(id).get();
+        ProductSpecDetailForEditResponse model = new ProductSpecDetailForEditResponse();
+        model.id = spec.getId();
+        model.name = spec.getName();
+        model.code = spec.getCode();
+        model.description = spec.getDescription();
+        model.selectedCharacteristics = spec.getProductSpecCharUses().stream()
+                .map(x -> new ProductSpecificationValueItemModel(x.getId(),
+                        x.getProductSpecCharValueUses().stream().map(y -> y.getProductSpecCharacteristicValue().getId()).collect(Collectors.toList()))).collect(Collectors.toList());
+        return model;
+    }
+
 }
+

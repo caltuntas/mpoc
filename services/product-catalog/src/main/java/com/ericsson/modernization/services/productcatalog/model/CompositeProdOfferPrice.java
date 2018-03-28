@@ -11,7 +11,7 @@ public class CompositeProdOfferPrice extends ProductOfferingPrice {
         children = new ArrayList<ProductOfferingPrice>();
     }
 
-    @OneToMany(mappedBy = "compositeProdOfferPrice")
+    @OneToMany(mappedBy = "compositeProdOfferPrice",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<ProductOfferingPrice> children;
 
     public List<ProductOfferingPrice> getChildren() {

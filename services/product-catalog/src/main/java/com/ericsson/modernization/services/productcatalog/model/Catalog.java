@@ -14,7 +14,7 @@ public class Catalog extends EntityBase implements Description, ValidFor {
     @ManyToOne
     private CatalogSpecification catalogSpecification;
     @JsonIgnore
-    @OneToMany(mappedBy = "catalog")
+    @OneToMany(mappedBy = "catalog",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<ProductOffering> productOfferings;
 
     private String externalId;

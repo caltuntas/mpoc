@@ -12,7 +12,7 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 
     public ProductOffering() {
         prices = new ArrayList<ProductOfferingPrice>();
-        determinedProdSpecCharValueUses = new ArrayList<ProdSpecCharValueUse>();
+        setProductOfferingDetermineses(new ArrayList<ProductOfferingDetermines>());
         unsupportedProductSpecCharValueUseGroups = new ArrayList<UnsupportedProductSpecCharValueUseGroup>();
         category = new ArrayList<Category>();
     }
@@ -46,16 +46,16 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     private long versionNumber;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "productOffering")
+    @OneToMany(mappedBy = "productOffering",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<ProductOfferingPrice> prices;
     @JsonIgnore
-    @OneToMany(mappedBy = "productOffering")
-    private List<ProdSpecCharValueUse> determinedProdSpecCharValueUses;
+    @OneToMany(mappedBy = "productOffering",orphanRemoval = true,cascade = CascadeType.ALL)
+    private List<ProductOfferingDetermines> productOfferingDetermineses;
     @JsonIgnore
-    @OneToMany(mappedBy = "productOffering")
+    @OneToMany(mappedBy = "productOffering",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<UnsupportedProductSpecCharValueUseGroup> unsupportedProductSpecCharValueUseGroups;
     @JsonIgnore
-    @OneToMany(mappedBy = "productOffering")
+    @OneToMany(mappedBy = "productOffering",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<Category> category;
 
     public List<Category> getCategory() {
@@ -154,13 +154,6 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
         this.prices = prices;
     }
 
-    public List<ProdSpecCharValueUse> getDeterminedProdSpecCharValueUses() {
-        return determinedProdSpecCharValueUses;
-    }
-
-    public void setDeterminedProdSpecCharValueUses(List<ProdSpecCharValueUse> determinedProdSpecCharValueUses) {
-        this.determinedProdSpecCharValueUses = determinedProdSpecCharValueUses;
-    }
 
     public List<UnsupportedProductSpecCharValueUseGroup> getUnsupportedProductSpecCharValueUseGroups() {
         return unsupportedProductSpecCharValueUseGroups;
@@ -177,5 +170,13 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 
     public void setCatalog(Catalog catalog) {
         this.catalog = catalog;
+    }
+
+    public List<ProductOfferingDetermines> getProductOfferingDetermineses() {
+        return productOfferingDetermineses;
+    }
+
+    public void setProductOfferingDetermineses(List<ProductOfferingDetermines> productOfferingDetermineses) {
+        this.productOfferingDetermineses = productOfferingDetermineses;
     }
 }

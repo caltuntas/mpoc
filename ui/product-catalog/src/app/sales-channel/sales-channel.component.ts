@@ -30,15 +30,18 @@ export class SalesChannelComponent implements OnInit {
                       { "data": "code" },
                       { "data": "name" },
                      { 
-                      "className": "centerCell",
                        "orderable":false,
                        "render": (data, type, fullRow, meta) => {
                          return `
-                            <div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                            <div class='btn-group dropdown show pull-right'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                                 <i class='fa fa-gear fa-lg'></i></button>
                                 <ul class='dropdown-menu  ng-star-inserted'>                                
-                                    <li><a class='sa-datatables-edit' scl-id='${fullRow.id}'>Edit</a></li>
-                                    <li><a class='sa-datatables-delete' scl-id='${fullRow.id}'>Delete</a></li>
+                                    <li><a class='sa-datatables-edit' scl-id='${fullRow.id}'>
+                                    <i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs" style="color:cornflowerblue"></i>
+                                      Edit</a></li>
+                                    <li><a class='sa-datatables-delete' scl-id='${fullRow.id}'>
+                                      <i class="fa fa-fw fa-ban text-muted hidden-md hidden-sm hidden-xs" style="color:red"></i>
+                                    Delete</a></li>
                                 </ul>
                             </div>`;
                 }

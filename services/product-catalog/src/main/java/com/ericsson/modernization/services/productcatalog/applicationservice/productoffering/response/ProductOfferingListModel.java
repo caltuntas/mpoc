@@ -7,7 +7,9 @@ import java.util.Date;
 public class ProductOfferingListModel {
     private int id;
     private String name;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date validForStartDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date validForEndDate;
     private String description;
     private long warrantyPeriodValue;
@@ -27,9 +29,7 @@ public class ProductOfferingListModel {
             String catalogCode,
             Boolean isReplicated,
             Boolean isSellable,
-            @JsonFormat(pattern="yyyy-MM-dd")
             Date validForStartDate,
-            @JsonFormat(pattern="yyyy-MM-dd")
             Date validForEndDate,
             long warrantyPeriodValue,
             int warrantyPeriodUnit,

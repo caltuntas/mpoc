@@ -6,7 +6,6 @@ public class CategoryCreateRequest {
     private String name;
     private String description;
 	private int parentId;
-	private Boolean isRoot;
     public int getId() {
 		return id;
 	}
@@ -36,11 +35,5 @@ public class CategoryCreateRequest {
 	}
 	public void setParentId(int parentId) {
 		this.parentId = parentId;
-	}
-	public Boolean getIsRoot() {
-		return isRoot;
-	}
-	public void setIsRoot(Boolean isRoot) {
-		this.isRoot = isRoot;
 	}
 }

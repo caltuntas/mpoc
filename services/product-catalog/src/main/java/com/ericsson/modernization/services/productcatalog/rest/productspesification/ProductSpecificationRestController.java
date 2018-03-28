@@ -6,14 +6,12 @@ import com.ericsson.modernization.services.productcatalog.applicationservice.pro
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.ProductSpecificationAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.request.ProductSpecificationCreateRequest;
 
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProductSpecDetailForEditResponse;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response.ProductSpecListModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,11 +29,18 @@ public class ProductSpecificationRestController {
 
     @RequestMapping(value = "/getCharacteristics", method = RequestMethod.GET)
     public List<ProdSpecCharListResponse> getCharacteristics() {
-       return productSpecificationAppService.getCharacteristics();
+        return productSpecificationAppService.getCharacteristics();
 
     }
+
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    public ResponseEntity<List<ProductSpecListModel>> getAllOfferings(){
-        return new ResponseEntity<List<ProductSpecListModel>>( productSpecificationAppService.getSpecs(), HttpStatus.OK);
+    public ResponseEntity<List<ProductSpecListModel>> getAllOfferings() {
+        return new ResponseEntity<List<ProductSpecListModel>>(productSpecificationAppService.getSpecs(), HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/getSpecForEdit/{id}", method = RequestMethod.GET)
+    public ResponseEntity<ProductSpecDetailForEditResponse> getSpecForEdit(@PathVariable  int id) {
+        return new ResponseEntity<ProductSpecDetailForEditResponse>(productSpecificationAppService.getSpecForEdit(id), HttpStatus.OK);
     }
 }

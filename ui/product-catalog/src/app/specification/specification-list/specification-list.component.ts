@@ -85,8 +85,7 @@ export class SpecificationListComponent implements OnInit {
   }
 
   onEditSpec(specId) {
-    console.log("edit spec:", specId);
-    //this.router.navigate(['/offering/offering-edit/' + offeringId]);
+    this.router.navigate(['/specification/edit/' + specId]);
   }
 
   onDeleteSpec(specId) {

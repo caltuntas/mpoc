@@ -1,7 +1,6 @@
 <div id="content">
     <div class="row">
-        <sa-big-breadcrumbs [items]="['Category', this.route.snapshot.params.id ? 'Edit' : 'New' ]" icon="pencil-square-o"
-                            class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>        
+        <sa-big-breadcrumbs [items]="['Category', this.route.snapshot.params.id ? 'Edit' : 'New' ]" icon="pencil-square-o" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
     </div>
     <sa-widgets-grid>
         <div class="row">
@@ -13,6 +12,22 @@
                     <div>
                         <div class="widget-body">
                             <form (ngSubmit)="onSubmit()" novalidate="novalidate" [saBootstrapValidator]="validatorOptions" class="form-horizontal">
+                                <fieldset>
+                                    <div class="form-group" [class.has-error]="parentIdControl.invalid && parentIdControl.submitted ">
+                                        <label class="col-xs-2 col-lg-3 control-label">Parent</label>
+                                        <div class="col-xs-9 col-lg-6">
+                                            <select select2 class="form-control" id="parentId" name="parentId" required [(ngModel)]="model.parentId"
+                                                (change)="onChange($event)" #parentIdControl="ngModel">
+                                                <option>--please select--</option>
+                                                <option *ngFor="let parent of parents" [value]="parent.id">
+                                                    {{parent.name}}
+                                                </option>
+                                            </select>
+                                            <small *ngIf="parentIdControl.invalid && parentIdControl.submitted " class="help-block">Parent is required
+                                            </small>
+                                        </div>
+                                    </div>
+                                </fieldset>
                                 <fieldset>
                                     <div class="form-group" [class.has-error]="codeControl.invalid && codeControl.submitted ">
                                         <label class="col-xs-2 col-lg-3 control-label">Code</label>
@@ -44,29 +59,7 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                                <fieldset>
-                                    <div class="form-group" [class.has-error]="parentIdControl.invalid && parentIdControl.submitted ">
-                                        <label class="col-xs-2 col-lg-3 control-label">Parent</label>
-                                        <div class="col-xs-9 col-lg-6">
-                                            <select class="form-control" id="parentId" name="parentId" required [(ngModel)]="model.parentId" (change)="onChange($event)" #parentIdControl="ngModel">
-                                                <option>--please select--</option>
-                                                <option *ngFor="let parent of parents" [value]="parent.id">
-                                                    {{parent.name}}
-                                                </option>
-                                            </select>
-                                            <small *ngIf="parentIdControl.invalid && parentIdControl.submitted " class="help-block">Parent is required</small>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <div class="form-group" [class.has-error]="isRootControl.invalid && isRootControl.submitted ">
-                                        <label class="col-xs-2 col-lg-3 control-label">Is Root?</label>
-                                        <div class="col-xs-9 col-lg-6 ">
-                                            <input id="isRoot" type="checkbox" class="form-control" name="isRoot" [(ngModel)]="model.isRoot" #isRootControl="ngModel"
-                                            />
-                                        </div>
-                                    </div>
-                                </fieldset>
+
                                 <div class="form-actions">
                                     <div class="row">
                                         <div class="col-md-12">

@@ -9,62 +9,24 @@ import java.util.List;
 /// </summary>
 @Entity
 public class ProductSpecCharUse extends EntityBase
-        implements Description, ValidFor, ExternalId, IsReplicated, Versioned {
+        implements  ValidFor, ExternalId, IsReplicated, Versioned {
 
 public ProductSpecCharUse()
 {
     this.productSpecCharValueUses=new ArrayList<ProdSpecCharValueUse>();
 }
-    public final int Type_None = 0;
-    public final int Type_Stock = 1;
-
-
-    private String name;
-    private String description;
-
-    /// <summary>
-    /// Gets or sets the value type of the product specification characteristic
-    /// 0 = All (Default)
-    /// 1 = Stock
-    /// </summary>
-    private int characteristicType;
 
     @ManyToOne
     private ProductSpecCharacteristic productSpecCharacteristic;
     @ManyToOne
     private ProductSpecification productSpecification;
-    @OneToMany(mappedBy = "productSpecCharUse")
+    @OneToMany(mappedBy = "productSpecCharUse",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<ProdSpecCharValueUse> productSpecCharValueUses;
     @Embedded
     private TimePeriod validFor;
     private String externalId;
     private Boolean isReplicated;
     private long versionNumber;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getCharacteristicType() {
-        return characteristicType;
-    }
-
-    public void setCharacteristicType(int characteristicType) {
-        this.characteristicType = characteristicType;
-    }
-
     public ProductSpecCharacteristic getProductSpecCharacteristic() {
         return productSpecCharacteristic;
     }
@@ -90,6 +52,7 @@ public ProductSpecCharUse()
     }
 
     public void addProductSpecCharValueUse(ProdSpecCharValueUse productSpecCharValueUse) {
+        productSpecCharValueUse.setProductSpecCharUse(this);
       this.productSpecCharValueUses.add(productSpecCharValueUse);
     }
 

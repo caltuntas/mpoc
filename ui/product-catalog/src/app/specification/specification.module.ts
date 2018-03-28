@@ -15,6 +15,7 @@ import { SmartadminModule } from "../shared/smartadmin.module";
 import { SmartadminDatatableModule } from "../shared/ui/datatable/smartadmin-datatable.module";
 import { SmartadminValidationModule } from "../shared/forms/validation/smartadmin-validation.module";
 import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.module";
+import { SpecificationEditComponent } from './specification-edit/specification-edit.component';
 
 
 
@@ -32,7 +33,8 @@ import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.mo
   ],
   declarations: [
     SpecificationListComponent,
-    SpecificationCreateComponent
+    SpecificationCreateComponent,
+    SpecificationEditComponent
   ],
   providers: [
     specificationService

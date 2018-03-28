@@ -3,6 +3,7 @@ import {Offering} from "./model/offering.model";
 import {Observable} from "rxjs/Observable";
 import {HttpClientProvider} from "../shared/httpclientprovider/http-client-provider";
 import { productSpecCharModel } from './model/productSpecCharModel';
+import { productSpecEditModel } from './model/productSpecEditModel';
 
 @Injectable()
 export class specificationService {
@@ -19,5 +20,12 @@ export class specificationService {
     getSpecifications(){
         return this.http.get(`/productspec/getAll`);
     }
+
+    getSpecificationForEdit(id:string):Observable<productSpecEditModel>
+    {
+        return this.http.get(`/productspec/getSpecForEdit/`+id);
+    }
+
+    
     
 }

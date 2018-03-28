@@ -28,11 +28,10 @@ export class CategoryListComponent implements OnInit {
         "iDisplayLength": 15,
         columns: [
             {"data": "id"},
+            {"data": "parent"},
             {"data": "code"},
             {"data": "name"},
             {"data": "description"},
-            {"data": "parentId"},
-            {"data": "isRoot"},                        
             {
                 render: (data, type, fullRow, meta) => {
                     return `

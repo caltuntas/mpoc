@@ -3,6 +3,12 @@ package com.ericsson.modernization.services.productcatalog.applicationservice.pr
 import java.util.List;
 
 public class ProductSpecificationValueItemModel {
+    public ProductSpecificationValueItemModel(){}
+    public ProductSpecificationValueItemModel(int id,List<Integer> selectedValueIds){
+        this.id=id;
+        this.selectedValueIds=selectedValueIds;
+
+    }
     public int id;
     public List<Integer> selectedValueIds;
 }
