@@ -12,5 +12,9 @@ package com.ericsson.modernization.services.productcatalog;
 @SpringBootTest
 public class ProductCatalogServiceApplicationTests {
 
+        @Test
+        public void test(){
+
+        }
 
 }
