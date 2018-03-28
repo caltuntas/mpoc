@@ -26,4 +26,8 @@ export class CharacteristicService{
     getCharacteristicById(id): Observable<CharacteristicEditModel> {
         return this.http.get('/productspeccharacteristic/getcharacteristicbyid/' + id);
     }
+
+    updateCharacteristic(model) {
+        return this.http.post('/productspeccharacteristic/updateproductspeccharacteristic/', model);
+    }
 }

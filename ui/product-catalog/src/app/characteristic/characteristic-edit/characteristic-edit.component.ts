@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 import {CharacteristicEditModel} from '../model/characteristicEditModel';
 import {CharacteristicService} from '../characteristic.service';
 import {moment} from 'ngx-bootstrap/chronos/test/chain';
@@ -14,7 +14,7 @@ export class CharacteristicEditComponent implements OnInit {
     model: CharacteristicEditModel;
     showCharacteristicField: boolean;
 
-    constructor(private route: ActivatedRoute, private characteristicService: CharacteristicService) {
+    constructor(private route: ActivatedRoute, private router: Router, private characteristicService: CharacteristicService) {
     }
 
     ngOnInit() {
@@ -24,6 +24,9 @@ export class CharacteristicEditComponent implements OnInit {
             .subscribe(res => {
                 console.log(res);
                 this.model = res;
+                if (this.model.valueType == 1) {
+                    this.showCharacteristicField = true;
+                }
             });
     }
 
@@ -35,6 +38,14 @@ export class CharacteristicEditComponent implements OnInit {
         else {
             this.showCharacteristicField = false;
         }
+    }
+
+    public onSubmit() {
+        this.model.charValueString = jQuery('#charValueString').val();
+        this.characteristicService.updateCharacteristic(this.model).subscribe(data => {
+            console.log("deneme",this.model);
+            this.router.navigate(['/characteristic/characteristic-list']);
+        });
     }
 
 }

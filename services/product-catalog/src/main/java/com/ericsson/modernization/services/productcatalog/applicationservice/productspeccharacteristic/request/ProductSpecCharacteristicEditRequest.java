@@ -1,12 +1,16 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.request;
 
+import com.ericsson.modernization.services.productcatalog.model.TimePeriod;
+
+import javax.persistence.Embedded;
 import java.util.Date;
 
 public class ProductSpecCharacteristicEditRequest {
     private int ID;
     private String name;
-    private Date validForStartDate;
-    private Date validForEndDate;
+
+    @Embedded
+    private TimePeriod validFor;
     private int valueType;
     private String description;
     private String externalId;
@@ -36,20 +40,12 @@ public class ProductSpecCharacteristicEditRequest {
         this.name = name;
     }
 
-    public Date getValidForStartDate() {
-        return validForStartDate;
+    public TimePeriod getValidFor() {
+        return validFor;
     }
 
-    public void setValidForStartDate(Date validForStartDate) {
-        this.validForStartDate = validForStartDate;
-    }
-
-    public Date getValidForEndDate() {
-        return validForEndDate;
-    }
-
-    public void setValidForEndDate(Date validForEndDate) {
-        this.validForEndDate = validForEndDate;
+    public void setValidFor(TimePeriod validFor) {
+        this.validFor = validFor;
     }
 
     public int getValueType() {

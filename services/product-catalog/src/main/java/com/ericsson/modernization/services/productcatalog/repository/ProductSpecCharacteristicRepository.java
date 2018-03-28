@@ -1,5 +1,6 @@
 package com.ericsson.modernization.services.productcatalog.repository;
 
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.request.ProductSpecCharacteristicEditRequest;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharacteristic;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

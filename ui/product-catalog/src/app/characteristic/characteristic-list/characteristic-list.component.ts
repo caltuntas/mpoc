@@ -40,13 +40,13 @@ export class CharacteristicListComponent implements OnInit {
                             <i class='fa fa-gear fa-lg'></i></button>
                             <ul class='dropdown-menu  ng-star-inserted'>                                
                                 <li>
-                                    <a class='sa-datatables-edit' characteristic-id='${fullRow.id}'>
+                                    <a class='sa-datatables-edit-characteristic' characteristic-id='${fullRow.id}'>
                                         <i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs" style="color:cornflowerblue"></i>
                                         Edit
                                     </a>
                                 </li>
                                 <li>
-                                    <a class='sa-datatables-delete' characteristic-id='${fullRow.id}'>
+                                    <a class='sa-datatables-delete-characteristic' characteristic-id='${fullRow.id}'>
                                         <i class="fa fa-fw fa-ban text-muted hidden-md hidden-sm hidden-xs" style="color:red"></i>
                                         Delete
                                     </a>
@@ -62,10 +62,10 @@ export class CharacteristicListComponent implements OnInit {
         document.querySelector('body').addEventListener('click', (event) => {
             let target = <Element>event.target;
 
-            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit')) {
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit-characteristic')) {
                 this.onEditCharacteristic(target.getAttribute('characteristic-id'));
             }
-            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete')) {
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete-characteristic')) {
                 this.onDeleteCharacteristic(target.getAttribute('characteristic-id'));
             }
         });
