@@ -19,15 +19,15 @@ public class DocumentAppService {
     public void create(DocumentRequest documentRequest){
 
         Document document = new Document();
-        //document.setCode(documentRequest.getCode());
-        //document.setName(documentRequest.getName());
-        //document.setDescription(documentRequest.getDescription());
+        document.setCode(documentRequest.getCode());
+        document.setName(documentRequest.getName());
+        document.setDescription(documentRequest.getDescription());
         document.setDeleted(false);
 
         TimePeriod validFor = new TimePeriod();
         validFor.setValidForEndDate(documentRequest.getValidForEndDate());
         validFor.setValidForStartDate(documentRequest.getValidForStartDate());
-        //document.setValidFor(validFor);
+        document.setValidFor(validFor);
 
         documentRepository.save(document);
     }
@@ -35,14 +35,14 @@ public class DocumentAppService {
     public void update(DocumentRequest documentRequest){
 
         Document document = documentRepository.findById(documentRequest.getId()).get();
-        //document.setCode(documentRequest.getCode());
-        //document.setName(documentRequest.getName());
-        //document.setDescription(documentRequest.getDescription());
+        document.setCode(documentRequest.getCode());
+        document.setName(documentRequest.getName());
+        document.setDescription(documentRequest.getDescription());
 
         TimePeriod validFor = new TimePeriod();
         validFor.setValidForEndDate(documentRequest.getValidForEndDate());
         validFor.setValidForStartDate(documentRequest.getValidForStartDate());
-        //document.setValidFor(validFor);
+        document.setValidFor(validFor);
 
         documentRepository.save(document);
     }

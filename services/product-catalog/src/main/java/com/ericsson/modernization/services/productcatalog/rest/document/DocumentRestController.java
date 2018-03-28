@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/document")
 public class DocumentRestController {
     @Autowired
-    private DocumentAppService documentAppService = new DocumentAppService();
+    private DocumentAppService documentAppService;
 
     @RequestMapping(value = "/createdocument", method = RequestMethod.POST)
     public ResponseEntity<DocumentResponse> createDocument(@RequestBody DocumentRequest createRequest) {

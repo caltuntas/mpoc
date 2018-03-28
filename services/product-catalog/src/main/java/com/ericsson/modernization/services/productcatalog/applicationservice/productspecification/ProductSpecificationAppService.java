@@ -48,8 +48,6 @@ public class ProductSpecificationAppService {
             charuse.setProductSpecification(productSpecification);
             charuse.setProductSpecCharacteristic(characteristic);
             charuse.setCreateUserDate(new Date());
-            charuse.setCharacteristicType(1);
-            charuse.setUpdateUserDate(new Date());
 
             charUseRepository.save(charuse);
 
@@ -95,7 +93,7 @@ public class ProductSpecificationAppService {
         model.code = spec.getCode();
         model.description = spec.getDescription();
         model.selectedCharacteristics = spec.getProductSpecCharUses().stream()
-                .map(x -> new ProductSpecificationValueItemModel(x.getProductSpecCharacteristic().getId(),
+                .map(x -> new ProductSpecificationValueItemModel(x.getId(),
                         x.getProductSpecCharValueUses().stream().map(y -> y.getProductSpecCharacteristicValue().getId()).collect(Collectors.toList()))).collect(Collectors.toList());
         return model;
     }
