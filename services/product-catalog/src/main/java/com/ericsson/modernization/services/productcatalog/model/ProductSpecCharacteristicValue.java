@@ -1,10 +1,7 @@
 
 package com.ericsson.modernization.services.productcatalog.model;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +21,7 @@ public ProductSpecCharacteristicValue()
     private Boolean isReplicated;
     private long versionNumber;
 
-    @OneToMany(mappedBy = "productSpecCharacteristicValue")
+    @OneToMany(mappedBy = "productSpecCharacteristicValue",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<ProdSpecCharValueUse> productSpecCharValueUses;
 
     public String getValue() {

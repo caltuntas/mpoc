@@ -21,7 +21,8 @@ public class ProductSpecCharacteristic extends EntityBase
     @Embedded
     private TimePeriod validFor;
     @JsonIgnore
-    @OneToMany(mappedBy = "productSpecCharacteristic")
+
+    @OneToMany(mappedBy = "productSpecCharacteristic",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<ProductSpecCharacteristicValue> productSpecCharacteristicValues;
 
     public void addValue(ProductSpecCharacteristicValue productSpecCharacteristicValue){

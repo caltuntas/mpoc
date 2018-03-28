@@ -15,7 +15,7 @@ public abstract class ProdOfferPriceCharge extends ComponentProductOfferPrice {
     @Transient //TODO: karşılıklı List<A> List<B> ilişkisi sorgulanacak
     private List<ProdOfferPriceAlteration> alterations;
 
-    @OneToMany(mappedBy = "prodOfferPriceCharge")
+    @OneToMany(mappedBy = "prodOfferPriceCharge",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<AlternateProdOfferPriceCharge> alternates;
 
     public Boolean getIsAltered() {

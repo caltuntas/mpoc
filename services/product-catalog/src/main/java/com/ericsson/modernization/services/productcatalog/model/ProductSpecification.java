@@ -37,7 +37,7 @@ public class ProductSpecification extends EntityBase
     private Duration returnPeriod;
     private String externalId;
     @JsonIgnore
-    @OneToMany(mappedBy = "productSpecification")
+    @OneToMany(mappedBy = "productSpecification",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<ProductSpecCharUse> productSpecCharUses;
     private String article;
     private Boolean isReplicated;
@@ -45,6 +45,7 @@ public class ProductSpecification extends EntityBase
     private long versionNumber;
 
     public void addCharUse(ProductSpecCharUse charuse) {
+        charuse.setProductSpecification(this);
         this.productSpecCharUses.add(charuse);
     }
 
@@ -121,7 +122,7 @@ public class ProductSpecification extends EntityBase
     }
 
     public List<ProductSpecCharUse> getProductSpecCharUses() {
-        return productSpecCharUses;
+        return this.productSpecCharUses;
     }
 
     public void setProductSpecCharUses(List<ProductSpecCharUse> productSpecCharUses) {
