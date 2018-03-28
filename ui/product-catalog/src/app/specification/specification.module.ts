@@ -16,7 +16,7 @@ import { SmartadminDatatableModule } from "../shared/ui/datatable/smartadmin-dat
 import { SmartadminValidationModule } from "../shared/forms/validation/smartadmin-validation.module";
 import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.module";
 import { SpecificationEditComponent } from './specification-edit/specification-edit.component';
-
+import { Http, HttpModule } from '@angular/http';
 
 
 @NgModule({
@@ -27,17 +27,20 @@ import { SpecificationEditComponent } from './specification-edit/specification-e
     SmartadminDatatableModule,
     SmartadminValidationModule,
     SmartadminInputModule,
-    FormsModule
+    FormsModule,
+    HttpModule
 
 
   ],
   declarations: [
     SpecificationListComponent,
     SpecificationCreateComponent,
-    SpecificationEditComponent
+    SpecificationEditComponent,
+    
   ],
   providers: [
-    specificationService
+    specificationService,
+    
   ]
 })
 export class SpecificationModule { }

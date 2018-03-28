@@ -8,19 +8,26 @@ import java.util.List;
 /// Represents the specific characteristics that is used for a specific product specification
 /// </summary>
 @Entity
-public class ProductSpecCharUse extends EntityBase {
+public class ProductSpecCharUse extends EntityBase
+        implements  ValidFor, ExternalId, IsReplicated, Versioned {
 
-    public ProductSpecCharUse() {
-        this.setProductSpecCharValueUses(new ArrayList<ProdSpecCharValueUse>());
-    }
+
 
     @ManyToOne
     private ProductSpecCharacteristic productSpecCharacteristic;
     @ManyToOne
     private ProductSpecification productSpecification;
-    @OneToMany(mappedBy = "productSpecCharUse", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "productSpecCharUse",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<ProdSpecCharValueUse> productSpecCharValueUses;
-
+    @Embedded
+    private TimePeriod validFor;
+    private int  characteristicType;
+    private String externalId;
+    private Boolean isReplicated;
+    private long versionNumber;
+    public ProductSpecCharacteristic getProductSpecCharacteristic() {
+        return productSpecCharacteristic;
+    }
 
     public void setProductSpecCharacteristic(ProductSpecCharacteristic productSpecCharacteristic) {
         this.productSpecCharacteristic = productSpecCharacteristic;
@@ -44,7 +51,54 @@ public class ProductSpecCharUse extends EntityBase {
 
     public void addProductSpecCharValueUse(ProdSpecCharValueUse productSpecCharValueUse) {
         productSpecCharValueUse.setProductSpecCharUse(this);
-        this.productSpecCharValueUses.add(productSpecCharValueUse);
+      this.productSpecCharValueUses.add(productSpecCharValueUse);
     }
 
+    public TimePeriod getValidFor() {
+        return validFor;
+    }
+
+    public void setValidFor(TimePeriod validFor) {
+        this.validFor = validFor;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
+    public Boolean getIsReplicated() {
+        return getReplicated();
+    }
+
+    public void setIsReplicated(Boolean isReplicated) {
+        this.setReplicated(isReplicated);
+    }
+
+    public long getVersionNumber() {
+        return versionNumber;
+    }
+
+    public void setVersionNumber(long versionNumber) {
+        this.versionNumber = versionNumber;
+    }
+
+    public Boolean getReplicated() {
+        return isReplicated;
+    }
+
+    public void setReplicated(Boolean replicated) {
+        isReplicated = replicated;
+    }
+
+    public int getCharacteristicType() {
+        return characteristicType;
+    }
+
+    public void setCharacteristicType(int characteristicType) {
+        this.characteristicType = characteristicType;
+    }
 }
