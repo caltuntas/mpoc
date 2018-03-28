@@ -11,8 +11,7 @@ import javax.persistence.ManyToOne;
 public class ProdSpecCharValueUse extends EntityBase implements ValidFor, ExternalId, IsReplicated, Versioned {
 
     private String name;
-    @ManyToOne
-    private ProductOffering productOffering;
+
     @ManyToOne
     private ProductSpecCharacteristicValue productSpecCharacteristicValue;
     @ManyToOne
@@ -80,14 +79,6 @@ public class ProdSpecCharValueUse extends EntityBase implements ValidFor, Extern
 
     public void setVersionNumber(long versionNumber) {
         this.versionNumber = versionNumber;
-    }
-
-    public ProductOffering getProductOffering() {
-        return productOffering;
-    }
-
-    public void setProductOffering(ProductOffering productOffering) {
-        this.productOffering = productOffering;
     }
 
     public ProductSpecCharValueUseGroup getProductSpecCharValueUseGroup() {

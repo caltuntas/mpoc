@@ -4,11 +4,17 @@ package com.ericsson.modernization.services.productcatalog.model;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class ProductSpecCharacteristicValue extends EntityBase
         implements ValidFor, ExternalId, IsReplicated, Versioned {
-
+public ProductSpecCharacteristicValue()
+{
+    this.productSpecCharValueUses=new ArrayList<ProdSpecCharValueUse>();
+}
     private String value;
     @ManyToOne
     private ProductSpecCharacteristic productSpecCharacteristic;
@@ -17,6 +23,9 @@ public class ProductSpecCharacteristicValue extends EntityBase
     private String externalId;
     private Boolean isReplicated;
     private long versionNumber;
+
+    @OneToMany(mappedBy = "productSpecCharacteristicValue")
+    private List<ProdSpecCharValueUse> productSpecCharValueUses;
 
     public String getValue() {
         return value;
@@ -72,5 +81,17 @@ public class ProductSpecCharacteristicValue extends EntityBase
 
     public void setReplicated(Boolean replicated) {
         isReplicated = replicated;
+    }
+
+    public List<ProdSpecCharValueUse> getProductSpecCharValueUses() {
+        return productSpecCharValueUses;
+    }
+
+    public void setProductSpecCharValueUses(List<ProdSpecCharValueUse> productSpecCharValueUses) {
+        this.productSpecCharValueUses = productSpecCharValueUses;
+    }
+
+    public void AddValueUse(ProdSpecCharValueUse valUse){
+        this.productSpecCharValueUses.add(valUse);
     }
 }

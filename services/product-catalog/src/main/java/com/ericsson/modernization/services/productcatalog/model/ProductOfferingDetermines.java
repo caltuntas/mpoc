@@ -6,23 +6,23 @@ import javax.persistence.ManyToOne;
 @Entity
 public class ProductOfferingDetermines extends EntityBase {
     @ManyToOne
-    private ProdSpecCharValueUse ProdSpecCharValueUse;
+    private ProdSpecCharValueUse prodSpecCharValueUse;
     @ManyToOne
-    private ProductOffering ProductOffering;
+    private ProductOffering productOffering;
 
     public com.ericsson.modernization.services.productcatalog.model.ProdSpecCharValueUse getProdSpecCharValueUse() {
-        return ProdSpecCharValueUse;
+        return prodSpecCharValueUse;
     }
 
     public void setProdSpecCharValueUse(com.ericsson.modernization.services.productcatalog.model.ProdSpecCharValueUse prodSpecCharValueUse) {
-        ProdSpecCharValueUse = prodSpecCharValueUse;
+        prodSpecCharValueUse = prodSpecCharValueUse;
     }
 
     public com.ericsson.modernization.services.productcatalog.model.ProductOffering getProductOffering() {
-        return ProductOffering;
+        return productOffering;
     }
 
     public void setProductOffering(com.ericsson.modernization.services.productcatalog.model.ProductOffering productOffering) {
-        ProductOffering = productOffering;
+        productOffering = productOffering;
     }
 }

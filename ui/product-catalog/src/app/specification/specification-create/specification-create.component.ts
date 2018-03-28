@@ -5,13 +5,13 @@ import { productSpecCharUseModel } from "../model/productSpecCharUseModel";
 import { productSpecCharModel } from "../model/productSpecCharModel";
 import { productSpecCharValueModel } from "../model/productSpecCharValueModel";
 import { specificationService } from "../specification.service";
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 @Component({
   selector: "app-specification-create",
   templateUrl: "./specification-create.component.html"
 })
 export class SpecificationCreateComponent implements OnInit {
-  constructor(private router: Router,private service: specificationService) {
+  constructor(private router: Router, private service: specificationService) {
     this.productSpec = new productSpecificationCreateModel();
   }
 
@@ -74,13 +74,10 @@ export class SpecificationCreateComponent implements OnInit {
     }
   }
 
-  saveForm(productSpec: productSpecificationCreateModel) {
-
-
+  saveForm() {
     this.service.createSpec(this.productSpec).subscribe(data => {
       console.log(data);
-     
-  });
-  this.router.navigate(['/specification/specification-list']);
+    });
+    this.router.navigate(["/list"]);
   }
 }

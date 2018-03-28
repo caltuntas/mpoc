@@ -15,9 +15,6 @@ public ProductSpecCharUse()
 {
     this.productSpecCharValueUses=new ArrayList<ProdSpecCharValueUse>();
 }
-    public final int Type_None = 0;
-    public final int Type_Stock = 1;
-
 
     private String name;
     private String description;
