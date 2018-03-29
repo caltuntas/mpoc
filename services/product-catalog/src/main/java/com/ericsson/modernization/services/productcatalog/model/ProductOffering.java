@@ -59,7 +59,7 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     @OneToMany(mappedBy = "productOffering",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<Category> category;
 
-    
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "ProductOfferingSalesChannels", joinColumns = @JoinColumn(name = "productoffering_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "saleschannel_id", referencedColumnName = "id"))
     private Set<SalesChannel> salesChannels;
@@ -70,7 +70,8 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     public void setSalesChannels(Set<SalesChannel> salesChannels) {
         this.salesChannels = salesChannels;
     }
-    
+
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "ProductOfferingSegments", joinColumns = @JoinColumn(name = "productoffering_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "segment_id", referencedColumnName = "id"))
     private Set<Segment> segments;
@@ -81,7 +82,8 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     public void setSegments(Set<Segment> segments) {
         this.segments = segments;
     }
-    
+
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "ProductOfferingDocuments", joinColumns = @JoinColumn(name = "productoffering_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id"))
     private Set<Document> documents;

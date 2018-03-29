@@ -1,7 +1,7 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.catalog.CatalogAppService;
-import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCreateRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingDetailModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.ProductOfferingListModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.ProductSpecificationAppService;
 import com.ericsson.modernization.services.productcatalog.model.*;
@@ -24,14 +24,14 @@ public class ProductOfferingAppService {
     @Autowired
     private CatalogAppService catalogAppService;
 
-    public ProductOffering create(ProductOfferingCreateRequest createRequest) {
+    public ProductOffering create(ProductOfferingDetailModel createRequest) {
 
         ProductOffering productOffering = new ProductOffering();
         productOffering.setName(createRequest.getName());
-        productOffering.setIsSellable(createRequest.getSellable());
+        productOffering.setIsSellable(createRequest.getIsSellable());
         productOffering.setDescription(createRequest.getDescription());
         productOffering.setExternalId(productOffering.getExternalId());
-        productOffering.setIsReplicated(createRequest.getReplicated());
+        productOffering.setIsReplicated(createRequest.getIsReplicated());
 
         Duration returnPeriod = new Duration();
         returnPeriod.setPeriodValue(createRequest.getReturnPeriodValue());
@@ -43,22 +43,22 @@ public class ProductOfferingAppService {
         warrantyPeriod.setPeriodUnit(createRequest.getWarrantyPeriodUnit());
         productOffering.setWarrantyPeriod(warrantyPeriod);
 
-        TimePeriod validFor = new TimePeriod();
-        validFor.setValidForEndDate(createRequest.getValidForEndDate());
-        validFor.setValidForStartDate(createRequest.getValidForStartDate());
-        productOffering.setValidFor(validFor);
-
         ProductSpecification specification = productSpecificationAppService.findById(createRequest.getProductSpecificationId());
         productOffering.setProductSpecification(specification);
 
         Catalog catalog = catalogAppService.findById(createRequest.getCatalogId());
         productOffering.setCatalog(catalog);
 
-        productOffering.setSalesChannels(createRequest.getSalesChannels());
-        productOffering.setSegments(createRequest.getSegments());
-        productOffering.setDocuments(createRequest.getDocuments());
-        
+
+        //productOffering.setSalesChannels(createRequest.getSalesChannels());
+        //productOffering.setSegments(createRequest.getSegments());
+        //productOffering.setDocuments(createRequest.getDocuments());
+
         return productOfferingRepository.save(productOffering);
+    }
+
+    public void update(ProductOfferingDetailModel editRequest) {
+        //TODO: implement
     }
 
     public void delete(int productOfferingId) {
@@ -71,6 +71,18 @@ public class ProductOfferingAppService {
 
     public ProductOffering findById(int id) {
         return productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
+    }
+
+    public ProductOfferingDetailModel findByIdForEditing(int id) {
+        ProductOffering productOffering = findById(id);
+        return new ProductOfferingDetailModel(
+                productOffering.getId(),
+                productOffering.getName(),
+                productOffering.getDescription(),
+                productOffering.getIsReplicated(),
+                productOffering.getIsSellable(),
+                productOffering.getProductSpecification().getId(),
+                productOffering.getCatalog().getId());
     }
 
     public List<ProductOfferingListModel> findAll() {
