@@ -29,6 +29,7 @@ export class SegmentComponent implements OnInit {
                      { "data": "id" },
                       { "data": "code" },
                       { "data": "name" },
+                      { "data": "description" },
                      { 
                       "className": "centerCell",
                        "orderable":false,
@@ -80,13 +81,11 @@ export class SegmentComponent implements OnInit {
     }
 
     onDeleteSalesCh(scid) {
-        console.log("Delete salesch", scid, "?");
       
         this.scService.deleteSegment(scid).subscribe((data) => {
           
-          this.notificationComponent.showNotification("Delete","Deleted successfully");
-          
             this.reloadPage();
+          this.notificationComponent.showNotification("Segment","Deleted successfully");
         });
     }
   

@@ -43,7 +43,7 @@ export class SegmentDetailComponent implements OnInit {
       {
         this.scService.createSegment(detail.SegmentInstance).subscribe(data => {
 
-          this.notificationComponent.showNotification("Create","Created successfully");
+          this.notificationComponent.showNotification("Segment","Created successfully");
           
           this.routeToSClist();
         } );
@@ -51,7 +51,7 @@ export class SegmentDetailComponent implements OnInit {
       {
         this.scService.updateSegment(detail.SegmentInstance).subscribe(data => {
 
-          this.notificationComponent.showNotification("Update","Updated successfully");
+          this.notificationComponent.showNotification("Segment","Updated successfully");
           
           this.routeToSClist();
           

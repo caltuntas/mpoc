@@ -29,6 +29,7 @@ export class SalesChannelComponent implements OnInit {
                      { "data": "id" },
                       { "data": "code" },
                       { "data": "name" },
+                      { "data": "description" },
                      { 
                        "orderable":false,
                        "render": (data, type, fullRow, meta) => {
@@ -89,7 +90,7 @@ export class SalesChannelComponent implements OnInit {
       
         this.scService.deleteSalesChannel(scid).subscribe((data) => {
           
-          this.notificationComponent.showNotification("Delete","Deleted successfully");
+          this.notificationComponent.showNotification("Sale Channel","Deleted successfully");
           
             this.reloadPage();
         });
