@@ -83,8 +83,7 @@ export class SpecificationEditComponent implements OnInit {
     let characteristic = this.characteristics[i];
     characteristic.isSelected = false;
     this.productSpec.selectedCharacteristics = this.productSpec.selectedCharacteristics
-      .filter(x => x.id == characteristic.id)
-      .slice();
+      .filter(x => x.id != characteristic.id);  
   }
 
   selectCharUse($event) {
@@ -105,7 +104,8 @@ export class SpecificationEditComponent implements OnInit {
     characteristic: productSpecCharModel,
     value: productSpecCharValueModel,
     $event
-  ) {
+  ) 
+  {
     if ($event.target.checked) {
       characteristic.values.find(x => x.id == value.id).isSelected = true;
       let charuse = this.productSpec.selectedCharacteristics.find(
@@ -118,15 +118,13 @@ export class SpecificationEditComponent implements OnInit {
         x => x.id == characteristic.id
       ).selectedValueIds = this.productSpec.selectedCharacteristics
         .find(x => x.id == characteristic.id)
-        .selectedValueIds.filter(x => value.id)
-        .slice();
+        .selectedValueIds.filter(x => x!=value.id);
     }
   }
 
   saveForm(productSpec: productSpecEditModel) {
-    this.service.updateSpec(this.productSpec).subscribe(data => {
-      console.log(data);
+    this.service.updateSpec(this.productSpec).subscribe(data => {     
     });
-    this.router.navigate(["/specification/specification-list"]);
+    this.router.navigate(["/specification/list"]);
   }
 }

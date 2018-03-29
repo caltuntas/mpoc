@@ -38,7 +38,7 @@ export class SpecificationListComponent implements OnInit {
       { data: "name" },
       { data: "code" },
       { data: "description" },
-      {data: "createTime"},
+      { data: "createTime" },
       {
         render: (data, type, fullRow, meta) => {
           return `
@@ -59,8 +59,34 @@ export class SpecificationListComponent implements OnInit {
         }
       }
     ],
-     order: [[ 0, "desc" ]]
+    order: [[0, "desc"]]
   };
+
+
+
+  constructor(
+    private router: Router,
+    private service: specificationService,
+    private cdRef: ChangeDetectorRef
+  ) {}
+
+  ngOnInit() {}
+
+
+  onEditSpec(specId) {
+    this.router.navigate(["/specification/edit/" + specId]);
+  }
+
+  onDeleteSpec(specId) {
+    
+    this.service.deleteSpec(specId);
+  }
+  reloadOfferingListTable() {
+    this.reRenderTable = true;
+    this.cdRef.detectChanges();
+    this.reRenderTable = false;
+  }
+
 
   ngAfterViewInit() {
     document.querySelector("body").addEventListener("click", event => {
@@ -81,30 +107,7 @@ export class SpecificationListComponent implements OnInit {
     });
   }
 
-  onEditSpec(specId) {
-    this.router.navigate(['/specification/edit/' + specId]);
-  }
 
-  onDeleteSpec(specId) {
-    console.log("Delete spec", specId, "?");
-    // this.ser.deleteOffering(offeringId).subscribe((data) => {
-    //     this.reloadOfferingListTable();
-    // });
-  }
-  reloadOfferingListTable() {
-    this.reRenderTable = true;
-    this.cdRef.detectChanges();
-    this.reRenderTable = false;
-  }
-
-  constructor(
-    private router: Router,
-    private service: specificationService,
-    private cdRef: ChangeDetectorRef
-  ) {}
-
-  ngOnInit() {}
-  
   private handleError(error: any) {
     let errMsg = error.message
       ? error.message
