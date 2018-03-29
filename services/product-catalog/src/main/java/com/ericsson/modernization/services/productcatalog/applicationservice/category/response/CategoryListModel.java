@@ -9,23 +9,14 @@ public class CategoryListModel  {
     private String code;
     private String name;
     private String description;
-    private String parent;
+    private int parentId;
+    private String parentName;
     //private Date validForStartDate;
     //private Date validForEndDate;
     //@JsonFormat(pattern="yyyy-MM-dd")
     //Date validForStartDate,
     //@JsonFormat(pattern="yyyy-MM-dd")
     //Date validForEndDate,
-    
-	public CategoryListModel(int id, String code, String name, String description, String parent) {
-		super();
-		this.id = id;
-		this.code = code;
-		this.name = name;
-		this.description = description;
-		this.parent = parent;
-	}
-	
 	public int getId() {
 		return id;
 	}
@@ -50,13 +41,28 @@ public class CategoryListModel  {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getParent() {
-		return parent;
+	public int getParentId() {
+		return parentId;
 	}
-	public void setParent(String parent) {
-		this.parent = parent;
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
 	}
-    
+	public String getParentName() {
+		return parentName;
+	}
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
+	public CategoryListModel(int id, String code, String name, String description, int parentId, String parentName) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.name = name;
+		this.description = description;
+		this.parentId = parentId;
+		this.parentName = parentName;
+	}
+     
 }
 
 

@@ -28,7 +28,7 @@ export class CategoryListComponent implements OnInit {
         "iDisplayLength": 15,
         columns: [
             {"data": "id"},
-            {"data": "parent"},
+            {"data": "parentName"},
             {"data": "code"},
             {"data": "name"},
             {"data": "description"},
