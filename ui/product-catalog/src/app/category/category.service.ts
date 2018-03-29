@@ -30,7 +30,7 @@ export class CategoryService {
         return this.http.delete(this.path + '/' + id);
     }
 
-    getLeavesFullPathNames() {
+    getLeavesFullPathNames(): Observable<Category[]> {
         return this.http.get(this.path + '/leavesFullPathNames');
     }
 }

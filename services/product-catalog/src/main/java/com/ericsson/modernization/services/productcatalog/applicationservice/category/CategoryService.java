@@ -1,8 +1,6 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.category;
 
 import java.util.List;
-import java.util.Map;
-
 import com.ericsson.modernization.services.productcatalog.applicationservice.category.request.CategoryCreateRequest;
 import com.ericsson.modernization.services.productcatalog.applicationservice.category.response.CategoryListModel;
 import com.ericsson.modernization.services.productcatalog.model.Category;
@@ -22,7 +20,7 @@ public interface CategoryService {
 
 	List<CategoryListModel> findAllWithModel();
 
-	Map<String, String> getLeavesFullPathNames();
+	List<CategoryListModel> getLeavesFullPathNames();
 
-	Map<String, String> getLeavesFullPathNamesByCategories(List<Category> categories);
+	List<CategoryListModel> getLeavesFullPathNamesByCategories(List<Category> categories);
 }

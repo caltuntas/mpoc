@@ -1,11 +1,14 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.category;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,12 +74,12 @@ public class CategoryServiceImpl implements CategoryService {
 				.collect(Collectors.toList());
 	}
 
-	public Map<String, String> getLeavesFullPathNames() {
+	public List<CategoryListModel> getLeavesFullPathNames() {
 		List<Category> categories = repository.findAllByIsDeletedIsFalse();
 		return getLeavesFullPathNamesByCategories(categories);
 	}
 
-	public Map<String, String> getLeavesFullPathNamesByCategories(List<Category> categories) {
+	public List<CategoryListModel> getLeavesFullPathNamesByCategories(List<Category> categories) {
 		Map<String, String> map = new HashMap<String, String>();
 		for (int i = 0; i < categories.size(); i++) {
 			Category category = categories.get(i);
@@ -104,8 +107,10 @@ public class CategoryServiceImpl implements CategoryService {
 			sb.append(category.getName());
 			map.put(category.getId() + "", sb.toString());
 		}
-
-		return map;
+		List<CategoryListModel> list = map.entrySet().stream().sorted(Comparator.comparing(e -> e.getKey()))
+				.map(e -> new CategoryListModel(Integer.parseInt(e.getKey()), e.getValue())).collect(Collectors.toList());
+		
+		return list;
 	}
 
 }

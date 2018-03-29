@@ -293,7 +293,7 @@
                                                         required [(ngModel)]="model.categoryId"
                                                         (ngModelChange)="onCategoryChanged($event)"
                                                         #selectCategoryControl="ngModel">
-                                                    <option *ngFor="let category of categories" [value]="category.id">
+                                                    <option *ngFor="let category of categoryLeaves" [value]="category.id">
                                                         {{category.name}}
                                                     </option>
                                                 </select>
