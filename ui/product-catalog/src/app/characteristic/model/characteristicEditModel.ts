@@ -7,4 +7,6 @@ export class CharacteristicEditModel {
     public valueType: number;
     public validFor: ValidDateModel;
     public charValueString: string;
+    public isRequired: boolean;
+    public isConfigurable: boolean;
 }

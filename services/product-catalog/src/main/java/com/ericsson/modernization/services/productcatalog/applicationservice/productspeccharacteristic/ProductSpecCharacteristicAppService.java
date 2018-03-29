@@ -28,29 +28,27 @@ public class ProductSpecCharacteristicAppService {
         productSpecCharacteristic.setName(productSpecCharacteristicCreateRequest.getName());
         productSpecCharacteristic.setDescription(productSpecCharacteristicCreateRequest.getDescription());
         productSpecCharacteristic.setValueType(productSpecCharacteristicCreateRequest.getValueType());
+        productSpecCharacteristic.setRequired(productSpecCharacteristicCreateRequest.getRequired());
+        productSpecCharacteristic.setConfigurable(productSpecCharacteristicCreateRequest.getConfigurable());
 
         TimePeriod validFor = new TimePeriod();
         validFor.setValidForStartDate(productSpecCharacteristicCreateRequest.getValidForStartDate());
         validFor.setValidForEndDate(productSpecCharacteristicCreateRequest.getValidForEndDate());
         productSpecCharacteristic.setValidFor(validFor);
 
-        List<String> items = Arrays.asList(productSpecCharacteristicCreateRequest.getCharValueString().split("\\s*,\\s*"));
-        ArrayList<ProductSpecCharacteristicValue> pscvList = new ArrayList<ProductSpecCharacteristicValue>();
-
-/*        for (String item : items) {
-            ProductSpecCharacteristicValue pscv = new ProductSpecCharacteristicValue();
-            pscv.setValue(item);
-            pscv.setProductSpecCharacteristic(productSpecCharacteristic);
-            productSpecCharacteristic.addValue(pscv);
-        }*/
-
         productSpecCharacteristicRepository.save(productSpecCharacteristic);
 
-        for (String item: items) {
-            ProductSpecCharacteristicValue pscv = new ProductSpecCharacteristicValue();
-            pscv.setValue(item);
-            pscv.setProductSpecCharacteristic(productSpecCharacteristic);
-            productSpecCharacteristicValueRepository.save(pscv);
+        if(productSpecCharacteristic.getValueType() == 1) {
+
+            List<String> items = Arrays.asList(productSpecCharacteristicCreateRequest.getCharValueString().trim().split("\\s*,\\s*"));
+            ArrayList<ProductSpecCharacteristicValue> pscvList = new ArrayList<ProductSpecCharacteristicValue>();
+
+            for (String item : items) {
+                ProductSpecCharacteristicValue pscv = new ProductSpecCharacteristicValue();
+                pscv.setValue(item);
+                pscv.setProductSpecCharacteristic(productSpecCharacteristic);
+                productSpecCharacteristicValueRepository.save(pscv);
+            }
         }
 
         return productSpecCharacteristic;
@@ -75,18 +73,22 @@ public class ProductSpecCharacteristicAppService {
         productSpecCharacteristicEditRequest.setDescription(productSpecCharacteristic.getDescription());
         productSpecCharacteristicEditRequest.setValidFor(productSpecCharacteristic.getValidFor());
         productSpecCharacteristicEditRequest.setValueType(productSpecCharacteristic.getValueType());
+        productSpecCharacteristicEditRequest.setConfigurable(productSpecCharacteristic.getConfigurable());
+        productSpecCharacteristicEditRequest.setRequired(productSpecCharacteristic.getRequired());
 
-        List<ProductSpecCharacteristicValue> productSpecCharacteristicValueList = productSpecCharacteristic.getProductSpecCharacteristicValues();
-        List<String> values = new ArrayList<String>();
+        if (productSpecCharacteristicEditRequest.getValueType() == 1) {
+            List<ProductSpecCharacteristicValue> productSpecCharacteristicValueList = productSpecCharacteristic.getProductSpecCharacteristicValues();
+            List<String> values = new ArrayList<String>();
 
-        for (ProductSpecCharacteristicValue pscv: productSpecCharacteristicValueList) {
-            if (!pscv.isDeleted()) {
-                values.add(pscv.getValue());
+            for (ProductSpecCharacteristicValue pscv : productSpecCharacteristicValueList) {
+                if (!pscv.isDeleted()) {
+                    values.add(pscv.getValue());
+                }
             }
-        }
 
-        String csv = String.join(",", values);
-        productSpecCharacteristicEditRequest.setCharValueString(csv);
+            String csv = String.join(",", values);
+            productSpecCharacteristicEditRequest.setCharValueString(csv);
+        }
 
         return productSpecCharacteristicEditRequest;
     }
@@ -107,23 +109,26 @@ public class ProductSpecCharacteristicAppService {
         productSpecCharacteristic.setDescription(productSpecCharacteristicEditRequest.getDescription());
         productSpecCharacteristic.setValidFor(productSpecCharacteristicEditRequest.getValidFor());
         productSpecCharacteristic.setValueType(productSpecCharacteristicEditRequest.getValueType());
-
-        List<String> items = Arrays.asList(productSpecCharacteristicEditRequest.getCharValueString().split("\\s*,\\s*"));
+        productSpecCharacteristic.setConfigurable(productSpecCharacteristicEditRequest.getConfigurable());
+        productSpecCharacteristic.setRequired(productSpecCharacteristicEditRequest.getRequired());
 
         productSpecCharacteristicRepository.save(productSpecCharacteristic);
 
-        for (String item: items) {
-            ProductSpecCharacteristicValue pscv = productSpecCharacteristicValueRepository.findByValueAndProductSpecCharacteristicEquals(item,productSpecCharacteristic);
-            if (pscv == null) {
-                pscv = new ProductSpecCharacteristicValue();
-                pscv.setValue(item);
-                pscv.setProductSpecCharacteristic(productSpecCharacteristic);
+
+        if (productSpecCharacteristic.getValueType() == 1) {
+            List<String> items = Arrays.asList(productSpecCharacteristicEditRequest.getCharValueString().split("\\s*,\\s*"));
+
+            for (String item : items) {
+                ProductSpecCharacteristicValue pscv = productSpecCharacteristicValueRepository.findByValueAndProductSpecCharacteristicEquals(item, productSpecCharacteristic);
+                if (pscv == null) {
+                    pscv = new ProductSpecCharacteristicValue();
+                    pscv.setValue(item);
+                    pscv.setProductSpecCharacteristic(productSpecCharacteristic);
+                } else {
+                    pscv.setDeleted(false);
+                }
+                productSpecCharacteristicValueRepository.save(pscv);
             }
-            else
-            {
-                pscv.setDeleted(false);
-            }
-            productSpecCharacteristicValueRepository.save(pscv);
         }
 
         return productSpecCharacteristic;
