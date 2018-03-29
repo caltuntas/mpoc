@@ -7,23 +7,43 @@ import com.ericsson.modernization.services.productcatalog.model.Document;
 import com.ericsson.modernization.services.productcatalog.model.SalesChannel;
 import com.ericsson.modernization.services.productcatalog.model.Segment;
 
-public class ProductOfferingCreateRequest {
+public class ProductOfferingDetailModel {
+    private int id;
     private String name;
-    private Date validForStartDate;
-    private Date validForEndDate;
     private long warrantyPeriodValue;
     private int warrantyPeriodUnit;
     private long returnPeriodValue;
     private int returnPeriodUnit;
     private String description;
-    private String externalId;
     private int productSpecificationId;
     private int catalogId;
     private Boolean isReplicated;
     private Boolean isSellable;
-    private Set<SalesChannel> salesChannels;
-    private Set<Segment> segments;
-    private Set<Document> documents;
+    //private Set<SalesChannel> salesChannels;
+    //private Set<Segment> segments;
+    //private Set<Document> documents;
+
+    public ProductOfferingDetailModel
+            (int id,
+             String name,
+             String description,
+             Boolean isReplicated,
+             Boolean isSellable,
+             int productSpecificationId,
+             int catalogId
+            ) {
+        setId(id);
+        setName(name);
+        setDescription(description);
+        setIsReplicated(isReplicated);
+        setIsSellable(isSellable);
+        setProductSpecificationId(productSpecificationId);
+        setCatalogId(catalogId);
+    }
+
+    public ProductOfferingDetailModel() {
+
+    }
 
     public String getName() {
         return name;
@@ -31,22 +51,6 @@ public class ProductOfferingCreateRequest {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Date getValidForStartDate() {
-        return validForStartDate;
-    }
-
-    public void setValidForStartDate(Date validForStartDate) {
-        this.validForStartDate = validForStartDate;
-    }
-
-    public Date getValidForEndDate() {
-        return validForEndDate;
-    }
-
-    public void setValidForEndDate(Date validForEndDate) {
-        this.validForEndDate = validForEndDate;
     }
 
     public long getWarrantyPeriodValue() {
@@ -89,27 +93,19 @@ public class ProductOfferingCreateRequest {
         this.description = description;
     }
 
-    public String getExternalId() {
-        return externalId;
-    }
-
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
-    }
-
-    public Boolean getReplicated() {
+    public Boolean getIsReplicated() {
         return isReplicated;
     }
 
-    public void setReplicated(Boolean replicated) {
+    public void setIsReplicated(Boolean replicated) {
         isReplicated = replicated;
     }
 
-    public Boolean getSellable() {
+    public Boolean getIsSellable() {
         return isSellable;
     }
 
-    public void setSellable(Boolean sellable) {
+    public void setIsSellable(Boolean sellable) {
         isSellable = sellable;
     }
 
@@ -128,28 +124,36 @@ public class ProductOfferingCreateRequest {
     public void setCatalogId(int catalogId) {
         this.catalogId = catalogId;
     }
-    
-    public Set<SalesChannel> getSalesChannels() {
-    	return this.salesChannels;
+
+    public int getId() {
+        return id;
     }
-    
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /*public Set<SalesChannel> getSalesChannels() {
+        return this.salesChannels;
+    }
+
     public void setSalesChannels(Set<SalesChannel> salesChannels) {
     	this.salesChannels = salesChannels;
     }
-    
+
     public Set<Segment> getSegments() {
     	return this.segments;
     }
-    
+
     public void setSegments(Set<Segment> segments) {
     	this.segments = segments;
     }
-    
+
     public Set<Document> getDocuments() {
     	return this.documents;
     }
-    
+
     public void setDocuments(Set<Document> documents) {
     	this.documents = documents;
-    }
+    }*/
 }
