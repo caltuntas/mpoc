@@ -20,7 +20,7 @@ import { Category } from '../../category/category.model';
 export class OfferingEditComponent implements OnInit {
 
     model: CreateOfferingModel;
-    spesifications: Array<OfferingSpecModel> = [];
+    spesifications: Array<specificationListModel>=[];
     catalogs: Array<Catalog> = [];
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
     categoryLeaves: Array<Category> = [];

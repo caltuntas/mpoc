@@ -123,8 +123,8 @@ export class SpecificationEditComponent implements OnInit {
     }
   }
 
-  saveForm(productSpec: productSpecificationCreateModel) {
-    this.service.createSpec(this.productSpec).subscribe(data => {
+  saveForm(productSpec: productSpecEditModel) {
+    this.service.updateSpec(this.productSpec).subscribe(data => {
       console.log(data);
     });
     this.router.navigate(["/specification/specification-list"]);
