@@ -32,14 +32,21 @@ public class ProductSpecificationAppService {
     @Autowired
     ProdSpecCharValueUseRepository charValueUseRepository;
 
+
+    public List<ProdSpecCharListResponse> getCharacteristics() {
+        return characteristicRepository.findAllByIsDeletedIsFalse().stream().filter(x -> x.isDeleted() == false)
+                .map(x -> new ProdSpecCharListResponse(x.getId(), x.getName(), x.getValueType(), x.getProductSpecCharacteristicValues().stream().filter(y -> y.isDeleted() == false)
+                        .map(y -> new ProdSpecCharValueModel(y.getId(), y.getValue())).
+                                collect(Collectors.toList())
+                )).collect(Collectors.toList());
+    }
+
     public void create(ProductSpecificationCreateRequest request) {
 
         ProductSpecification productSpecification = new ProductSpecification();
         productSpecification.setName(request.name);
         productSpecification.setCode(request.code);
         productSpecification.setDescription(request.description);
-        // productSpecification.setProductType(request.productType);
-        //productSpecification.setStatus(request.status);
         productSpecification.setCreateUserDate(new Date());
         productSpecificationRepository.save(productSpecification);
 
@@ -71,41 +78,6 @@ public class ProductSpecificationAppService {
 
     }
 
-    public List<ProdSpecCharListResponse> getCharacteristics() {
-        return characteristicRepository.findAllByIsDeletedIsFalse().stream()
-                .map(x -> new ProdSpecCharListResponse(x.getId(), x.getName(), x.getValueType(), x.getProductSpecCharacteristicValues().stream()
-                        .map(y -> new ProdSpecCharValueModel(y.getId(), y.getValue())).
-                                collect(Collectors.toList())
-                )).collect(Collectors.toList());
-    }
-
-
-    public List<ProductSpecListModel> getSpecs() {
-        return productSpecificationRepository.findAll().stream()
-                .map(x -> new ProductSpecListModel(x.getId(), x.getName(), x.getCode(), x.getDescription(), x.getCreateUserDate())).collect(Collectors.toList());
-
-
-    }
-
-    public ProductSpecification findById(int id) {
-        return productSpecificationRepository.findByIdAndIsDeletedIsFalse(id);
-
-    }
-
-    public ProductSpecDetailForEditResponse getSpecForEdit(int id) {
-        ProductSpecification spec = productSpecificationRepository.findById(id).get();
-        ProductSpecDetailForEditResponse model = new ProductSpecDetailForEditResponse();
-        model.id = spec.getId();
-        model.name = spec.getName();
-        model.code = spec.getCode();
-        model.description = spec.getDescription();
-        model.selectedCharacteristics = spec.getProductSpecCharUses().stream()
-                .map(x -> new ProductSpecificationValueItemModel(x.getProductSpecCharacteristic().getId(),
-                        x.getProductSpecCharValueUses().stream().map(y -> y.getProductSpecCharacteristicValue().getId()).collect(Collectors.toList()))).collect(Collectors.toList());
-        return model;
-    }
-
-
     public void Update(ProductSpecDetailForEditResponse request) {
 
         ProductSpecification productSpecification = productSpecificationRepository.findById(request.id).get();
@@ -123,12 +95,14 @@ public class ProductSpecificationAppService {
             }
             charUseRepository.save(charuse);
         }
+        final ProductSpecification productSpecification2 = productSpecification;
 
         for (ProductSpecificationValueItemModel selectedChar : request.selectedCharacteristics) {
 
+
             ProductSpecCharUse charUse = charUseRepository.findAll().stream()
                     .filter(x -> x.getProductSpecCharacteristic().getId() == selectedChar.id
-                            && x.getProductSpecification().getId() == productSpecification.getId()).findFirst().get();
+                            && x.getProductSpecification() == productSpecification2).findFirst().get();
 
             if (charUse != null) {
                 charUse.setDeleted(false);
@@ -145,16 +119,14 @@ public class ProductSpecificationAppService {
             }
 
             charUseRepository.save(charUse);
-            int charUseId = charUse.getId();
+            final ProductSpecCharUse charuse2 = charUse;
 
             for (int selectedValue : selectedChar.selectedValueIds) {
 
-                ProdSpecCharValueUse valueUse = charValueUseRepository.findAll().stream()
-                        .filter(x -> x.getProductSpecCharacteristicValue().getId() == selectedValue &&
-                                x.getProductSpecCharUse().getId() == charUseId).findFirst().get();
+                ProductSpecCharacteristicValue productSpecCharacteristicValue = characteristicValueRepository.findById(selectedValue);
 
-
-                if (charUse != null) {
+                ProdSpecCharValueUse valueUse = charValueUseRepository.findByProductSpecCharacteristicValueAndProductSpecCharUse(productSpecCharacteristicValue, charuse2);
+                if (valueUse != null) {
                     valueUse.setDeleted(false);
                     valueUse.setUpdateUserDate(new Date());
                 } else {
@@ -168,5 +140,41 @@ public class ProductSpecificationAppService {
             }
         }
     }
+
+    public void delete(int id) {
+        ProductSpecification productSpecification = productSpecificationRepository.findById(id).get();
+        if (productSpecification != null) {
+            productSpecification.setDeleted(true);
+            productSpecificationRepository.save(productSpecification);
+        }
+
+    }
+
+    public List<ProductSpecListModel> getSpecs() {
+        return productSpecificationRepository.findAllByIsDeletedIsFalse().stream()
+                .map(x -> new ProductSpecListModel(x.getId(), x.getName(), x.getCode(), x.getDescription(), x.getCreateUserDate())).collect(Collectors.toList());
+
+
+    }
+
+    public ProductSpecification findById(int id) {
+        return productSpecificationRepository.findByIdAndIsDeletedIsFalse(id);
+
+    }
+
+    public ProductSpecDetailForEditResponse getSpecForEdit(int id) {
+        ProductSpecification spec = productSpecificationRepository.findById(id).get();
+        ProductSpecDetailForEditResponse model = new ProductSpecDetailForEditResponse();
+        model.id = spec.getId();
+        model.name = spec.getName();
+        model.code = spec.getCode();
+        model.description = spec.getDescription();
+        model.selectedCharacteristics = spec.getProductSpecCharUses().stream().filter(x -> x.isDeleted() == false)
+                .map(x -> new ProductSpecificationValueItemModel(x.getProductSpecCharacteristic().getId(),
+                        x.getProductSpecCharValueUses().stream().filter(y -> y.isDeleted() == false).map(y -> y.getProductSpecCharacteristicValue().getId()).collect(Collectors.toList()))).collect(Collectors.toList());
+        return model;
+    }
+
+
 }
 

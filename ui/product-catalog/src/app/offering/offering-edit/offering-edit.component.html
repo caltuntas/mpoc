@@ -65,10 +65,10 @@
                     </div>
                 </div>
                 <div class="step-content">
-                    <form class="form-horizontal">
+                    <form (ngSubmit)="onSubmit()" class="form-horizontal">
 
                         <div class="step-pane active" data-step="1">
-                            <h3><strong>Step 1 </strong> - Validation states</h3>
+                            <h3><strong>Step 1 </strong> - Basic Info</h3>
 
                             <!-- wizard form starts here -->
                             <fieldset>
@@ -119,16 +119,9 @@
 
                                                 <section class="col col-6">
                                                     <label class="toggle">
-                                                        <input type="checkbox" name="checkbox-toggle" checked="checked">
-                                                        <i data-swchon-text="ON" data-swchoff-text="OFF"></i>Is
+                                                        <input type="checkbox" [(ngModel)]="model.isSellable" name="checkbox-toggle" checked="checked">
+                                                        <i data-swchon-text="YES" data-swchoff-text="NO"></i>Is
                                                         Sellable?</label>
-                                                </section>
-
-                                                <section class="col col-6">
-                                                    <label class="toggle">
-                                                        <input type="checkbox" name="checkbox-toggle" checked="checked">
-                                                        <i data-swchon-text="ON" data-swchoff-text="OFF"></i>Is
-                                                        Replicated?</label>
                                                 </section>
                                             </fieldset>
                                             <br>
@@ -178,6 +171,7 @@
                                         </fieldset>
 
                                         <fieldset>
+
                                             <div class="row" *ngFor="let charValue of charValueUseList">
 
                                                 <section class="col col-2">
@@ -185,13 +179,24 @@
                                                 </section>
 
                                                 <section class="col col-10">
-                                                    <select select2 style="width:100%" data-select-search="true">
+
+                                                    <label *ngIf="charValue.prodSpecCharType != 1" class="input"> <i
+                                                            class="icon-append fa fa-user"></i>
+                                                        <input type="text" name="offeringName"
+                                                               placeholder="Please type the value"/>
+                                                        <b class="tooltip tooltip-bottom-right">Type char value
+                                                            here</b> </label>
+
+                                                    <select *ngIf="charValue.prodSpecCharType == 1" select2
+                                                            style="width:100%" data-select-search="true">
                                                         <option *ngFor="let charValueUse of charValue.prodSpecCharValueList"
                                                                 [value]="charValueUse.prodSpecCharValueUseId">
                                                             {{charValueUse.prodSpecCharValue}}
                                                         </option>
                                                     </select>
                                                 </section>
+
+
                                             </div>
                                         </fieldset>
 
@@ -265,18 +270,19 @@
                             <br>
                             <br>
                             <fieldset>
-                                    <div class="form-group">
-                                        <label class="col-xs-2 col-lg-3 control-label">Segment</label>
-                                        <div class="col-xs-9 col-lg-6 ">
-                                            <select select2 multiple name="segments" style="width:100%" 
-												[compareWith]="compareIdValues" [ngModel]="selectedSegments" class="select2">
-                                            	<option *ngFor="let sc of segments" [ngValue]="sc" >{{sc.name}}
-												</option>
-                                            </select>
-                                            
-                                        </div>
+                                <div class="form-group">
+                                    <label class="col-xs-2 col-lg-3 control-label">Segment</label>
+                                    <div class="col-xs-9 col-lg-6 ">
+                                        <select select2 multiple name="segments" style="width:100%"
+                                                [compareWith]="compareIdValues" [ngModel]="selectedSegments"
+                                                class="select2">
+                                            <option *ngFor="let sc of segments" [ngValue]="sc">{{sc.name}}
+                                            </option>
+                                        </select>
+
                                     </div>
-                                </fieldset>
+                                </div>
+                            </fieldset>
                             <br>
                             <br>
                             <br>
@@ -301,7 +307,8 @@
                                                         required [(ngModel)]="model.categoryId"
                                                         (ngModelChange)="onCategoryChanged($event)"
                                                         #selectCategoryControl="ngModel">
-                                                    <option *ngFor="let category of categoryLeaves" [value]="category.id">
+                                                    <option *ngFor="let category of categoryLeaves"
+                                                            [value]="category.id">
                                                         {{category.name}}
                                                     </option>
                                                 </select>
@@ -319,18 +326,19 @@
                             <br>
                             <br>
                             <fieldset>
-                                    <div class="form-group">
-                                        <label class="col-xs-2 col-lg-3 control-label">Sale Channel</label>
-                                        <div class="col-xs-9 col-lg-6 ">
-                                            <select select2 multiple name="saleChannels" style="width:100%" 
-												[compareWith]="compareIdValues" [ngModel]="selectedSalesChannels" class="select2">
-                                            	<option *ngFor="let sc of salesChannels" [ngValue]="sc" >{{sc.name}}
-												</option>
-                                            </select>
-                                            
-                                        </div>
+                                <div class="form-group">
+                                    <label class="col-xs-2 col-lg-3 control-label">Sale Channel</label>
+                                    <div class="col-xs-9 col-lg-6 ">
+                                        <select select2 multiple name="saleChannels" style="width:100%"
+                                                [compareWith]="compareIdValues" [ngModel]="selectedSalesChannels"
+                                                class="select2">
+                                            <option *ngFor="let sc of salesChannels" [ngValue]="sc">{{sc.name}}
+                                            </option>
+                                        </select>
+
                                     </div>
-                                </fieldset>
+                                </div>
+                            </fieldset>
                             <br>
                             <br>
                             <br>
@@ -340,25 +348,26 @@
                             <br>
                             <br>
                             <fieldset>
-                                    <div class="form-group">
-                                        <label class="col-xs-2 col-lg-3 control-label">Documents</label>
-                                        <div class="col-xs-9 col-lg-6 ">
-                                            <select select2 multiple name="documents" style="width:100%" 
-												[compareWith]="compareIdValues" [ngModel]="selectedDocuments" class="select2">
-                                            	<option *ngFor="let sc of documents" [ngValue]="sc" >{{sc.name}}
-												</option>
-                                            </select>
-                                            
-                                        </div>
+                                <div class="form-group">
+                                    <label class="col-xs-2 col-lg-3 control-label">Documents</label>
+                                    <div class="col-xs-9 col-lg-6 ">
+                                        <select select2 multiple name="documents" style="width:100%"
+                                                [compareWith]="compareIdValues" [ngModel]="selectedDocuments"
+                                                class="select2">
+                                            <option *ngFor="let sc of documents" [ngValue]="sc">{{sc.name}}
+                                            </option>
+                                        </select>
+
                                     </div>
-                                </fieldset>
+                                </div>
+                            </fieldset>
                             <br>
                             <br>
                             <br>
                             <br>
                         </div>
                         <div class="step-pane" data-step="9">
-                            <h3><strong>Step 5 </strong> - Finished!</h3>
+                            <h3><strong>Step 9 </strong> -Save</h3>
                             <br>
                             <br>
 
