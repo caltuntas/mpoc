@@ -41,7 +41,14 @@ export class CharacteristicEditComponent implements OnInit {
     }
 
     public onSubmit() {
-        this.model.charValueString = jQuery('#charValueString').val();
+        if(this.model.valueType == 1)
+        {
+            this.model.charValueString = jQuery('#charValueString').val();
+        } else {
+            this.model.charValueString = "";
+        }
+        this.model.isConfigurable = true;
+        this.model.isRequired = true;
         this.characteristicService.updateCharacteristic(this.model).subscribe(data => {
             console.log("deneme",this.model);
             this.router.navigate(['/characteristic/characteristic-list']);
