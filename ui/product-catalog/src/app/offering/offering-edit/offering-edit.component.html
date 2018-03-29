@@ -185,13 +185,23 @@
                                                 </section>
 
                                                 <section class="col col-10">
-                                                    <select select2 style="width:100%" data-select-search="true">
+
+                                                    <label *ngIf="charValue.prodSpecCharType != 1" class="input"> <i class="icon-append fa fa-user"></i>
+                                                        <input type="text" name="offeringName"
+                                                               placeholder="Please type the value"/>
+                                                        <b class="tooltip tooltip-bottom-right">Type char value
+                                                            here</b> </label>
+
+                                                    <select *ngIf="charValue.prodSpecCharType == 1" select2
+                                                            style="width:100%" data-select-search="true">
                                                         <option *ngFor="let charValueUse of charValue.prodSpecCharValueList"
                                                                 [value]="charValueUse.prodSpecCharValueUseId">
                                                             {{charValueUse.prodSpecCharValue}}
                                                         </option>
                                                     </select>
                                                 </section>
+
+
                                             </div>
                                         </fieldset>
 
@@ -294,7 +304,8 @@
                                                         required [(ngModel)]="model.categoryId"
                                                         (ngModelChange)="onCategoryChanged($event)"
                                                         #selectCategoryControl="ngModel">
-                                                    <option *ngFor="let category of categoryLeaves" [value]="category.id">
+                                                    <option *ngFor="let category of categoryLeaves"
+                                                            [value]="category.id">
                                                         {{category.name}}
                                                     </option>
                                                 </select>

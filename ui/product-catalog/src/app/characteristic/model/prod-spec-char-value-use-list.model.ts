@@ -5,4 +5,5 @@ export class ProdSpecCharValueUseListModel {
     public prodCharValueList: Array<ProdSpecCharValueListModel>;
     public prodSpecCharId: number;
     public prodSpecCharDescription: string;
+    public prodSpecCharType : number;
 }
