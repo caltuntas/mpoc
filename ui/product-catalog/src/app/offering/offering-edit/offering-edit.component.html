@@ -45,10 +45,13 @@
                                 <span class="badge">6</span>Category<span class="chevron"></span>
                             </li>
                             <li data-step="7">
-                                <span class="badge">7</span>Sale Channel<span class="chevron"></span>
+                                <span class="badge">7</span>Sales Channel<span class="chevron"></span>
                             </li>
                             <li data-step="8">
-                                <span class="badge">8</span>Document<span class="chevron"></span>
+                                <span class="badge">8</span>Documents<span class="chevron"></span>
+                            </li>
+                            <li data-step="9">
+                                <span class="badge">9</span>Save<span class="chevron"></span>
                             </li>
                         </ul>
                     </div>
@@ -165,19 +168,16 @@
 
                                             <section class="col col-10">
                                                 <select select2 style="width:100%" data-select-search="true"
-                                                        id="specs"
-                                                        name="specSelect"
-                                                        required [(ngModel)]="model.productSpecificationId"
-
-                                                        #selectSpecControl="ngModel">
+                                                        id="specSelect"
+                                                        name="specSelect">
                                                     <option *ngFor="let spec of spesifications" [value]="spec.id">
                                                         {{spec.name}}
                                                     </option>
                                                 </select>
                                             </section>
                                         </fieldset>
-                                        <fieldset>
 
+                                        <fieldset>
                                             <div class="row" *ngFor="let charValue of charValueUseList">
 
                                                 <section class="col col-2">
@@ -204,6 +204,7 @@
                             <br>
                             <br>
                         </div>
+
 
                         <div class="step-pane" data-step="3">
                             <h3><strong>Step 3 </strong> - Wizard continued</h3>
@@ -302,6 +303,48 @@
                                     </div>
                                 </div>
                             </div>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                        <div class="step-pane" data-step="7">
+                            <h3><strong>Step 5 </strong> - Finished!</h3>
+                            <br>
+                            <br>
+
+                            <h1 class="text-center text-success"><i class="fa fa-check"></i> Congratulations!
+                                <br>
+                                <small>Click finish to end wizard</small>
+                            </h1>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                        <div class="step-pane" data-step="8">
+                            <h3><strong>Step 5 </strong> - Documents!</h3>
+                            <br>
+                            <br>
+
+                            <h1 class="text-center text-success"><i class="fa fa-check"></i> Congratulations!
+                                <br>
+                                <small>Click finish to end wizard</small>
+                            </h1>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                        <div class="step-pane" data-step="9">
+                            <h3><strong>Step 5 </strong> - Finished!</h3>
+                            <br>
+                            <br>
+
+                            <h1 class="text-center text-success"><i class="fa fa-check"></i> Congratulations!
+                                <br>
+                                <small>Click finish to end wizard</small>
+                            </h1>
                             <br>
                             <br>
                             <br>

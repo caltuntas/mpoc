@@ -34,26 +34,51 @@ export class OfferingEditComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.loadSpecs();
+        this.loadCatalogs();
+        this.loadCategories();
+
+        let specId = jQuery("#specSelect").val()
+        if(specId){
+            this.loadCharValueUses(specId);
+        }
+    }
+
+    ngAfterViewInit() {
+        var self = this;
+        jQuery('#specSelect').on('select2:select', function (e) {
+            var data = e.params.data;
+            console.log(data.id);
+            self.loadCharValueUses(data.id);
+        });
+    }
+
+    loadSpecs() {
+        this.specService.getSpecifications().subscribe((specs) => {
+            this.spesifications = specs;
+        })
+    }
+
+    loadCatalogs() {
         this.catalogService.getCatalogs().subscribe((catalogs) => {
             this.catalogs = catalogs;
         })
+    }
 
-        this.specService.getSpecifications().subscribe((specs) => {
-            //this.spesifications = specs;
+    loadCharValueUses(specId) {
+        this.charService.getSpecCharValueUses(specId).subscribe((charValuUseList) => {
+            this.charValueUseList = charValuUseList;
         })
+    }
+
+    loadCategories(){
         this.categoryService.getLeavesFullPathNames().subscribe((categoryLeaves) => {
             this.categoryLeaves = categoryLeaves;
         })
     }
 
-    onSpecSelected() {
-        this.charService.getSpecCharValueUses(this.model.productSpecificationId).subscribe((charValuUseList) => {
-            this.charValueUseList = charValuUseList;
-        })
-    }
-
     public onSubmit() {
-        this.model.productSpecificationId = jQuery("#spesification").val();
+        this.model.productSpecificationId = jQuery("#specSelect").val();
         this.model.catalogId = jQuery("#catalogs").val();
         this.offeringService.createOffering(this.model).subscribe(data => {
             this.router.navigate(['/offering/offering-list']);
