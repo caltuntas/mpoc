@@ -11,6 +11,12 @@ import { Observable } from "rxjs/Observable";
 import { ProdSpecCharValueUseListModel } from "../../characteristic/model/prod-spec-char-value-use-list.model";
 import { CategoryService } from '../../category/category.service';
 import { Category } from '../../category/category.model';
+import { SalesChannel } from '../../sales-channel/detail/sales-channel';
+import { SalesChannelService } from '../../sales-channel/sales-channel.service';
+import { Segment } from '../../segment/detail/segment';
+import { SegmentService } from '../../segment/segment.service';
+import { Document } from '../../document/detail/document';
+import { DocumentService } from '../../document/document.service';
 
 @Component({
     selector: 'app-offering-edit',
@@ -24,12 +30,21 @@ export class OfferingEditComponent implements OnInit {
     catalogs: Array<Catalog> = [];
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
     categoryLeaves: Array<Category> = [];
+    salesChannels: SalesChannel[];
+    selectedSalesChannels: SalesChannel[] = [new SalesChannel(),new SalesChannel(),new SalesChannel()];
+    segments: Segment[];
+    selectedSegments: Segment[] = [new Segment(),new Segment(),new Segment()];
+    documents: Document[];
+    selectedDocuments: Document[] = [new Document(),new Document(),new Document()];
     constructor(private router: Router,
         private offeringService: OfferingService,
         private catalogService: CatalogService,
         private charService: CharacteristicService,
         private specService: specificationService,
-        private categoryService: CategoryService) {
+        private categoryService: CategoryService,
+        private saleChannelService: SalesChannelService,
+        private segmentService: SegmentService,
+        private documentService: DocumentService) {
         this.model = new CreateOfferingModel();
     }
 
@@ -37,11 +52,15 @@ export class OfferingEditComponent implements OnInit {
         this.loadSpecs();
         this.loadCatalogs();
         this.loadCategories();
+        this.loadSalesChannels();
+        this.loadSegments();
+        this.loadDocuments();
 
         let specId = jQuery("#specSelect").val()
         if(specId){
             this.loadCharValueUses(specId);
         }
+      
     }
 
     ngAfterViewInit() {
@@ -76,6 +95,23 @@ export class OfferingEditComponent implements OnInit {
             this.categoryLeaves = categoryLeaves;
         })
     }
+  
+    loadSalesChannels(){
+        this.selectedSalesChannels[0].id = 30;
+        this.selectedSalesChannels[1].id = 21;
+        this.selectedSalesChannels[2].id = 23;
+        this.saleChannelService.getSalesChannels().subscribe(data => this.salesChannels = data); 
+    }
+  
+    loadSegments(){
+        this.selectedSegments[0].id = 3;
+        this.segmentService.getSegments().subscribe(data => this.segments = data); 
+    }
+  
+    loadDocuments(){
+        this.selectedDocuments[0].id = 1;
+        this.documentService.getDocuments().subscribe(data => this.documents = data); 
+    }
 
     public onSubmit() {
         this.model.productSpecificationId = jQuery("#specSelect").val();
@@ -90,5 +126,9 @@ export class OfferingEditComponent implements OnInit {
         console.log('fuel-ux wizard complete', data)
     }
 
+    compareIdValues(t1: any, t2: any): boolean {
+      return t1 && t2 ? t1.id === t2.id : false ;
+    } 
+  
 }
 

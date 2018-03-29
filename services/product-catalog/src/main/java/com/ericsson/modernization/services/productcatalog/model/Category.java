@@ -1,15 +1,18 @@
 package com.ericsson.modernization.services.productcatalog.model;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Category extends EntityBase implements Description {
+public class Category extends EntityBase implements Description, ValidFor {
     private int id;
     private String code;
     private String name;
     private String description;
     private int parentId;
+    @Embedded
+    private TimePeriod validFor;
     @ManyToOne
     private ProductOffering productOffering;
 
@@ -59,5 +62,13 @@ public class Category extends EntityBase implements Description {
 
     public void setProductOffering(ProductOffering productOffering) {
         this.productOffering = productOffering;
+    }
+
+    public TimePeriod getValidFor() {
+        return validFor;
+    }
+
+    public void setValidFor(TimePeriod validFor) {
+        this.validFor = validFor;
     }
 }
