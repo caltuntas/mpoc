@@ -262,14 +262,21 @@
                         </div>
 
                         <div class="step-pane" data-step="5">
-                            <h3><strong>Step 5 </strong> - Finished!</h3>
                             <br>
                             <br>
-
-                            <h1 class="text-center text-success"><i class="fa fa-check"></i> Congratulations!
-                                <br>
-                                <small>Click finish to end wizard</small>
-                            </h1>
+                            <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-xs-2 col-lg-3 control-label">Segment</label>
+                                        <div class="col-xs-9 col-lg-6 ">
+                                            <select select2 multiple name="segments" style="width:100%" 
+												[compareWith]="compareIdValues" [ngModel]="selectedSegments" class="select2">
+                                            	<option *ngFor="let sc of segments" [ngValue]="sc" >{{sc.name}}
+												</option>
+                                            </select>
+                                            
+                                        </div>
+                                    </div>
+                                </fieldset>
                             <br>
                             <br>
                             <br>
@@ -309,28 +316,42 @@
                             <br>
                         </div>
                         <div class="step-pane" data-step="7">
-                            <h3><strong>Step 5 </strong> - Finished!</h3>
                             <br>
                             <br>
-
-                            <h1 class="text-center text-success"><i class="fa fa-check"></i> Congratulations!
-                                <br>
-                                <small>Click finish to end wizard</small>
-                            </h1>
+                            <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-xs-2 col-lg-3 control-label">Sale Channel</label>
+                                        <div class="col-xs-9 col-lg-6 ">
+                                            <select select2 multiple name="saleChannels" style="width:100%" 
+												[compareWith]="compareIdValues" [ngModel]="selectedSalesChannels" class="select2">
+                                            	<option *ngFor="let sc of salesChannels" [ngValue]="sc" >{{sc.name}}
+												</option>
+                                            </select>
+                                            
+                                        </div>
+                                    </div>
+                                </fieldset>
                             <br>
                             <br>
                             <br>
                             <br>
                         </div>
                         <div class="step-pane" data-step="8">
-                            <h3><strong>Step 5 </strong> - Documents!</h3>
                             <br>
                             <br>
-
-                            <h1 class="text-center text-success"><i class="fa fa-check"></i> Congratulations!
-                                <br>
-                                <small>Click finish to end wizard</small>
-                            </h1>
+                            <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-xs-2 col-lg-3 control-label">Documents</label>
+                                        <div class="col-xs-9 col-lg-6 ">
+                                            <select select2 multiple name="documents" style="width:100%" 
+												[compareWith]="compareIdValues" [ngModel]="selectedDocuments" class="select2">
+                                            	<option *ngFor="let sc of documents" [ngValue]="sc" >{{sc.name}}
+												</option>
+                                            </select>
+                                            
+                                        </div>
+                                    </div>
+                                </fieldset>
                             <br>
                             <br>
                             <br>
