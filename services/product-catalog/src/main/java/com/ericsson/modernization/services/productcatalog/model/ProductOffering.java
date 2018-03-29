@@ -13,7 +13,6 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 
     public ProductOffering() {
         prices = new ArrayList<ProductOfferingPrice>();
-        offeringSegment = new ArrayList<Segment>();
         setProductOfferingDetermineses(new ArrayList<ProductOfferingDetermines>());
         unsupportedProductSpecCharValueUseGroups = new ArrayList<UnsupportedProductSpecCharValueUseGroup>();
         category = new ArrayList<Category>();
