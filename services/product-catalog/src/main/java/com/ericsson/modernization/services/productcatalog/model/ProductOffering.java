@@ -78,16 +78,16 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	public void setCategory(List<Category> category) {
 		this.category = category;
 	}
-
-    public String getProductOfferingType() {
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private ProductOfferingType productOfferingType;
+    public ProductOfferingType getProductOfferingType() {
         return productOfferingType;
     }
 
-    public void setProductOfferingType(String productOfferingType) {
+    public void setProductOfferingTypeId(ProductOfferingType productOfferingType) {
         this.productOfferingType = productOfferingType;
-    }
-
-    private String productOfferingType;
+    }    
 
 	public String getName() {
         return name;
@@ -200,6 +200,6 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     }
 
     public void setProductOfferingDetermineses(List<ProductOfferingDetermines> productOfferingDetermineses) {
-        this.productOfferingDetermineses = productOfferingDetermineses;
-    }
+		this.productOfferingDetermineses = productOfferingDetermineses;
+	}
 }
