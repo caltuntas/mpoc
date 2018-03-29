@@ -54,6 +54,10 @@ public class ProductOfferingAppService {
         Catalog catalog = catalogAppService.findById(createRequest.getCatalogId());
         productOffering.setCatalog(catalog);
 
+        productOffering.setSalesChannels(createRequest.getSalesChannels());
+        productOffering.setSegments(createRequest.getSegments());
+        productOffering.setDocuments(createRequest.getDocuments());
+        
         return productOfferingRepository.save(productOffering);
     }
 
