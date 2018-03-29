@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class ProductOffering extends EntityBase implements Description, ValidFor, ExternalId, IsReplicated, Versioned {
@@ -58,6 +59,42 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     @OneToMany(mappedBy = "productOffering",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<Category> category;
 
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "ProductOfferingSalesChannels", joinColumns = @JoinColumn(name = "productoffering_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "saleschannel_id", referencedColumnName = "id"))
+    private Set<SalesChannel> salesChannels;
+    public Set<SalesChannel> getSalesChannels() {
+        return salesChannels;
+    }
+
+    public void setSalesChannels(Set<SalesChannel> salesChannels) {
+        this.salesChannels = salesChannels;
+    }
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "ProductOfferingSegments", joinColumns = @JoinColumn(name = "productoffering_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "segment_id", referencedColumnName = "id"))
+    private Set<Segment> segments;
+    public Set<Segment> getSegments() {
+        return segments;
+    }
+
+    public void setSegments(Set<Segment> segments) {
+        this.segments = segments;
+    }
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "ProductOfferingDocuments", joinColumns = @JoinColumn(name = "productoffering_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id"))
+    private Set<Document> documents;
+    public Set<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(Set<Document> documents) {
+        this.documents = documents;
+    }
+
+    
+    
     public List<Category> getCategory() {
 		return category;
 	}

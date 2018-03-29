@@ -31,11 +31,11 @@ export class OfferingEditComponent implements OnInit {
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
     categoryLeaves: Array<Category> = [];
     salesChannels: SalesChannel[];
-    selectedSalesChannels: SalesChannel[] = [new SalesChannel(),new SalesChannel(),new SalesChannel()];
+    selectedSalesChannels: SalesChannel[];
     segments: Segment[];
-    selectedSegments: Segment[] = [new Segment(),new Segment(),new Segment()];
+    selectedSegments: Segment[];
     documents: Document[];
-    selectedDocuments: Document[] = [new Document(),new Document(),new Document()];
+    selectedDocuments: Document[];
     constructor(private router: Router,
         private offeringService: OfferingService,
         private catalogService: CatalogService,
@@ -97,25 +97,26 @@ export class OfferingEditComponent implements OnInit {
     }
   
     loadSalesChannels(){
-        this.selectedSalesChannels[0].id = 30;
-        this.selectedSalesChannels[1].id = 21;
-        this.selectedSalesChannels[2].id = 23;
+        this.selectedSalesChannels =  this.model.salesChannels;
         this.saleChannelService.getSalesChannels().subscribe(data => this.salesChannels = data); 
     }
   
     loadSegments(){
-        this.selectedSegments[0].id = 3;
+        this.selectedSegments =  this.model.segments;
         this.segmentService.getSegments().subscribe(data => this.segments = data); 
     }
   
     loadDocuments(){
-        this.selectedDocuments[0].id = 1;
+        this.selectedDocuments = this.model.documents;
         this.documentService.getDocuments().subscribe(data => this.documents = data); 
     }
 
     public onSubmit() {
         this.model.productSpecificationId = jQuery("#specSelect").val();
         this.model.catalogId = jQuery("#catalogs").val();
+        
+        this.model.salesChannels = this.selectedSalesChannels;
+      
         this.offeringService.createOffering(this.model).subscribe(data => {
             this.router.navigate(['/offering/offering-list']);
         });
