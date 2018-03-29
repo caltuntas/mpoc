@@ -17,7 +17,7 @@ export class specificationService {
     createSpec(model) {
         return this.http.post(`/productspec/createSpec`, model);
     }
-    getSpecifications():Observable<specificationListModel>{
+    getSpecifications():Observable<specificationListModel[]>{
         return this.http.get(`/productspec/getAll`);
     }
 
