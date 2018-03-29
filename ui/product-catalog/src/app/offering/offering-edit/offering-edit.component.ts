@@ -1,13 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {CreateOfferingModel} from "../model/create-offering-model";
-import {OfferingSpecModel} from "../model/offering-spec-model";
 import {Catalog} from "../../catalog/model/catalog.model";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {OfferingService} from "../offering.service";
 import {CatalogService} from "../../catalog/catalog.service";
 import {CharacteristicService} from "../../characteristic/characteristic.service";
 import {specificationService} from "../../specification/specification.service";
-import {Observable} from "rxjs/Observable";
 import {ProdSpecCharValueUseListModel} from "../../characteristic/model/prod-spec-char-value-use-list.model";
 import {CategoryService} from '../../category/category.service';
 import {Category} from '../../category/category.model';
@@ -17,6 +14,7 @@ import {Segment} from '../../segment/detail/segment';
 import {SegmentService} from '../../segment/segment.service';
 import {Document} from '../../document/detail/document';
 import {DocumentService} from '../../document/document.service';
+import {OfferingEditModel} from "../model/offering-edit-model";
 
 @Component({
     selector: 'app-offering-edit',
@@ -25,8 +23,8 @@ import {DocumentService} from '../../document/document.service';
 })
 export class OfferingEditComponent implements OnInit {
 
-    model: CreateOfferingModel;
-    isCurrentStepValid: boolean = true;
+    model: OfferingEditModel;
+    isNewOffering: boolean = false;
     spesifications: Array<specificationListModel> = [];
     catalogs: Array<Catalog> = [];
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
@@ -39,6 +37,7 @@ export class OfferingEditComponent implements OnInit {
     selectedDocuments: Document[];
 
     constructor(private router: Router,
+                private route: ActivatedRoute,
                 private offeringService: OfferingService,
                 private catalogService: CatalogService,
                 private charService: CharacteristicService,
@@ -47,31 +46,61 @@ export class OfferingEditComponent implements OnInit {
                 private saleChannelService: SalesChannelService,
                 private segmentService: SegmentService,
                 private documentService: DocumentService) {
-        this.model = new CreateOfferingModel();
+        this.model = new OfferingEditModel();
+        const idParam = route.snapshot.params.offeringId;
+        if (idParam) {
+            this.model.id = idParam;
+            this.isNewOffering = false;
+        }
     }
 
     ngOnInit() {
+
+        //loading fields of offering for editing
+        if (!this.isNewOffering) {
+            this.offeringService.getOffering(this.model.id).subscribe((offering) => {
+                this.model = offering;
+
+                if (this.model.productSpecificationId) {
+                    jQuery("#specSelect").val(this.model.productSpecificationId).trigger('change');
+                }
+
+                if (this.model.catalogId) {
+                    jQuery("#catalogSelect").val(this.model.catalogId).trigger('change');
+                }
+
+                console.log(this.model);
+
+            })
+        }
+
         this.loadSpecs();
         this.loadCatalogs();
         this.loadCategories();
         this.loadSalesChannels();
         this.loadSegments();
         this.loadDocuments();
-
-        let specId = jQuery("#specSelect").val()
-        if (specId) {
-            this.loadCharValueUses(specId);
-        }
     }
 
     ngAfterViewInit() {
         var self = this;
+
+        //Spesification Select
         jQuery('#specSelect').on('select2:select', function (e) {
             var data = e.params.data;
             console.log(data.id);
             self.model.productSpecificationId = jQuery("#specSelect").val();
             self.loadCharValueUses(data.id);
         });
+        //Spesification Select
+
+        //Catalog Select
+        jQuery('#catalogSelect').on('select2:select', function (e) {
+            var data = e.params.data;
+            console.log(data.id);
+            self.model.catalogId = jQuery("#catalogSelect").val();
+        });
+        //Catalog Select
 
         //Wizard Events
         jQuery('#offeringWizard').on('actionclicked.fu.wizard', function (event, data) {
@@ -95,10 +124,10 @@ export class OfferingEditComponent implements OnInit {
         let isValid = false;
         switch (step) {
             case 1:
-                isValid = !!(this.model.name && this.model.description)
+                isValid = !!(this.model.name && this.model.description);
                 break;
             case 2:
-                isValid = !!(this.model.productSpecificationId)
+                isValid = !!(this.model.productSpecificationId);
                 break;
             case 3:
             case 4:
@@ -118,13 +147,13 @@ export class OfferingEditComponent implements OnInit {
     loadSpecs() {
         this.specService.getSpecifications().subscribe((specs) => {
             this.spesifications = specs;
-        })
+        });
     }
 
     loadCatalogs() {
         this.catalogService.getCatalogs().subscribe((catalogs) => {
             this.catalogs = catalogs;
-        })
+        });
     }
 
     loadCharValueUses(specId) {
@@ -136,7 +165,7 @@ export class OfferingEditComponent implements OnInit {
     loadCategories() {
         this.categoryService.getLeavesFullPathNames().subscribe((categoryLeaves) => {
             this.categoryLeaves = categoryLeaves;
-        })
+        });
     }
 
     loadSalesChannels() {
@@ -154,25 +183,22 @@ export class OfferingEditComponent implements OnInit {
         this.documentService.getDocuments().subscribe(data => this.documents = data);
     }
 
-    public
-
-    onSubmit() {
-
-    }
-
     onWizardComplete(data) {
         console.log('fuel-ux wizard complete', data)
-        this.model.catalogId = jQuery("#catalogs").val();
-
         this.model.salesChannels = this.selectedSalesChannels;
         this.model.segments = this.selectedSegments;
         this.model.documents = this.selectedDocuments;
-
         this.model.categoryId = jQuery("#categories").val();
-        this.offeringService.createOffering(this.model).subscribe(data => {
-            this.router.navigate(['/offering/offering-list']);
-        });
 
+        if (this.isNewOffering) {
+            this.offeringService.createOffering(this.model).subscribe(data => {
+                this.router.navigate(['/offering/offering-list']);
+            });
+        } else {
+            this.offeringService.updateOffering(this.model).subscribe(data => {
+                this.router.navigate(['/offering/offering-list']);
+            });
+        }
     }
 
     compareIdValues(t1: any, t2: any): boolean {

@@ -2,8 +2,9 @@ import { SalesChannel } from '../../sales-channel/detail/sales-channel';
 import { Segment } from '../../segment/detail/segment';
 import { Document } from '../../document/detail/document';
 
-export class CreateOfferingModel {
+export class OfferingEditModel {
 
+    public id :number;
     public name: string;
     public validForStartDate: string;
     public validForEndDate: string;

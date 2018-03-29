@@ -1,6 +1,6 @@
 import {OfferingSpecModel} from "./offering-spec-model";
 
-export class Offering {
+export class OfferingListModel {
     public id: string;
     public name: string;
     public description: string;
