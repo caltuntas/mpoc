@@ -11,7 +11,6 @@ export class CreateOfferingModel {
     public externalId: string;
     public productSpecificationId: number;
     public catalogId: number;
-    public isReplicated: boolean;
     public isSellable: boolean;
     public categoryId: number;
 
