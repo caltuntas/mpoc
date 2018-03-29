@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {CreateCategoryModel} from '../create-category-model';
-import {Category} from './category.model';
+import { Component, OnInit } from '@angular/core';
+import { CreateCategoryModel } from '../create-category-model';
+import { Category } from './category.model';
 import { CategoryService } from './category.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { NotificationComponent } from '../shared/utils/NotificationComponent';
 
 @Component({
     selector: 'app-category-list',
@@ -27,11 +28,11 @@ export class CategoryListComponent implements OnInit {
         },
         "iDisplayLength": 15,
         columns: [
-            {"data": "id"},
-            {"data": "parentName"},
-            {"data": "code"},
-            {"data": "name"},
-            {"data": "description"},
+            { "data": "id" },
+            { "data": "parentName" },
+            { "data": "code" },
+            { "data": "name" },
+            { "data": "description" },
             {
                 render: (data, type, fullRow, meta) => {
                     return `
@@ -70,22 +71,29 @@ export class CategoryListComponent implements OnInit {
     }
 
     onEdit(categoryId) {
-        console.log("Edit category:", categoryId);
         this.router.navigate(['/category/' + categoryId]);
-        
     }
 
     onDelete(categoryId) {
-        console.log("Delete category", categoryId, "?");
         this.service.delete(categoryId).subscribe((data) => {
-            window.location.reload();//TODO : Syf burada hata verdiği için aşağıda tekrar yapıyorum.
+            this.notificationComponent.showNotification("Category","Deleted successfully");
+            this.reloadPage();
         });
-        //this.service.delete(categoryId).subscribe();
-        window.location.reload();
     }
 
-    constructor(private router: Router, private service: CategoryService) {
+    reloadPage() {
+        this.router.routeReuseStrategy.shouldReuseRoute = function () { return false; };
+        let currentUrl = this.router.url + '?';
+        this.router.navigateByUrl(currentUrl)
+            .then(() => {
+                this.router.navigated = false;
+                this.router.navigate([this.router.url]);
+            });
     }
+
+    constructor(private router: Router, 
+        private service: CategoryService,
+        private notificationComponent: NotificationComponent) { }
 
     ngOnInit() {
 

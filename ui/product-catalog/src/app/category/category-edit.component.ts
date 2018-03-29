@@ -23,14 +23,10 @@ export class CategoryEditComponent implements OnInit {
       this.service.get(this.route.snapshot.params.id)
         .subscribe(data => this.model = data);
       if (this.route.snapshot.params.id == 0) {
-        //jQuery("#parentId").Val("0");
-        //jQuery("#parentId").html("<b>Hello world!</b>");
-        //jQuery("#parentId").val("0").change();
         this.model.parentId = 0;
       }
     }
     else {
-      //jQuery("#parentId").val("0").change();
       this.model.parentId = 0;
     }
     this.service.getAll().subscribe(data => {
