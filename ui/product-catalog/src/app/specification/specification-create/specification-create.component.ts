@@ -38,7 +38,7 @@ export class SpecificationCreateComponent implements OnInit {
 
   selectCharUse($event) {
     this.selectedCharUse = $event.target.value;
-    console.log(this.selectedCharUse);
+   
   }
 
   addCharUse() {
@@ -56,7 +56,8 @@ export class SpecificationCreateComponent implements OnInit {
     characteristic: productSpecCharModel,
     value: productSpecCharValueModel,
     $event
-  ) {
+  ) 
+  {
     if ($event.target.checked) {
       characteristic.values.find(x => x.id == value.id).isSelected = true;
       let charuse = this.productSpec.selectedCharacteristics.find(
@@ -69,14 +70,13 @@ export class SpecificationCreateComponent implements OnInit {
         x => x.id == characteristic.id
       ).selectedValueIds = this.productSpec.selectedCharacteristics
         .find(x => x.id == characteristic.id)
-        .selectedValueIds.filter(x => value.id)
-        .slice();
+        .selectedValueIds.filter(x => x!=value.id);
     }
   }
 
+
   saveForm() {
-    this.service.createSpec(this.productSpec).subscribe(data => {
-      console.log(data);
+    this.service.createSpec(this.productSpec).subscribe(data => {    
     });
     this.router.navigate(["/specification/list"]);
   }

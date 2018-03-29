@@ -25,4 +25,9 @@ export class specificationService {
   updateSpec(model) {
     return this.http.post(`/productspec/updateSpec`, model);
   }
+
+  deleteSpec(id)
+  {
+    return this.http.get(`/productspec/delete/` + id);
+  }
 }
