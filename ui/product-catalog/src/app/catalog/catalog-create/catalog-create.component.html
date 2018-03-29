@@ -5,7 +5,7 @@
     <sa-widgets-grid>
         <div class="row">
             <div class="col-sm-12">
-                <div sa-widget id="createCatalogWidget" [colorbutton]="true" [editbutton]="false" [deletebutton]="false" [sortable]="false">
+                <div sa-widget id="createCatalogWidget" [colorbutton]="true" [editbutton]="false" [deletebutton]="false" [sortable]="false" color="vdf">
                     <header>
                         <h2>Catalog Form </h2>
                     </header>
@@ -40,6 +40,7 @@
                                         </div>
                                     </div>
                                 </fieldset>
+                                <!--
                                 <fieldset>
                                     <div class="form-group"
                                          [class.has-error]="validForStartDateControl.invalid && validForStartDateControl.submitted && validForEndDateControl.invalid && validForEndDateControl.submitted ">
@@ -74,9 +75,14 @@
                                         </div>
                                     </div>
                                 </fieldset>
+                                -->
                                 <div class="form-actions">
                                     <div class="row">
                                         <div class="col-md-12">
+                                            <button class="btn btn-danger" routerLink="/catalog/catalog-list">
+                                                <i class="fa fa-arrow-circle-left"></i>
+                                                Cancel
+                                            </button>
                                             <button class="btn btn-success" type="submit">
                                                 <i class="fa fa-save"></i>
                                                 Save

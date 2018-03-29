@@ -29,4 +29,8 @@ export class CategoryService {
     delete(id: any): any {
         return this.http.delete(this.path + '/' + id);
     }
+
+    getLeavesFullPathNames(): Observable<Category[]> {
+        return this.http.get(this.path + '/leavesFullPathNames');
+    }
 }

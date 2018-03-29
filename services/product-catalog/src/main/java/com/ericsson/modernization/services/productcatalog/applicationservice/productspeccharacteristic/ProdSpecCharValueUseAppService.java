@@ -4,6 +4,7 @@ import com.ericsson.modernization.services.productcatalog.applicationservice.pro
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.response.ProdSpecCharValueUseListModel;
 import com.ericsson.modernization.services.productcatalog.model.ProdSpecCharValueUse;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharUse;
+import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharacteristic;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecification;
 import com.ericsson.modernization.services.productcatalog.repository.ProductSpecCharUseRepository;
 import com.ericsson.modernization.services.productcatalog.repository.ProductSpecificationRepository;
@@ -38,10 +39,10 @@ public class ProdSpecCharValueUseAppService {
                 for (ProdSpecCharValueUse prodSpecCharValueUse : prodSpecCharValueUseList) {
 
                     charValueUseListModel.getProdSpecCharValueList().add(createCharValueListModel(prodSpecCharValueUse));
-                    charValueUseListModel.setProdSpecCharDescription(
-                            prodSpecCharValueUse.getProductSpecCharacteristicValue().getProductSpecCharacteristic().getName());
-                    charValueUseListModel.setProdSpecCharId(
-                            prodSpecCharValueUse.getProductSpecCharacteristicValue().getProductSpecCharacteristic().getId());
+                    ProductSpecCharacteristic specCharacteristic = prodSpecCharValueUse.getProductSpecCharacteristicValue().getProductSpecCharacteristic();
+                    charValueUseListModel.setProdSpecCharDescription(specCharacteristic.getName());
+                    charValueUseListModel.setProdSpecCharId(specCharacteristic.getId());
+                    charValueUseListModel.setProdSpecCharType(specCharacteristic.getValueType());
                 }
 
                 prodSpecCharValueListModelList.add(charValueUseListModel);
