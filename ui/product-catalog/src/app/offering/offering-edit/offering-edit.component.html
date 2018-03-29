@@ -165,19 +165,16 @@
 
                                             <section class="col col-10">
                                                 <select select2 style="width:100%" data-select-search="true"
-                                                        id="specs"
-                                                        name="specSelect"
-                                                        required [(ngModel)]="model.productSpecificationId"
-
-                                                        #selectSpecControl="ngModel">
+                                                        id="specSelect"
+                                                        name="specSelect">
                                                     <option *ngFor="let spec of spesifications" [value]="spec.id">
                                                         {{spec.name}}
                                                     </option>
                                                 </select>
                                             </section>
                                         </fieldset>
-                                        <fieldset>
 
+                                        <fieldset>
                                             <div class="row" *ngFor="let charValue of charValueUseList">
 
                                                 <section class="col col-2">
@@ -204,6 +201,7 @@
                             <br>
                             <br>
                         </div>
+
 
                         <div class="step-pane" data-step="3">
                             <h3><strong>Step 3 </strong> - Wizard continued</h3>
