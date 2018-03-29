@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -58,6 +59,8 @@ public class ProductSpecCharacteristicAppService {
     public void delete(int productSpecCharacteristicID){
         ProductSpecCharacteristic productSpecCharacteristic = productSpecCharacteristicRepository.findById(productSpecCharacteristicID).get();
         if(productSpecCharacteristic != null) {
+            Date _date = new Date();
+            productSpecCharacteristic.getValidFor().setValidForEndDate(_date);
             productSpecCharacteristic.setDeleted(true);
             productSpecCharacteristicRepository.save(productSpecCharacteristic);
         }
