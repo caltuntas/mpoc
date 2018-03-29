@@ -23,7 +23,6 @@ export class OfferingEditComponent implements OnInit {
     spesifications: Array<specificationListModel>=[];
     catalogs: Array<Catalog> = [];
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
-    categoryLeavesString: { [name: string]: string };
     categoryLeaves: Array<Category> = [];
     constructor(private router: Router,
         private offeringService: OfferingService,
@@ -40,12 +39,10 @@ export class OfferingEditComponent implements OnInit {
         })
 
         this.specService.getSpecifications().subscribe((specs) => {
-            this.spesifications = specs;
+            //this.spesifications = specs;
         })
-        this.categoryService.getLeavesFullPathNames().subscribe((categoryLeavesString) => {
-            this.categoryLeavesString = categoryLeavesString;
-            //console.log(this.categoryLeavesString);
-            //console.log(JSON.stringify(this.categoryLeavesString));
+        this.categoryService.getLeavesFullPathNames().subscribe((categoryLeaves) => {
+            this.categoryLeaves = categoryLeaves;
         })
     }
 
