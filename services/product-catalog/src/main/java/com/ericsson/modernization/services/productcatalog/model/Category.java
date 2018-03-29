@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Category extends EntityBase {
+public class Category extends EntityBase implements Description {
     private int id;
     private String code;
     private String name;
