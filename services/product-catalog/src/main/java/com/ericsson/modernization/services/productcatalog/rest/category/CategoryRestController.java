@@ -1,6 +1,7 @@
 package com.ericsson.modernization.services.productcatalog.rest.category;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,18 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ericsson.modernization.services.productcatalog.applicationservice.CommonServiceResponse;
-import com.ericsson.modernization.services.productcatalog.applicationservice.category.CategoryAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.category.CategoryService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.category.request.CategoryCreateRequest;
 import com.ericsson.modernization.services.productcatalog.applicationservice.category.response.CategoryListModel;
 import com.ericsson.modernization.services.productcatalog.model.Category;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/categories")
 //https://blog.mwaysolutions.com/2014/06/05/10-best-practices-for-better-restful-api/
 public class CategoryRestController {
 	@Autowired
-	private CategoryAppService appService;
+	private CategoryService appService;
 /*
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> getAll() {
@@ -61,5 +61,11 @@ public class CategoryRestController {
 		appService.delete(id);
 		String message = "The category with id : " + id + " is deleted.";
 		return new ResponseEntity<>(message, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/fullPathName", method = RequestMethod.GET)
+	public Map<String, String> getFullPathName() {
+		Map<String, String> fullList = appService.getFullPathName();
+		return fullList;
 	}
 }

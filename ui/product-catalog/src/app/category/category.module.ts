@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { routing } from './category.routing';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CategoryCreateComponent } from './category-create.component';
+import { CategoryEditComponent } from './category-edit.component';
 import { CategoryListComponent } from './category-list.component';
 import { CategoryService } from './category.service';
 
@@ -22,7 +22,7 @@ import { SmartadminInputModule } from '../shared/forms/input/smartadmin-input.mo
         SmartadminInputModule,
         FormsModule
     ],
-    declarations: [CategoryListComponent, CategoryCreateComponent,],
+    declarations: [CategoryListComponent, CategoryEditComponent,],
     providers: [CategoryService]
 })
 export class CategoryModule {

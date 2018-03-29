@@ -1,5 +1,5 @@
-import { Component }   from '@angular/core';
-import { Router }      from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'app/+auth/auth.service';
 import { LoginRequestModel } from '../model/login-request-model';
 
@@ -7,21 +7,21 @@ import { LoginRequestModel } from '../model/login-request-model';
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent  {
+export class LoginComponent {
   public username;
   public password;
   message: string;
   public model: LoginRequestModel;
-  constructor(private authService: AuthService){ 
-    this.model = new LoginRequestModel(); 
+  constructor(private authService: AuthService) {
+    this.model = new LoginRequestModel();
   }
 
-  login(event){
+  login(event) {
     event.preventDefault();
-    this.authService.login(this.model);
-    if (!this.authService.isLoggedIn){
+    let isSucessfull = this.authService.login(this.model);
+    if (!isSucessfull) {
       this.message = "Credentials are not valid!";
-    }    
+    }
   }
   logout() {
     this.authService.logout();
