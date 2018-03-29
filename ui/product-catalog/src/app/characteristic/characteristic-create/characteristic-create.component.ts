@@ -36,6 +36,7 @@ export class CharacteristicCreateComponent implements OnInit {
 
     public onSubmit() {
         this.model.charValueString = jQuery('#charValueString').val();
+        this.model.validForStartDate = Date.now().toString();
         this.characteristicService.createCharacteristic(this.model).subscribe(data => {
             console.log("deneme",this.model);
             this.router.navigate(['/characteristic/characteristic-list']);

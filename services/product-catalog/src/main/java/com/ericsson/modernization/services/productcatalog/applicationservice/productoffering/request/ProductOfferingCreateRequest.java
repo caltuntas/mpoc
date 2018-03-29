@@ -1,6 +1,11 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request;
 
 import java.util.Date;
+import java.util.Set;
+
+import com.ericsson.modernization.services.productcatalog.model.Document;
+import com.ericsson.modernization.services.productcatalog.model.SalesChannel;
+import com.ericsson.modernization.services.productcatalog.model.Segment;
 
 public class ProductOfferingCreateRequest {
     private String name;
@@ -16,6 +21,9 @@ public class ProductOfferingCreateRequest {
     private int catalogId;
     private Boolean isReplicated;
     private Boolean isSellable;
+    private Set<SalesChannel> salesChannels;
+    private Set<Segment> segments;
+    private Set<Document> documents;
 
     public String getName() {
         return name;
@@ -119,5 +127,29 @@ public class ProductOfferingCreateRequest {
 
     public void setCatalogId(int catalogId) {
         this.catalogId = catalogId;
+    }
+    
+    public Set<SalesChannel> getSalesChannels() {
+    	return this.salesChannels;
+    }
+    
+    public void setSalesChannels(Set<SalesChannel> salesChannels) {
+    	this.salesChannels = salesChannels;
+    }
+    
+    public Set<Segment> getSegments() {
+    	return this.segments;
+    }
+    
+    public void setSegments(Set<Segment> segments) {
+    	this.segments = segments;
+    }
+    
+    public Set<Document> getDocuments() {
+    	return this.documents;
+    }
+    
+    public void setDocuments(Set<Document> documents) {
+    	this.documents = documents;
     }
 }
