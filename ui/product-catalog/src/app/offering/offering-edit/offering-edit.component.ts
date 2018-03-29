@@ -40,12 +40,15 @@ export class OfferingEditComponent implements OnInit {
             this.spesifications = specs;
         })
 
+        this.charService.getSpecCharValueUses(44).subscribe((charValuUseList) => {
+            this.charValueUseList = charValuUseList;
+            console.log(charValuUseList);
+        })
+
     }
 
     onSpecSelected() {
-        this.charService.getSpecCharValueUses(this.model.productSpecificationId).subscribe((charValuUseList) => {
-            this.charValueUseList = charValuUseList;
-        })
+
     }
 
     public onSubmit() {
