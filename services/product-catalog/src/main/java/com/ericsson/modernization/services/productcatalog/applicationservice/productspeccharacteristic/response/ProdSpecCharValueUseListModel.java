@@ -5,6 +5,8 @@ import java.util.List;
 
 public class ProdSpecCharValueUseListModel {
     private int prodSpecCharUseId;
+    private int prodSpecCharId;
+    private String prodSpecCharDescription;
     private List<ProdSpecCharValueListModel> prodSpecCharValueList;
 
     public ProdSpecCharValueUseListModel() {
@@ -25,5 +27,21 @@ public class ProdSpecCharValueUseListModel {
 
     public void setProdSpecCharUseId(int prodSpecCharUseId) {
         this.prodSpecCharUseId = prodSpecCharUseId;
+    }
+
+    public int getProdSpecCharId() {
+        return prodSpecCharId;
+    }
+
+    public void setProdSpecCharId(int prodSpecCharId) {
+        this.prodSpecCharId = prodSpecCharId;
+    }
+
+    public String getProdSpecCharDescription() {
+        return prodSpecCharDescription;
+    }
+
+    public void setProdSpecCharDescription(String prodSpecCharDescription) {
+        this.prodSpecCharDescription = prodSpecCharDescription;
     }
 }
