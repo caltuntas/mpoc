@@ -32,8 +32,8 @@ export class SpecificationCreateComponent implements OnInit {
     let characteristic = this.characteristics[i];
     characteristic.isSelected = false;
     this.productSpec.selectedCharacteristics = this.productSpec.selectedCharacteristics
-      .filter(x => x.id == characteristic.id)
-      .slice();
+      .filter(x => x.id != characteristic.id);
+   
   }
 
   selectCharUse($event) {

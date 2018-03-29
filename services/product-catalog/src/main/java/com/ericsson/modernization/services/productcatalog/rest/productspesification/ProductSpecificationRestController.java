@@ -43,4 +43,10 @@ public class ProductSpecificationRestController {
     public ResponseEntity<ProductSpecDetailForEditResponse> getSpecForEdit(@PathVariable  int id) {
         return new ResponseEntity<ProductSpecDetailForEditResponse>(productSpecificationAppService.getSpecForEdit(id), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/updateSpec", method = RequestMethod.POST)
+    public ResponseEntity<String> updaProductSpecification(@RequestBody ProductSpecDetailForEditResponse request) {
+        productSpecificationAppService.Update(request);
+        return new ResponseEntity<>("created succesfully", HttpStatus.OK);
+    }
 }

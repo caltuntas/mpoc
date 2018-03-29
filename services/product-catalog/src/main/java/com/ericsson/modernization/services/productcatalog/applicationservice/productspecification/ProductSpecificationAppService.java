@@ -10,6 +10,7 @@ import com.ericsson.modernization.services.productcatalog.model.*;
 import com.ericsson.modernization.services.productcatalog.repository.*;
 
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecification;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,7 @@ public class ProductSpecificationAppService {
             charuse.setCharacteristicType(1);
             charuse.setVersionNumber(1);
             charuse.setUpdateUserDate(new Date());
+            charuse.setDeleted(false);
 
 
             charUseRepository.save(charuse);
@@ -62,6 +64,7 @@ public class ProductSpecificationAppService {
 
                 valueUse.setProductSpecCharacteristicValue(val);
                 valueUse.setProductSpecCharUse(charuse);
+                valueUse.setDeleted(false);
                 charValueUseRepository.save((valueUse));
             }
         }
@@ -102,5 +105,68 @@ public class ProductSpecificationAppService {
         return model;
     }
 
+
+    public void Update(ProductSpecDetailForEditResponse request) {
+
+        ProductSpecification productSpecification = productSpecificationRepository.findById(request.id).get();
+        productSpecification.setName(request.name);
+        productSpecification.setCode(request.code);
+        productSpecification.setDescription(request.description);
+        productSpecification.setUpdateUserDate(new Date());
+        productSpecificationRepository.save(productSpecification);
+
+        for (ProductSpecCharUse charuse : productSpecification.getProductSpecCharUses()) {
+            charuse.setDeleted(true);
+            for (ProdSpecCharValueUse valueUse : charuse.getProductSpecCharValueUses()) {
+                valueUse.setDeleted(true);
+                charValueUseRepository.save(valueUse);
+            }
+            charUseRepository.save(charuse);
+        }
+
+        for (ProductSpecificationValueItemModel selectedChar : request.selectedCharacteristics) {
+
+            ProductSpecCharUse charUse = charUseRepository.findAll().stream()
+                    .filter(x -> x.getProductSpecCharacteristic().getId() == selectedChar.id
+                            && x.getProductSpecification().getId() == productSpecification.getId()).findFirst().get();
+
+            if (charUse != null) {
+                charUse.setDeleted(false);
+                charUse.setUpdateUserDate(new Date());
+            } else {
+                ProductSpecCharacteristic characteristic = characteristicRepository.findByIdAndIsDeletedIsFalse(selectedChar.id);
+                charUse = new ProductSpecCharUse();
+                charUse.setProductSpecification(productSpecification);
+                charUse.setProductSpecCharacteristic(characteristic);
+                charUse.setCreateUserDate(new Date());
+                charUse.setCharacteristicType(1);
+                charUse.setVersionNumber(1);
+                charUse.setUpdateUserDate(new Date());
+            }
+
+            charUseRepository.save(charUse);
+            int charUseId = charUse.getId();
+
+            for (int selectedValue : selectedChar.selectedValueIds) {
+
+                ProdSpecCharValueUse valueUse = charValueUseRepository.findAll().stream()
+                        .filter(x -> x.getProductSpecCharacteristicValue().getId() == selectedValue &&
+                                x.getProductSpecCharUse().getId() == charUseId).findFirst().get();
+
+
+                if (charUse != null) {
+                    valueUse.setDeleted(false);
+                    valueUse.setUpdateUserDate(new Date());
+                } else {
+                    ProductSpecCharacteristicValue val = characteristicValueRepository.findById(selectedValue);
+                    valueUse = new ProdSpecCharValueUse();
+
+                    valueUse.setProductSpecCharacteristicValue(val);
+                    valueUse.setProductSpecCharUse(charUse);
+                    charValueUseRepository.save((valueUse));
+                }
+            }
+        }
+    }
 }
 
