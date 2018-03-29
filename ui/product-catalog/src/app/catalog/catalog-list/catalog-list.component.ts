@@ -51,32 +51,33 @@ export class CatalogListComponent implements OnInit {
                             <i class='fa fa-gear fa-lg'></i></button>
                             <ul class='dropdown-menu  ng-star-inserted'>                                
                                 <li>
-                                    <a class='sa-datatables-edit-characteristic' characteristic-id='${fullRow.id}'>
+                                
+                                    <a class='sa-datatables-edit-catalog' catalog-id='${fullRow.id}'>
                                         <i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs" style="color:cornflowerblue"></i>
-                                        Edit
+                                            Edit
                                     </a>
+                                    
                                 </li>
                                 <li>
-                                    <a class='sa-datatables-delete-characteristic' characteristic-id='${fullRow.id}'>
+                                    <a class='sa-datatables-delete-catalog' catalog-id='${fullRow.id}'>
                                         <i class="fa fa-fw fa-ban text-muted hidden-md hidden-sm hidden-xs" style="color:red"></i>
-                                        Delete
+                                            Delete
                                     </a>
                                 </li>
                             </ul>
                         </div>`;
-                },
-                'orderable': false
-            }]
+                }
+            }],
     };
 
     ngAfterViewInit() {
         document.querySelector('body').addEventListener('click', (event) => {
             let target = <Element>event.target;
 
-            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit')) {
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit-catalog')) {
                 this.onEditCatalog(target.getAttribute('catalog-id'));
             }
-            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete')) {
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete-catalog')) {
                 this.onDeleteCatalog(target.getAttribute('catalog-id'));
             }
         });
@@ -88,9 +89,9 @@ export class CatalogListComponent implements OnInit {
     onEditCatalog(catalogId) {
         console.log("edit catalog:", catalogId);
         this.router.navigate(['/catalog/catalog-edit/' + catalogId]);
-        this.catalogService.updateCatalog(catalogId).subscribe((data) => {
-            this.reloadCatalogListTable();
-        });
+        //this.catalogService.updateCatalog(catalogId).subscribe((data) => {
+        //    this.reloadCatalogListTable();
+        //});
     }
 
     onDeleteCatalog(catalogId) {
@@ -102,7 +103,9 @@ export class CatalogListComponent implements OnInit {
 
     reloadCatalogListTable() {
         this.reRenderTable = true;
-        this.cdRef.detectChanges();
+        if (!this.cdRef['destroyed']) {
+            this.cdRef.detectChanges();
+        }
         this.reRenderTable = false;
     }
 
