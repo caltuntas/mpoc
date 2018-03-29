@@ -24,7 +24,7 @@ import {OfferingEditModel} from "../model/offering-edit-model";
 export class OfferingEditComponent implements OnInit {
 
     model: OfferingEditModel;
-    isNewOffering: boolean = false;
+    isNewOffering: boolean = true;
     spesifications: Array<specificationListModel> = [];
     catalogs: Array<Catalog> = [];
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
@@ -189,6 +189,7 @@ export class OfferingEditComponent implements OnInit {
         this.model.segments = this.selectedSegments;
         this.model.documents = this.selectedDocuments;
         this.model.categoryId = jQuery("#categories").val();
+
 
         if (this.isNewOffering) {
             this.offeringService.createOffering(this.model).subscribe(data => {
