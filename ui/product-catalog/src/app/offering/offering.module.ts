@@ -9,6 +9,9 @@ import {SmartadminDatatableModule} from "../shared/ui/datatable/smartadmin-datat
 import { OfferingListComponent } from './offering-list/offering-list.component';
 import { OfferingEditComponent } from './offering-edit/offering-edit.component';
 import {SmartadminFormsModule} from "../shared/forms/smartadmin-forms.module";
+import { SalesChannelService } from '../sales-channel/sales-channel.service';
+import { SegmentService } from '../segment/segment.service';
+import { DocumentService } from '../document/document.service';
 
 @NgModule({
     imports: [
@@ -20,7 +23,8 @@ import {SmartadminFormsModule} from "../shared/forms/smartadmin-forms.module";
         SmartadminInputModule,
         SmartadminFormsModule
     ],
-    declarations: [OfferingListComponent, OfferingEditComponent]
+    declarations: [OfferingListComponent, OfferingEditComponent],
+    providers: [SalesChannelService,SegmentService,DocumentService]
 })
 export class OfferingModule {
 }

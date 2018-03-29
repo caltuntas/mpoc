@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {CharacteristicCreateModel} from '../model/CharacateristicCreateModel';
+import {CharacteristicCreateModel} from '../model/characateristicCreateModel';
 import {CharacteristicService} from '../characteristic.service';
 import {moment} from 'ngx-bootstrap/chronos/test/chain';
 import {Router} from '@angular/router';

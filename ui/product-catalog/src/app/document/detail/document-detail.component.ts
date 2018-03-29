@@ -43,7 +43,7 @@ export class DocumentDetailComponent implements OnInit {
       {
         this.docService.createDocument(detail.DocumentInstance).subscribe(data => {
 
-          this.notificationComponent.showNotification("Create","Created successfully");
+          this.notificationComponent.showNotification("Document","Created successfully");
           
           this.routeToSClist();
         } );
@@ -52,7 +52,7 @@ export class DocumentDetailComponent implements OnInit {
       {
         this.docService.updateDocument(detail.DocumentInstance).subscribe(data => {
 
-          this.notificationComponent.showNotification("Update","Updated successfully");
+          this.notificationComponent.showNotification("Document","Updated successfully");
           
           this.routeToSClist();
           
