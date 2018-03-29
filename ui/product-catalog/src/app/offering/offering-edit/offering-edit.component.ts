@@ -69,8 +69,6 @@ export class OfferingEditComponent implements OnInit {
                     jQuery("#catalogSelect").val(this.model.catalogId).trigger('change');
                 }
 
-                console.log(this.model);
-
             })
         }
 
@@ -191,6 +189,7 @@ export class OfferingEditComponent implements OnInit {
         this.model.categoryId = jQuery("#categories").val();
 
 
+        console.log(this.isNewOffering);
         if (this.isNewOffering) {
             this.offeringService.createOffering(this.model).subscribe(data => {
                 this.router.navigate(['/offering/offering-list']);
