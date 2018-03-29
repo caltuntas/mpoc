@@ -18,8 +18,8 @@ import {ProdSpecCharValueUseListModel} from "../../characteristic/model/prod-spe
 export class OfferingEditComponent implements OnInit {
 
     model: CreateOfferingModel;
-    spesifications: Array<OfferingSpecModel> = [];
-    catalogs: Array<Catalog> = [];
+    spesifications: Array<OfferingSpecModel>;
+    catalogs: Array<Catalog>;
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
 
 
