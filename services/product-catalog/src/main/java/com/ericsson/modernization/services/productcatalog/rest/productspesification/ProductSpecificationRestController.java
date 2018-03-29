@@ -49,4 +49,10 @@ public class ProductSpecificationRestController {
         productSpecificationAppService.Update(request);
         return new ResponseEntity<>("created succesfully", HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public ResponseEntity<String> delete(@PathVariable  int id) {
+        productSpecificationAppService.delete(id);
+        return new ResponseEntity<>("created succesfully", HttpStatus.OK);
+    }
 }
