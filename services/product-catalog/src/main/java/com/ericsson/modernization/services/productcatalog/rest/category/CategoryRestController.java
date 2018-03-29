@@ -63,9 +63,9 @@ public class CategoryRestController {
 		return new ResponseEntity<>(message, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/fullPathName", method = RequestMethod.GET)
-	public Map<String, String> getFullPathName() {
-		Map<String, String> fullList = appService.getFullPathName();
+	@RequestMapping(value = "/leavesFullPathNames", method = RequestMethod.GET)
+	public Map<String, String> getLeavesFullPathNames() {
+		Map<String, String> fullList = appService.getLeavesFullPathNames();
 		return fullList;
 	}
 }

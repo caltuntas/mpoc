@@ -66,17 +66,17 @@ public class CategoryServiceImpl implements CategoryService {
 
 	public List<CategoryListModel> findAllWithModel() {
 		return repository.findAllByIsDeletedIsFalse().stream().map(x -> new CategoryListModel(x.getId(), x.getCode(),
-				x.getName(), x.getDescription(),
+				x.getName(), x.getDescription(), x.getParentId(),
 				x.getParentId() != 0 ? repository.findByIdAndIsDeletedIsFalse(x.getParentId()).getName() : null))
 				.collect(Collectors.toList());
 	}
 
-	public Map<String, String> getFullPathName() {
+	public Map<String, String> getLeavesFullPathNames() {
 		List<Category> categories = repository.findAllByIsDeletedIsFalse();
-		return getFullPathNameString(categories);
+		return getLeavesFullPathNamesByCategories(categories);
 	}
 
-	public Map<String, String> getFullPathNameString(List<Category> categories) {
+	public Map<String, String> getLeavesFullPathNamesByCategories(List<Category> categories) {
 		Map<String, String> map = new HashMap<String, String>();
 		for (int i = 0; i < categories.size(); i++) {
 			Category category = categories.get(i);
@@ -102,10 +102,10 @@ public class CategoryServiceImpl implements CategoryService {
 			if (parent != null)
 				sb.append(parent.getName() + " - ");
 			sb.append(category.getName());
-			map.put(category.getId() + "", sb.toString());			
+			map.put(category.getId() + "", sb.toString());
 		}
 
 		return map;
 	}
-	
+
 }

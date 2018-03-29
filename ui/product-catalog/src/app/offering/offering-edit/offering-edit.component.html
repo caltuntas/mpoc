@@ -274,6 +274,39 @@
                             <br>
                             <br>
                         </div>
+                        <div class="step-pane" data-step="6">
+                            <br>
+                            <br>
+                            <div class="row">
+                                <div class="smart-form">
+                                    <div class="col-sm-1">
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <fieldset>
+                                            <section class="col col-2">
+                                                <label class="toggle">Category:</label>
+                                            </section>
+                                            <section class="col col-10">
+                                                <select select2 style="width:100%" data-select-search="true"
+                                                        id="categories"
+                                                        name="categorySelect"
+                                                        required [(ngModel)]="model.categoryId"
+                                                        (ngModelChange)="onCategoryChanged($event)"
+                                                        #selectCategoryControl="ngModel">
+                                                    <option *ngFor="let category of categories" [value]="category.id">
+                                                        {{category.name}}
+                                                    </option>
+                                                </select>
+                                            </section>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
 
                     </form>
                 </div>

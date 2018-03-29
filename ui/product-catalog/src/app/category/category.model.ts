@@ -4,4 +4,5 @@ export class Category {
     public name: string;
     public description: string;
     public parentId: number;
+    public parentName: string;
 }

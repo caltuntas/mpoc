@@ -13,6 +13,6 @@ export class CreateOfferingModel {
     public catalogId: number;
     public isReplicated: boolean;
     public isSellable: boolean;
-
+    public categoryId: number;
 
 }

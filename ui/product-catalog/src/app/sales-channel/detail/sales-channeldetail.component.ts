@@ -43,7 +43,7 @@ export class SalesChannelDetailComponent implements OnInit {
       {
         this.scService.createSalesChannel(detail.SalesChannelInstance).subscribe(data => {
 
-          this.notificationComponent.showNotification("Create","Created successfully");
+          this.notificationComponent.showNotification("Sale Channel","Created successfully");
           
           this.routeToSClist();
         } );
@@ -51,7 +51,7 @@ export class SalesChannelDetailComponent implements OnInit {
       {
         this.scService.updateSalesChannel(detail.SalesChannelInstance).subscribe(data => {
 
-          this.notificationComponent.showNotification("Update","Updated successfully");
+          this.notificationComponent.showNotification("Sale Channel","Updated successfully");
           
           this.routeToSClist();
           

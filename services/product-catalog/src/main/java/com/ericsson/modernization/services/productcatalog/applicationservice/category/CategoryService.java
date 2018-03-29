@@ -22,7 +22,7 @@ public interface CategoryService {
 
 	List<CategoryListModel> findAllWithModel();
 
-	Map<String, String> getFullPathName();
+	Map<String, String> getLeavesFullPathNames();
 
-	Map<String, String> getFullPathNameString(List<Category> categories);
+	Map<String, String> getLeavesFullPathNamesByCategories(List<Category> categories);
 }
