@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Catalog extends EntityBase implements Description, ValidFor {
+public class Catalog extends EntityBase implements Description, ValidFor, ExternalId, IsReplicated, Versioned {
     private String name;
     @Embedded
     private TimePeriod validFor;

@@ -114,16 +114,18 @@ export class OfferingEditComponent implements OnInit {
     }
 
     public onSubmit() {
-        this.model.productSpecificationId = jQuery("#specSelect").val();
-        this.model.catalogId = jQuery("#catalogs").val();
-        this.offeringService.createOffering(this.model).subscribe(data => {
-            this.router.navigate(['/offering/offering-list']);
-        });
-        this.model.categoryId = jQuery("#categories").val();
+
     }
 
     onWizardComplete(data) {
         console.log('fuel-ux wizard complete', data)
+        this.model.productSpecificationId = jQuery("#specSelect").val();
+        this.model.catalogId = jQuery("#catalogs").val();
+        this.model.categoryId = jQuery("#categories").val();
+        this.offeringService.createOffering(this.model).subscribe(data => {
+            this.router.navigate(['/offering/offering-list']);
+        });
+
     }
 
     compareIdValues(t1: any, t2: any): boolean {

@@ -12,6 +12,7 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 
     public ProductOffering() {
         prices = new ArrayList<ProductOfferingPrice>();
+        offeringSegment = new ArrayList<Segment>();
         setProductOfferingDetermineses(new ArrayList<ProductOfferingDetermines>());
         unsupportedProductSpecCharValueUseGroups = new ArrayList<UnsupportedProductSpecCharValueUseGroup>();
         category = new ArrayList<Category>();
@@ -58,6 +59,18 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
     @OneToMany(mappedBy = "productOffering",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<Category> category;
 
+    public List<Segment> getOfferingSegment() {
+        return offeringSegment;
+    }
+
+    public void setOfferingSegment(List<Segment> offeringSegment) {
+        this.offeringSegment = offeringSegment;
+    }
+
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Segment> offeringSegment;
+
     public List<Category> getCategory() {
 		return category;
 	}
@@ -65,6 +78,16 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	public void setCategory(List<Category> category) {
 		this.category = category;
 	}
+
+    public String getProductOfferingType() {
+        return productOfferingType;
+    }
+
+    public void setProductOfferingType(String productOfferingType) {
+        this.productOfferingType = productOfferingType;
+    }
+
+    private String productOfferingType;
 
 	public String getName() {
         return name;
