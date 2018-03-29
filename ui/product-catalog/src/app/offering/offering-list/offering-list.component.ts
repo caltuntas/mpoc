@@ -28,14 +28,13 @@ export class OfferingListComponent implements OnInit, OnDestroy {
             {"data": "id"},
             {"data": "name"},
             {"data": "description"},
-            {"data": "validForEndDate"},
             {"data": "isSellable"},
             {"data": "productSpesificationCode"},
             {"data": "catalogCode"},
             {
                 render: (data, type, fullRow, meta) => {
                     return `
-                        <div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                        <div class='btn-group dropdown show pull-right'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                             <i class='fa fa-gear fa-lg'></i></button>
                             <ul class='dropdown-menu  ng-star-inserted'>                                
                                 <li>
@@ -56,6 +55,7 @@ export class OfferingListComponent implements OnInit, OnDestroy {
                         </div>`;
                 }
             }],
+        order: [[0, "desc"]]
 
     };
 
