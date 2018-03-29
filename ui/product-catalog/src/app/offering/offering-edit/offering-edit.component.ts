@@ -1,13 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {CreateOfferingModel} from "../model/create-offering-model";
-import {OfferingSpecModel} from "../model/offering-spec-model";
 import {Catalog} from "../../catalog/model/catalog.model";
 import {Router} from "@angular/router";
 import {OfferingService} from "../offering.service";
 import {CatalogService} from "../../catalog/catalog.service";
 import {CharacteristicService} from "../../characteristic/characteristic.service";
 import {specificationService} from "../../specification/specification.service";
-import {Observable} from "rxjs/Observable";
 import {ProdSpecCharValueUseListModel} from "../../characteristic/model/prod-spec-char-value-use-list.model";
 
 @Component({
@@ -18,7 +16,7 @@ import {ProdSpecCharValueUseListModel} from "../../characteristic/model/prod-spe
 export class OfferingEditComponent implements OnInit {
 
     model: CreateOfferingModel;
-    spesifications: Array<OfferingSpecModel> = [];
+    spesifications: Array<specificationListModel> = [];
     catalogs: Array<Catalog> = [];
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
 
@@ -40,12 +38,15 @@ export class OfferingEditComponent implements OnInit {
             this.spesifications = specs;
         })
 
+        this.charService.getSpecCharValueUses(44).subscribe((charValuUseList) => {
+            this.charValueUseList = charValuUseList;
+            console.log(charValuUseList);
+        })
+
     }
 
     onSpecSelected() {
-        this.charService.getSpecCharValueUses(this.model.productSpecificationId).subscribe((charValuUseList) => {
-            this.charValueUseList = charValuUseList;
-        })
+
     }
 
     public onSubmit() {

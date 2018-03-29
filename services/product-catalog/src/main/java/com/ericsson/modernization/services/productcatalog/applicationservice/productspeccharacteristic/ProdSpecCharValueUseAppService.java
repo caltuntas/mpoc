@@ -36,7 +36,12 @@ public class ProdSpecCharValueUseAppService {
                 charValueUseListModel.setProdSpecCharUseId(productSpecCharUse.getId());
 
                 for (ProdSpecCharValueUse prodSpecCharValueUse : prodSpecCharValueUseList) {
+
                     charValueUseListModel.getProdSpecCharValueList().add(createCharValueListModel(prodSpecCharValueUse));
+                    charValueUseListModel.setProdSpecCharDescription(
+                            prodSpecCharValueUse.getProductSpecCharacteristicValue().getProductSpecCharacteristic().getName());
+                    charValueUseListModel.setProdSpecCharId(
+                            prodSpecCharValueUse.getProductSpecCharacteristicValue().getProductSpecCharacteristic().getId());
                 }
 
                 prodSpecCharValueListModelList.add(charValueUseListModel);
@@ -46,22 +51,16 @@ public class ProdSpecCharValueUseAppService {
         return prodSpecCharValueListModelList;
     }
 
-    private ProdSpecCharValueListModel createCharValueListModel(ProdSpecCharValueUse prodSpecCharValueUse){
+    private ProdSpecCharValueListModel createCharValueListModel(ProdSpecCharValueUse prodSpecCharValueUse) {
         ProdSpecCharValueListModel charValueListModel = new ProdSpecCharValueListModel();
 
         charValueListModel.setProdSpecCharValueId(prodSpecCharValueUse.getId());
 
-        charValueListModel.setProdSpecCharDescription(
-                prodSpecCharValueUse.getProductSpecCharacteristicValue().getProductSpecCharacteristic().getName());
-
-        charValueListModel.setProdSpecCharId(
-                prodSpecCharValueUse.getProductSpecCharacteristicValue().getProductSpecCharacteristic().getId());
-
         charValueListModel.setProdSpecCharValue(
                 prodSpecCharValueUse.getProductSpecCharacteristicValue().getValue());
 
-        charValueListModel.setProdSpecCharId(
-                prodSpecCharValueUse.getProductSpecCharacteristicValue().getId());
+        charValueListModel.setProdSpecCharValueUseId(
+                prodSpecCharValueUse.getId());
 
         return charValueListModel;
     }

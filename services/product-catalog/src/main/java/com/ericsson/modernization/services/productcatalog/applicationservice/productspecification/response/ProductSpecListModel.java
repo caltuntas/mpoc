@@ -1,5 +1,7 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class ProductSpecListModel {
@@ -7,6 +9,7 @@ public class ProductSpecListModel {
     public String name;
     public String code;
     public String description;
+    @JsonFormat(pattern="yyyy-MM-dd")
     public Date createTime;
 
     public ProductSpecListModel(int id,String name, String code, String description, Date createTime){

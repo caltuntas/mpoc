@@ -1,5 +1,7 @@
 package com.ericsson.modernization.services.productcatalog.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,8 +14,10 @@ public class EntityBase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int createUserId;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date createUserDate;
     private int updateUserId;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date updateUserDate;
     private boolean isDeleted;
 
