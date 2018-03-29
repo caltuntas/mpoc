@@ -1,20 +1,20 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.category;
 
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.category.request.CategoryCreateRequest;
 import com.ericsson.modernization.services.productcatalog.applicationservice.category.response.CategoryListModel;
 import com.ericsson.modernization.services.productcatalog.model.Category;
+import com.ericsson.modernization.services.productcatalog.model.TimePeriod;
 import com.ericsson.modernization.services.productcatalog.repository.CategoryRepository;
 
 @Transactional
@@ -28,6 +28,9 @@ public class CategoryServiceImpl implements CategoryService {
 
 		Category category = new Category();
 		getEntityFromRequest(request, category);
+        TimePeriod validFor = new TimePeriod();
+        validFor.setValidForStartDate(new Date());
+        category.setValidFor(validFor);
 		return repository.save(category);
 	}
 
@@ -36,23 +39,17 @@ public class CategoryServiceImpl implements CategoryService {
 		category.setCode(request.getCode());
 		category.setDescription(request.getDescription());
 		category.setParentId(request.getParentId());
-		/*
-		 * TimePeriod validFor = new TimePeriod();
-		 * validFor.setValidForEndDate(request.getValidForEndDate());
-		 * validFor.setValidForStartDate(request.getValidForStartDate());
-		 * category.setValidFor(validFor);
-		 */
 	}
 
 	public void update(CategoryCreateRequest request) {
-
 		Category category = repository.findByIdAndIsDeletedIsFalse(request.getId());
-		getEntityFromRequest(request, category);
+		getEntityFromRequest(request, category);		
 		repository.save(category);
 	}
 
 	public void delete(int id) {
 		Category category = repository.findById(id).get();
+		category.getValidFor().setValidForEndDate(new Date());
 		if (category != null) {
 			category.setDeleted(true);
 			repository.save(category);
@@ -108,8 +105,9 @@ public class CategoryServiceImpl implements CategoryService {
 			map.put(category.getId() + "", sb.toString());
 		}
 		List<CategoryListModel> list = map.entrySet().stream().sorted(Comparator.comparing(e -> e.getKey()))
-				.map(e -> new CategoryListModel(Integer.parseInt(e.getKey()), e.getValue())).collect(Collectors.toList());
-		
+				.map(e -> new CategoryListModel(Integer.parseInt(e.getKey()), e.getValue()))
+				.collect(Collectors.toList());
+
 		return list;
 	}
 

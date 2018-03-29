@@ -6,6 +6,7 @@ import java.util.List;
 public class ProdSpecCharValueUseListModel {
     private int prodSpecCharUseId;
     private int prodSpecCharId;
+    private int prodSpecCharType;
     private String prodSpecCharDescription;
     private List<ProdSpecCharValueListModel> prodSpecCharValueList;
 
@@ -43,5 +44,13 @@ public class ProdSpecCharValueUseListModel {
 
     public void setProdSpecCharDescription(String prodSpecCharDescription) {
         this.prodSpecCharDescription = prodSpecCharDescription;
+    }
+
+    public int getProdSpecCharType() {
+        return prodSpecCharType;
+    }
+
+    public void setProdSpecCharType(int prodSpecCharType) {
+        this.prodSpecCharType = prodSpecCharType;
     }
 }

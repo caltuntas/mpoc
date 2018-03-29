@@ -54,12 +54,8 @@ export class SegmentComponent implements OnInit {
   constructor(private router: Router,private scService: SegmentService,private notificationComponent: NotificationComponent) { }
 
   ngOnInit() {
-    //this.getSalesChannels();
-    
   }
-  
 
-  
   
   ngAfterViewInit() {
         document.querySelector('body').addEventListener('click', (event) => {

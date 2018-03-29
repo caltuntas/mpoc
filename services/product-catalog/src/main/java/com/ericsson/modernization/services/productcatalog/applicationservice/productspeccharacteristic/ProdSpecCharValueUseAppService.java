@@ -4,6 +4,7 @@ import com.ericsson.modernization.services.productcatalog.applicationservice.pro
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.response.ProdSpecCharValueUseListModel;
 import com.ericsson.modernization.services.productcatalog.model.ProdSpecCharValueUse;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharUse;
+import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharacteristic;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecification;
 import com.ericsson.modernization.services.productcatalog.repository.ProductSpecCharUseRepository;
 import com.ericsson.modernization.services.productcatalog.repository.ProductSpecificationRepository;
@@ -24,24 +25,27 @@ public class ProdSpecCharValueUseAppService {
     public List<ProdSpecCharValueUseListModel> getProdSpecCharValueUses(int productSpecId) {
 
         List<ProdSpecCharValueUseListModel> prodSpecCharValueListModelList = new ArrayList<>();
-
         ProductSpecification specification = productSpecificationRepository.findByIdAndIsDeletedIsFalse(productSpecId);
+
         if (specification != null) {
 
             List<ProductSpecCharUse> prodSpecCharUseList = productSpecCharUseRepository.findAllByProductSpecification(specification);
 
             for (ProductSpecCharUse productSpecCharUse : prodSpecCharUseList) {
-                List<ProdSpecCharValueUse> prodSpecCharValueUseList = productSpecCharUse.getProductSpecCharValueUses();
+
+                ProductSpecCharacteristic specCharacteristic = productSpecCharUse.getProductSpecCharacteristic();
                 ProdSpecCharValueUseListModel charValueUseListModel = new ProdSpecCharValueUseListModel();
+                charValueUseListModel.setProdSpecCharId(specCharacteristic.getId());
+                charValueUseListModel.setProdSpecCharType(specCharacteristic.getValueType());
                 charValueUseListModel.setProdSpecCharUseId(productSpecCharUse.getId());
+                charValueUseListModel.setProdSpecCharDescription(specCharacteristic.getName());
 
-                for (ProdSpecCharValueUse prodSpecCharValueUse : prodSpecCharValueUseList) {
+                List<ProdSpecCharValueUse> prodSpecCharValueUseList = productSpecCharUse.getProductSpecCharValueUses();
+                if (prodSpecCharValueUseList.size() > 0) {
 
-                    charValueUseListModel.getProdSpecCharValueList().add(createCharValueListModel(prodSpecCharValueUse));
-                    charValueUseListModel.setProdSpecCharDescription(
-                            prodSpecCharValueUse.getProductSpecCharacteristicValue().getProductSpecCharacteristic().getName());
-                    charValueUseListModel.setProdSpecCharId(
-                            prodSpecCharValueUse.getProductSpecCharacteristicValue().getProductSpecCharacteristic().getId());
+                    for (ProdSpecCharValueUse prodSpecCharValueUse : prodSpecCharValueUseList) {
+                        charValueUseListModel.getProdSpecCharValueList().add(createCharValueListModel(prodSpecCharValueUse));
+                    }
                 }
 
                 prodSpecCharValueListModelList.add(charValueUseListModel);
