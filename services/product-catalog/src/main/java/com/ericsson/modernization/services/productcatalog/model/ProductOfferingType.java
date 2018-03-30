@@ -2,7 +2,6 @@ package com.ericsson.modernization.services.productcatalog.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -17,9 +16,12 @@ public class ProductOfferingType extends EntityBase implements Description {
 	@OneToMany
 	private List<ProductOffering> productOfferings;
 
-	public ProductOfferingType(int id, String name, String description) {
+	public ProductOfferingType() {
 		super();
-		this.id = id;
+	}
+	
+	public ProductOfferingType(String name, String description) {
+		super();
 		this.name = name;
 		this.description = description;
 	}

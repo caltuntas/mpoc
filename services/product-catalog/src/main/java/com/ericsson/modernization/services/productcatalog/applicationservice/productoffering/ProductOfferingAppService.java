@@ -100,7 +100,8 @@ public class ProductOfferingAppService {
                         x.getWarrantyPeriod() != null ? x.getWarrantyPeriod().getPeriodValue() : 0,
                         x.getWarrantyPeriod() != null ? x.getWarrantyPeriod().getPeriodUnit() : 0,
                         x.getReturnPeriod() != null ? x.getReturnPeriod().getPeriodValue() : 0,
-                        x.getReturnPeriod() != null ? x.getReturnPeriod().getPeriodUnit() : 0)
+                        x.getReturnPeriod() != null ? x.getReturnPeriod().getPeriodUnit() : 0,
+                        x.getProductOfferingType() != null ? x.getProductOfferingType().getName(): null)
                 ).collect(Collectors.toList());
     }
 }

@@ -228,11 +228,12 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	@JsonIgnore
 	@ManyToOne
 	private ProductOfferingType productOfferingType;
+
 	public ProductOfferingType getProductOfferingType() {
 		return productOfferingType;
-	}
-
-	public void setProductOfferingTypeId(ProductOfferingType productOfferingType) {
+	}	
+	
+	public void setProductOfferingType(ProductOfferingType productOfferingType) {
 		this.productOfferingType = productOfferingType;
 	}
 
@@ -241,5 +242,12 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	@JoinTable(name = "ProductOfferingRelation", joinColumns = @JoinColumn(name = "mainProductOfferingId"), inverseJoinColumns = @JoinColumn(name = "relatedProductOfferingId"))
 	private List<ProductOffering> relatedProductOfferings;
 
+	public List<ProductOffering> getRelatedProductOfferings() {
+		return relatedProductOfferings;
+	}
+
+	public void setRelatedProductOfferings(List<ProductOffering> relatedProductOfferings) {
+		this.relatedProductOfferings = relatedProductOfferings;
+	}
 
 }

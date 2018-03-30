@@ -1,7 +1,6 @@
 <div id="content">
     <div class="row">
-        <sa-big-breadcrumbs [items]="['Offering', 'List']" icon="table"
-                            class="col-xs-12 col-sm-9 col-md-9 col-lg-9"></sa-big-breadcrumbs>
+        <sa-big-breadcrumbs [items]="['Offering', 'List']" icon="table" class="col-xs-12 col-sm-9 col-md-9 col-lg-9"></sa-big-breadcrumbs>
         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
             <a routerLink="/offering/offering-edit">
                 <button type="button" class="btn btn-info btn-lg pull-right header-btn hidden-mobile">
@@ -18,43 +17,53 @@
                 <div sa-widget [editbutton]="false" [deletebutton]="false" color="vdf">
                     <header>
                         <span class="widget-icon">
-                        <i class="fa fa-table"></i>
+                            <i class="fa fa-table"></i>
                         </span>
                         <h2>Offering List</h2>
                     </header>
                     <div>
                         <div class="widget-body no-padding">
-                            <sa-datatable [options]="options" paginationLength="true"
-                                          tableClass="table table-striped table-bordered table-hover" width="100%"
-                                          *ngIf="!reRenderTable">
+                            <sa-datatable [options]="options" paginationLength="true" tableClass="table table-striped table-bordered table-hover" width="100%"
+                                *ngIf="!reRenderTable">
                                 <thead>
-                                <tr>
-                                    <th>
-                                        <i class="fa fa-fw fa-key text-muted hidden-md hiden-sm hidden-xs"></i>
-                                        Id
-                                    </th>
-                                    <th>
-                                        <i class="fa fa-fw fa-newspaper-o text-muted hidden-md hidden-sm hidden-xs"></i>
-                                        Name
-                                    </th>
-                                    <th>
-                                        <i class="fa fa-fw fa-comment text-muted hidden-md hidden-sm hidden-xs"></i>
-                                        Description
-                                    </th>
-                                    <th>
-                                        <i class="fa fa-fw fa-unlock-alt text-muted hidden-md hiden-sm hidden-xs"></i>
-                                        Sellable
-                                    </th>
-                                    <th>
-                                        <i class="fa fa-fw fa-wrench text-muted hidden-md hiden-sm hidden-xs"></i>
-                                        Specification
-                                    </th>
-                                    <th>
-                                        <i class="fa fa-fw fa-wrench text-muted hidden-md hiden-sm hidden-xs"></i>
-                                        Catalog
-                                    </th>
-                                    <th></th>
-                                </tr>
+                                    <tr>
+                                        <th>
+                                            <i class="fa fa-fw fa-key text-muted hidden-md hiden-sm hidden-xs"></i>
+                                            Id
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-fw fa-newspaper-o text-muted hidden-md hidden-sm hidden-xs"></i>
+                                            Name
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-fw fa-comment text-muted hidden-md hidden-sm hidden-xs"></i>
+                                            Description
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-fw fa-unlock-alt text-muted hidden-md hiden-sm hidden-xs"></i>
+                                            Sellable
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-fw fa-wrench text-muted hidden-md hiden-sm hidden-xs"></i>
+                                            Specification
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-fw fa-wrench text-muted hidden-md hiden-sm hidden-xs"></i>
+                                            Catalog
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-fw fa-wrench text-muted hidden-md hiden-sm hidden-xs"></i> Type
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-fw fa-calendar-o text-muted hidden-md hiden-sm hidden-xs"></i>
+                                            First Valid Date
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-fw fa-calendar-o text-muted hidden-md hiden-sm hidden-xs"></i>
+                                            Last Valid Date
+                                        </th>
+                                        <th></th>
+                                    </tr>
                                 </thead>
                             </sa-datatable>
                         </div>
