@@ -1,6 +1,6 @@
 import {BundleSpecModel} from "./bundle-spec-model";
 
-export class BundleListModel {
+export class OfferingListModel {
     public id: string;
     public name: string;
     public description: string;
