@@ -28,8 +28,8 @@ public class ProductSpecCharacteristicAppService {
         productSpecCharacteristic.setName(productSpecCharacteristicCreateRequest.getName());
         productSpecCharacteristic.setDescription(productSpecCharacteristicCreateRequest.getDescription());
         productSpecCharacteristic.setValueType(productSpecCharacteristicCreateRequest.getValueType());
-        productSpecCharacteristic.setRequired(productSpecCharacteristicCreateRequest.getRequired());
-        productSpecCharacteristic.setConfigurable(productSpecCharacteristicCreateRequest.getConfigurable());
+        productSpecCharacteristic.setisRequired(productSpecCharacteristicCreateRequest.getisRequired());
+        productSpecCharacteristic.setisConfigurable(productSpecCharacteristicCreateRequest.getisConfigurable());
 
         TimePeriod validFor = new TimePeriod();
         validFor.setValidForStartDate(productSpecCharacteristicCreateRequest.getValidForStartDate());
@@ -73,8 +73,8 @@ public class ProductSpecCharacteristicAppService {
         productSpecCharacteristicEditRequest.setDescription(productSpecCharacteristic.getDescription());
         productSpecCharacteristicEditRequest.setValidFor(productSpecCharacteristic.getValidFor());
         productSpecCharacteristicEditRequest.setValueType(productSpecCharacteristic.getValueType());
-        productSpecCharacteristicEditRequest.setConfigurable(productSpecCharacteristic.getConfigurable());
-        productSpecCharacteristicEditRequest.setRequired(productSpecCharacteristic.getRequired());
+        productSpecCharacteristicEditRequest.setisConfigurable(productSpecCharacteristic.getisConfigurable());
+        productSpecCharacteristicEditRequest.setisRequired(productSpecCharacteristic.getisRequired());
 
         if (productSpecCharacteristicEditRequest.getValueType() == 1) {
             List<ProductSpecCharacteristicValue> productSpecCharacteristicValueList = productSpecCharacteristic.getProductSpecCharacteristicValues();
@@ -109,8 +109,8 @@ public class ProductSpecCharacteristicAppService {
         productSpecCharacteristic.setDescription(productSpecCharacteristicEditRequest.getDescription());
         productSpecCharacteristic.setValidFor(productSpecCharacteristicEditRequest.getValidFor());
         productSpecCharacteristic.setValueType(productSpecCharacteristicEditRequest.getValueType());
-        productSpecCharacteristic.setConfigurable(productSpecCharacteristicEditRequest.getConfigurable());
-        productSpecCharacteristic.setRequired(productSpecCharacteristicEditRequest.getRequired());
+        productSpecCharacteristic.setisConfigurable(productSpecCharacteristicEditRequest.getisConfigurable());
+        productSpecCharacteristic.setisRequired(productSpecCharacteristicEditRequest.getisRequired());
 
         productSpecCharacteristicRepository.save(productSpecCharacteristic);
 

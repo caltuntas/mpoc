@@ -37,19 +37,19 @@ public class ProductSpecCharacteristic extends EntityBase
 
     private Boolean isRequired;
 
-    public Boolean getRequired() {
+    public Boolean getisRequired() {
         return isRequired;
     }
 
-    public void setRequired(Boolean required) {
+    public void setisRequired(Boolean required) {
         isRequired = required;
     }
 
-    public Boolean getConfigurable() {
+    public Boolean getisConfigurable() {
         return isConfigurable;
     }
 
-    public void setConfigurable(Boolean configurable) {
+    public void setisConfigurable(Boolean configurable) {
         isConfigurable = configurable;
     }
 
