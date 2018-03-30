@@ -8,14 +8,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.google.common.base.Joiner;
+//import com.google.common.base.Joiner;
 
 public class CriteriaParser {
 
     private static Map<String, Operator> ops;
-
+/*
     private static Pattern SpecCriteraRegex = Pattern.compile("^(\\w+?)(" + Joiner.on("|")
-        .join(SearchOperation.SIMPLE_OPERATION_SET) + ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?)$");
+        .join(SearchOperation.SIMPLE_OPERATION_SET) + ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?)$");*/
 
     private enum Operator {
         OR(1), AND(2);
@@ -59,11 +59,11 @@ public class CriteriaParser {
                     output.push(stack.pop());
                 stack.pop();
             } else {
-
+/*
                 Matcher matcher = SpecCriteraRegex.matcher(token);
                 while (matcher.find()) {
                     output.push(new SpecSearchCriteria(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4), matcher.group(5)));
-                }
+                }*/
             }
         }
 

@@ -1,6 +1,8 @@
 package com.ericsson.modernization.services.productcatalog.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +28,13 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 		setProductOfferingDetermineses(new ArrayList<ProductOfferingDetermines>());
 		unsupportedProductSpecCharValueUseGroups = new ArrayList<UnsupportedProductSpecCharValueUseGroup>();
 		category = new ArrayList<Category>();
+		
+		TimePeriod validFor = new TimePeriod();
+		validFor.setValidForStartDate(new Date());
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, 1);
+		validFor.setValidForEndDate(cal.getTime());
+		setValidFor(validFor);
 	}
 
 	private String name;
