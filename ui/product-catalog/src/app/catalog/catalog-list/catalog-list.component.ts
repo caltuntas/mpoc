@@ -68,6 +68,8 @@ export class CatalogListComponent implements OnInit {
                         </div>`;
                 }
             }],
+        order: [[0, "desc"]]
+
     };
 
     ngAfterViewInit() {
