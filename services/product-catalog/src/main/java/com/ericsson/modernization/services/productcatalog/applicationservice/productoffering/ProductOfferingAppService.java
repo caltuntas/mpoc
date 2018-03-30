@@ -126,4 +126,24 @@ public class ProductOfferingAppService {
                         x.getProductOfferingType() != null ? x.getProductOfferingType().getName(): null)
                 ).collect(Collectors.toList());
     }
-}
+    
+    public List<ProductOfferingListModel> findAllByProductOfferingTypeId(int productOfferingTypeId) {
+        return productOfferingRepository.findAllByProductOfferingTypeId(productOfferingTypeId).stream()
+                .map(x -> new ProductOfferingListModel(
+                        x.getId(),
+                        x.getName(),
+                        x.getDescription(),
+                        x.getProductSpecification() != null ? x.getProductSpecification().getCode() : null,
+                        x.getCatalog() != null ? x.getCatalog().getName() : null,
+                        x.getIsReplicated(),
+                        x.getIsSellable(),
+                        x.getValidFor() != null ? x.getValidFor().getValidForStartDate() : null,
+                        x.getValidFor() != null ? x.getValidFor().getValidForEndDate() : null,
+                        x.getWarrantyPeriod() != null ? x.getWarrantyPeriod().getPeriodValue() : 0,
+                        x.getWarrantyPeriod() != null ? x.getWarrantyPeriod().getPeriodUnit() : 0,
+                        x.getReturnPeriod() != null ? x.getReturnPeriod().getPeriodValue() : 0,
+                        x.getReturnPeriod() != null ? x.getReturnPeriod().getPeriodUnit() : 0,
+                        x.getProductOfferingType() != null ? x.getProductOfferingType().getName(): null)
+                ).collect(Collectors.toList());
+    }
+    }
