@@ -1,28 +1,24 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {CatalogService} from "../catalog.service";
-import {NavigationExtras, Router, Routes} from "@angular/router";
-import {Catalog} from "../model/catalog.model";
+import {Router} from "@angular/router";
 import {DatatableComponent} from "../../shared/ui/datatable/datatable.component";
+import {BundleService} from "../bundle.service";
 
 @Component({
-    selector: 'app-catalog-list',
-    templateUrl: './catalog-list.component.html'
+    selector: 'app-bundle-list',
+    templateUrl: './bundle-list.component.html',
+    styleUrls: ['./bundle-list.component.css']
 })
-export class CatalogListComponent implements OnInit {
-    reRenderTable: boolean;
-    @ViewChild(DatatableComponent) catalogTable: DatatableComponent;
-    catalogs: Array<Catalog> = [];
-    selectedCatalog: Catalog;
+export class BundleListComponent implements OnInit, OnDestroy {
+
+    reRenderTable = false;
 
     options = {
         dom: "Bfrtip",
         ajax: (data, callback, settings) => {
-            this.catalogService.getCatalogs()
-                .map((data: any) => (data.data || data))
+            this.bundleService.getOfferings()
                 .catch(this.handleError)
                 .subscribe((data) => {
-                    this.catalogs = data;
                     callback({
                         aaData: data
                     })
@@ -32,18 +28,9 @@ export class CatalogListComponent implements OnInit {
             {"data": "id"},
             {"data": "name"},
             {"data": "description"},
-            {
-                "data": "validFor.validForStartDate",
-                "render": function (data, type, full, meta) {
-                    return data == null ? "" : data;
-                }
-            },
-            {
-                "data": "validFor.validForEndDate",
-                "render": function (data, type, full, meta) {
-                    return data == null ? "" : data;
-                }
-            },
+            {"data": "isSellable"},
+            {"data": "productSpesificationCode"},
+            {"data": "catalogCode"},
             {
                 render: (data, type, fullRow, meta) => {
                     return `
@@ -52,14 +39,14 @@ export class CatalogListComponent implements OnInit {
                             <ul class='dropdown-menu  ng-star-inserted'>                                
                                 <li>
                                 
-                                    <a class='sa-datatables-edit-catalog' catalog-id='${fullRow.id}'>
+                                    <a class="sa-datatables-edit-bundleoffering"  offering-id='${fullRow.id}'>
                                         <i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs" style="color:cornflowerblue"></i>
                                             Edit
                                     </a>
                                     
                                 </li>
                                 <li>
-                                    <a class='sa-datatables-delete-catalog' catalog-id='${fullRow.id}'>
+                                    <a class="sa-datatables-delete-bundleoffering"  offering-id='${fullRow.id}'>
                                         <i class="fa fa-fw fa-ban text-muted hidden-md hidden-sm hidden-xs" style="color:red"></i>
                                             Delete
                                     </a>
@@ -72,38 +59,37 @@ export class CatalogListComponent implements OnInit {
 
     };
 
+    constructor(private router: Router,
+                private bundleService: BundleService,
+                private cdRef: ChangeDetectorRef) {
+    }
+
     ngAfterViewInit() {
         document.querySelector('body').addEventListener('click', (event) => {
             let target = <Element>event.target;
 
-            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit-catalog')) {
-                this.onEditCatalog(target.getAttribute('catalog-id'));
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit-bundleoffering')) {
+                this.onEditOffering(target.getAttribute('offering-id'));
             }
-            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete-catalog')) {
-                this.onDeleteCatalog(target.getAttribute('catalog-id'));
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete-bundleoffering')) {
+                this.onDeleteOffering(target.getAttribute('offering-id'));
             }
         });
     }
 
-    constructor(private router: Router, private catalogService: CatalogService, private cdRef: ChangeDetectorRef) {
+    onEditOffering(offeringId) {
+        console.log("edit offering:", offeringId);
+        this.router.navigate(['/bundle/bundle-edit/' + offeringId]);
     }
 
-    onEditCatalog(catalogId) {
-        console.log("edit catalog:", catalogId);
-        this.router.navigate(['/catalog/catalog-edit/' + catalogId]);
-        //this.catalogService.updateCatalog(catalogId).subscribe((data) => {
-        //    this.reloadCatalogListTable();
-        //});
-    }
-
-    onDeleteCatalog(catalogId) {
-        console.log("The catalog with id: ", catalogId, " will be deleted. Do you confirm?");
-        this.catalogService.deleteCatalog(catalogId).subscribe((data) => {
-            this.reloadCatalogListTable();
+    onDeleteOffering(offeringId) {
+        console.log("Delete offering", offeringId, "?");
+        this.bundleService.deleteOffering(offeringId).subscribe((data) => {
+            this.reloadOfferingListTable();
         });
     }
 
-    reloadCatalogListTable() {
+    reloadOfferingListTable() {
         this.reRenderTable = true;
         if (!this.cdRef['destroyed']) {
             this.cdRef.detectChanges();
@@ -113,6 +99,10 @@ export class CatalogListComponent implements OnInit {
 
     ngOnInit() {
 
+    }
+
+    ngOnDestroy() {
+        this.cdRef.detach();
     }
 
     private handleError(error: any) {

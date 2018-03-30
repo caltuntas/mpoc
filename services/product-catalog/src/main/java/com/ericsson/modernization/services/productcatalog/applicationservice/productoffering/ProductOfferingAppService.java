@@ -18,6 +18,9 @@ import com.ericsson.modernization.services.productcatalog.model.ProductOffering;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecification;
 import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Transactional
 @Service
 public class ProductOfferingAppService {

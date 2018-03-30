@@ -9,9 +9,27 @@ import javax.persistence.ManyToOne;
 public abstract class ComponentProductOfferPrice extends ProductOfferingPrice {
     @ManyToOne
     private AmountType amountType;
-    private BigDecimal percentage;
-    @ManyToOne
-    private MonetaryAmount amount;
+
+    private int amount;
+    private String periodType;
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    private String currency;
+
+    public String getPeriodType() {
+        return periodType;
+    }
+
+    public void setPeriodType(String periodType) {
+        this.periodType = periodType;
+    }
 
     @ManyToOne
     public AmountType getAmountType() {
@@ -22,19 +40,11 @@ public abstract class ComponentProductOfferPrice extends ProductOfferingPrice {
         this.amountType = amountType;
     }
 
-    public BigDecimal getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(BigDecimal percentage) {
-        this.percentage = percentage;
-    }
-
-    public MonetaryAmount getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(MonetaryAmount amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 

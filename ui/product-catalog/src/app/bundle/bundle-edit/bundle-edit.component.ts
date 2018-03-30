@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Catalog} from "../../catalog/model/catalog.model";
 import {ActivatedRoute, Router} from "@angular/router";
-import {OfferingService} from "../offering.service";
+import {BundleService} from "../bundle.service";
 import {CatalogService} from "../../catalog/catalog.service";
 import {CharacteristicService} from "../../characteristic/characteristic.service";
 import {specificationService} from "../../specification/specification.service";
@@ -14,16 +14,16 @@ import {Segment} from '../../segment/detail/segment';
 import {SegmentService} from '../../segment/segment.service';
 import {Document} from '../../document/detail/document';
 import {DocumentService} from '../../document/document.service';
-import {OfferingEditModel} from "../model/offering-edit-model";
+import {BundleEditModel} from "../model/bundle-edit-model";
 
 @Component({
-    selector: 'app-offering-edit',
-    templateUrl: './offering-edit.component.html',
-    styleUrls: ['./offering-edit.component.css'],
+    selector: 'app-bundle-edit',
+    templateUrl: './bundle-edit.component.html',
+    styleUrls: ['./bundle-edit.component.css'],
 })
-export class OfferingEditComponent implements OnInit {
+export class BundleEditComponent implements OnInit {
 
-    model: OfferingEditModel;
+    model: BundleEditModel;
     isNewOffering: boolean = true;
     spesifications: Array<specificationListModel> = [];
     catalogs: Array<Catalog> = [];
@@ -38,7 +38,7 @@ export class OfferingEditComponent implements OnInit {
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
-                private offeringService: OfferingService,
+                private offeringService: BundleService,
                 private catalogService: CatalogService,
                 private charService: CharacteristicService,
                 private specService: specificationService,
@@ -46,7 +46,7 @@ export class OfferingEditComponent implements OnInit {
                 private saleChannelService: SalesChannelService,
                 private segmentService: SegmentService,
                 private documentService: DocumentService) {
-        this.model = new OfferingEditModel();
+        this.model = new BundleEditModel();
         const idParam = route.snapshot.params.offeringId;
         if (idParam) {
             this.model.id = idParam;
@@ -138,7 +138,7 @@ export class OfferingEditComponent implements OnInit {
                 break;
 
         }
-        return true;
+        return isValid;
     }
 
 

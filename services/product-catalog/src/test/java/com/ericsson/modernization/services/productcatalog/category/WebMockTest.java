@@ -34,4 +34,5 @@ public class WebMockTest {
         this.mockMvc.perform(get("/categories")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("categories")));
     }
-}*/
+}
+*/

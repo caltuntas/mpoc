@@ -6,17 +6,12 @@ import { productSpecCharModel } from "../model/productSpecCharModel";
 import { productSpecCharValueModel } from "../model/productSpecCharValueModel";
 import { specificationService } from "../specification.service";
 import { Router } from "@angular/router";
-import { NotificationComponent } from "../../shared/utils/NotificationComponent";
 @Component({
   selector: "app-specification-create",
   templateUrl: "./specification-create.component.html"
 })
 export class SpecificationCreateComponent implements OnInit {
-  constructor(
-    private router: Router,
-    private service: specificationService,
-    private notificationComponent: NotificationComponent
-  ) {
+  constructor(private router: Router, private service: specificationService) {
     this.productSpec = new productSpecificationCreateModel();
   }
 
@@ -36,13 +31,14 @@ export class SpecificationCreateComponent implements OnInit {
   removeCharUse(i: number) {
     let characteristic = this.characteristics[i];
     characteristic.isSelected = false;
-    this.productSpec.selectedCharacteristics = this.productSpec.selectedCharacteristics.filter(
-      x => x.id != characteristic.id
-    );
+    this.productSpec.selectedCharacteristics = this.productSpec.selectedCharacteristics
+      .filter(x => x.id != characteristic.id);
+   
   }
 
   selectCharUse($event) {
     this.selectedCharUse = $event.target.value;
+   
   }
 
   addCharUse() {
@@ -60,7 +56,8 @@ export class SpecificationCreateComponent implements OnInit {
     characteristic: productSpecCharModel,
     value: productSpecCharValueModel,
     $event
-  ) {
+  ) 
+  {
     if ($event.target.checked) {
       characteristic.values.find(x => x.id == value.id).isSelected = true;
       let charuse = this.productSpec.selectedCharacteristics.find(
@@ -73,16 +70,14 @@ export class SpecificationCreateComponent implements OnInit {
         x => x.id == characteristic.id
       ).selectedValueIds = this.productSpec.selectedCharacteristics
         .find(x => x.id == characteristic.id)
-        .selectedValueIds.filter(x => x != value.id);
+        .selectedValueIds.filter(x => x!=value.id);
     }
   }
 
+
   saveForm() {
-    this.service.createSpec(this.productSpec).subscribe(data => {});
-    this.notificationComponent.showNotification(
-      "Specification",
-      "Crated successfully"
-    );
+    this.service.createSpec(this.productSpec).subscribe(data => {    
+    });
     this.router.navigate(["/specification/list"]);
   }
 }

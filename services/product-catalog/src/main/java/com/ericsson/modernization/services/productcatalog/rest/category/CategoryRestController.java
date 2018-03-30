@@ -1,8 +1,11 @@
 package com.ericsson.modernization.services.productcatalog.rest.category;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,35 +31,42 @@ public class CategoryRestController {
 	 */
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<CategoryListModel> getAll() {
+	public ResponseEntity<List<CategoryListModel>> getAll() {
 		List<CategoryListModel> categories = appService.findAllWithModel();
-		return categories;
+		return new ResponseEntity<>(categories, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Category getById(@PathVariable int id) {
+	public ResponseEntity<Category> getById(@PathVariable int id) {
 		Category category = appService.findById(id);
-		return category;
+		return new ResponseEntity<>(category, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void create(@RequestBody CategoryCreateRequest request) {
-		appService.create(request);
+	public ResponseEntity<String> create(@RequestBody CategoryCreateRequest request) {
+		Category category = appService.create(request);
+		String message = "A category with id : " + category.getId() + " is created";
+		return new ResponseEntity<>(message, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void updateCategory(@PathVariable int id, @RequestBody CategoryCreateRequest request) {
+	public ResponseEntity<String> updateCategory(@PathVariable int id, @RequestBody CategoryCreateRequest request) {
 		appService.update(request);
+		String message = "The category with id : " + id + " is updated.";
+		return new ResponseEntity<>(message, HttpStatus.NO_CONTENT);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void deleteCategory(@PathVariable int id) {
+	public ResponseEntity<String> deleteCategory(@PathVariable int id) {
 		appService.delete(id);
+		String message = "The category with id : " + id + " is deleted.";
+		return new ResponseEntity<>(message, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/leavesFullPathNames", method = RequestMethod.GET)
-	public List<CategoryListModel> getLeavesFullPathNames() {
-		List<CategoryListModel> fullList = appService.getLeavesFullPathNames();
+	public ResponseEntity<List<CategoryListModel>> getLeavesFullPathNames() {
+		ResponseEntity<List<CategoryListModel>> fullList = new ResponseEntity<List<CategoryListModel>>(
+				appService.getLeavesFullPathNames(), HttpStatus.OK);
 		return fullList;
 	}
 }
