@@ -53,6 +53,10 @@ export const routes: Routes = [
                 loadChildren: 'app/specification/specification.module#SpecificationModule'
             },
             {
+                path: 'bundle',
+                loadChildren: 'app/bundle/bundle.module#BundleModule'
+            },
+            {
                 path: 'add-on',
                 loadChildren: 'app/add-on/add-on.module#AddOnModule'
             },

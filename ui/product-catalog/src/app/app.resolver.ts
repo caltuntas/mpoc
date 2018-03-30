@@ -9,6 +9,7 @@ import {specificationService} from "./specification/specification.service";
 import { HomeService } from './home/home.service';
 import { DocumentService } from './document/document.service';
 import { CategoryService } from './category/category.service';
+import {BundleService} from "./bundle/bundle.service";
 
 
 @Injectable()
@@ -31,5 +32,6 @@ export const APP_RESOLVER_PROVIDERS = [
     specificationService,
     HomeService,
     DocumentService,
-    CategoryService
+    CategoryService,
+    BundleService
 ];

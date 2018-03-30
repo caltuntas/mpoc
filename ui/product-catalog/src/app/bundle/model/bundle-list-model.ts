@@ -1,4 +1,4 @@
-import {OfferingSpecModel} from "./offering-spec-model";
+import {BundleSpecModel} from "./bundle-spec-model";
 
 export class OfferingListModel {
     public id: string;
@@ -6,6 +6,5 @@ export class OfferingListModel {
     public description: string;
     public validForStartDate: string;
     public validForEndDate: string;
-    public spesification: OfferingSpecModel;
-    public productOfferingType: string;
+    public spesification: BundleSpecModel;
 }

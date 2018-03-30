@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,58 +27,38 @@ public class ProductOfferingAppService {
     public ProductOffering create(ProductOfferingDetailModel createRequest) {
 
         ProductOffering productOffering = new ProductOffering();
-
-        TimePeriod validFor = new TimePeriod();
-        validFor.setValidForStartDate(new Date());
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MONTH, 1);
-        validFor.setValidForEndDate( cal.getTime() );
-        productOffering.setValidFor(validFor);
-
-        return saveFields(productOffering, createRequest);
-
-    }
-
-    public ProductOffering update(ProductOfferingDetailModel editRequest) {
-        ProductOffering productOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(editRequest.getId());
-        if (productOffering != null) {
-
-            return saveFields(productOffering, editRequest);
-        }
-
-        return null;
-    }
-
-    private ProductOffering saveFields(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
-
-        productOffering.setName(detailModel.getName());
-        productOffering.setIsSellable(detailModel.getIsSellable());
-        productOffering.setDescription(detailModel.getDescription());
+        productOffering.setName(createRequest.getName());
+        productOffering.setIsSellable(createRequest.getIsSellable());
+        productOffering.setDescription(createRequest.getDescription());
         productOffering.setExternalId(productOffering.getExternalId());
-        productOffering.setIsReplicated(detailModel.getIsReplicated());
+        productOffering.setIsReplicated(createRequest.getIsReplicated());
 
         Duration returnPeriod = new Duration();
-        returnPeriod.setPeriodValue(detailModel.getReturnPeriodValue());
-        returnPeriod.setPeriodUnit(detailModel.getReturnPeriodUnit());
+        returnPeriod.setPeriodValue(createRequest.getReturnPeriodValue());
+        returnPeriod.setPeriodUnit(createRequest.getReturnPeriodUnit());
         productOffering.setReturnPeriod(returnPeriod);
 
         Duration warrantyPeriod = new Duration();
-        warrantyPeriod.setPeriodValue(detailModel.getWarrantyPeriodValue());
-        warrantyPeriod.setPeriodUnit(detailModel.getWarrantyPeriodUnit());
+        warrantyPeriod.setPeriodValue(createRequest.getWarrantyPeriodValue());
+        warrantyPeriod.setPeriodUnit(createRequest.getWarrantyPeriodUnit());
         productOffering.setWarrantyPeriod(warrantyPeriod);
 
-        ProductSpecification specification = productSpecificationAppService.findById(detailModel.getProductSpecificationId());
+        ProductSpecification specification = productSpecificationAppService.findById(createRequest.getProductSpecificationId());
         productOffering.setProductSpecification(specification);
 
-        Catalog catalog = catalogAppService.findById(detailModel.getCatalogId());
+        Catalog catalog = catalogAppService.findById(createRequest.getCatalogId());
         productOffering.setCatalog(catalog);
 
 
-        productOffering.setSalesChannels(detailModel.getSalesChannels());
-        productOffering.setSegments(detailModel.getSegments());
-        productOffering.setDocuments(detailModel.getDocuments());
+        //productOffering.setSalesChannels(createRequest.getSalesChannels());
+        //productOffering.setSegments(createRequest.getSegments());
+        //productOffering.setDocuments(createRequest.getDocuments());
 
         return productOfferingRepository.save(productOffering);
+    }
+
+    public void update(ProductOfferingDetailModel editRequest) {
+        //TODO: implement
     }
 
     public void delete(int productOfferingId) {
@@ -122,7 +100,28 @@ public class ProductOfferingAppService {
                         x.getWarrantyPeriod() != null ? x.getWarrantyPeriod().getPeriodValue() : 0,
                         x.getWarrantyPeriod() != null ? x.getWarrantyPeriod().getPeriodUnit() : 0,
                         x.getReturnPeriod() != null ? x.getReturnPeriod().getPeriodValue() : 0,
-                        x.getReturnPeriod() != null ? x.getReturnPeriod().getPeriodUnit() : 0)
+                        x.getReturnPeriod() != null ? x.getReturnPeriod().getPeriodUnit() : 0,
+                        x.getProductOfferingType() != null ? x.getProductOfferingType().getName(): null)
                 ).collect(Collectors.toList());
     }
-}
+    
+    public List<ProductOfferingListModel> findAllByProductOfferingTypeId(int productOfferingTypeId) {
+        return productOfferingRepository.findAllByProductOfferingTypeId(productOfferingTypeId).stream()
+                .map(x -> new ProductOfferingListModel(
+                        x.getId(),
+                        x.getName(),
+                        x.getDescription(),
+                        x.getProductSpecification() != null ? x.getProductSpecification().getCode() : null,
+                        x.getCatalog() != null ? x.getCatalog().getName() : null,
+                        x.getIsReplicated(),
+                        x.getIsSellable(),
+                        x.getValidFor() != null ? x.getValidFor().getValidForStartDate() : null,
+                        x.getValidFor() != null ? x.getValidFor().getValidForEndDate() : null,
+                        x.getWarrantyPeriod() != null ? x.getWarrantyPeriod().getPeriodValue() : 0,
+                        x.getWarrantyPeriod() != null ? x.getWarrantyPeriod().getPeriodUnit() : 0,
+                        x.getReturnPeriod() != null ? x.getReturnPeriod().getPeriodValue() : 0,
+                        x.getReturnPeriod() != null ? x.getReturnPeriod().getPeriodUnit() : 0,
+                        x.getProductOfferingType() != null ? x.getProductOfferingType().getName(): null)
+                ).collect(Collectors.toList());
+    }
+    }
