@@ -26,7 +26,7 @@ export const routes:Routes = [
     {
         path: 'characteristic-edit/:characteristicId',
         component: CharacteristicEditComponent, data: {
-            pageTitle: 'Edit the characteristic'
+            pageTitle: 'Edit Characteristic'
         }
     }
 ];
