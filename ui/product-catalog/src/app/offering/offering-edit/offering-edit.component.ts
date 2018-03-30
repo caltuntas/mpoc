@@ -136,7 +136,7 @@ export class OfferingEditComponent implements OnInit {
                 break;
 
         }
-        return isValid;
+        return true;
     }
 
 
