@@ -1,8 +1,8 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import {Router} from "@angular/router";
-import {DatatableComponent} from "../../shared/ui/datatable/datatable.component";
-import {OfferingService} from "../offering.service";
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Observable } from "rxjs/Observable";
+import { Router } from "@angular/router";
+import { DatatableComponent } from "../../shared/ui/datatable/datatable.component";
+import { OfferingService } from "../offering.service";
 
 @Component({
     selector: 'app-offering-list',
@@ -25,17 +25,18 @@ export class OfferingListComponent implements OnInit, OnDestroy {
                 })
         },
         columns: [
-            {"data": "id"},
-            {"data": "name"},
-            {"data": "description"},
+            { "data": "id" },
+            { "data": "name" },
+            { "data": "description" },
             {
                 "data": "isSellable",
                 "render": function (data, type, full, meta) {
                     return data == true ? "<span class=\"fa fa-fw fa-check\"></span>" : "<span class=\"fa fa-fw fa-times-circle\"></span>";
                 }
             },
-            {"data": "productSpesificationCode"},
-            {"data": "catalogCode"},
+            { "data": "productSpesificationCode" },
+            { "data": "catalogCode" },
+            { "data": "productOfferingType" },
             {
                 "data": "validForStartDate",
                 "render": function (data, type, full, meta) {
@@ -77,8 +78,8 @@ export class OfferingListComponent implements OnInit, OnDestroy {
     };
 
     constructor(private router: Router,
-                private offeringService: OfferingService,
-                private cdRef: ChangeDetectorRef) {
+        private offeringService: OfferingService,
+        private cdRef: ChangeDetectorRef) {
     }
 
     ngAfterViewInit() {
