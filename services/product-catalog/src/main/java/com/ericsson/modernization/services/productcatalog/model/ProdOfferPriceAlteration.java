@@ -1,11 +1,14 @@
 package com.ericsson.modernization.services.productcatalog.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public abstract class ProdOfferPriceAlteration extends ComponentProductOfferPrice {
+
+    private BigDecimal percentage;
 
     public ProdOfferPriceAlteration() {
         charges = new ArrayList<ProdOfferPriceCharge>();
@@ -22,5 +25,11 @@ public abstract class ProdOfferPriceAlteration extends ComponentProductOfferPric
         this.charges = charges;
     }
 
+    public BigDecimal getPercentage() {
+        return percentage;
+    }
 
+    public void setPercentage(BigDecimal percentage) {
+        this.percentage = percentage;
+    }
 }

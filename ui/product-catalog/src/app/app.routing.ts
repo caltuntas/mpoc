@@ -56,14 +56,18 @@ export const routes: Routes = [
                 path: 'add-on',
                 loadChildren: 'app/add-on/add-on.module#AddOnModule'
             },
-            {
+/*            {
                 path: 'test',
                 loadChildren: 'app/test/test.module#TestModule'
-            },
+            },*/
             {
                 path: 'category',
                 loadChildren: 'app/category/category.module#CategoryModule'
-            }
+            },
+            {
+                path: 'price',
+                loadChildren: 'app/price/price.module#PriceModule'
+            },
         ]
     },
     { path: 'auth', component: AuthLayoutComponent, loadChildren: 'app/+auth/auth.module#AuthModule' },

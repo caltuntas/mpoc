@@ -8,7 +8,16 @@ public class DiscountProdOfferPriceAlteration extends ProdOfferPriceAlteration {
     private String chargePeriod;
     private int chargePeriodFrom;
     private int chargePeriodTo;
-    
+    private Boolean isPercentage;
+
+    public Boolean getisPercentage() {
+        return isPercentage;
+    }
+
+    public void setisPercentage(Boolean percentage) {
+        isPercentage = percentage;
+    }
+
     public String getChargePeriod() {
 		// TODO Auto-generated method stub
 		return chargePeriod;
