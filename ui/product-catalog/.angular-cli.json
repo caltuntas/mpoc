@@ -52,7 +52,6 @@
   },
   "defaults": {
     "styleExt": "css",
-    "serve": { "host": "0.0.0.0", "port": 4200 },
     "component": {
       "style": false,
       "template": false

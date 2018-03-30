@@ -52,4 +52,9 @@ public class ProductOfferingRestController {
         ProductOfferingDetailModel detailModel = productOfferingAppService.findByIdForEditing(offeringId);
         return new ResponseEntity<>(detailModel, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/productOfferingTypeId={productOfferingTypeId}", method = RequestMethod.GET)
+    public ResponseEntity<List<ProductOfferingListModel>> getAllOfferingsByProductOfferingTypeId(@PathVariable int productOfferingTypeId) {
+        return new ResponseEntity<>(productOfferingAppService.findAllByProductOfferingTypeId(productOfferingTypeId), HttpStatus.OK);
+    }
 }
