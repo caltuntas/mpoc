@@ -5,5 +5,5 @@
 
 export const environment = {
     production: false,
-    productCatalogRootUrl: 'http://localhost:8080'
+    productCatalogRootUrl: 'http://product-catalog-service-vodafone-pc.apps.129.192.64.65.nip.io'
 };
