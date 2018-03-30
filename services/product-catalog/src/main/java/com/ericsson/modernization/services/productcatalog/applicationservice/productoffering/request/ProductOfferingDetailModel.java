@@ -19,9 +19,9 @@ public class ProductOfferingDetailModel {
     private int catalogId;
     private Boolean isReplicated;
     private Boolean isSellable;
-    //private Set<SalesChannel> salesChannels;
-    //private Set<Segment> segments;
-    //private Set<Document> documents;
+    private Set<SalesChannel> salesChannels;
+    private Set<Segment> segments;
+    private Set<Document> documents;
 
     public ProductOfferingDetailModel
             (int id,
@@ -133,7 +133,7 @@ public class ProductOfferingDetailModel {
         this.id = id;
     }
 
-    /*public Set<SalesChannel> getSalesChannels() {
+    public Set<SalesChannel> getSalesChannels() {
         return this.salesChannels;
     }
 
@@ -155,5 +155,5 @@ public class ProductOfferingDetailModel {
 
     public void setDocuments(Set<Document> documents) {
     	this.documents = documents;
-    }*/
+    }
 }
