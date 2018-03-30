@@ -108,11 +108,9 @@ export class OfferingEditComponent implements OnInit {
                 if (!self.validateStep(data.step)) {
                     event.preventDefault();
                 }
-            }
 
-            console.log(data.direction);
-            console.log(data.step);
-            console.log(data);
+                console.log(self.model);
+            }
         });
         //Wizard Events
     }
@@ -189,7 +187,6 @@ export class OfferingEditComponent implements OnInit {
         this.model.categoryId = jQuery("#categories").val();
 
 
-        console.log(this.isNewOffering);
         if (this.isNewOffering) {
             this.offeringService.createOffering(this.model).subscribe(data => {
                 this.router.navigate(['/offering/offering-list']);

@@ -32,6 +32,18 @@ export class OfferingListComponent implements OnInit, OnDestroy {
             {"data": "productSpesificationCode"},
             {"data": "catalogCode"},
             {
+                "data": "validForStartDate",
+                "render": function (data, type, full, meta) {
+                    return data == null ? "" : data;
+                }
+            },
+            {
+                "data": "validForEndDate",
+                "render": function (data, type, full, meta) {
+                    return data == null ? "" : data;
+                }
+            },
+            {
                 render: (data, type, fullRow, meta) => {
                     return `
                         <div class='btn-group dropdown show pull-right'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
