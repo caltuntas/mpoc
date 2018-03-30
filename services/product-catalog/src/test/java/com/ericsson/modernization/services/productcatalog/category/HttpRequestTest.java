@@ -1,5 +1,5 @@
 package com.ericsson.modernization.services.productcatalog.category;
-
+/*
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -27,4 +27,4 @@ public class HttpRequestTest {
         assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/",
                 String.class)).contains("Hello World");
     }
-}
+}*/

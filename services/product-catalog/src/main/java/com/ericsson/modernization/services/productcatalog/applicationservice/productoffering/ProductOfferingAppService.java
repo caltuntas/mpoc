@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,14 @@ public class ProductOfferingAppService {
     public ProductOffering create(ProductOfferingDetailModel createRequest) {
 
         ProductOffering productOffering = new ProductOffering();
+
+        TimePeriod validFor = new TimePeriod();
+        validFor.setValidForStartDate(new Date());
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, 1);
+        validFor.setValidForEndDate( cal.getTime() );
+        productOffering.setValidFor(validFor);
+
         return saveFields(productOffering, createRequest);
 
     }
