@@ -12,6 +12,7 @@ import { Http } from "@angular/http";
 
 import { forkJoin } from "rxjs/observable/forkJoin";
 import { environment } from "../../../environments/environment";
+import { NotificationComponent } from "../../shared/utils/NotificationComponent";
 
 @Component({
   selector: "app-specification-edit",
@@ -22,7 +23,8 @@ export class SpecificationEditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: specificationService,
-    private http: Http
+    private http: Http,
+    private notificationComponent: NotificationComponent
   ) {}
 
   selectedChar: number = 0;
@@ -125,6 +127,10 @@ export class SpecificationEditComponent implements OnInit {
   saveForm(productSpec: productSpecEditModel) {
     this.service.updateSpec(this.productSpec).subscribe(data => {     
     });
+    this.notificationComponent.showNotification(
+      "Specification",
+      "Updated successfully"
+    );
     this.router.navigate(["/specification/list"]);
   }
 }
