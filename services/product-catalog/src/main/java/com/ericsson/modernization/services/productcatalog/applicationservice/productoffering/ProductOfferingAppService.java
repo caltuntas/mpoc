@@ -27,38 +27,50 @@ public class ProductOfferingAppService {
     public ProductOffering create(ProductOfferingDetailModel createRequest) {
 
         ProductOffering productOffering = new ProductOffering();
-        productOffering.setName(createRequest.getName());
-        productOffering.setIsSellable(createRequest.getIsSellable());
-        productOffering.setDescription(createRequest.getDescription());
+        return saveFields(productOffering, createRequest);
+
+    }
+
+    public ProductOffering update(ProductOfferingDetailModel editRequest) {
+        ProductOffering productOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(editRequest.getId());
+        if (productOffering != null) {
+
+            return saveFields(productOffering, editRequest);
+        }
+
+        return null;
+    }
+
+    private ProductOffering saveFields(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
+
+        productOffering.setName(detailModel.getName());
+        productOffering.setIsSellable(detailModel.getIsSellable());
+        productOffering.setDescription(detailModel.getDescription());
         productOffering.setExternalId(productOffering.getExternalId());
-        productOffering.setIsReplicated(createRequest.getIsReplicated());
+        productOffering.setIsReplicated(detailModel.getIsReplicated());
 
         Duration returnPeriod = new Duration();
-        returnPeriod.setPeriodValue(createRequest.getReturnPeriodValue());
-        returnPeriod.setPeriodUnit(createRequest.getReturnPeriodUnit());
+        returnPeriod.setPeriodValue(detailModel.getReturnPeriodValue());
+        returnPeriod.setPeriodUnit(detailModel.getReturnPeriodUnit());
         productOffering.setReturnPeriod(returnPeriod);
 
         Duration warrantyPeriod = new Duration();
-        warrantyPeriod.setPeriodValue(createRequest.getWarrantyPeriodValue());
-        warrantyPeriod.setPeriodUnit(createRequest.getWarrantyPeriodUnit());
+        warrantyPeriod.setPeriodValue(detailModel.getWarrantyPeriodValue());
+        warrantyPeriod.setPeriodUnit(detailModel.getWarrantyPeriodUnit());
         productOffering.setWarrantyPeriod(warrantyPeriod);
 
-        ProductSpecification specification = productSpecificationAppService.findById(createRequest.getProductSpecificationId());
+        ProductSpecification specification = productSpecificationAppService.findById(detailModel.getProductSpecificationId());
         productOffering.setProductSpecification(specification);
 
-        Catalog catalog = catalogAppService.findById(createRequest.getCatalogId());
+        Catalog catalog = catalogAppService.findById(detailModel.getCatalogId());
         productOffering.setCatalog(catalog);
 
 
-        //productOffering.setSalesChannels(createRequest.getSalesChannels());
-        //productOffering.setSegments(createRequest.getSegments());
-        //productOffering.setDocuments(createRequest.getDocuments());
+        productOffering.setSalesChannels(detailModel.getSalesChannels());
+        productOffering.setSegments(detailModel.getSegments());
+        productOffering.setDocuments(detailModel.getDocuments());
 
         return productOfferingRepository.save(productOffering);
-    }
-
-    public void update(ProductOfferingDetailModel editRequest) {
-        //TODO: implement
     }
 
     public void delete(int productOfferingId) {
