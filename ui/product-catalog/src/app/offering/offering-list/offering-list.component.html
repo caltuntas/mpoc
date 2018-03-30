@@ -10,18 +10,20 @@
             </a>
 
         </div>
+    </div>
 
-        <sa-widgets-grid>
-            <div class="row">
-                <article class="col-sm-12">
-                    <div sa-widget [editbutton]="false" [deletebutton]="false" color="vdf">
-                        <header>
+    <sa-widgets-grid>
+        <div class="row">
+            <article class="col-sm-12">
+                <div sa-widget [editbutton]="false" [deletebutton]="false" color="vdf">
+                    <header>
                         <span class="widget-icon">
                         <i class="fa fa-table"></i>
                         </span>
-                            <h2>Offering List</h2>
-                        </header>
-                        <div>
+                        <h2>Offering List</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
                             <sa-datatable [options]="options" paginationLength="true"
                                           tableClass="table table-striped table-bordered table-hover" width="100%"
                                           *ngIf="!reRenderTable">
@@ -65,7 +67,8 @@
                             </sa-datatable>
                         </div>
                     </div>
-                </article>
-            </div>
-        </sa-widgets-grid>
-    </div>
+                </div>
+            </article>
+        </div>
+    </sa-widgets-grid>
+</div>
