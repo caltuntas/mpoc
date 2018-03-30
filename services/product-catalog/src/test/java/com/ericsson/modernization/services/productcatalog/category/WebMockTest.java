@@ -1,5 +1,5 @@
 package com.ericsson.modernization.services.productcatalog.category;
-
+/*
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.category.CategoryService;
 import com.ericsson.modernization.services.productcatalog.rest.category.CategoryRestController;
-/*
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(CategoryRestController.class)
 public class WebMockTest {
