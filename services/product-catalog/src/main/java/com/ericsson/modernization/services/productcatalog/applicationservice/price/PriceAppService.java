@@ -31,7 +31,7 @@ public class PriceAppService {
     }
 
     public List<PriceRequest> getAllPrices(ProductOffering productOffering) {
-        List<ProductOfferingPrice> productOfferingPriceList = productOfferingPriceRepository.findAllByDeletedIsFalse();
+        List<ProductOfferingPrice> productOfferingPriceList = productOfferingPriceRepository.findAllByIsDeletedIsFalse();
         List<PriceRequest> priceRequestsList = new ArrayList<PriceRequest>();
 
         for (ProductOfferingPrice por: productOfferingPriceList) {
@@ -61,7 +61,7 @@ public class PriceAppService {
     }
 
     public void updatePrices(List<PriceRequest> priceRequestList, ProductOffering productOffering) {
-        List<ProductOfferingPrice> productOfferingPriceList = productOfferingPriceRepository.findAllByDeletedIsFalse();
+        List<ProductOfferingPrice> productOfferingPriceList = productOfferingPriceRepository.findAllByIsDeletedIsFalse();
 
         for (ProductOfferingPrice por: productOfferingPriceList) {
             por.setDeleted(true);

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ProductOfferingPriceRepository extends JpaRepository<ProductOfferingPrice, Integer> {
-    List<ProductOfferingPrice> findAllByDeletedIsFalse();
+    List<ProductOfferingPrice> findAllByIsDeletedIsFalse();
 }
