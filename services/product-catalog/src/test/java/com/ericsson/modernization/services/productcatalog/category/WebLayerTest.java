@@ -1,5 +1,5 @@
 package com.ericsson.modernization.services.productcatalog.category;
-/*
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,4 +25,4 @@ public class WebLayerTest {
        this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
                .andExpect(content().string(containsString("Sign In")));
     }
-}*/
+}

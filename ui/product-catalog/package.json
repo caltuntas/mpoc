@@ -24,7 +24,7 @@
     "rimraf": "rimraf",
     "server:dev": "./node_modules/.bin/ng serve",
     "serve": "npm run server:dev",
-    "start": "npm run server:dev",
+    "start": "ng serve --host 0.0.0.0 --disable-host-check",
     "test": "./node_modules/.bin/ng test",
     "tslint": "tslint",
     "typedoc": "typedoc",

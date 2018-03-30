@@ -1,22 +1,22 @@
-import { ChangeDetectorRef, Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Observable } from "rxjs/Observable";
-import { Router } from "@angular/router";
-import { DatatableComponent } from "../../shared/ui/datatable/datatable.component";
-import { OfferingService } from "../offering.service";
+import {ChangeDetectorRef, Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Observable} from "rxjs/Observable";
+import {Router} from "@angular/router";
+import {DatatableComponent} from "../../shared/ui/datatable/datatable.component";
+import {BundleService} from "../bundle.service";
 
 @Component({
-    selector: 'app-offering-list',
-    templateUrl: './offering-list.component.html',
-    styleUrls: ['./offering-list.component.css']
+    selector: 'app-bundle-list',
+    templateUrl: './bundle-list.component.html',
+    styleUrls: ['./bundle-list.component.css']
 })
-export class OfferingListComponent implements OnInit, OnDestroy {
+export class BundleListComponent implements OnInit, OnDestroy {
 
     reRenderTable = false;
 
     options = {
         dom: "Bfrtip",
         ajax: (data, callback, settings) => {
-            this.offeringService.getOfferings()
+            this.bundleService.getOfferings()
                 .catch(this.handleError)
                 .subscribe((data) => {
                     callback({
@@ -25,30 +25,12 @@ export class OfferingListComponent implements OnInit, OnDestroy {
                 })
         },
         columns: [
-            { "data": "id" },
-            { "data": "name" },
-            { "data": "description" },
-            {
-                "data": "isSellable",
-                "render": function (data, type, full, meta) {
-                    return data == true ? "<span class=\"fa fa-fw fa-check\"></span>" : "<span class=\"fa fa-fw fa-times-circle\"></span>";
-                }
-            },
-            { "data": "productSpesificationCode" },
-            { "data": "catalogCode" },
-            { "data": "productOfferingType" },
-            {
-                "data": "validForStartDate",
-                "render": function (data, type, full, meta) {
-                    return data == null ? "" : data;
-                }
-            },
-            {
-                "data": "validForEndDate",
-                "render": function (data, type, full, meta) {
-                    return data == null ? "" : data;
-                }
-            },
+            {"data": "id"},
+            {"data": "name"},
+            {"data": "description"},
+            {"data": "isSellable"},
+            {"data": "productSpesificationCode"},
+            {"data": "catalogCode"},
             {
                 render: (data, type, fullRow, meta) => {
                     return `
@@ -57,14 +39,14 @@ export class OfferingListComponent implements OnInit, OnDestroy {
                             <ul class='dropdown-menu  ng-star-inserted'>                                
                                 <li>
                                 
-                                    <a class="sa-datatables-edit-offering"  offering-id='${fullRow.id}'>
+                                    <a class="sa-datatables-edit-bundleoffering"  offering-id='${fullRow.id}'>
                                         <i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs" style="color:cornflowerblue"></i>
                                             Edit
                                     </a>
                                     
                                 </li>
                                 <li>
-                                    <a class="sa-datatables-delete-offering"  offering-id='${fullRow.id}'>
+                                    <a class="sa-datatables-delete-bundleoffering"  offering-id='${fullRow.id}'>
                                         <i class="fa fa-fw fa-ban text-muted hidden-md hidden-sm hidden-xs" style="color:red"></i>
                                             Delete
                                     </a>
@@ -78,18 +60,18 @@ export class OfferingListComponent implements OnInit, OnDestroy {
     };
 
     constructor(private router: Router,
-        private offeringService: OfferingService,
-        private cdRef: ChangeDetectorRef) {
+                private bundleService: BundleService,
+                private cdRef: ChangeDetectorRef) {
     }
 
     ngAfterViewInit() {
         document.querySelector('body').addEventListener('click', (event) => {
             let target = <Element>event.target;
 
-            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit-offering')) {
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit-bundleoffering')) {
                 this.onEditOffering(target.getAttribute('offering-id'));
             }
-            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete-offering')) {
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete-bundleoffering')) {
                 this.onDeleteOffering(target.getAttribute('offering-id'));
             }
         });
@@ -97,12 +79,12 @@ export class OfferingListComponent implements OnInit, OnDestroy {
 
     onEditOffering(offeringId) {
         console.log("edit offering:", offeringId);
-        this.router.navigate(['/offering/offering-edit/' + offeringId]);
+        this.router.navigate(['/bundle/bundle-edit/' + offeringId]);
     }
 
     onDeleteOffering(offeringId) {
         console.log("Delete offering", offeringId, "?");
-        this.offeringService.deleteOffering(offeringId).subscribe((data) => {
+        this.bundleService.deleteOffering(offeringId).subscribe((data) => {
             this.reloadOfferingListTable();
         });
     }

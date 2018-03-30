@@ -1,5 +1,5 @@
 package com.ericsson.modernization.services.productcatalog.repository;
-/*
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,4 +13,4 @@ import org.springframework.transaction.annotation.Transactional;
 public class NonTransactionalTests {
 	void initializationError() {
 	}
-}*/
+}

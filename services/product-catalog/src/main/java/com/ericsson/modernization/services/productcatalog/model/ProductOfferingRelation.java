@@ -1,36 +1,47 @@
 package com.ericsson.modernization.services.productcatalog.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
-public class ProductOfferingRelation extends EntityBase implements Description {
+public class ProductOfferingRelation extends EntityBase {
+	@Id
 	private int id;
-	private String name;
-	private String description;
-	public ProductOfferingRelation(int id, String name, String description) {
+	private int mainProductOfferingId;
+	private int relatedProductOfferingId;
+
+	public ProductOfferingRelation() {
 		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
 	}
+
+	public ProductOfferingRelation(int mainProductOfferingId, int relatedProductOfferingId) {
+		super();
+		this.mainProductOfferingId = mainProductOfferingId;
+		this.relatedProductOfferingId = relatedProductOfferingId;
+	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+
+	public int getMainProductOfferingId() {
+		return mainProductOfferingId;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setMainProductOfferingId(int mainProductOfferingId) {
+		this.mainProductOfferingId = mainProductOfferingId;
 	}
-	public String getDescription() {
-		return description;
+
+	public int getRelatedProductOfferingId() {
+		return relatedProductOfferingId;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+
+	public void setRelatedProductOfferingId(int relatedProductOfferingId) {
+		this.relatedProductOfferingId = relatedProductOfferingId;
 	}
- 
 
 }
