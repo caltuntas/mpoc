@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {Offering} from "./model/offering.model";
 import {HttpClientProvider} from "../shared/httpclientprovider/http-client-provider";
+import {OfferingEditModel} from "./model/offering-edit-model";
+import {OfferingListModel} from "./model/offering-list-model";
 
 @Injectable()
 export class OfferingService {
@@ -9,7 +10,7 @@ export class OfferingService {
     constructor(private http: HttpClientProvider) {
     }
 
-    getOfferings(): Observable<Offering[]> {
+    getOfferings(): Observable<OfferingListModel[]> {
         return this.http.get(`/productoffering/getallofferings`);
     }
 
@@ -18,6 +19,14 @@ export class OfferingService {
     }
 
     deleteOffering(id) {
-        return this.http.get('/productoffering/deleteOffering/' + id);
+        return this.http.get('/productoffering/deleteoffering/' + id);
+    }
+
+    getOffering(id) : Observable<OfferingEditModel> {
+        return this.http.get(`/productoffering/getoffering/` + id);
+    }
+
+    updateOffering(model){
+        return this.http.post(`/productoffering/updateoffering`, model);
     }
 }

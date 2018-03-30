@@ -10,6 +10,7 @@ import sun.util.calendar.BaseCalendar;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CatalogAppService {
@@ -29,7 +30,7 @@ public class CatalogAppService {
         TimePeriod validFor = new TimePeriod();
         //validFor.setValidForEndDate(catalogCreateRequest.getValidForEndDate());
         //validFor.setValidForStartDate(catalogCreateRequest.getValidForStartDate());
-        validFor.setValidForEndDate(new Date());
+        validFor.setValidForStartDate(new Date());
         catalog.setValidFor(validFor);
 
         CatalogSpecification catalogSpecification =  null; //TODO: Waiting for services implementations to update
@@ -67,6 +68,7 @@ public class CatalogAppService {
     public Catalog findById(int id){
         return catalogRepository.findByIdAndIsDeletedIsFalse(id);
     }
+
 
     public List<Catalog> findAll(){
         return catalogRepository.findAllByIsDeletedIsFalse();

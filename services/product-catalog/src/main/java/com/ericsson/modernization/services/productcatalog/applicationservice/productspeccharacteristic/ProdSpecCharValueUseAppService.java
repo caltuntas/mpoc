@@ -25,24 +25,27 @@ public class ProdSpecCharValueUseAppService {
     public List<ProdSpecCharValueUseListModel> getProdSpecCharValueUses(int productSpecId) {
 
         List<ProdSpecCharValueUseListModel> prodSpecCharValueListModelList = new ArrayList<>();
-
         ProductSpecification specification = productSpecificationRepository.findByIdAndIsDeletedIsFalse(productSpecId);
+
         if (specification != null) {
 
             List<ProductSpecCharUse> prodSpecCharUseList = productSpecCharUseRepository.findAllByProductSpecification(specification);
 
             for (ProductSpecCharUse productSpecCharUse : prodSpecCharUseList) {
-                List<ProdSpecCharValueUse> prodSpecCharValueUseList = productSpecCharUse.getProductSpecCharValueUses();
+
+                ProductSpecCharacteristic specCharacteristic = productSpecCharUse.getProductSpecCharacteristic();
                 ProdSpecCharValueUseListModel charValueUseListModel = new ProdSpecCharValueUseListModel();
+                charValueUseListModel.setProdSpecCharId(specCharacteristic.getId());
+                charValueUseListModel.setProdSpecCharType(specCharacteristic.getValueType());
                 charValueUseListModel.setProdSpecCharUseId(productSpecCharUse.getId());
+                charValueUseListModel.setProdSpecCharDescription(specCharacteristic.getName());
 
-                for (ProdSpecCharValueUse prodSpecCharValueUse : prodSpecCharValueUseList) {
+                List<ProdSpecCharValueUse> prodSpecCharValueUseList = productSpecCharUse.getProductSpecCharValueUses();
+                if (prodSpecCharValueUseList.size() > 0) {
 
-                    charValueUseListModel.getProdSpecCharValueList().add(createCharValueListModel(prodSpecCharValueUse));
-                    ProductSpecCharacteristic specCharacteristic = prodSpecCharValueUse.getProductSpecCharacteristicValue().getProductSpecCharacteristic();
-                    charValueUseListModel.setProdSpecCharDescription(specCharacteristic.getName());
-                    charValueUseListModel.setProdSpecCharId(specCharacteristic.getId());
-                    charValueUseListModel.setProdSpecCharType(specCharacteristic.getValueType());
+                    for (ProdSpecCharValueUse prodSpecCharValueUse : prodSpecCharValueUseList) {
+                        charValueUseListModel.getProdSpecCharValueList().add(createCharValueListModel(prodSpecCharValueUse));
+                    }
                 }
 
                 prodSpecCharValueListModelList.add(charValueUseListModel);

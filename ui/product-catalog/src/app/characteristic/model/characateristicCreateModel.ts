@@ -8,4 +8,6 @@ export class CharacteristicCreateModel {
     public validForStartDate: string;
     public validForEndDate: string;
     public charValueString: string;
+    public isRequired: boolean;
+    public isConfigurable: boolean;
 }

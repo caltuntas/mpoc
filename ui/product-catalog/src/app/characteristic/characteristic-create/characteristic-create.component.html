@@ -36,6 +36,23 @@
                   </div>
                 </fieldset>
                 <fieldset>
+                  <div class="form-group">
+                    <label class="col-sm-3 col-md-3 col-lg-3 control-label">Is Required?</label>
+                    <div class="col-sm-1 col-md-1 col-lg-1 pull-left smart-form">
+                      <label class="toggle">
+                        <input type="checkbox" name="checkbox-toggle" [(ngModel)]="model.isRequired">
+                        <i data-swchon-text="YES" data-swchoff-text="NO"></i></label>
+                    </div>
+
+                    <label class="col-sm-3 col-md-3 col-lg-3 control-label">Is Configurable?</label>
+                    <div class="col-sm-1 col-md-1 col-lg-1 pull-left smart-form">
+                      <label class="toggle">
+                        <input type="checkbox" name="checkbox-toggle" [(ngModel)]="model.isConfigurable">
+                        <i data-swchon-text="YES" data-swchoff-text="NO"></i></label>
+                    </div>
+                  </div>
+                </fieldset>
+                <!--<fieldset>
                     <div class="form-group" [class.has-error]="validForStartDateControl.invalid && validForStartDateControl.submitted && validForEndDateControl.invalid && validForEndDateControl.submitted ">
                       <label class="col-xs-2 col-lg-3 control-label">Valid For:</label>
                       <div class=" col-xs-5 col-lg-3">
@@ -60,7 +77,7 @@
                         <small *ngIf="validForEndDateControl.invalid && validForEndDateControl.submitted" class="help-block">Valid For End Date is required</small>
                       </div>
                     </div>
-                  </fieldset>
+                  </fieldset>-->
                 <fieldset>
                   <div class="form-group" [class.has-error]="valueTypeControl.invalid && valueTypeControl.submitted ">
                     <label class="col-xs-2 col-lg-3 control-label">Value Type</label>

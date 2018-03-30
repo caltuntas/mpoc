@@ -1,7 +1,7 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.catalog.CatalogAppService;
-import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCreateRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingDetailModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.ProductOfferingListModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.ProductSpecificationAppService;
 import com.ericsson.modernization.services.productcatalog.model.*;
@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,35 +26,59 @@ public class ProductOfferingAppService {
     @Autowired
     private CatalogAppService catalogAppService;
 
-    public ProductOffering create(ProductOfferingCreateRequest createRequest) {
+    public ProductOffering create(ProductOfferingDetailModel createRequest) {
 
         ProductOffering productOffering = new ProductOffering();
-        productOffering.setName(createRequest.getName());
-        productOffering.setIsSellable(createRequest.getSellable());
-        productOffering.setDescription(createRequest.getDescription());
+
+        TimePeriod validFor = new TimePeriod();
+        validFor.setValidForStartDate(new Date());
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, 1);
+        validFor.setValidForEndDate( cal.getTime() );
+        productOffering.setValidFor(validFor);
+
+        return saveFields(productOffering, createRequest);
+
+    }
+
+    public ProductOffering update(ProductOfferingDetailModel editRequest) {
+        ProductOffering productOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(editRequest.getId());
+        if (productOffering != null) {
+
+            return saveFields(productOffering, editRequest);
+        }
+
+        return null;
+    }
+
+    private ProductOffering saveFields(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
+
+        productOffering.setName(detailModel.getName());
+        productOffering.setIsSellable(detailModel.getIsSellable());
+        productOffering.setDescription(detailModel.getDescription());
         productOffering.setExternalId(productOffering.getExternalId());
-        productOffering.setIsReplicated(createRequest.getReplicated());
+        productOffering.setIsReplicated(detailModel.getIsReplicated());
 
         Duration returnPeriod = new Duration();
-        returnPeriod.setPeriodValue(createRequest.getReturnPeriodValue());
-        returnPeriod.setPeriodUnit(createRequest.getReturnPeriodUnit());
+        returnPeriod.setPeriodValue(detailModel.getReturnPeriodValue());
+        returnPeriod.setPeriodUnit(detailModel.getReturnPeriodUnit());
         productOffering.setReturnPeriod(returnPeriod);
 
         Duration warrantyPeriod = new Duration();
-        warrantyPeriod.setPeriodValue(createRequest.getWarrantyPeriodValue());
-        warrantyPeriod.setPeriodUnit(createRequest.getWarrantyPeriodUnit());
+        warrantyPeriod.setPeriodValue(detailModel.getWarrantyPeriodValue());
+        warrantyPeriod.setPeriodUnit(detailModel.getWarrantyPeriodUnit());
         productOffering.setWarrantyPeriod(warrantyPeriod);
 
-        TimePeriod validFor = new TimePeriod();
-        validFor.setValidForEndDate(createRequest.getValidForEndDate());
-        validFor.setValidForStartDate(createRequest.getValidForStartDate());
-        productOffering.setValidFor(validFor);
-
-        ProductSpecification specification = productSpecificationAppService.findById(createRequest.getProductSpecificationId());
+        ProductSpecification specification = productSpecificationAppService.findById(detailModel.getProductSpecificationId());
         productOffering.setProductSpecification(specification);
 
-        Catalog catalog = catalogAppService.findById(createRequest.getCatalogId());
+        Catalog catalog = catalogAppService.findById(detailModel.getCatalogId());
         productOffering.setCatalog(catalog);
+
+
+        productOffering.setSalesChannels(detailModel.getSalesChannels());
+        productOffering.setSegments(detailModel.getSegments());
+        productOffering.setDocuments(detailModel.getDocuments());
 
         return productOfferingRepository.save(productOffering);
     }
@@ -67,6 +93,18 @@ public class ProductOfferingAppService {
 
     public ProductOffering findById(int id) {
         return productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
+    }
+
+    public ProductOfferingDetailModel findByIdForEditing(int id) {
+        ProductOffering productOffering = findById(id);
+        return new ProductOfferingDetailModel(
+                productOffering.getId(),
+                productOffering.getName(),
+                productOffering.getDescription(),
+                productOffering.getIsReplicated(),
+                productOffering.getIsSellable(),
+                productOffering.getProductSpecification().getId(),
+                productOffering.getCatalog().getId());
     }
 
     public List<ProductOfferingListModel> findAll() {

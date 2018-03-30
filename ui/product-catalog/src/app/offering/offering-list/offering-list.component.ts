@@ -28,14 +28,30 @@ export class OfferingListComponent implements OnInit, OnDestroy {
             {"data": "id"},
             {"data": "name"},
             {"data": "description"},
-            {"data": "validForEndDate"},
-            {"data": "isSellable"},
+            {
+                "data": "isSellable",
+                "render": function (data, type, full, meta) {
+                    return data == true ? "<span class=\"fa fa-fw fa-check\"></span>" : "<span class=\"fa fa-fw fa-times-circle\"></span>";
+                }
+            },
             {"data": "productSpesificationCode"},
             {"data": "catalogCode"},
             {
+                "data": "validForStartDate",
+                "render": function (data, type, full, meta) {
+                    return data == null ? "" : data;
+                }
+            },
+            {
+                "data": "validForEndDate",
+                "render": function (data, type, full, meta) {
+                    return data == null ? "" : data;
+                }
+            },
+            {
                 render: (data, type, fullRow, meta) => {
                     return `
-                        <div class='btn-group dropdown show'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                        <div class='btn-group dropdown show pull-right'><button class='btn btn-info btn-sm dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                             <i class='fa fa-gear fa-lg'></i></button>
                             <ul class='dropdown-menu  ng-star-inserted'>                                
                                 <li>
@@ -56,6 +72,7 @@ export class OfferingListComponent implements OnInit, OnDestroy {
                         </div>`;
                 }
             }],
+        order: [[0, "desc"]]
 
     };
 

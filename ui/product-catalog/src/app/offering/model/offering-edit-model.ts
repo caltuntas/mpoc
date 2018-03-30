@@ -1,5 +1,10 @@
-export class CreateOfferingModel {
+import { SalesChannel } from '../../sales-channel/detail/sales-channel';
+import { Segment } from '../../segment/detail/segment';
+import { Document } from '../../document/detail/document';
 
+export class OfferingEditModel {
+
+    public id :number;
     public name: string;
     public validForStartDate: string;
     public validForEndDate: string;
@@ -11,8 +16,10 @@ export class CreateOfferingModel {
     public externalId: string;
     public productSpecificationId: number;
     public catalogId: number;
-    public isReplicated: boolean;
     public isSellable: boolean;
     public categoryId: number;
+    public salesChannels: SalesChannel[];
+    public segments: Segment[];
+    public documents: Document[];
 
 }

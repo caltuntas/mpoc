@@ -26,7 +26,6 @@ export class CategoryListComponent implements OnInit {
                     })
                 })
         },
-        "iDisplayLength": 15,
         columns: [
             { "data": "id" },
             { "data": "parentName" },
@@ -54,7 +53,8 @@ export class CategoryListComponent implements OnInit {
                         </ul>
                     </div>`;
                 }
-            }]
+            }],
+            order: [[ 0, "desc" ]]
     };
 
     ngAfterViewInit() {
