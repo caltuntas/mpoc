@@ -36,6 +36,7 @@ export class OfferingListComponent implements OnInit, OnDestroy {
             },
             { "data": "productSpesificationCode" },
             { "data": "catalogCode" },
+            { "data": "categoryCode" },
             { "data": "productOfferingType" },
             {
                 "data": "validForStartDate",

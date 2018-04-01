@@ -69,6 +69,10 @@ export class OfferingEditComponent implements OnInit {
                     jQuery("#catalogSelect").val(this.model.catalogId).trigger('change');
                 }
 
+                if (this.model.categoryId) {
+                    jQuery("#categorySelect").val(this.model.categoryId).trigger('change');
+                }
+
             })
         }
 
@@ -138,7 +142,7 @@ export class OfferingEditComponent implements OnInit {
                 break;
 
         }
-        return true;
+        return isValid;
     }
 
 
