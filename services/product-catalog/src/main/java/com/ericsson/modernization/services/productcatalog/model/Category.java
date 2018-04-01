@@ -13,8 +13,6 @@ public class Category extends EntityBase implements Description, ValidFor {
     private int parentId;
     @Embedded
     private TimePeriod validFor;
-    @ManyToOne
-    private ProductOffering productOffering;
 
     public int getId() {
         return id;
@@ -54,14 +52,6 @@ public class Category extends EntityBase implements Description, ValidFor {
 
     public void setParentId(int parentId) {
         this.parentId = parentId;
-    }
-
-    public ProductOffering getProductOffering() {
-        return productOffering;
-    }
-
-    public void setProductOffering(ProductOffering productOffering) {
-        this.productOffering = productOffering;
     }
 
     public TimePeriod getValidFor() {

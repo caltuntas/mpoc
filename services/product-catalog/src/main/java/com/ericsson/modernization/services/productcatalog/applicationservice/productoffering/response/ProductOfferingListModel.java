@@ -20,6 +20,7 @@ public class ProductOfferingListModel {
 	private Boolean isSellable = false;
 	private String productSpesificationCode;
 	private String catalogCode;
+	private String categoryCode;
 	private String productOfferingType;
 
     public ProductOfferingListModel(
@@ -28,6 +29,7 @@ public class ProductOfferingListModel {
             String description,
             String productSpesificationCode,
             String catalogCode,
+            String categoryCode,
             Boolean isReplicated,
             Boolean isSellable,
             Date validForStartDate,
@@ -42,6 +44,7 @@ public class ProductOfferingListModel {
 		setDescription(description);
 		setProductSpesificationCode(productSpesificationCode);
 		setCatalogCode(catalogCode);
+		setCategoryCode(categoryCode);
 		setReplicated(isReplicated);
 		setIsSellable(isSellable);
 		setValidForStartDate(validForStartDate);
@@ -164,4 +167,12 @@ public class ProductOfferingListModel {
 	public void setProductOfferingType(String productOfferingType) {
 		this.productOfferingType = productOfferingType;
 	}
+
+    public String getCategoryCode() {
+        return categoryCode;
+    }
+
+    public void setCategoryCode(String categoryCode) {
+        this.categoryCode = categoryCode;
+    }
 }

@@ -27,8 +27,7 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 		prices = new ArrayList<ProductOfferingPrice>();
 		setProductOfferingDetermineses(new ArrayList<ProductOfferingDetermines>());
 		unsupportedProductSpecCharValueUseGroups = new ArrayList<UnsupportedProductSpecCharValueUseGroup>();
-		category = new ArrayList<Category>();
-		
+
 		TimePeriod validFor = new TimePeriod();
 		validFor.setValidForStartDate(new Date());
 		Calendar cal = Calendar.getInstance();
@@ -46,6 +45,8 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	private ProductSpecification productSpecification;
 	// @ManyToOne
 	// private ProductOfferingTerm productOfferingTerm;
+	@ManyToOne
+	private Category category;
 
 	@ManyToOne
 	private Catalog catalog;
@@ -70,9 +71,6 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	@JsonIgnore
 	@OneToMany(mappedBy = "productOffering", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<UnsupportedProductSpecCharValueUseGroup> unsupportedProductSpecCharValueUseGroups;
-	@JsonIgnore
-	@OneToMany(mappedBy = "productOffering", orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<Category> category;
 
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -111,14 +109,6 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 
 	public void setDocuments(Set<Document> documents) {
 		this.documents = documents;
-	}
-
-	public List<Category> getCategory() {
-		return category;
-	}
-
-	public void setCategory(List<Category> category) {
-		this.category = category;
 	}
 
 	public String getName() {
@@ -259,4 +249,11 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 		this.relatedProductOfferings = relatedProductOfferings;
 	}
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

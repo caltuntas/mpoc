@@ -19,6 +19,7 @@ public class ProductOfferingDetailModel {
 	private String description;
 	private int productSpecificationId;
 	private int catalogId;
+	private int categoryId;
 	private Boolean isReplicated;
 	private Boolean isSellable;
 	private Set<SalesChannel> salesChannels;
@@ -34,7 +35,8 @@ public class ProductOfferingDetailModel {
              Boolean isReplicated,
              Boolean isSellable,
              int productSpecificationId,
-			 int catalogId, 
+			 int catalogId,
+			 int categoryId,
 			 int productOfferingTypeId,
 			 List<Integer> productOfferingIds) {
 		setId(id);
@@ -44,6 +46,7 @@ public class ProductOfferingDetailModel {
 		setIsSellable(isSellable);
 		setProductSpecificationId(productSpecificationId);
 		setCatalogId(catalogId);
+		setCategoryId(categoryId);
 		setProductOfferingTypeId(productOfferingTypeId);
 		setProductOfferingIds(productOfferingIds);
 	}
@@ -200,4 +203,12 @@ public class ProductOfferingDetailModel {
 	public void setProductOfferingIds(List<Integer> productOfferingIds) {
 		this.productOfferingIds = productOfferingIds;
 	}
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
 }

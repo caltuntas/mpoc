@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ericsson.modernization.services.productcatalog.applicationservice.category.CategoryService;
+import com.ericsson.modernization.services.productcatalog.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +14,6 @@ import com.ericsson.modernization.services.productcatalog.applicationservice.cat
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingDetailModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.ProductOfferingListModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.ProductSpecificationAppService;
-import com.ericsson.modernization.services.productcatalog.model.Catalog;
-import com.ericsson.modernization.services.productcatalog.model.Duration;
-import com.ericsson.modernization.services.productcatalog.model.ProductOffering;
-import com.ericsson.modernization.services.productcatalog.model.ProductSpecification;
 import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingRepository;
 
 import java.util.List;
@@ -31,6 +29,8 @@ public class ProductOfferingAppService {
 	private ProductSpecificationAppService productSpecificationAppService;
 	@Autowired
 	private CatalogAppService catalogAppService;
+	@Autowired
+    private CategoryService categoryService;
 
 	public ProductOffering create(ProductOfferingDetailModel createRequest) {
 
@@ -88,6 +88,9 @@ public class ProductOfferingAppService {
 		Catalog catalog = catalogAppService.findById(detailModel.getCatalogId());
 		productOffering.setCatalog(catalog);
 
+		Category category = categoryService.findById(detailModel.getCategoryId());
+		productOffering.setCategory(category);
+
 		productOffering.setSalesChannels(detailModel.getSalesChannels());
 		productOffering.setSegments(detailModel.getSegments());
 		productOffering.setDocuments(detailModel.getDocuments());
@@ -117,6 +120,7 @@ public class ProductOfferingAppService {
                 productOffering.getIsSellable(),
                 productOffering.getProductSpecification().getId(),
                 productOffering.getCatalog().getId(),
+                productOffering.getCategory().getId(),
                 productOffering.getProductOfferingType().getId() ,
                 //productOffering.getRelatedProductOfferings());
                 new ArrayList<Integer>());
@@ -130,6 +134,7 @@ public class ProductOfferingAppService {
                         x.getDescription(),
                         x.getProductSpecification() != null ? x.getProductSpecification().getCode() : null,
                         x.getCatalog() != null ? x.getCatalog().getName() : null,
+                        x.getCategory() != null ? x.getCategory().getCode() : null,
                         x.getIsReplicated(),
                         x.getIsSellable(),
                         x.getValidFor() != null ? x.getValidFor().getValidForStartDate() : null,
@@ -150,6 +155,7 @@ public class ProductOfferingAppService {
                         x.getDescription(),
                         x.getProductSpecification() != null ? x.getProductSpecification().getCode() : null,
                         x.getCatalog() != null ? x.getCatalog().getName() : null,
+                        x.getCategory() != null ? x.getCategory().getCode() : null,
                         x.getIsReplicated(),
                         x.getIsSellable(),
                         x.getValidFor() != null ? x.getValidFor().getValidForStartDate() : null,
