@@ -114,7 +114,22 @@
                                                                 <i data-swchon-text="YES" data-swchoff-text="NO"></i>Is
                                                                 Sellable?</label>
                                                         </section>
+                                                        <section class="col col-1">
+                                                            <label class="toggle">Term</label>
+                                                        </section>
+                                                        <section class="col col-5">
+                                                            <select  style="width:100%"
+                                                                    id="termSelect"
+                                                                    name="termSelect"
+                                                                    [(ngModel)]="model.term">
+                                                                <option *ngFor="let term of termValues" [value]="term.id">
+                                                                    {{term.value}}
+                                                                </option>
+                                                            </select>
+                                                        </section>
                                                     </div>
+
+
                                                 </fieldset>
                                                 <br>
                                                 <br>

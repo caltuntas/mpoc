@@ -28,6 +28,7 @@ export class OfferingEditComponent implements OnInit {
     spesifications: Array<specificationListModel> = [];
     catalogs: Array<Catalog> = [];
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
+    termValues;
     categoryLeaves: Array<Category> = [];
     salesChannels: SalesChannel[];
     selectedSalesChannels: SalesChannel[];
@@ -72,11 +73,11 @@ export class OfferingEditComponent implements OnInit {
                 if (this.model.categoryId) {
                     jQuery("#categorySelect").val(this.model.categoryId).trigger('change');
                 }
-
             })
         }
 
         this.loadSpecs();
+        this.loadTerms();
         this.loadCatalogs();
         this.loadCategories();
         this.loadSalesChannels();
@@ -101,6 +102,14 @@ export class OfferingEditComponent implements OnInit {
             var data = e.params.data;
             console.log(data.id);
             self.model.catalogId = jQuery("#catalogSelect").val();
+        });
+        //Catalog Select
+
+        //Category Select
+        jQuery('#categorySelect').on('select2:select', function (e) {
+            var data = e.params.data;
+            console.log(data.id);
+            self.model.categoryId = jQuery("#categorySelect").val();
         });
         //Catalog Select
 
@@ -185,15 +194,23 @@ export class OfferingEditComponent implements OnInit {
         this.documentService.getDocuments().subscribe(data => this.documents = data);
     }
 
+    loadTerms() {
+        this.termValues =
+            [
+                {"value": "Please Select", "id" : 0},
+                {"value": 1, "id" : 1}, {"value": 2, "id" : 2}, {"value": 3, "id" : 3},
+                {"value": 4, "id" : 4}, {"value": 5, "id" : 5}, {"value": 6, "id" : 6},
+                {"value": 7, "id" : 7}, {"value": 8, "id" : 8}, {"value": 9, "id" : 9},
+                {"value": 10, "id" : 10}, {"value": 11, "id" : 11}, {"value": 12, "id" : 12}
+            ];
+    }
+
     onWizardComplete(data) {
         console.log('fuel-ux wizard complete', data)
         this.model.salesChannels = this.selectedSalesChannels;
         this.model.segments = this.selectedSegments;
         this.model.documents = this.selectedDocuments;
-        this.model.categoryId = jQuery("#categories").val();
 
-
-        console.log(this.isNewOffering);
         if (this.isNewOffering) {
             this.offeringService.createOffering(this.model).subscribe(data => {
                 this.router.navigate(['/offering/offering-list']);
