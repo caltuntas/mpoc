@@ -65,6 +65,7 @@ export class OfferingEditComponent implements OnInit {
 
                 if (this.model.productSpecificationId) {
                     jQuery("#specSelect").val(this.model.productSpecificationId).trigger('change');
+                    this.setCharValues(this.model.productSpecificationId);
                 }
 
                 if (this.model.catalogId) {
@@ -197,11 +198,38 @@ export class OfferingEditComponent implements OnInit {
         this.termValues =
             [
                 {"value": "Please Select", "id": 0},
-                {"value": 1, "id": 1}, {"value": 2, "id": 2}, {"value": 3, "id": 3},
-                {"value": 4, "id": 4}, {"value": 5, "id": 5}, {"value": 6, "id": 6},
-                {"value": 7, "id": 7}, {"value": 8, "id": 8}, {"value": 9, "id": 9},
-                {"value": 10, "id": 10}, {"value": 11, "id": 11}, {"value": 12, "id": 12}
+                {"value": 6, "id": 1},
+                {"value": 12, "id": 2},
+                {"value": 18, "id": 3},
+                {"value": 24, "id": 4},
+                {"value": 30, "id": 5},
+                {"value": 36, "id": 6}
             ];
+    }
+
+    setCharValues(specId) {
+
+        this.charService.getSpecCharValueUses(specId).subscribe((data) => {
+
+            let specCharValueUseList :  Array<ProdSpecCharValueUseListModel> = data;
+
+            for (let i = 0; i < specCharValueUseList.length; i++) {
+                if (specCharValueUseList[i].prodSpecCharType == 1) {
+                    let offeringCharValues = this.model.productOfferingCharValues;
+                    for (let j = 0; j < specCharValueUseList[i].prodSpecCharValueList.length; j++) {
+
+                       for(let k = 0; k < offeringCharValues.length; k++){
+
+                           if(offeringCharValues[k].charValueUseId == specCharValueUseList[i].prodSpecCharValueList[j].prodSpecCharValueUseId){
+                               specCharValueUseList[i].prodSpecCharValueList[j].isSelected = true;
+                           }
+                       }
+                    }
+                }
+            }
+            console.log(specCharValueUseList);
+            this.charValueUseList = specCharValueUseList;
+        })
     }
 
     getCharValues() {

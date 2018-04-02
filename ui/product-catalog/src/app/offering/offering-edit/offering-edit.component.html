@@ -185,7 +185,8 @@
                                                         style="width:100%" data-select-search="true">
                                                     <option [value] = "0">Please Select </option>
                                                     <option *ngFor="let charValueUse of charValue.prodSpecCharValueList"
-                                                            [value]="charValueUse.prodSpecCharValueUseId">
+                                                            [value]="charValueUse.prodSpecCharValueUseId"
+                                                            [selected] = "charValueUse.isSelected">
                                                         {{charValueUse.prodSpecCharValue}}
                                                     </option>
                                                 </select>
