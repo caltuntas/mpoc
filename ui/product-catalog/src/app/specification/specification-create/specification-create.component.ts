@@ -84,14 +84,11 @@ export class SpecificationCreateComponent implements OnInit {
 
 
   saveForm() {
-    this.service.createSpec(this.productSpec).subscribe(data => {    
-    });
     this.service.createSpec(this.productSpec).subscribe(data => {});
     this.notificationComponent.showNotification(
       "Specification",
       "Crated successfully"
     );
-
     this.router.navigate(["/specification/list"]);
   }
 }
