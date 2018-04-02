@@ -28,6 +28,7 @@ export class BundleEditComponent implements OnInit {
     spesifications: Array<specificationListModel> = [];
     catalogs: Array<Catalog> = [];
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
+    termValues;
     categoryLeaves: Array<Category> = [];
     salesChannels: SalesChannel[];
     selectedSalesChannels: SalesChannel[];
