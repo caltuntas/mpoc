@@ -5,6 +5,6 @@ export class PriceModel {
     public percentage: boolean;
     public amount: number;
     public currency: string;
-    public changePeriodFrom: number;
-    public changePeriodTo: number;
+    public chargePeriodFrom: number;
+    public chargePeriodTo: number;
 }
