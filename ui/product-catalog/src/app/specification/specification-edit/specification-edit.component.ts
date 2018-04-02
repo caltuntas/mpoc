@@ -90,18 +90,18 @@ export class SpecificationEditComponent implements OnInit {
   }
 
   selectCharUse($event) {
-    this.selectedCharUse = $event.target.value;
+    this.selectedChar = $event.target.value;
 
-    if (this.selectedCharUse != 0) {
+    if (this.selectedChar != 0) {
       let charUse = this.characteristics.find(
-        x => x.id == this.selectedCharUse
+        x => x.id == this.selectedChar
       );
       charUse.isSelected = true;
       this.productSpec.selectedCharacteristics.push(
         new productSpecCharUseModel(charUse.id)
       );
 
-      this.selectedCharUse = 0;
+      this.selectedChar = 0;
     }
   }
 
