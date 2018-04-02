@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCharValueModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProdSpecCharValueUseAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProductSpecCharacteristicAppService;
 import com.ericsson.modernization.services.productcatalog.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,8 @@ public class ProductOfferingAppService {
     private CategoryService categoryService;
     @Autowired
     private ProdSpecCharValueUseAppService prodSpecCharValueUseAppService;
+    @Autowired
+    private ProductSpecCharacteristicAppService productSpecCharacteristicAppService;
     @Autowired
     private ProductOfferingTypeRepository productOfferingTypeRepository;
 
@@ -95,14 +98,14 @@ public class ProductOfferingAppService {
         saveDetermines(productOffering, detailModel);
     }
 
-    private void saveWarrantyPeriod(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
+    private void saveWarrantyPeriod(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
         Duration warrantyPeriod = new Duration();
         warrantyPeriod.setPeriodValue(detailModel.getWarrantyPeriodValue());
         warrantyPeriod.setPeriodUnit(detailModel.getWarrantyPeriodUnit());
         productOffering.setWarrantyPeriod(warrantyPeriod);
     }
 
-    private void saveReturnPeriod(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
+    private void saveReturnPeriod(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
         Duration returnPeriod = new Duration();
         returnPeriod.setPeriodValue(detailModel.getReturnPeriodValue());
         returnPeriod.setPeriodUnit(detailModel.getReturnPeriodUnit());
@@ -130,9 +133,16 @@ public class ProductOfferingAppService {
 
         for (ProductOfferingCharValueModel model : detailModel.getProductOfferingCharValues()) {
             ProductOfferingDetermines determines = new ProductOfferingDetermines();
-            ProdSpecCharValueUse prodSpecCharValueUse = prodSpecCharValueUseAppService.findById(model.getCharValueUseId());
+
+            if (model.getCharValueType() == 1) {
+                ProdSpecCharValueUse prodSpecCharValueUse = prodSpecCharValueUseAppService.findById(model.getCharValueUseId());
+                determines.setProdSpecCharValueUse(prodSpecCharValueUse);
+            }
+
+            ProductSpecCharacteristic productSpecCharacteristic = productSpecCharacteristicAppService.findById(model.getCharId());
+            determines.setProductSpecCharacteristic(productSpecCharacteristic);
+            determines.setTextValue(model.getCharValue());
             determines.setProductOffering(productOffering);
-            determines.setProdSpecCharValueUse(prodSpecCharValueUse);
             productOfferingDetermines.add(determines);
         }
 
@@ -202,5 +212,35 @@ public class ProductOfferingAppService {
                         x.getReturnPeriod() != null ? x.getReturnPeriod().getPeriodUnit() : 0,
                         x.getProductOfferingType() != null ? x.getProductOfferingType().getName() : null))
                 .collect(Collectors.toList());
+    }
+
+    public List<ProductOfferingCharValueModel> findOfferingDetermines(int offeringId) {
+
+        List<ProductOfferingCharValueModel> valueModelList = new ArrayList<>();
+
+        ProductOffering productOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(offeringId);
+        if (productOffering != null) {
+
+            List<ProductOfferingDetermines> determinesList = productOffering.getProductOfferingDetermineses();
+            for (ProductOfferingDetermines determines : determinesList) {
+
+                ProductOfferingCharValueModel model = new ProductOfferingCharValueModel();
+
+                if (determines.getProdSpecCharValueUse() != null) {
+                    model.setCharValueUseId(determines.getProdSpecCharValueUse().getId());
+                    model.setCharValue(determines.getProdSpecCharValueUse().getProductSpecCharacteristicValue().getValue());
+                } else {
+                    model.setCharValue(determines.getTextValue());
+                }
+
+                model.setCharValueType(determines.getProductSpecCharacteristic().getValueType());
+                model.setCharId(determines.getProductSpecCharacteristic().getId());
+
+                valueModelList.add(model);
+            }
+        }
+
+        return valueModelList;
+
     }
 }

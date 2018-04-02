@@ -1,6 +1,7 @@
 package com.ericsson.modernization.services.productcatalog.rest.productoffering;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.ProductOfferingAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCharValueModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingDetailModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.CommonServiceResponse;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.ProductOfferingListModel;
@@ -52,9 +53,14 @@ public class ProductOfferingRestController {
         ProductOfferingDetailModel detailModel = productOfferingAppService.findByIdForEditing(offeringId);
         return new ResponseEntity<>(detailModel, HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = "/productOfferingTypeId={productOfferingTypeId}", method = RequestMethod.GET)
     public ResponseEntity<List<ProductOfferingListModel>> getAllOfferingsByProductOfferingTypeId(@PathVariable int productOfferingTypeId) {
         return new ResponseEntity<>(productOfferingAppService.findAllByProductOfferingTypeId(productOfferingTypeId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getchardetermines/{offeringId}", method = RequestMethod.GET)
+    public ResponseEntity<List<ProductOfferingCharValueModel>> getCharDetermines(@PathVariable int offeringId) {
+        return new ResponseEntity<>(productOfferingAppService.findOfferingDetermines(offeringId), HttpStatus.OK);
     }
 }

@@ -64,7 +64,11 @@ public class ProductSpecCharacteristicAppService {
         }
     }
 
-    public ProductSpecCharacteristicEditRequest findById(int id){
+    public ProductSpecCharacteristic findById(int id){
+        return productSpecCharacteristicRepository.findByIdAndIsDeletedIsFalse(id);
+    }
+
+    public ProductSpecCharacteristicEditRequest findByIdForEditing(int id){
         ProductSpecCharacteristicEditRequest productSpecCharacteristicEditRequest = new ProductSpecCharacteristicEditRequest();
         ProductSpecCharacteristic productSpecCharacteristic = productSpecCharacteristicRepository.findByIdAndIsDeletedIsFalse(id);
 

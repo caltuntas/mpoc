@@ -9,7 +9,9 @@ public class ProductOfferingDetermines extends EntityBase {
     private ProdSpecCharValueUse prodSpecCharValueUse;
     @ManyToOne
     private ProductOffering productOffering;
-
+    @ManyToOne
+    private ProductSpecCharacteristic productSpecCharacteristic;
+    private String textValue;
 
     public ProdSpecCharValueUse getProdSpecCharValueUse() {
         return prodSpecCharValueUse;
@@ -25,5 +27,21 @@ public class ProductOfferingDetermines extends EntityBase {
 
     public void setProductOffering(ProductOffering productOffering) {
         this.productOffering = productOffering;
+    }
+
+    public String getTextValue() {
+        return textValue;
+    }
+
+    public void setTextValue(String textValue) {
+        this.textValue = textValue;
+    }
+
+    public ProductSpecCharacteristic getProductSpecCharacteristic() {
+        return productSpecCharacteristic;
+    }
+
+    public void setProductSpecCharacteristic(ProductSpecCharacteristic productSpecCharacteristic) {
+        this.productSpecCharacteristic = productSpecCharacteristic;
     }
 }

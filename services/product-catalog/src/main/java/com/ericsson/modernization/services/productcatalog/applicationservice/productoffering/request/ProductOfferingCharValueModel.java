@@ -6,6 +6,21 @@ public class ProductOfferingCharValueModel {
     private int charValueUseId;
     private int charValueType ;
 
+    public ProductOfferingCharValueModel(){
+
+    }
+
+    public ProductOfferingCharValueModel(
+            int charId,
+            int charValueType,
+            int charValueUseId,
+            String charValue){
+        setCharId(charId);
+        setCharValue(charValue);
+        setCharValueType(charValueType);
+        setCharValueUseId(charValueUseId);
+    }
+
     public int getCharId() {
         return charId;
     }

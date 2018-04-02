@@ -46,8 +46,8 @@ public class ProductSpecCharacteristicRestController {
     }
 
     @RequestMapping(value = "/getcharacteristicbyid/{characteristicId}", method = RequestMethod.GET)
-    public ResponseEntity<ProductSpecCharacteristicEditRequest> getcharacteristicbyid(@PathVariable int characteristicId) {
-        return new ResponseEntity<ProductSpecCharacteristicEditRequest>(productSpecCharacteristicAppService.findById(characteristicId), HttpStatus.OK);
+    public ResponseEntity<ProductSpecCharacteristicEditRequest> getcharacteristicbyidForEditing(@PathVariable int characteristicId) {
+        return new ResponseEntity<ProductSpecCharacteristicEditRequest>(productSpecCharacteristicAppService.findByIdForEditing(characteristicId), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/updateproductspeccharacteristic", method = RequestMethod.POST)
