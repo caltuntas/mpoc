@@ -74,6 +74,9 @@ export class BundleEditComponent implements OnInit {
                     jQuery("#catalogSelect").val(this.model.catalogId).trigger('change');
                 }
 
+                if (this.model.categoryId) {
+                    jQuery("#categorySelect").val(this.model.categoryId).trigger('change');
+                }
             })
         }
 
@@ -106,6 +109,12 @@ export class BundleEditComponent implements OnInit {
         });
         //Catalog Select
 
+        //Category Select
+        jQuery('#categorySelect').on('select2:select', function (e) {
+            var data = e.params.data;
+            console.log(data.id);
+            self.model.categoryId = jQuery("#categorySelect").val();
+        });
         //Wizard Events
         jQuery('#offeringWizard').on('actionclicked.fu.wizard', function (event, data) {
 
@@ -198,8 +207,10 @@ export class BundleEditComponent implements OnInit {
         this.model.salesChannels = this.selectedSalesChannels;
         this.model.segments = this.selectedSegments;
         this.model.documents = this.selectedDocuments;
-        this.model.categoryId = jQuery("#categories").val();
-
+        this.model.productOfferingTypeId = 2;
+        this.model.simpleProductOfferingIds = [];
+        this.model.simpleProductOfferingIds.push(336);
+        this.model.simpleProductOfferingIds.push(337);
 
         console.log(this.isNewOffering);
         if (this.isNewOffering) {

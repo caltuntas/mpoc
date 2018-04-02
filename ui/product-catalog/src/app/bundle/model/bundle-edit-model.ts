@@ -22,5 +22,6 @@ export class BundleEditModel {
     public salesChannels: SalesChannel[];
     public segments: Segment[];
     public documents: Document[];
-
+    public productOfferingTypeId: number;
+    public simpleProductOfferingIds: number[];
 }
