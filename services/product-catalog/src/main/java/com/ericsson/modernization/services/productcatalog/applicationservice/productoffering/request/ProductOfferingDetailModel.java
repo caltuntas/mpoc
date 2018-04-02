@@ -51,6 +51,7 @@ public class ProductOfferingDetailModel {
 		setCategoryId(categoryId);
 		setProductOfferingTypeId(productOfferingTypeId);
 		setSimpleProductOfferingIds(simpleProductOfferingIds);
+		setProductOfferingCharValues(productOfferingCharValues);
 	}
 /*
     public ProductOfferingDetailModel

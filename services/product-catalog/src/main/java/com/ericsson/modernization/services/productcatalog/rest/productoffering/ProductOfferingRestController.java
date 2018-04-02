@@ -59,8 +59,4 @@ public class ProductOfferingRestController {
         return new ResponseEntity<>(productOfferingAppService.findAllByProductOfferingTypeId(productOfferingTypeId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getchardetermines/{offeringId}", method = RequestMethod.GET)
-    public ResponseEntity<List<ProductOfferingCharValueModel>> getCharDetermines(@PathVariable int offeringId) {
-        return new ResponseEntity<>(productOfferingAppService.findOfferingDetermines(offeringId), HttpStatus.OK);
-    }
 }

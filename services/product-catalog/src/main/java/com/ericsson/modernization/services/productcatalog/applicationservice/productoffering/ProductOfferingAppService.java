@@ -203,7 +203,7 @@ public class ProductOfferingAppService {
                 productOffering.getProductOfferingType().getId(),
                 // productOffering.getRelatedProductOfferings());
                 new ArrayList<Integer>(),
-                new ArrayList<>() //TODO: will be edited after creating determines
+                findOfferingCharValues(id)
         );
     }
 
@@ -239,7 +239,7 @@ public class ProductOfferingAppService {
                 .collect(Collectors.toList());
     }
 
-    public List<ProductOfferingCharValueModel> findOfferingDetermines(int offeringId) {
+    public List<ProductOfferingCharValueModel> findOfferingCharValues(int offeringId) {
 
         List<ProductOfferingCharValueModel> valueModelList = new ArrayList<>();
 
