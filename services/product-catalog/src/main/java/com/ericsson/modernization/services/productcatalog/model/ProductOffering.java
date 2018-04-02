@@ -25,9 +25,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ProductOffering extends EntityBase implements Description, ValidFor, ExternalId, IsReplicated, Versioned {
 
 	public ProductOffering() {
-		prices = new ArrayList<ProductOfferingPrice>();
-		setProductOfferingDetermineses(new ArrayList<ProductOfferingDetermines>());
-		unsupportedProductSpecCharValueUseGroups = new ArrayList<UnsupportedProductSpecCharValueUseGroup>();
+		setPrices(new ArrayList<>());
+		setProductOfferingDetermineses(new ArrayList<>());
+		setUnsupportedProductSpecCharValueUseGroups(new ArrayList<>());
+        setSalesChannels(new ArrayList<>());
+        setSegments(new ArrayList<>());
+        setDocuments(new ArrayList<>());
 
 		TimePeriod validFor = new TimePeriod();
 		validFor.setValidForStartDate(new Date());
@@ -72,45 +75,17 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	@JsonIgnore
 	@OneToMany(mappedBy = "productOffering", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<UnsupportedProductSpecCharValueUseGroup> unsupportedProductSpecCharValueUseGroups;
-
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "ProductOfferingSalesChannels", joinColumns = @JoinColumn(name = "productoffering_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "saleschannel_id", referencedColumnName = "id"))
-	private Set<SalesChannel> salesChannels;
-
-	public Set<SalesChannel> getSalesChannels() {
-		return salesChannels;
-	}
-
-	public void setSalesChannels(Set<SalesChannel> salesChannels) {
-		this.salesChannels = salesChannels;
-	}
-
-	@JsonIgnore
+	private List<SalesChannel> salesChannels;
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "ProductOfferingSegments", joinColumns = @JoinColumn(name = "productoffering_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "segment_id", referencedColumnName = "id"))
-	private Set<Segment> segments;
-
-	public Set<Segment> getSegments() {
-		return segments;
-	}
-
-	public void setSegments(Set<Segment> segments) {
-		this.segments = segments;
-	}
-
+	private List<Segment> segments;
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "ProductOfferingDocuments", joinColumns = @JoinColumn(name = "productoffering_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id"))
-	private Set<Document> documents;
-
-	public Set<Document> getDocuments() {
-		return documents;
-	}
-
-	public void setDocuments(Set<Document> documents) {
-		this.documents = documents;
-	}
+	private List<Document> documents;
 
 	public String getName() {
 		return name;
@@ -267,5 +242,29 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public List<SalesChannel> getSalesChannels() {
+		return salesChannels;
+	}
+
+	public void setSalesChannels(List<SalesChannel> salesChannels) {
+		this.salesChannels = salesChannels;
+	}
+
+	public List<Segment> getSegments() {
+		return segments;
+	}
+
+	public void setSegments(List<Segment> segments) {
+		this.segments = segments;
+	}
+
+	public List<Document> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(List<Document> documents) {
+		this.documents = documents;
 	}
 }

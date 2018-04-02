@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.ericsson.modernization.services.productcatalog.applicationservice.document.DocumentAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCharValueModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProdSpecCharValueUseAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProductSpecCharacteristicAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.saleschannel.SalesChannelAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.segment.SegmentAppService;
 import com.ericsson.modernization.services.productcatalog.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +41,12 @@ public class ProductOfferingAppService {
     private ProdSpecCharValueUseAppService prodSpecCharValueUseAppService;
     @Autowired
     private ProductSpecCharacteristicAppService productSpecCharacteristicAppService;
+    @Autowired
+    private SalesChannelAppService salesChannelAppService;
+    @Autowired
+    private SegmentAppService segmentAppService;
+    @Autowired
+    private DocumentAppService documentAppService;
     @Autowired
     private ProductOfferingTypeRepository productOfferingTypeRepository;
 
@@ -88,9 +97,9 @@ public class ProductOfferingAppService {
         saveCatalog(productOffering, detailModel);
         saveCategory(productOffering, detailModel);
 
-        productOffering.setSalesChannels(detailModel.getSalesChannels());
-        productOffering.setSegments(detailModel.getSegments());
-        productOffering.setDocuments(detailModel.getDocuments());
+        //productOffering.setSalesChannels(detailModel.getSalesChannels());
+        //productOffering.setSegments(detailModel.getSegments());
+        //productOffering.setDocuments(detailModel.getDocuments());
 
         Integer productOfferingTypeId = 1;
         if (detailModel.getProductOfferingTypeId() > 0)
@@ -100,6 +109,31 @@ public class ProductOfferingAppService {
         productOfferingRepository.save(productOffering);
 
         saveDetermines(productOffering, detailModel);
+        saveSalesChannels(productOffering, detailModel);
+        saveSegments(productOffering, detailModel);
+        saveDocuments(productOffering, detailModel);
+        productOfferingRepository.save(productOffering);
+    }
+
+    private void saveSalesChannels(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
+        for(int salesChannelId : detailModel.getSalesChannels()){
+            SalesChannel salesChannel = salesChannelAppService.findById(salesChannelId);
+            productOffering.getSalesChannels().add(salesChannel);
+        }
+    }
+
+    private void saveSegments(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
+        for(int segmentId : detailModel.getSegments()){
+            Segment segment = segmentAppService.findById(segmentId);
+            productOffering.getSegments().add(segment);
+        }
+    }
+
+    private void saveDocuments(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
+        for(int documentId : detailModel.getDocuments()){
+            Document document = documentAppService.findById(documentId);
+            productOffering.getDocuments().add(document);
+        }
     }
 
     private void saveWarrantyPeriod(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
@@ -182,7 +216,6 @@ public class ProductOfferingAppService {
 
         if (productOfferingDetermines.size() > 0) {
             productOffering.setProductOfferingDetermineses(productOfferingDetermines);
-            productOfferingRepository.save(productOffering);
         }
     }
 
@@ -210,9 +243,11 @@ public class ProductOfferingAppService {
                 productOffering.getCatalog().getId(),
                 productOffering.getCategory().getId(),
                 productOffering.getProductOfferingType().getId(),
-                // productOffering.getRelatedProductOfferings());
                 new ArrayList<Integer>(),
-                findOfferingCharValues(id)
+                findOfferingCharValues(id),
+                getSalesChannelsIds(productOffering),
+                getSegmentIds(productOffering),
+                getDocumentIds(productOffering)
         );
     }
 
@@ -249,7 +284,7 @@ public class ProductOfferingAppService {
                 .collect(Collectors.toList());
     }
 
-    public List<ProductOfferingCharValueModel> findOfferingCharValues(int offeringId) {
+    private List<ProductOfferingCharValueModel> findOfferingCharValues(int offeringId) {
 
         List<ProductOfferingCharValueModel> valueModelList = new ArrayList<>();
 
@@ -276,6 +311,32 @@ public class ProductOfferingAppService {
         }
 
         return valueModelList;
+    }
 
+    private List<Integer> getSegmentIds(ProductOffering productOffering) {
+        //TODO: foreign keys will be persisted for performance
+        List<Integer> segmentIds = new ArrayList<>();
+        for (Segment segment : productOffering.getSegments()) {
+            segmentIds.add(segment.getId());
+        }
+        return segmentIds;
+    }
+
+    private List<Integer> getSalesChannelsIds(ProductOffering productOffering) {
+        //TODO: foreign keys will be persisted for performance
+        List<Integer> salesChannelsIds = new ArrayList<>();
+        for (SalesChannel salesChannel : productOffering.getSalesChannels()) {
+            salesChannelsIds.add(salesChannel.getId());
+        }
+        return salesChannelsIds;
+    }
+
+    private List<Integer> getDocumentIds(ProductOffering productOffering) {
+        //TODO: foreign keys will be persisted for performance
+        List<Integer> documentIds = new ArrayList<>();
+        for (Document document : productOffering.getDocuments()) {
+            documentIds.add(document.getId());
+        }
+        return documentIds;
     }
 }
