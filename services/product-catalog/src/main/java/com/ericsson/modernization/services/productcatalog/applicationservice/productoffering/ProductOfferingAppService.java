@@ -1,7 +1,9 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +42,16 @@ public class ProductOfferingAppService {
 	public ProductOffering create(ProductOfferingDetailModel createRequest) {
 
 		ProductOffering productOffering = new ProductOffering();
-		saveFields(productOffering, createRequest);
+		saveFields(productOffering, createRequest);// Simple or Bundle
+		System.out.println(createRequest.getProductOfferingTypeId());
 		if (createRequest.getProductOfferingTypeId() == 2)// Bundle
 		{
-			List<ProductOffering> relatedProductOfferings = new ArrayList<ProductOffering>();
-			for (Integer id : createRequest.getProductOfferingIds()) {
+			Set<ProductOffering> relatedProductOfferings = new HashSet<ProductOffering>();
+			for (Integer id : createRequest.getSimpleProductOfferingIds()) {
+				System.out.println("id : " + id);
 				// BoChild kaydet
 				ProductOffering childproductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
-				// saveFields(childproductOffering, item);
+				cloneChildProductOfferingForBundle(productOffering, childproductOffering);
 				// Relation ata
 				relatedProductOfferings.add(childproductOffering);
 				// TODO : BoChild'ın ilişkilerini kaydet
@@ -100,12 +104,33 @@ public class ProductOfferingAppService {
 		productOffering.setSegments(detailModel.getSegments());
 		productOffering.setDocuments(detailModel.getDocuments());
 
-		Integer productOfferingTypeId = 1;
+		Integer productOfferingTypeId = 1;// Simple
 		if (detailModel.getProductOfferingTypeId() > 0)
 			productOfferingTypeId = detailModel.getProductOfferingTypeId();
 		ProductOfferingType productOfferingType = productOfferingTypeRepository.findById(productOfferingTypeId).get();
 		productOffering.setProductOfferingType(productOfferingType);
 		productOfferingRepository.save(productOffering);
+	}
+
+	private void cloneChildProductOfferingForBundle(ProductOffering mainProductOffering, ProductOffering childproductOffering) {
+		ProductOffering clonedProductOffering = new ProductOffering();
+		clonedProductOffering.setName(childproductOffering.getName());
+		clonedProductOffering.setIsSellable(childproductOffering.getIsSellable());
+		clonedProductOffering.setDescription(childproductOffering.getDescription());
+		clonedProductOffering.setExternalId(childproductOffering.getExternalId());
+		clonedProductOffering.setIsReplicated(childproductOffering.getIsReplicated());
+		clonedProductOffering.setReturnPeriod(childproductOffering.getReturnPeriod());
+		clonedProductOffering.setWarrantyPeriod(childproductOffering.getWarrantyPeriod());
+		clonedProductOffering.setProductSpecification(childproductOffering.getProductSpecification());
+		clonedProductOffering.setCategory(childproductOffering.getCategory());
+		//clonedProductOffering.setSalesChannels(childproductOffering.getSalesChannels());
+		//clonedProductOffering.setSegments(childproductOffering.getSegments());
+		//clonedProductOffering.setDocuments(childproductOffering.getDocuments());
+		clonedProductOffering.setProductOfferingType(childproductOffering.getProductOfferingType());
+		Set<ProductOffering> mainProductOfferings = new HashSet<ProductOffering>();
+		mainProductOfferings.add(mainProductOffering);
+		clonedProductOffering.setMainProductOfferings(mainProductOfferings);
+		productOfferingRepository.save(clonedProductOffering);
 	}
 
 	public void delete(int productOfferingId) {
