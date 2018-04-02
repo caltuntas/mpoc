@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface ProductSpecCharUseRepository extends  JpaRepository<ProductSpecCharUse, Integer> {
         List<ProductSpecCharUse> findAllByProductSpecification(ProductSpecification productSpecification);
+
+        ProductSpecCharUse findByProductSpecificationAndProductSpecCharacteristic_Id(ProductSpecification productSpecification, int productSpecCharacteristicId);
 }

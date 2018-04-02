@@ -6,6 +6,7 @@ import com.ericsson.modernization.services.productcatalog.model.ProdSpecCharValu
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharUse;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharacteristic;
 import com.ericsson.modernization.services.productcatalog.model.ProductSpecification;
+import com.ericsson.modernization.services.productcatalog.repository.ProdSpecCharValueUseRepository;
 import com.ericsson.modernization.services.productcatalog.repository.ProductSpecCharUseRepository;
 import com.ericsson.modernization.services.productcatalog.repository.ProductSpecificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import java.util.List;
 @Service
 public class ProdSpecCharValueUseAppService {
 
+    @Autowired
+    private ProdSpecCharValueUseRepository prodSpecCharValueUseRepository;
     @Autowired
     private ProductSpecificationRepository productSpecificationRepository;
     @Autowired
@@ -67,6 +70,10 @@ public class ProdSpecCharValueUseAppService {
                 prodSpecCharValueUse.getId());
 
         return charValueListModel;
+    }
+
+    public ProdSpecCharValueUse findById(int id) {
+        return prodSpecCharValueUseRepository.findByIdAndIsDeletedIsFalse(id);
     }
 
 }

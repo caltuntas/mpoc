@@ -12,5 +12,6 @@ import java.util.List;
 public interface ProdSpecCharValueUseRepository extends  JpaRepository<ProdSpecCharValueUse, Integer> {
 
     ProdSpecCharValueUse findByProductSpecCharacteristicValueAndProductSpecCharUse(ProductSpecCharacteristicValue productSpecCharacteristicValue, ProductSpecCharUse productSpecCharUse);
+    ProdSpecCharValueUse findByIdAndIsDeletedIsFalse(int id);
 
 }

@@ -15,6 +15,7 @@ import {SegmentService} from '../../segment/segment.service';
 import {Document} from '../../document/detail/document';
 import {DocumentService} from '../../document/document.service';
 import {OfferingEditModel} from "../model/offering-edit-model";
+import {OfferingCharValueModel} from "../model/offering-char-value-model";
 
 @Component({
     selector: 'app-offering-edit',
@@ -74,6 +75,8 @@ export class OfferingEditComponent implements OnInit {
                     jQuery("#categorySelect").val(this.model.categoryId).trigger('change');
                 }
             })
+        } else {
+            this.model.productOfferingCharValues = [];
         }
 
         this.loadSpecs();
@@ -122,10 +125,6 @@ export class OfferingEditComponent implements OnInit {
                     event.preventDefault();
                 }
             }
-
-            console.log(data.direction);
-            console.log(data.step);
-            console.log(data);
         });
         //Wizard Events
     }
@@ -197,12 +196,34 @@ export class OfferingEditComponent implements OnInit {
     loadTerms() {
         this.termValues =
             [
-                {"value": "Please Select", "id" : 0},
-                {"value": 1, "id" : 1}, {"value": 2, "id" : 2}, {"value": 3, "id" : 3},
-                {"value": 4, "id" : 4}, {"value": 5, "id" : 5}, {"value": 6, "id" : 6},
-                {"value": 7, "id" : 7}, {"value": 8, "id" : 8}, {"value": 9, "id" : 9},
-                {"value": 10, "id" : 10}, {"value": 11, "id" : 11}, {"value": 12, "id" : 12}
+                {"value": "Please Select", "id": 0},
+                {"value": 1, "id": 1}, {"value": 2, "id": 2}, {"value": 3, "id": 3},
+                {"value": 4, "id": 4}, {"value": 5, "id": 5}, {"value": 6, "id": 6},
+                {"value": 7, "id": 7}, {"value": 8, "id": 8}, {"value": 9, "id": 9},
+                {"value": 10, "id": 10}, {"value": 11, "id": 11}, {"value": 12, "id": 12}
             ];
+    }
+
+    getCharValues() {
+        console.log("char values:");
+        for (let i = 0; i < this.charValueUseList.length; i++) {
+
+            let offeringCharValue = new OfferingCharValueModel();
+            offeringCharValue.charId = this.charValueUseList[i].prodSpecCharId;
+            offeringCharValue.charValueType = this.charValueUseList[i].prodSpecCharType;
+
+            if (this.charValueUseList[i].prodSpecCharType == 1) {
+                let selector = "#charValueUseSelect" + i;
+                var data = jQuery(selector).select2('data');
+                offeringCharValue.charValue = data[0].text;
+                offeringCharValue.charValueUseId = data[0].id;
+            }
+            else {
+                let selector = "#charValueUseInput" + i;
+                offeringCharValue.charValue = jQuery(selector).val();
+            }
+            this.model.productOfferingCharValues.push(offeringCharValue);
+        }
     }
 
     onWizardComplete(data) {
@@ -210,6 +231,7 @@ export class OfferingEditComponent implements OnInit {
         this.model.salesChannels = this.selectedSalesChannels;
         this.model.segments = this.selectedSegments;
         this.model.documents = this.selectedDocuments;
+        this.getCharValues();
 
         if (this.isNewOffering) {
             this.offeringService.createOffering(this.model).subscribe(data => {

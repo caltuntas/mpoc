@@ -99,14 +99,12 @@ public class ProductSpecificationAppService {
 
         for (ProductSpecificationValueItemModel selectedChar : request.selectedCharacteristics) {
 
-
-            ProductSpecCharUse charUse = charUseRepository.findAll().stream()
-                    .filter(x -> x.getProductSpecCharacteristic().getId() == selectedChar.id
-                            && x.getProductSpecification() == productSpecification2).findFirst().get();
+            ProductSpecCharUse charUse = charUseRepository.findByProductSpecificationAndProductSpecCharacteristic_Id(productSpecification2,selectedChar.id);
 
             if (charUse != null) {
                 charUse.setDeleted(false);
                 charUse.setUpdateUserDate(new Date());
+
             } else {
                 ProductSpecCharacteristic characteristic = characteristicRepository.findByIdAndIsDeletedIsFalse(selectedChar.id);
                 charUse = new ProductSpecCharUse();
@@ -132,11 +130,12 @@ public class ProductSpecificationAppService {
                 } else {
                     ProductSpecCharacteristicValue val = characteristicValueRepository.findById(selectedValue);
                     valueUse = new ProdSpecCharValueUse();
-
                     valueUse.setProductSpecCharacteristicValue(val);
                     valueUse.setProductSpecCharUse(charUse);
-                    charValueUseRepository.save((valueUse));
+
                 }
+
+                charValueUseRepository.save(valueUse);
             }
         }
     }

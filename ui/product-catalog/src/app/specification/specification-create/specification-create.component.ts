@@ -40,16 +40,11 @@ export class SpecificationCreateComponent implements OnInit {
     this.productSpec.selectedCharacteristics = this.productSpec.selectedCharacteristics.filter(
       x => x.id != characteristic.id
     );
-
-   
   }
 
   selectCharUse($event) {
     this.selectedCharUse = $event.target.value;
-   
-  }
 
-  addCharUse() {
     if (this.selectedCharUse != 0) {
       let charUse = this.characteristics.find(
         x => x.id == this.selectedCharUse
@@ -58,14 +53,16 @@ export class SpecificationCreateComponent implements OnInit {
       this.productSpec.selectedCharacteristics.push(
         new productSpecCharUseModel(charUse.id)
       );
+
+      this.selectedCharUse = 0;
     }
   }
+
   check(
     characteristic: productSpecCharModel,
     value: productSpecCharValueModel,
     $event
-  ) 
-  {
+  ) {
     if ($event.target.checked) {
       characteristic.values.find(x => x.id == value.id).isSelected = true;
       let charuse = this.productSpec.selectedCharacteristics.find(
@@ -78,20 +75,16 @@ export class SpecificationCreateComponent implements OnInit {
         x => x.id == characteristic.id
       ).selectedValueIds = this.productSpec.selectedCharacteristics
         .find(x => x.id == characteristic.id)
-        .selectedValueIds.filter(x => x!=value.id);
+        .selectedValueIds.filter(x => x != value.id);
     }
   }
 
-
   saveForm() {
-    this.service.createSpec(this.productSpec).subscribe(data => {    
-    });
     this.service.createSpec(this.productSpec).subscribe(data => {});
     this.notificationComponent.showNotification(
       "Specification",
       "Crated successfully"
     );
-
     this.router.navigate(["/specification/list"]);
   }
 }
