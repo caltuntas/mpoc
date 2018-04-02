@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Catalog} from "../../catalog/model/catalog.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BundleService} from "../bundle.service";
+//import {OfferingService} from "./offering/offering.service";
 import {CatalogService} from "../../catalog/catalog.service";
 import {CharacteristicService} from "../../characteristic/characteristic.service";
 import {specificationService} from "../../specification/specification.service";
@@ -15,6 +16,7 @@ import {SegmentService} from '../../segment/segment.service';
 import {Document} from '../../document/detail/document';
 import {DocumentService} from '../../document/document.service';
 import {BundleEditModel} from "../model/bundle-edit-model";
+import {OfferingListModel} from "../model/bundle-list-model";
 
 @Component({
     selector: 'app-bundle-edit',
@@ -25,6 +27,7 @@ export class BundleEditComponent implements OnInit {
 
     model: BundleEditModel;
     isNewOffering: boolean = true;
+    simpleOfferings: Array<OfferingListModel> = [];
     spesifications: Array<specificationListModel> = [];
     catalogs: Array<Catalog> = [];
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
@@ -39,10 +42,11 @@ export class BundleEditComponent implements OnInit {
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
-                private offeringService: BundleService,
+                //                private offeringService: OfferingService,
                 private catalogService: CatalogService,
                 private charService: CharacteristicService,
                 private specService: specificationService,
+                private bundleService: BundleService,
                 private categoryService: CategoryService,
                 private saleChannelService: SalesChannelService,
                 private segmentService: SegmentService,
@@ -59,7 +63,7 @@ export class BundleEditComponent implements OnInit {
 
         //loading fields of offering for editing
         if (!this.isNewOffering) {
-            this.offeringService.getOffering(this.model.id).subscribe((offering) => {
+            this.bundleService.getOffering(this.model.id).subscribe((offering) => {
                 this.model = offering;
 
                 if (this.model.productSpecificationId) {
@@ -73,6 +77,7 @@ export class BundleEditComponent implements OnInit {
             })
         }
 
+        this.loadSimpleOfferings();
         this.loadSpecs();
         this.loadCatalogs();
         this.loadCategories();
@@ -126,7 +131,7 @@ export class BundleEditComponent implements OnInit {
                 isValid = !!(this.model.name && this.model.description);
                 break;
             case 2:
-                isValid = !!(this.model.productSpecificationId);
+                isValid = !!(this.model.productSpecificationId);// TODO: update with offeringId
                 break;
             case 3:
             case 4:
@@ -140,6 +145,12 @@ export class BundleEditComponent implements OnInit {
 
         }
         return isValid;
+    }
+
+    loadSimpleOfferings() {
+        this.bundleService.getAllOfferingsByProductOfferingTypeId().subscribe((offerings) => {
+            this.simpleOfferings = offerings;
+        });
     }
 
 
@@ -192,11 +203,11 @@ export class BundleEditComponent implements OnInit {
 
         console.log(this.isNewOffering);
         if (this.isNewOffering) {
-            this.offeringService.createOffering(this.model).subscribe(data => {
+            this.bundleService.createOffering(this.model).subscribe(data => {
                 this.router.navigate(['/offering/offering-list']);
             });
         } else {
-            this.offeringService.updateOffering(this.model).subscribe(data => {
+            this.bundleService.updateOffering(this.model).subscribe(data => {
                 this.router.navigate(['/offering/offering-list']);
             });
         }

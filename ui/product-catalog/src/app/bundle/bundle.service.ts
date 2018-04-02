@@ -15,6 +15,10 @@ export class BundleService {
         return this.http.get(`/productoffering/getallofferings`);
     }
 
+    getAllOfferingsByProductOfferingTypeId(): Observable<OfferingListModel[]> {
+        return this.http.get(`/productoffering/productOfferingTypeId=1`);
+    }
+
     createOffering(model) {
         return this.http.post(`/productoffering/createoffering`, model);
     }

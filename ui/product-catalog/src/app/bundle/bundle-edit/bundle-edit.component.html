@@ -24,7 +24,7 @@
                                     <span class="badge badge-info">1</span>Basic Info<span class="chevron"></span>
                                 </li>
                                 <li data-step="2">
-                                    <span class="badge">2</span>Spesification<span class="chevron"></span>
+                                    <span class="badge">2</span>Offerings<span class="chevron"></span>
                                 </li>
                                 <li data-step="3">
                                     <span class="badge">3</span>Price<span class="chevron"></span>
@@ -153,6 +153,22 @@
                                 <br>
                                 <br>
 
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2"><strong>Simple Offering</strong></label>
+
+                                        <div class="col-md-8">
+                                            <select select2 style="width:100%" data-select-search="true"
+                                                    id="simpleOfferingSelect"
+                                                    name="simpleOfferingSelect">
+                                                <option *ngFor="let simpleOffing of simpleOfferings"
+                                                        [value]="simpleOffing.id">
+                                                    {{simpleOffing.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="row">
                                     <div class="form-group">
