@@ -75,16 +75,8 @@ public class ProductOfferingAppService {
         productOffering.setExternalId(productOffering.getExternalId());
         productOffering.setIsReplicated(detailModel.getIsReplicated());
 
-        Duration returnPeriod = new Duration();
-        returnPeriod.setPeriodValue(detailModel.getReturnPeriodValue());
-        returnPeriod.setPeriodUnit(detailModel.getReturnPeriodUnit());
-        productOffering.setReturnPeriod(returnPeriod);
-
-        Duration warrantyPeriod = new Duration();
-        warrantyPeriod.setPeriodValue(detailModel.getWarrantyPeriodValue());
-        warrantyPeriod.setPeriodUnit(detailModel.getWarrantyPeriodUnit());
-        productOffering.setWarrantyPeriod(warrantyPeriod);
-
+        saveReturnPeriod(productOffering, detailModel);
+        saveWarrantyPeriod(productOffering, detailModel);
         saveSpesification(productOffering, detailModel);
         saveCatalog(productOffering, detailModel);
         saveCategory(productOffering, detailModel);
@@ -101,6 +93,20 @@ public class ProductOfferingAppService {
         productOfferingRepository.save(productOffering);
 
         saveDetermines(productOffering, detailModel);
+    }
+
+    private void saveWarrantyPeriod(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
+        Duration warrantyPeriod = new Duration();
+        warrantyPeriod.setPeriodValue(detailModel.getWarrantyPeriodValue());
+        warrantyPeriod.setPeriodUnit(detailModel.getWarrantyPeriodUnit());
+        productOffering.setWarrantyPeriod(warrantyPeriod);
+    }
+
+    private void saveReturnPeriod(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
+        Duration returnPeriod = new Duration();
+        returnPeriod.setPeriodValue(detailModel.getReturnPeriodValue());
+        returnPeriod.setPeriodUnit(detailModel.getReturnPeriodUnit());
+        productOffering.setReturnPeriod(returnPeriod);
     }
 
     private void saveSpesification(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
