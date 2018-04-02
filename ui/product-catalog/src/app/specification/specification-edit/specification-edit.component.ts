@@ -7,11 +7,10 @@ import { productSpecCharValueModel } from "../model/productSpecCharValueModel";
 import { specificationService } from "../specification.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { productSpecEditModel } from "../model/productSpecEditModel";
-
 import { Http } from "@angular/http";
-
 import { forkJoin } from "rxjs/observable/forkJoin";
 import { environment } from "../../../environments/environment";
+import { NotificationComponent } from "../../shared/utils/NotificationComponent";
 
 @Component({
   selector: "app-specification-edit",
@@ -22,7 +21,8 @@ export class SpecificationEditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: specificationService,
-    private http: Http
+    private http: Http,
+    private notificationComponent: NotificationComponent
   ) {}
 
   selectedChar: number = 0;
@@ -82,8 +82,9 @@ export class SpecificationEditComponent implements OnInit {
   removeCharUse(i: number) {
     let characteristic = this.characteristics[i];
     characteristic.isSelected = false;
-    this.productSpec.selectedCharacteristics = this.productSpec.selectedCharacteristics
-      .filter(x => x.id != characteristic.id);  
+    this.productSpec.selectedCharacteristics = this.productSpec.selectedCharacteristics.filter(
+      x => x.id != characteristic.id
+    );
   }
 
   selectCharUse($event) {
@@ -104,8 +105,7 @@ export class SpecificationEditComponent implements OnInit {
     characteristic: productSpecCharModel,
     value: productSpecCharValueModel,
     $event
-  ) 
-  {
+  ) {
     if ($event.target.checked) {
       characteristic.values.find(x => x.id == value.id).isSelected = true;
       let charuse = this.productSpec.selectedCharacteristics.find(
@@ -118,13 +118,17 @@ export class SpecificationEditComponent implements OnInit {
         x => x.id == characteristic.id
       ).selectedValueIds = this.productSpec.selectedCharacteristics
         .find(x => x.id == characteristic.id)
-        .selectedValueIds.filter(x => x!=value.id);
+        .selectedValueIds.filter(x => x != value.id);
     }
   }
 
   saveForm(productSpec: productSpecEditModel) {
-    this.service.updateSpec(this.productSpec).subscribe(data => {     
-    });
+    this.service.updateSpec(this.productSpec).subscribe(data => {});
+    this.notificationComponent.showNotification(
+      "Specification",
+      "Updated successfully"
+    );
+
     this.router.navigate(["/specification/list"]);
   }
 }

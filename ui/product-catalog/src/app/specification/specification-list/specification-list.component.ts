@@ -10,6 +10,7 @@ import { Router } from "@angular/router";
 import { specificationService } from "../specification.service";
 import { DatatableComponent } from "../../shared/ui/datatable/datatable.component";
 import { productSpecCharModel } from "../model/productSpecCharModel";
+import { NotificationComponent } from "../../shared/utils/NotificationComponent";
 
 @Component({
   selector: "app-specification-list",
@@ -20,6 +21,13 @@ export class SpecificationListComponent implements OnInit {
   reRenderTable = false;
 
   @ViewChild(DatatableComponent) specTable: DatatableComponent;
+
+  constructor(
+    private router: Router,
+    private service: specificationService,
+    private cdRef: ChangeDetectorRef,
+    private notificationComponent: NotificationComponent
+  ) {}
 
   options = {
     dom: "Bfrtip",
@@ -46,11 +54,15 @@ export class SpecificationListComponent implements OnInit {
                         <i class='fa fa-gear fa-lg'></i></button>
                         <ul class='dropdown-menu  ng-star-inserted'>                                
                             <li>  
-                              <a class='sa-datatables-edit-specification' spec-id='${fullRow.id}'>
+                            <a class='sa-datatables-edit-specification' spec-id='${
+                              fullRow.id
+                            }'>
                               <i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs" style="color:cornflowerblue"></i>
                               Edit</a>
                         </li>
-                            <li> <a class='sa-datatables-delete-specification' spec-id='${fullRow.id}'>
+                            <li> <a class='sa-datatables-delete-specification' spec-id='${
+                              fullRow.id
+                            }'>
                             <i class="fa fa-fw fa-ban text-muted hidden-md hidden-sm hidden-xs" style="color:red"></i>
                             Delete
                         </a></li>
@@ -62,31 +74,32 @@ export class SpecificationListComponent implements OnInit {
     order: [[0, "desc"]]
   };
 
-
-
-  constructor(
-    private router: Router,
-    private service: specificationService,
-    private cdRef: ChangeDetectorRef
-  ) {}
-
   ngOnInit() {}
-
 
   onEditSpec(specId) {
     this.router.navigate(["/specification/edit/" + specId]);
   }
 
   onDeleteSpec(specId) {
-    
-    this.service.deleteSpec(specId);
+    var r = confirm("Are you sure you want to delete this specification?");
+    if (r == true) {
+      this.service.deleteSpec(specId).subscribe(data => {
+        this.reloadSpecistTable();
+        this.notificationComponent.showNotification(
+          "Specification",
+          "Deleted successfully"
+        );
+      });
+
+      this.service.deleteSpec(specId);
+    }
   }
-  reloadOfferingListTable() {
+
+  reloadSpecistTable() {
     this.reRenderTable = true;
     this.cdRef.detectChanges();
     this.reRenderTable = false;
   }
-
 
   ngAfterViewInit() {
     document.querySelector("body").addEventListener("click", event => {
@@ -106,7 +119,6 @@ export class SpecificationListComponent implements OnInit {
       }
     });
   }
-
 
   private handleError(error: any) {
     let errMsg = error.message

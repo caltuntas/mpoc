@@ -6,12 +6,18 @@ import { productSpecCharModel } from "../model/productSpecCharModel";
 import { productSpecCharValueModel } from "../model/productSpecCharValueModel";
 import { specificationService } from "../specification.service";
 import { Router } from "@angular/router";
+import { NotificationComponent } from "../../shared/utils/NotificationComponent";
+
 @Component({
   selector: "app-specification-create",
   templateUrl: "./specification-create.component.html"
 })
 export class SpecificationCreateComponent implements OnInit {
-  constructor(private router: Router, private service: specificationService) {
+  constructor(
+    private router: Router,
+    private service: specificationService,
+    private notificationComponent: NotificationComponent
+  ) {
     this.productSpec = new productSpecificationCreateModel();
   }
 
@@ -31,8 +37,10 @@ export class SpecificationCreateComponent implements OnInit {
   removeCharUse(i: number) {
     let characteristic = this.characteristics[i];
     characteristic.isSelected = false;
-    this.productSpec.selectedCharacteristics = this.productSpec.selectedCharacteristics
-      .filter(x => x.id != characteristic.id);
+    this.productSpec.selectedCharacteristics = this.productSpec.selectedCharacteristics.filter(
+      x => x.id != characteristic.id
+    );
+
    
   }
 
@@ -78,6 +86,12 @@ export class SpecificationCreateComponent implements OnInit {
   saveForm() {
     this.service.createSpec(this.productSpec).subscribe(data => {    
     });
+    this.service.createSpec(this.productSpec).subscribe(data => {});
+    this.notificationComponent.showNotification(
+      "Specification",
+      "Crated successfully"
+    );
+
     this.router.navigate(["/specification/list"]);
   }
 }
