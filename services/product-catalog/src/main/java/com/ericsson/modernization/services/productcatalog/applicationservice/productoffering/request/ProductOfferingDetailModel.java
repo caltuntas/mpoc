@@ -26,7 +26,7 @@ public class ProductOfferingDetailModel {
 	private Set<Segment> segments;
 	private Set<Document> documents;
 	private int productOfferingTypeId;
-	List<Integer> productOfferingIds = new ArrayList<Integer>();
+	private List<Integer> productOfferingIds = new ArrayList<Integer>();
 
     public ProductOfferingDetailModel
             (int id,

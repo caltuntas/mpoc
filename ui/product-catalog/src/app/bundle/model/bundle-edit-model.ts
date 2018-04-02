@@ -18,6 +18,7 @@ export class BundleEditModel {
     public catalogId: number;
     public isSellable: boolean;
     public categoryId: number;
+    public term: number;
     public salesChannels: SalesChannel[];
     public segments: Segment[];
     public documents: Document[];
