@@ -275,10 +275,13 @@
                                         <label class="control-label col-md-2"><strong>Segment</strong></label>
 
                                         <div class="col-md-8">
-                                            <select select2 multiple name="segments" style="width:100%"
-                                                    [compareWith]="compareIdValues" [ngModel]="selectedSegments"
+                                            <select select2 multiple
+                                                    id="segmentSelect"
+                                                    name="segmentSelect"
+                                                     style="width:100%"
                                                     class="select2">
-                                                <option *ngFor="let sc of segments" [ngValue]="sc">{{sc.name}}
+                                                <option *ngFor="let segment of segmentList"  [value]="segment.id">
+                                                    {{segment.name}}
                                                 </option>
                                             </select>
                                         </div>
@@ -291,12 +294,13 @@
                                         <label class="control-label col-md-2"><strong>Sales Channel</strong></label>
 
                                         <div class="col-md-8">
-                                            <select select2 multiple name="saleChannels" style="width:100%"
-                                                    [compareWith]="compareIdValues"
-                                                    [ngModel]="selectedSalesChannels"
+                                            <select select2 multiple
+                                                    id="salesChannelSelect"
+                                                    name="salesChannelSelect"
+                                                    style="width:100%"
                                                     class="select2">
-                                                <option *ngFor="let sc of salesChannels" [ngValue]="sc">
-                                                    {{sc.name}}
+                                                <option *ngFor="let salesChannel of salesChannelList"  [value]="salesChannel.id">
+                                                    {{salesChannel.name}}
                                                 </option>
                                             </select>
                                         </div>
@@ -316,9 +320,13 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-2"><strong>Documents</strong></label>
                                         <div class="col-md-8">
-                                            <select select2 multiple name="documents" style="width:100%"
-                                                    [compareWith]="compareIdValues" [ngModel]="selectedDocuments" class="select2">
-                                                <option *ngFor="let sc of documents" [ngValue]="sc" >{{sc.name}}
+                                            <select select2 multiple
+                                                    id="documentSelect"
+                                                    name="documentSelect"
+                                                    style="width:100%"
+                                                    class="select2">
+                                                <option *ngFor="let document of documentList"  [value]="document.id" >
+                                                    {{document.name}}
                                                 </option>
                                             </select>
                                         </div>

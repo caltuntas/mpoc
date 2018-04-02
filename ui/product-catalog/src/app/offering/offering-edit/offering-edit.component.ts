@@ -16,6 +16,7 @@ import {Document} from '../../document/detail/document';
 import {DocumentService} from '../../document/document.service';
 import {OfferingEditModel} from "../model/offering-edit-model";
 import {OfferingCharValueModel} from "../model/offering-char-value-model";
+import {OfferingSegmentModel} from "../model/offering-segment-model";
 
 @Component({
     selector: 'app-offering-edit',
@@ -31,12 +32,10 @@ export class OfferingEditComponent implements OnInit {
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
     termValues;
     categoryLeaves: Array<Category> = [];
-    salesChannels: SalesChannel[];
-    selectedSalesChannels: SalesChannel[];
-    segments: Segment[];
-    selectedSegments: Segment[];
-    documents: Document[];
-    selectedDocuments: Document[];
+    salesChannelList: SalesChannel[];
+    segmentList: Segment[];
+    documentList: Document[];
+
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -75,6 +74,18 @@ export class OfferingEditComponent implements OnInit {
                 if (this.model.categoryId) {
                     jQuery("#categorySelect").val(this.model.categoryId).trigger('change');
                 }
+
+                if(this.model.segments && this.model.segments.length > 0){
+                    jQuery("#segmentSelect").val(this.model.segments).trigger('change');
+                }
+
+                if(this.model.salesChannels && this.model.salesChannels.length > 0){
+                    jQuery("#salesChannelSelect").val(this.model.salesChannels).trigger('change');
+                }
+
+                if(this.model.documents && this.model.documents.length > 0){
+                    jQuery("#documentSelect").val(this.model.documents).trigger('change');
+                }
             })
         } else {
             this.model.productOfferingCharValues = [];
@@ -95,7 +106,6 @@ export class OfferingEditComponent implements OnInit {
         //Spesification Select
         jQuery('#specSelect').on('select2:select', function (e) {
             var data = e.params.data;
-            console.log(data.id);
             self.model.productSpecificationId = jQuery("#specSelect").val();
             self.loadCharValueUses(data.id);
         });
@@ -103,19 +113,46 @@ export class OfferingEditComponent implements OnInit {
 
         //Catalog Select
         jQuery('#catalogSelect').on('select2:select', function (e) {
-            var data = e.params.data;
-            console.log(data.id);
             self.model.catalogId = jQuery("#catalogSelect").val();
         });
         //Catalog Select
 
         //Category Select
         jQuery('#categorySelect').on('select2:select', function (e) {
-            var data = e.params.data;
-            console.log(data.id);
+
             self.model.categoryId = jQuery("#categorySelect").val();
         });
         //Catalog Select
+
+        //Segment Select
+        jQuery('#segmentSelect').on('select2:select', function (e) {
+            var data = jQuery('#segmentSelect').select2('data');
+            self.model.segments = [];
+            for (let i = 0; i < data.length; i++) {
+              self.model.segments.push(data[i].id);
+            }
+        });
+        //Segment Select
+
+        //Sales Channel Select
+        jQuery('#salesChannelSelect').on('select2:select', function (e) {
+            var data = jQuery('#salesChannelSelect').select2('data');
+            self.model.salesChannels = [];
+            for (let i = 0; i < data.length; i++) {
+                self.model.salesChannels.push(data[i].id);
+            }
+        });
+        //Sales Channel Select
+
+        //Documents Select
+        jQuery('#documentSelect').on('select2:select', function (e) {
+            var data = jQuery('#documentSelect').select2('data');
+            self.model.documents = [];
+            for (let i = 0; i < data.length; i++) {
+                self.model.documents.push(data[i].id);
+            }
+        });
+        //Documents Select
 
         //Wizard Events
         jQuery('#offeringWizard').on('actionclicked.fu.wizard', function (event, data) {
@@ -125,6 +162,8 @@ export class OfferingEditComponent implements OnInit {
                 if (!self.validateStep(data.step)) {
                     event.preventDefault();
                 }
+
+                console.log(self.model);
             }
         });
         //Wizard Events
@@ -180,18 +219,15 @@ export class OfferingEditComponent implements OnInit {
     }
 
     loadSalesChannels() {
-        this.selectedSalesChannels = this.model.salesChannels;
-        this.saleChannelService.getSalesChannels().subscribe(data => this.salesChannels = data);
+        this.saleChannelService.getSalesChannels().subscribe(data => this.salesChannelList = data);
     }
 
     loadSegments() {
-        this.selectedSegments = this.model.segments;
-        this.segmentService.getSegments().subscribe(data => this.segments = data);
+        this.segmentService.getSegments().subscribe(data => this.segmentList = data);
     }
 
     loadDocuments() {
-        this.selectedDocuments = this.model.documents;
-        this.documentService.getDocuments().subscribe(data => this.documents = data);
+        this.documentService.getDocuments().subscribe(data => this.documentList = data);
     }
 
     loadTerms() {
@@ -211,29 +247,28 @@ export class OfferingEditComponent implements OnInit {
 
         this.charService.getSpecCharValueUses(specId).subscribe((data) => {
 
-            let specCharValueUseList :  Array<ProdSpecCharValueUseListModel> = data;
+            let specCharValueUseList: Array<ProdSpecCharValueUseListModel> = data;
 
             for (let i = 0; i < specCharValueUseList.length; i++) {
                 if (specCharValueUseList[i].prodSpecCharType == 1) {
                     let offeringCharValues = this.model.productOfferingCharValues;
                     for (let j = 0; j < specCharValueUseList[i].prodSpecCharValueList.length; j++) {
 
-                       for(let k = 0; k < offeringCharValues.length; k++){
+                        for (let k = 0; k < offeringCharValues.length; k++) {
 
-                           if(offeringCharValues[k].charValueUseId == specCharValueUseList[i].prodSpecCharValueList[j].prodSpecCharValueUseId){
-                               specCharValueUseList[i].prodSpecCharValueList[j].isSelected = true;
-                           }
-                       }
+                            if (offeringCharValues[k].charValueUseId == specCharValueUseList[i].prodSpecCharValueList[j].prodSpecCharValueUseId) {
+                                specCharValueUseList[i].prodSpecCharValueList[j].isSelected = true;
+                            }
+                        }
                     }
                 }
             }
-            console.log(specCharValueUseList);
+
             this.charValueUseList = specCharValueUseList;
         })
     }
 
     getCharValues() {
-        console.log("char values:");
         for (let i = 0; i < this.charValueUseList.length; i++) {
 
             let offeringCharValue = new OfferingCharValueModel();
@@ -255,12 +290,8 @@ export class OfferingEditComponent implements OnInit {
     }
 
     onWizardComplete(data) {
-        console.log('fuel-ux wizard complete', data)
-        this.model.salesChannels = this.selectedSalesChannels;
-        this.model.segments = this.selectedSegments;
-        this.model.documents = this.selectedDocuments;
-        this.getCharValues();
 
+        this.getCharValues();
         if (this.isNewOffering) {
             this.offeringService.createOffering(this.model).subscribe(data => {
                 this.router.navigate(['/offering/offering-list']);
@@ -271,10 +302,5 @@ export class OfferingEditComponent implements OnInit {
             });
         }
     }
-
-    compareIdValues(t1: any, t2: any): boolean {
-        return t1 && t2 ? t1.id === t2.id : false;
-    }
-
 }
 

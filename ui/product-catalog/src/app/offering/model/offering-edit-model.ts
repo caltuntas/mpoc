@@ -20,13 +20,16 @@ export class OfferingEditModel {
     public isSellable: boolean;
     public categoryId: number;
     public term: number;
-    public salesChannels: SalesChannel[];
-    public segments: Segment[];
-    public documents: Document[];
+    public salesChannels: Array<number>;
+    public segments: Array<number>;
+    public documents:Array<number>;
     public productOfferingCharValues: Array<OfferingCharValueModel>;
 
     constructor() {
         this.productOfferingCharValues = [];
+        this.segments = [];
+        this.salesChannels = [];
+        this.documents = [];
     }
 
 
