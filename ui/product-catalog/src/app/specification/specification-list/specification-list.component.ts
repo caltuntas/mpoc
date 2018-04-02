@@ -33,8 +33,7 @@ export class SpecificationListComponent implements OnInit {
     dom: "Bfrtip",
     ajax: (data, callback, settings) => {
       this.service
-        .getSpecifications()
-        .catch(this.handleError)
+        .getSpecifications()       
         .subscribe(data => {
           callback({
             aaData: data
@@ -74,7 +73,14 @@ export class SpecificationListComponent implements OnInit {
     order: [[0, "desc"]]
   };
 
-  ngOnInit() {}
+  ngOnInit() {
+
+   
+  }
+
+  ngOnDestroy() {
+    this.cdRef.detach();
+  }
 
   onEditSpec(specId) {
     this.router.navigate(["/specification/edit/" + specId]);
@@ -84,7 +90,7 @@ export class SpecificationListComponent implements OnInit {
     var r = confirm("Are you sure you want to delete this specification?");
     if (r == true) {
       this.service.deleteSpec(specId).subscribe(data => {
-        this.reloadSpecistTable();
+        this.reloadSpecListTable();
         this.notificationComponent.showNotification(
           "Specification",
           "Deleted successfully"
@@ -92,39 +98,31 @@ export class SpecificationListComponent implements OnInit {
       });
 
       this.service.deleteSpec(specId);
+      this.reloadSpecListTable();
     }
   }
 
-  reloadSpecistTable() {
+  reloadSpecListTable() {
     this.reRenderTable = true;
-    this.cdRef.detectChanges();
+    if (!this.cdRef['destroyed']) {
+        this.cdRef.detectChanges();
+    }
     this.reRenderTable = false;
-  }
+}
+
 
   ngAfterViewInit() {
-    document.querySelector("body").addEventListener("click", event => {
+    document.querySelector('body').addEventListener('click', (event) => {
       let target = <Element>event.target;
 
-      if (
-        target.tagName.toLowerCase() === "a" &&
-        jQuery(target).hasClass("sa-datatables-edit-specification")
-      ) {
-        this.onEditSpec(target.getAttribute("spec-id"));
+      if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit-specification')) {
+          this.onEditSpec(target.getAttribute('spec-id'));
       }
-      if (
-        target.tagName.toLowerCase() === "a" &&
-        jQuery(target).hasClass("sa-datatables-delete-specification")
-      ) {
-        this.onDeleteSpec(target.getAttribute("spec-id"));
+      if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete-specification')) {
+          this.onDeleteSpec(target.getAttribute('spec-id'));
       }
-    });
+  });
   }
 
-  private handleError(error: any) {
-    let errMsg = error.message
-      ? error.message
-      : error.status ? `${error.status} - ${error.statusText}` : "Server error";
-    console.error(errMsg); // log to console instead
-    return Observable.throw(errMsg);
-  }
+ 
 }
