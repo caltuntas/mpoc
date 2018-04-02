@@ -48,17 +48,19 @@ export class SpecificationEditComponent implements OnInit {
     forkJoin([chars, prod]).subscribe(results => {
       this.characteristics = <Array<productSpecCharModel>>results[0].json();
       this.productSpec = <productSpecEditModel>results[1].json();
-
+      console.log(this.productSpec);
       this.productSpec.selectedCharacteristics.forEach(selectedChar => {
         this.characteristics.find(
           x => x.id == selectedChar.id
         ).isSelected = true;
+
         selectedChar.selectedValueIds.forEach(selectedValueId => {
           this.characteristics
             .find(x => x.id == selectedChar.id)
             .values.find(x => x.id == selectedValueId).isSelected = true;
         });
       });
+      
     });
   }
 
@@ -88,19 +90,22 @@ export class SpecificationEditComponent implements OnInit {
   }
 
   selectCharUse($event) {
-    this.selectedChar = $event.target.value;
-    console.log(this.selectedChar);
-  }
+    this.selectedCharUse = $event.target.value;
 
-  addCharUse() {
-    if (this.selectedChar != 0) {
-      let charUse = this.characteristics.find(x => x.id == this.selectedChar);
+    if (this.selectedCharUse != 0) {
+      let charUse = this.characteristics.find(
+        x => x.id == this.selectedCharUse
+      );
       charUse.isSelected = true;
       this.productSpec.selectedCharacteristics.push(
         new productSpecCharUseModel(charUse.id)
       );
+
+      this.selectedCharUse = 0;
     }
   }
+
+  
   check(
     characteristic: productSpecCharModel,
     value: productSpecCharValueModel,
@@ -123,6 +128,7 @@ export class SpecificationEditComponent implements OnInit {
   }
 
   saveForm(productSpec: productSpecEditModel) {
+    console.log(this.productSpec);
     this.service.updateSpec(this.productSpec).subscribe(data => {});
     this.notificationComponent.showNotification(
       "Specification",
