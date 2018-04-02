@@ -1,10 +1,11 @@
-import { SalesChannel } from '../../sales-channel/detail/sales-channel';
-import { Segment } from '../../segment/detail/segment';
-import { Document } from '../../document/detail/document';
+import {SalesChannel} from '../../sales-channel/detail/sales-channel';
+import {Segment} from '../../segment/detail/segment';
+import {Document} from '../../document/detail/document';
+import {OfferingCharValueModel} from "./offering-char-value-model";
 
 export class OfferingEditModel {
 
-    public id :number;
+    public id: number;
     public name: string;
     public validForStartDate: string;
     public validForEndDate: string;
@@ -18,9 +19,15 @@ export class OfferingEditModel {
     public catalogId: number;
     public isSellable: boolean;
     public categoryId: number;
-    public term : number;
+    public term: number;
     public salesChannels: SalesChannel[];
     public segments: Segment[];
     public documents: Document[];
+    public productOfferingCharValues: Array<OfferingCharValueModel>;
+
+    constructor() {
+        this.productOfferingCharValues = [];
+    }
+
 
 }

@@ -161,6 +161,7 @@
                                             <select select2 style="width:100%" data-select-search="true"
                                                     id="specSelect"
                                                     name="specSelect">
+                                                <option [value] = "0">Please Select </option>
                                                 <option *ngFor="let spec of spesifications" [value]="spec.id">
                                                     {{spec.name}}
                                                 </option>
@@ -172,7 +173,7 @@
                                 <legend *ngIf="charValueUseList.length > 0"></legend>
 
 
-                                <div *ngFor="let charValue of charValueUseList">
+                                <div *ngFor="let charValue of charValueUseList; let i = index">
 
                                     <div class="row" *ngIf="charValue.prodSpecCharType == 1">
                                         <div class="form-group">
@@ -180,7 +181,9 @@
                                                 charValue.prodSpecCharDescription }}</strong></label>
                                             <div class="col-md-8">
                                                 <select select2
+                                                        id = "charValueUseSelect{{i}}"
                                                         style="width:100%" data-select-search="true">
+                                                    <option [value] = "0">Please Select </option>
                                                     <option *ngFor="let charValueUse of charValue.prodSpecCharValueList"
                                                             [value]="charValueUse.prodSpecCharValueUseId">
                                                         {{charValueUse.prodSpecCharValue}}
@@ -194,7 +197,9 @@
                                         <label class="control-label col-md-2"><strong>{{
                                             charValue.prodSpecCharDescription }}</strong></label>
                                         <div class="col-md-8">
-                                            <input class="form-control" placeholder="Please type the value"
+                                            <input class="form-control"
+                                                   id = "charValueUseInput{{i}}"
+                                                   placeholder="Please type the value"
                                                    type="text">
                                         </div>
                                     </div>
@@ -235,6 +240,7 @@
                                                     required [(ngModel)]="model.catalogId"
                                                     (ngModelChange)="onCatalogChanged($event)"
                                                     #selectCatalogControl="ngModel">
+                                                <option [value] = "0">Please Select </option>
                                                 <option *ngFor="let catalog of catalogs" [value]="catalog.id">
                                                     {{catalog.name}}
                                                 </option>
