@@ -305,6 +305,19 @@
                                 <br>
                                 <br>
 
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2"><strong>Documents</strong></label>
+                                        <div class="col-md-8">
+                                            <select select2 multiple name="documents" style="width:100%"
+                                                    [compareWith]="compareIdValues" [ngModel]="selectedDocuments" class="select2">
+                                                <option *ngFor="let sc of documents" [ngValue]="sc" >{{sc.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <br>
                                 <br>
