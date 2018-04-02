@@ -43,25 +43,25 @@ public class ProductOfferingAppService {
 
     public ProductOffering create(ProductOfferingDetailModel createRequest) {
 
-		ProductOffering productOffering = new ProductOffering();
-		saveFields(productOffering, createRequest);// Simple or Bundle
-		System.out.println(createRequest.getProductOfferingTypeId());
-		if (createRequest.getProductOfferingTypeId() == 2)// Bundle
-		{
-			Set<ProductOffering> relatedProductOfferings = new HashSet<ProductOffering>();
-			for (Integer id : createRequest.getSimpleProductOfferingIds()) {
-				System.out.println("id : " + id);
-				// BoChild kaydet
-				ProductOffering childproductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
-				cloneChildProductOfferingForBundle(productOffering, childproductOffering);
-				// Relation ata
-				relatedProductOfferings.add(childproductOffering);
-				// TODO : BoChild'ın ilişkilerini kaydet
-			}
-			// Relation kaydet
-			productOffering.setRelatedProductOfferings(relatedProductOfferings);
-			productOfferingRepository.save(productOffering);
-		}
+        ProductOffering productOffering = new ProductOffering();
+        saveFields(productOffering, createRequest);// Simple or Bundle
+        System.out.println(createRequest.getProductOfferingTypeId());
+        if (createRequest.getProductOfferingTypeId() == 2)// Bundle
+        {
+            Set<ProductOffering> relatedProductOfferings = new HashSet<ProductOffering>();
+            for (Integer id : createRequest.getSimpleProductOfferingIds()) {
+                System.out.println("id : " + id);
+                // BoChild kaydet
+                ProductOffering childproductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
+                cloneChildProductOfferingForBundle(productOffering, childproductOffering);
+                // Relation ata
+                relatedProductOfferings.add(childproductOffering);
+                // TODO : BoChild'ın ilişkilerini kaydet
+            }
+            // Relation kaydet
+            // productOffering.setRelatedProductOfferings(relatedProductOfferings);
+            productOfferingRepository.save(productOffering);
+        }
 
         return productOffering;
     }
@@ -122,26 +122,33 @@ public class ProductOfferingAppService {
         productOffering.setProductSpecification(specification);
     }
 
-	private void cloneChildProductOfferingForBundle(ProductOffering mainProductOffering, ProductOffering childproductOffering) {
-		ProductOffering clonedProductOffering = new ProductOffering();
-		clonedProductOffering.setName(childproductOffering.getName());
-		clonedProductOffering.setIsSellable(childproductOffering.getIsSellable());
-		clonedProductOffering.setDescription(childproductOffering.getDescription());
-		clonedProductOffering.setExternalId(childproductOffering.getExternalId());
-		clonedProductOffering.setIsReplicated(childproductOffering.getIsReplicated());
-		clonedProductOffering.setReturnPeriod(childproductOffering.getReturnPeriod());
-		clonedProductOffering.setWarrantyPeriod(childproductOffering.getWarrantyPeriod());
-		clonedProductOffering.setProductSpecification(childproductOffering.getProductSpecification());
-		clonedProductOffering.setCategory(childproductOffering.getCategory());
-		//clonedProductOffering.setSalesChannels(childproductOffering.getSalesChannels());
-		//clonedProductOffering.setSegments(childproductOffering.getSegments());
-		//clonedProductOffering.setDocuments(childproductOffering.getDocuments());
-		clonedProductOffering.setProductOfferingType(childproductOffering.getProductOfferingType());
-		Set<ProductOffering> mainProductOfferings = new HashSet<ProductOffering>();
-		mainProductOfferings.add(mainProductOffering);
-		clonedProductOffering.setMainProductOfferings(mainProductOfferings);
-		productOfferingRepository.save(clonedProductOffering);
-	}
+    private void cloneChildProductOfferingForBundle(ProductOffering mainProductOffering,
+                                                    ProductOffering childproductOffering) {
+        ProductOffering clonedProductOffering = new ProductOffering();
+        // TODO : Clone ManyToMany
+        clonedProductOffering.setProductOfferingType(childproductOffering.getProductOfferingType());
+        clonedProductOffering.setCatalog(childproductOffering.getCatalog());
+        clonedProductOffering.setCategory(childproductOffering.getCategory());
+        clonedProductOffering.setCreateUserId(childproductOffering.getCreateUserId());
+        clonedProductOffering.setDescription(childproductOffering.getDescription());
+        // clonedProductOffering.setDocuments(childproductOffering.getDocuments());
+        clonedProductOffering.setExternalId(childproductOffering.getExternalId());
+        clonedProductOffering.setIsReplicated(childproductOffering.getIsReplicated());
+        clonedProductOffering.setName(childproductOffering.getName());
+        // clonedProductOffering.setPrices(childproductOffering.getPrices());
+        // clonedProductOffering.setProductOfferingDetermineses(childproductOffering.getProductOfferingDetermineses());
+        ProductOfferingType boChildProductOfferingType = productOfferingTypeRepository.findByIdAndIsDeletedIsFalse(3);// BoChild
+        clonedProductOffering.setProductOfferingType(boChildProductOfferingType);
+        clonedProductOffering.setProductSpecification(childproductOffering.getProductSpecification());
+        clonedProductOffering.setReturnPeriod(childproductOffering.getReturnPeriod());
+        // clonedProductOffering.setSalesChannels(childproductOffering.getSalesChannels());
+        // clonedProductOffering.setSegments(childproductOffering.getSegments());
+        // clonedProductOffering.setUnsupportedProductSpecCharValueUseGroups(childproductOffering.getUnsupportedProductSpecCharValueUseGroups());
+        clonedProductOffering.setUpdateUserId(childproductOffering.getUpdateUserId());
+        clonedProductOffering.setValidFor(childproductOffering.getValidFor());
+        clonedProductOffering.setWarrantyPeriod(childproductOffering.getWarrantyPeriod());
+        productOfferingRepository.save(clonedProductOffering);
+    }
 
     private void saveCatalog(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
         Catalog catalog = catalogAppService.findById(detailModel.getCatalogId());
@@ -154,6 +161,8 @@ public class ProductOfferingAppService {
     }
 
     private void saveDetermines(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
+        if (detailModel.getProductOfferingCharValues() == null)
+            return;
         List<ProductOfferingDetermines> productOfferingDetermines = new ArrayList<>();
 
         for (ProductOfferingCharValueModel model : detailModel.getProductOfferingCharValues()) {
@@ -225,6 +234,7 @@ public class ProductOfferingAppService {
 
     public List<ProductOfferingListModel> findAllByProductOfferingTypeId(int productOfferingTypeId) {
         return productOfferingRepository.findAllByProductOfferingTypeId(productOfferingTypeId).stream()
+                .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
                 .map(x -> new ProductOfferingListModel(x.getId(), x.getName(), x.getDescription(),
                         x.getProductSpecification() != null ? x.getProductSpecification().getCode() : null,
                         x.getCatalog() != null ? x.getCatalog().getName() : null,
