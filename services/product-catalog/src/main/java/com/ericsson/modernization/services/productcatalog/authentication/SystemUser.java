@@ -14,8 +14,6 @@ public class SystemUser extends EntityBase implements Description, ValidFor {
 	public SystemUser() {
 		super();
 	}
-	@Id
-	private int id;
 	private String userName;
 	private String password;
 	private String firstName;
@@ -24,12 +22,6 @@ public class SystemUser extends EntityBase implements Description, ValidFor {
     private TimePeriod validFor;
     private String name;
     private String description;
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getUserName() {
 		return userName;
 	}

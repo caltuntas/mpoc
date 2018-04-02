@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ProductOfferingType extends EntityBase implements Description {
-	private int id;
 	private String name;
 	private String description;
 	@JsonIgnore
@@ -24,14 +23,6 @@ public class ProductOfferingType extends EntityBase implements Description {
 		super();
 		this.name = name;
 		this.description = description;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getName() {

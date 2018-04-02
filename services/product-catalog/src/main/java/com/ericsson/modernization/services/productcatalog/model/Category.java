@@ -6,21 +6,12 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Category extends EntityBase implements Description, ValidFor {
-    private int id;
     private String code;
     private String name;
     private String description;
     private int parentId;
     @Embedded
     private TimePeriod validFor;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getCode() {
         return code;

@@ -236,7 +236,7 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	public void setProductOfferingType(ProductOfferingType productOfferingType) {
 		this.productOfferingType = productOfferingType;
 	}
-
+/*
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "ProductOfferingRelation", joinColumns = {
 			@JoinColumn(name = "mainProductOfferingId") }, inverseJoinColumns = { @JoinColumn(name = "relatedProductOfferingId") })
@@ -259,7 +259,7 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	
 	public void setMainProductOfferings(Set<ProductOffering> mainProductOfferings) {
 		this.mainProductOfferings = mainProductOfferings;
-	}
+	}*/
 
 	public Category getCategory() {
 		return category;

@@ -7,10 +7,7 @@ import javax.persistence.Id;
 
 @Entity
 public class ProductOfferingRelation extends EntityBase {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-	private int mainProductOfferingId;
+    private int mainProductOfferingId;
 	private int relatedProductOfferingId;
 
 	public ProductOfferingRelation() {
