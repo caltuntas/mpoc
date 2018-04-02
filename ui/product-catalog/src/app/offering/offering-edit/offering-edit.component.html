@@ -158,7 +158,7 @@
                                         <label class="control-label col-md-2"><strong>Spec</strong></label>
 
                                         <div class="col-md-8">
-                                            <select select2 style="width:100%" data-select-search="true"
+                                            <select [disabled]="!isNewOffering" select2 style="width:100%" data-select-search="true"
                                                     id="specSelect"
                                                     name="specSelect">
                                                 <option [value] = "0">Please Select </option>
