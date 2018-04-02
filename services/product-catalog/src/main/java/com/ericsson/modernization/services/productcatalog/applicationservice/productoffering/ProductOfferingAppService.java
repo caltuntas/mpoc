@@ -1,7 +1,9 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCharValueModel;
@@ -41,23 +43,25 @@ public class ProductOfferingAppService {
 
     public ProductOffering create(ProductOfferingDetailModel createRequest) {
 
-        ProductOffering productOffering = new ProductOffering();
-        saveFields(productOffering, createRequest);
-        if (createRequest.getProductOfferingTypeId() == 2)// Bundle
-        {
-            List<ProductOffering> relatedProductOfferings = new ArrayList<ProductOffering>();
-            for (Integer id : createRequest.getProductOfferingIds()) {
-                // BoChild kaydet
-                ProductOffering childproductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
-                // saveFields(childproductOffering, item);
-                // Relation ata
-                relatedProductOfferings.add(childproductOffering);
-                // TODO : BoChild'ın ilişkilerini kaydet
-            }
-            // Relation kaydet
-            productOffering.setRelatedProductOfferings(relatedProductOfferings);
-            productOfferingRepository.save(productOffering);
-        }
+		ProductOffering productOffering = new ProductOffering();
+		saveFields(productOffering, createRequest);// Simple or Bundle
+		System.out.println(createRequest.getProductOfferingTypeId());
+		if (createRequest.getProductOfferingTypeId() == 2)// Bundle
+		{
+			Set<ProductOffering> relatedProductOfferings = new HashSet<ProductOffering>();
+			for (Integer id : createRequest.getSimpleProductOfferingIds()) {
+				System.out.println("id : " + id);
+				// BoChild kaydet
+				ProductOffering childproductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
+				cloneChildProductOfferingForBundle(productOffering, childproductOffering);
+				// Relation ata
+				relatedProductOfferings.add(childproductOffering);
+				// TODO : BoChild'ın ilişkilerini kaydet
+			}
+			// Relation kaydet
+			productOffering.setRelatedProductOfferings(relatedProductOfferings);
+			productOfferingRepository.save(productOffering);
+		}
 
         return productOffering;
     }
@@ -117,6 +121,27 @@ public class ProductOfferingAppService {
                 .findById(detailModel.getProductSpecificationId());
         productOffering.setProductSpecification(specification);
     }
+
+	private void cloneChildProductOfferingForBundle(ProductOffering mainProductOffering, ProductOffering childproductOffering) {
+		ProductOffering clonedProductOffering = new ProductOffering();
+		clonedProductOffering.setName(childproductOffering.getName());
+		clonedProductOffering.setIsSellable(childproductOffering.getIsSellable());
+		clonedProductOffering.setDescription(childproductOffering.getDescription());
+		clonedProductOffering.setExternalId(childproductOffering.getExternalId());
+		clonedProductOffering.setIsReplicated(childproductOffering.getIsReplicated());
+		clonedProductOffering.setReturnPeriod(childproductOffering.getReturnPeriod());
+		clonedProductOffering.setWarrantyPeriod(childproductOffering.getWarrantyPeriod());
+		clonedProductOffering.setProductSpecification(childproductOffering.getProductSpecification());
+		clonedProductOffering.setCategory(childproductOffering.getCategory());
+		//clonedProductOffering.setSalesChannels(childproductOffering.getSalesChannels());
+		//clonedProductOffering.setSegments(childproductOffering.getSegments());
+		//clonedProductOffering.setDocuments(childproductOffering.getDocuments());
+		clonedProductOffering.setProductOfferingType(childproductOffering.getProductOfferingType());
+		Set<ProductOffering> mainProductOfferings = new HashSet<ProductOffering>();
+		mainProductOfferings.add(mainProductOffering);
+		clonedProductOffering.setMainProductOfferings(mainProductOfferings);
+		productOfferingRepository.save(clonedProductOffering);
+	}
 
     private void saveCatalog(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
         Catalog catalog = catalogAppService.findById(detailModel.getCatalogId());

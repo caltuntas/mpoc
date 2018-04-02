@@ -1,12 +1,15 @@
 package com.ericsson.modernization.services.productcatalog.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class ProductOfferingRelation extends EntityBase {
-	@Id
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 	private int mainProductOfferingId;
 	private int relatedProductOfferingId;
 
@@ -18,14 +21,6 @@ public class ProductOfferingRelation extends EntityBase {
 		super();
 		this.mainProductOfferingId = mainProductOfferingId;
 		this.relatedProductOfferingId = relatedProductOfferingId;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public int getMainProductOfferingId() {

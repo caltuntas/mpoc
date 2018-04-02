@@ -3,6 +3,7 @@ package com.ericsson.modernization.services.productcatalog.model;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -230,30 +231,41 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 
 	public ProductOfferingType getProductOfferingType() {
 		return productOfferingType;
-	}	
-	
+	}
+
 	public void setProductOfferingType(ProductOfferingType productOfferingType) {
 		this.productOfferingType = productOfferingType;
 	}
 
-	@JsonIgnore
-	@OneToMany
-	@JoinTable(name = "ProductOfferingRelation", joinColumns = @JoinColumn(name = "mainProductOfferingId"), inverseJoinColumns = @JoinColumn(name = "relatedProductOfferingId"))
-	private List<ProductOffering> relatedProductOfferings;
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "ProductOfferingRelation", joinColumns = {
+			@JoinColumn(name = "mainProductOfferingId") }, inverseJoinColumns = { @JoinColumn(name = "relatedProductOfferingId") })
+	private Set<ProductOffering> mainProductOfferings = new HashSet<ProductOffering>();
 
-	public List<ProductOffering> getRelatedProductOfferings() {
+	@ManyToMany(mappedBy = "mainProductOfferings")
+	private Set<ProductOffering> relatedProductOfferings = new HashSet<ProductOffering>();
+
+	public Set<ProductOffering> getRelatedProductOfferings() {
 		return relatedProductOfferings;
 	}
 
-	public void setRelatedProductOfferings(List<ProductOffering> relatedProductOfferings) {
+	public void setRelatedProductOfferings(Set<ProductOffering> relatedProductOfferings) {
 		this.relatedProductOfferings = relatedProductOfferings;
 	}
 
-    public Category getCategory() {
-        return category;
-    }
+	public Set<ProductOffering> getMainProductOfferings() {
+		return mainProductOfferings;
+	}
+	
+	public void setMainProductOfferings(Set<ProductOffering> mainProductOfferings) {
+		this.mainProductOfferings = mainProductOfferings;
+	}
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 }

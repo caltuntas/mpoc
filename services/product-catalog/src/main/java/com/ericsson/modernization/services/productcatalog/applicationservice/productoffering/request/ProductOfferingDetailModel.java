@@ -26,9 +26,8 @@ public class ProductOfferingDetailModel {
 	private Set<Segment> segments;
 	private Set<Document> documents;
 	private int productOfferingTypeId;
-	private List<Integer> productOfferingIds = new ArrayList<Integer>();
+	private List<Integer> simpleProductOfferingIds = new ArrayList<Integer>();
 	private List<ProductOfferingCharValueModel> productOfferingCharValues;
-
 
     public ProductOfferingDetailModel
             (int id,
@@ -40,7 +39,7 @@ public class ProductOfferingDetailModel {
 			 int catalogId,
 			 int categoryId,
 			 int productOfferingTypeId,
-			 List<Integer> productOfferingIds,
+			 List<Integer> simpleProductOfferingIds,
              List<ProductOfferingCharValueModel> productOfferingCharValues) {
 		setId(id);
 		setName(name);
@@ -51,7 +50,7 @@ public class ProductOfferingDetailModel {
 		setCatalogId(catalogId);
 		setCategoryId(categoryId);
 		setProductOfferingTypeId(productOfferingTypeId);
-		setProductOfferingIds(productOfferingIds);
+		setSimpleProductOfferingIds(simpleProductOfferingIds);
 	}
 /*
     public ProductOfferingDetailModel
@@ -199,12 +198,12 @@ public class ProductOfferingDetailModel {
 		this.productOfferingTypeId = productOfferingTypeId;
 	}
 
-	public List<Integer> getProductOfferingIds() {
-		return productOfferingIds;
+	public List<Integer> getSimpleProductOfferingIds() {
+		return simpleProductOfferingIds;
 	}
 
-	public void setProductOfferingIds(List<Integer> productOfferingIds) {
-		this.productOfferingIds = productOfferingIds;
+	public void setSimpleProductOfferingIds(List<Integer> simpleProductOfferingIds) {
+		this.simpleProductOfferingIds = simpleProductOfferingIds;
 	}
 
     public int getCategoryId() {
