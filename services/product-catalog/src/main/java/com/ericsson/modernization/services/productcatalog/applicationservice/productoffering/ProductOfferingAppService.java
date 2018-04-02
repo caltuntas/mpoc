@@ -36,20 +36,20 @@ public class ProductOfferingAppService {
 
 		ProductOffering productOffering = new ProductOffering();
 		saveFields(productOffering, createRequest);
-		if (productOffering.getProductOfferingType().getId() == 2)// Bundle
-		{/*
+		if (createRequest.getProductOfferingTypeId() == 2)// Bundle
+		{
 			List<ProductOffering> relatedProductOfferings = new ArrayList<ProductOffering>();
-			for (ProductOfferingDetailModel item : createRequest.getProductOfferingIds()) {
+			for (Integer id : createRequest.getProductOfferingIds()) {
 				//BoChild kaydet
-				ProductOffering childproductOffering = new ProductOffering();
-				saveFields(childproductOffering, item);
+				ProductOffering childproductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
+				//saveFields(childproductOffering, item);
 				//Relation ata
 				relatedProductOfferings.add(childproductOffering);
 				//TODO : BoChild'ın ilişkilerini kaydet
 			}
 			//Relation kaydet
 			productOffering.setRelatedProductOfferings(relatedProductOfferings);
-			productOfferingRepository.save(productOffering);*/
+			productOfferingRepository.save(productOffering);
 		}
 
 		return productOffering;
