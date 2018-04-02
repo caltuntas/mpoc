@@ -82,6 +82,7 @@ export class BundleEditComponent implements OnInit {
 
         this.loadSimpleOfferings();
         this.loadSpecs();
+		this.loadTerms();
         this.loadCatalogs();
         this.loadCategories();
         this.loadSalesChannels();
@@ -202,6 +203,16 @@ export class BundleEditComponent implements OnInit {
         this.documentService.getDocuments().subscribe(data => this.documents = data);
     }
 
+    loadTerms() {
+        this.termValues =
+            [
+                {"value": "Please Select", "id": 0},
+                {"value": 1, "id": 1}, {"value": 2, "id": 2}, {"value": 3, "id": 3},
+                {"value": 4, "id": 4}, {"value": 5, "id": 5}, {"value": 6, "id": 6},
+                {"value": 7, "id": 7}, {"value": 8, "id": 8}, {"value": 9, "id": 9},
+                {"value": 10, "id": 10}, {"value": 11, "id": 11}, {"value": 12, "id": 12}
+            ];
+    }
     onWizardComplete(data) {
         console.log('fuel-ux wizard complete', data)
         this.model.salesChannels = this.selectedSalesChannels;
@@ -215,11 +226,11 @@ export class BundleEditComponent implements OnInit {
         console.log(this.isNewOffering);
         if (this.isNewOffering) {
             this.bundleService.createOffering(this.model).subscribe(data => {
-                this.router.navigate(['/offering/offering-list']);
+                this.router.navigate(['/bundle/bundle-list']);
             });
         } else {
             this.bundleService.updateOffering(this.model).subscribe(data => {
-                this.router.navigate(['/offering/offering-list']);
+                this.router.navigate(['/bundle/bundle-list']);
             });
         }
     }
