@@ -7,4 +7,5 @@ export class OfferingListModel {
     public validForStartDate: string;
     public validForEndDate: string;
     public spesification: BundleSpecModel;
+    public productOfferingType: string;
 }
