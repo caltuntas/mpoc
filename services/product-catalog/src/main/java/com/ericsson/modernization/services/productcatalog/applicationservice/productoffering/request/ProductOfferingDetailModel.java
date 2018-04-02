@@ -27,6 +27,8 @@ public class ProductOfferingDetailModel {
 	private Set<Document> documents;
 	private int productOfferingTypeId;
 	private List<Integer> productOfferingIds = new ArrayList<Integer>();
+	private List<ProductOfferingCharValueModel> productOfferingCharValues;
+
 
     public ProductOfferingDetailModel
             (int id,
@@ -38,7 +40,8 @@ public class ProductOfferingDetailModel {
 			 int catalogId,
 			 int categoryId,
 			 int productOfferingTypeId,
-			 List<Integer> productOfferingIds) {
+			 List<Integer> productOfferingIds,
+             List<ProductOfferingCharValueModel> productOfferingCharValues) {
 		setId(id);
 		setName(name);
 		setDescription(description);
@@ -210,5 +213,13 @@ public class ProductOfferingDetailModel {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public List<ProductOfferingCharValueModel> getProductOfferingCharValues() {
+        return productOfferingCharValues;
+    }
+
+    public void setProductOfferingCharValues(List<ProductOfferingCharValueModel> productOfferingCharValues) {
+        this.productOfferingCharValues = productOfferingCharValues;
     }
 }
