@@ -3,9 +3,6 @@ jdk:
  - oraclejdk8
 env:
  global:
-- secure: "LtMQYkSyXU39J8eeJfEHCz22abGabZ/RBCX4jk046s8XCiIW65zwfBAfYfnuCxQP1nXeIfQfHNH4argxmKApDgmce7/L63NPKDCrfrVzLpz7hk6+A0KRoXfbFDGUnr6ue8h5XPBNz8I1ZVa9LrtVmVCPdoK5YRshQhoUjAfZ4liDolWcxKJBMwsLzmx0vfHKOYyrFDPNAR9tt0iXyc98YQJ0npklffClg7ucXgCgYVw1c6QD8n9zA/xpRaUrhd9WYE4xqko/cnpzcaDB/d9s0vIQbz5vDFs7vHyuqlLrcSu0v46qBeKEKWMAvt7BMcvjmM1yO2KR4FobCFpP7gRv99w1OAxHW2GyijsO6fpTJazrt2m1zBNRHR3oKU/tSWKLoGpsnOxLEOwAVQ3slK8hbjnctP/9vXb/4z+qVy6QamrZPxJre1gEvfFvfUjWUwg3XxugB4LBxN98UM8BNFFB8SnvetueoAp4uqcYJMCqrFjsjRLK2l4yAHcOhmfLZZ50ylQ8x088mOy10UExSsjypzoic1BQG3at/kedVrnDBEaF3tW32eO743I7EfFDjQk5kYrCA0qZLrzihhZk4dzX+dls+rfM3EgS1EVlofCfEtUvO78XPjUREcklU41VhHVXkDFrvZtDuwuf8HDDnJ7zSLLJz56uwWUYh3C2R1Hxeng=" # DOCKER_USER
-- secure: "b5S8ZuL/Tpr2gnzI85uyUmLQchrinenVy2mb7ufnh9/a+SOS23QY1H1FKeHNV0C31eYIVceiZcl198zeIsXrgzImywerXelwdI6fwqNNeYu0ZHT2Z+i/O3sAgSifNSXbHjF6lTE42zr/n7HpzMO8yeJ1SuZFINgJ8VqDPdsA2hoZpWDdGr46gGJOcs1Pqt6DqL/ISYufhm5Bkx64o0Z1KeOKJWj3rLXPQeKbOOHZJNZVI532mUTDP6WC7vCbUtP+PHDfDrQDE25kPc0AaJU3bkrb/nc/n87nbEzDNNE/gecz6Ya7c0a0lNmxL1HolNGOpQa2v5StW6z00ChvtqHG9treL6T4T9iX8BVBHhMXevvre/3srwpm6okow0f6s1G3bZE/hu83YiTe2Z9/eHSXz3Lu7J5bPmq1bdJkmzYhtL8chKw1DwuHuNZ0ejxHNGqJgHdY7L4h4eLqBL90RxlvBMeVkpbMTeVz+Qr6B4IiZLC30gFQ8QAFaeFUyY5zSrT9S/9lkwB201pwc6MOYk1wZXhFamg2j1x0EBuhR4yyP3ZjtIN0Vd1/i28CY15BbwkTEPwX/SCVivqVP27vuG4j0K23vZWkFxs1KqEea1XUCa/v53nmCdi0TDqKj/PEaXA0ljv+wbEXBjAQ1rU1pWFYy5QNOI/udMYjTM0pmleQ18I=" # DOCKER_PASS
-- secure: "N/VLWo9IX36uk9E877stSpknWicz9Xyb04gcJLrfhNYznjcLyWiipiepfzEBdSWjZ68YtYrPSo5msYeEmpt6RUHkOw0oQ8ML/HPwRAq6mJX8O0cc7oub/UT2aKNNpw5+l6350vaNAfyBa13UInZ+L/mrNAh9PSWEVUkECOgIZjOLqJ9GgDroSwlnnW+W9t+rGwu276a1ax1bWHu1AjODSKvtIwYzKeD+2nFmFelr5772ONl18zrl4UBI8xAWDmjoRjlIM01Y10PTfqqXoBQ9iIp/6WaPov1MPciYPHAZMWKCz0Unx52ycM3vzwQ3xn4R84fUCj9vnZsnK+fmisY0zaDU5GnAIxrvLyJedhVEqcg/BpgMiNy/7uKNnoQ6RwzVB/fj76AvQZcYC+7Sj7BcoZ/wHejPEdqsZlg+JeRRDVylE52M2hs/RVN58F7Fz7h9AZ6Gtvy27QEAf1AYQsqZVgQ7Kqc4izQPCyok/04zMCPDD+DnxR/x92No0s6W5CNItUdjhMszoaCpztmTtEDteIvkLJrtO/IPWC+FAZRgEsmAOw3glLXvqKD/K04PPo5AreVt6yMS6JL0uvp/FzsW9bk4TiBSJEapWmBo2Zni8SNS7qOq+xYPDTD9Tu1dWbUFqGnXzAczcQrcW2EmQefdCfiZZ2tJUkAJsD+T/mzXfXM=" # DOCKER_EMAIL
 - COMMIT=${TRAVIS_COMMIT::8}
 
 
@@ -14,10 +11,9 @@ before_install:
  - chmod +x mvnw
 
 after_success:
-  - cd services/product-catalog
   - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
   - export REPO=caltuntas/product-catalog-service
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - export TAG=latest
   - docker build -f Dockerfile -t $REPO:$COMMIT .
   - docker tag $REPO:$COMMIT $REPO:$TAG
   - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
