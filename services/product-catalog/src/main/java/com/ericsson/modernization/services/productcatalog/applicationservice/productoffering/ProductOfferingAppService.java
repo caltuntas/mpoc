@@ -170,8 +170,9 @@ public class ProductOfferingAppService {
 	}
 
 	private void saveDetermines(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
+		if (detailModel.getProductOfferingCharValues() == null)
+			return;
 		List<ProductOfferingDetermines> productOfferingDetermines = new ArrayList<>();
-
 		for (ProductOfferingCharValueModel model : detailModel.getProductOfferingCharValues()) {
 			ProductOfferingDetermines determines = new ProductOfferingDetermines();
 
@@ -211,8 +212,12 @@ public class ProductOfferingAppService {
 		ProductOffering productOffering = findById(id);
 		return new ProductOfferingDetailModel(productOffering.getId(), productOffering.getName(),
 				productOffering.getDescription(), productOffering.getIsReplicated(), productOffering.getIsSellable(),
-				productOffering.getProductSpecification().getId(), productOffering.getCatalog().getId(),
-				productOffering.getCategory().getId(), productOffering.getProductOfferingType().getId(),
+				productOffering.getProductSpecification() != null ? productOffering.getProductSpecification().getId()
+						: null,
+				productOffering.getCatalog() != null ? productOffering.getCatalog().getId() : null,
+				productOffering.getCategory() != null ? productOffering.getCategory().getId() : null,
+				productOffering.getProductOfferingType() != null ? productOffering.getProductOfferingType().getId()
+						: null,
 				// productOffering.getRelatedProductOfferings());
 				new ArrayList<Integer>(), new ArrayList<>() // TODO: will be edited after creating determines
 		);
@@ -236,7 +241,7 @@ public class ProductOfferingAppService {
 
 	public List<ProductOfferingListModel> findAllByProductOfferingTypeId(int productOfferingTypeId) {
 		return productOfferingRepository.findAllByProductOfferingTypeId(productOfferingTypeId).stream()
-				.sorted((o1, o2)->o1.getName().compareTo(o2.getName()))
+				.sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
 				.map(x -> new ProductOfferingListModel(x.getId(), x.getName(), x.getDescription(),
 						x.getProductSpecification() != null ? x.getProductSpecification().getCode() : null,
 						x.getCatalog() != null ? x.getCatalog().getName() : null,
@@ -248,7 +253,7 @@ public class ProductOfferingAppService {
 						x.getReturnPeriod() != null ? x.getReturnPeriod().getPeriodValue() : 0,
 						x.getReturnPeriod() != null ? x.getReturnPeriod().getPeriodUnit() : 0,
 						x.getProductOfferingType() != null ? x.getProductOfferingType().getName() : null))
-				.collect(Collectors.toList());				
+				.collect(Collectors.toList());
 	}
 
 	public List<ProductOfferingCharValueModel> findOfferingDetermines(int offeringId) {
