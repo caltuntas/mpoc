@@ -4,7 +4,7 @@ import {HttpClientProvider} from "../shared/httpclientprovider/http-client-provi
 import {BundleEditModel} from "./model/bundle-edit-model";
 import {OfferingListModel} from "./model/bundle-list-model";
 import { BundleModel } from './model/bundle-model';
-import { idNameModel } from '../specification/model/idNameModel';
+import { IdNameDescriptionModel } from './model/idNameDescriptionModel';
 
 
 @Injectable()
@@ -19,7 +19,7 @@ export class BundleService {
         return this.http.get(`/productoffering/getOfferings/2`);
     }
 
-    getSimgpleOfferingsForSelect(): Observable<idNameModel[]> {
+    getSimgpleOfferingsForSelect(): Observable<IdNameDescriptionModel[]> {
         return this.http.get(`/productoffering/getSimgpleOfferingsForSelect`);
     }
     createOffering(model) {

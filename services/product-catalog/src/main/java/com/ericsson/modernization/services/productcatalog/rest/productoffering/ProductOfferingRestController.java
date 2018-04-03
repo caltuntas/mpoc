@@ -1,10 +1,9 @@
 package com.ericsson.modernization.services.productcatalog.rest.productoffering;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.ProductOfferingAppService;
-import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCharValueModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingDetailModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.CommonServiceResponse;
-import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.IdNameModel;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.IdNameDescriptionModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.ProductOfferingListModel;
 import com.ericsson.modernization.services.productcatalog.model.ProductOffering;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +56,7 @@ public class ProductOfferingRestController {
     }
 
     @RequestMapping(value = "/getSimgpleOfferingsForSelect", method = RequestMethod.GET)
-    public List<IdNameModel> getOfferingsForSelect() {
+    public List<IdNameDescriptionModel> getOfferingsForSelect() {
         return productOfferingAppService.getSimgpleOfferingsForSelect();
     }
 
