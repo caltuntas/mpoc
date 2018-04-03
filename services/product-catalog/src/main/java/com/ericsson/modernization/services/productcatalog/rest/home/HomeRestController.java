@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -47,4 +48,9 @@ public class HomeRestController {
         //yukardaki kod disable SerializationFeature.FAIL_ON_EMPTY_BEANS hatası aldı
     }
 
+    @RequestMapping(value = "/getOfferingSalesChannels", method = RequestMethod.GET)
+    public ResponseEntity<Collection<Object>> getOfferingSalesChannels(){
+        return new ResponseEntity<Collection<Object>>( homeAppService.getOfferingSalesChannels(), HttpStatus.OK);
+    }
+    
 }
