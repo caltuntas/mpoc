@@ -109,7 +109,8 @@ export class PriceComponent implements OnInit {
     }
 
     updatePrice(priceInp) {
-        this.priceList[priceInp.id-1] = Object.create(priceInp);
+        var ind = this.priceList.findIndex(item => item.id === priceInp.id);
+        this.priceList[ind] = Object.create(priceInp);
         this.screenStatus = true; // change to add
         this.cleanFields("OneTime");
     }
@@ -119,6 +120,8 @@ export class PriceComponent implements OnInit {
         if (index !== -1) {
             this.priceList.splice(index, 1);
         }
+        this.screenStatus = true; // change to add
+        this.cleanFields("OneTime");
     }
 
     onEditPrice(priceItem) {
