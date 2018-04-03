@@ -19,9 +19,6 @@ matrix:
   - language: node_js
     node_js:
       - node
-    cache:
-      directories:
-        - ./node_modules
 
     before_install:
       - cd ui/product-catalog
