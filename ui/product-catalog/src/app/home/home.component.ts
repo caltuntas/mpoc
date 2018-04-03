@@ -6,7 +6,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HomeService } from "./home.service";
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { BaseChartDirective } from 'ng2-charts';
+//import { BaseChartDirective } from 'ng2-charts';
+import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+
 
 @Component({
   selector: 'app-home',
@@ -14,19 +16,130 @@ import { BaseChartDirective } from 'ng2-charts';
   styleUrls: ['./home.component.css']
 })
 
+// class SharingService {
+//   private data1: CustomType1;
+//   getChartsData():() => Promise {
+//      if(goog.isDef(this.data1)){
+//          return Promise.resolve(data1);
+//      }
+//      return Net.fetch().then(data => {
+//          this.data1 = data;
+//          return data;
+//      });
+//   }
+// }	
+
+
 export class HomeComponent implements OnInit, OnDestroy {
+
+
+
+
+
+  public barChartOptions: any = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
+
+
+  public barChartType: string = 'bar';
+  public barChartLegend: boolean = true;
+
+
+  public offeringsOfSegmentsChartData: any[] = [
+    { data: [65, 59, 80], label: 'Available' },
+    { data: [28, 48, 40], label: 'Closed' }
+  ];
+  public offeringsOfSegmentsLabels: string[] = ['Mcare3', 'WEB', 'IVR'];
+
+
+  public offeringsOfCategoriesChartData: any[] = [
+    { data: [65, 59, 80, 65, 59, 80, 65, 59, 80], label: 'Available' },
+    { data: [28, 48, 40, 28, 48, 40, 28, 48, 40], label: 'Closed' }
+  ];
+  public offeringsOfCategoriesLabels: string[] = ['THK', 'FTTH', 'TSOL', 'Fiber', 'ADSL', 'Adsl+Internet', 'Tel', 'OzelKampanyalar', 'Internet'];
+
+
 
   private chartjsData: any[];
 
 
-  public dataOfferingsSegment: number[];
-  public labelsOfferingsSegment: string[];
-  public datasetsOfferingsSegment: any[];
+  public offeringsSegmentServiceResponse: any;
+  public offeringsSegmentData: number[];
+  public offeringsSegmentLabels: string[];
+  public offeringsSegmentDatasets: any[];
 
+
+
+  public dailyOfferingsServiceResponse: any;
+  public dailyOfferingsChartData: number[];
+  public dailyOfferingsChartLabels: string[];
+  public dailyOfferingsChartDataSets: any[];
+
+
+  public lineChartType: string = 'line';
+
+
+
+
+
+  public dailyOfferingsChartColors: Array<any> = [
+    { // first color
+      backgroundColor: 'rgba(255,0,0,0.6)',
+      borderColor: 'rgba(255,0,0,0.2)',
+      pointBackgroundColor: 'rgba(255,0,0,0.6)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(255,0,0,0.6)'
+    }];
+
+
+
+
+
+  public newBarChartColors: Array<any> = [
+    { // first color
+      backgroundColor: 'rgba(255,0,0,0.6)',
+      borderColor: 'rgba(255,0,0,0.2)',
+      pointBackgroundColor: 'rgba(255,0,0,0.6)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(255,0,0,0.6)'
+    },
+    { // first color
+      backgroundColor: 'rgba(0,0,255,0.6)',
+      borderColor: 'rgba(0,0,255,0.6)',
+      pointBackgroundColor: 'rgba(0,0,255,0.6)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(0,0,255,0.6)'
+    }];
+
+  public newPieChartColors: Array<any> = [{
+    backgroundColor: ['rgba(255,0,0,0.6)', 'rgba(0,0,255,0.6)', 'rgba(255,51,51,0.6)', 'rgba(255,77,77,0.6)'],
+    // borderColor: ['rgba(0,0,0,1)', 'rgba(252,252,252,1)', 'rgba(252,252,252,1)'],       
+    // hoverBackgroundColor: 'rgba(0,255,0,0.2)',
+    pointHoverBackgroundColor: '#000'
+  }];
+
+
+  public morrisDonutChartColors: string[] =  ['rgba(255,0,0,0.6)', 'rgba(255,26,26,0.6)', 'rgba(255,51,51,0.6)', 'rgba(255,77,77,0.6)', 'rgba(255,100,100,0.6)'];
+
+
+
+  barColorsDemo(row, series, type) {
+    if (type === 'donut') {
+      var red = Math.ceil(150 * row.y / 8);
+      return 'rgb(' + red + ',0,0)';
+    } else {
+      return '#000';
+    }
+  }
 
 
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+
 
   private updateChart() {
     this.chart.ngOnChanges({});
@@ -35,59 +148,94 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private homeService: HomeService) {
 
 
-    this.dataOfferingsSegment = [23, 43];
-    this.labelsOfferingsSegment = ["EBN", "CBN"];
+    setTimeout(() => this.ngOnInit(), 1250);
+
+    this.offeringsSegmentData = [12, 17];
+    this.offeringsSegmentLabels = ["EBU", "CBU"];
+
+    this.dailyOfferingsChartData = [23, 43, 23, 43, 23, 43, 54];
+    this.dailyOfferingsChartLabels = ['27/03', '28/03', '29/03', '30/03', '31/03', '01/04', '01/04'];
+    this.dailyOfferingsChartDataSets = [{ data: [23, 43, 23, 43, 23, 43, 54], label: "Offerings" }]
 
 
+    console.log("constructor girildi");
+
+    this.homeService.getChartsData().subscribe(
+      (data) => {
+
+        console.log("getChartsData girildi");
+
+        this.chartjsData = data;
+
+        this.offeringsSegmentServiceResponse = this.chartjsData.filter(function getName(element, index, array) { return (element.name == "dataOfferingsSegment"); });
+        this.dailyOfferingsServiceResponse = this.chartjsData.filter(function getName(element, index, array) { return (element.name == "dailyOfferingsChartData"); });
 
 
-    this.homeService.getChartsData().subscribe((data) => {
-      this.chartjsData = data;
+        console.log("getChartsData çıkıldı");
+        console.log(this.offeringsSegmentServiceResponse);
+      },
 
+      error => console.log("Error: ", error),
+      () => { this.ngOnInit(); }
 
-      var asd = this.chartjsData.filter(function getName(element, index, array) { return (element.name == "dataOfferingsSegment"); });
-
-      this.dataOfferingsSegment = asd[0].data;
-      this.labelsOfferingsSegment = asd[0].labels;
-
-
-      this.datasetsOfferingsSegment = [
-        {
-          labels: this.labelsOfferingsSegment,
-          data: this.dataOfferingsSegment,
-          backgroundColor: this.backgroundColorOfferings,
-          hoverBackgroundColor: this.hoverBackgroundColorOfferings
-        }];
-
-
-
-
-
-
-
-    });
-
+    );
+    console.log("constructor'e çıkıldı");
   }
 
 
 
-  ngOnChanges() { }
+  ngOnChanges() {
 
-  ngOnInit() { }
+
+    console.log("ngOnChanges'e girildi");
+    console.log(this.chartjsData);
+    console.log(this.dailyOfferingsServiceResponse);
+
+    console.log(this.dailyOfferingsChartData);
+    console.log(this.dailyOfferingsChartLabels);
+    this.chart.chart.update();
+
+
+  }
+
+  ngOnInit() {
+
+
+
+    console.log("ngOnInit'e girildi");
+    this.offeringsSegmentData = this.offeringsSegmentServiceResponse[0].data;
+    this.offeringsSegmentLabels = this.offeringsSegmentServiceResponse[0].labels;
+    this.offeringsSegmentDatasets = [
+      {
+        labels: this.offeringsSegmentLabels,
+        data: this.offeringsSegmentData,
+        backgroundColor: this.backgroundColorOfferings,
+        hoverBackgroundColor: this.hoverBackgroundColorOfferings
+      }];
+
+
+    this.dailyOfferingsChartData = this.dailyOfferingsServiceResponse[0].data;
+    this.dailyOfferingsChartLabels = this.dailyOfferingsServiceResponse[0].datalabels;
+    this.dailyOfferingsChartDataSets = [{ data: this.dailyOfferingsServiceResponse[0].data, labels: this.dailyOfferingsServiceResponse[0].labels }];
+
+    this.chart.chart.update();
+    console.log("ngOnInit'e çıkıldı");
+
+  }
 
   ngOnDestroy() { }
 
   //name: string;
 
   doughnutChartType: string = 'doughnut';
-  barChartType: string = 'bar';
+  barChartType2: string = 'bar';
 
   // asd = this.homeService.getChartsData()
   //   .catch(this.handleError)
   //   .subscribe((data) => {})
 
-  donutdemo = [{"value":70,"label":"foo"},{"value":15,"label":"bar"},{"value":10,"label":"baz"},{"value":5,"label":"A really really long label"}];
-  donutLabels = ['foo', 'bar', 'baz', 'A really really long label'];
+  donutdemo = [{ "value": 70, "label": "Internet" }, { "value": 15, "label": "İşOrtağım" }];
+  donutLabels = ['Internet', 'İşOrtağım'];
 
   backgroundColorOfferings: string[] = ["#FF6384", "#36A2EB", "#FFCE56"];
   hoverBackgroundColorOfferings: string[] = ["#FF6384", "#36A2EB", "#FFCE56"];
@@ -117,28 +265,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  public doit(ctx) {
-    //   Chart.types.Doughnut.prototype.draw.apply(this, arguments);
-
-       var width = this.canvas.nativeElement.clientWidth,
-           height = this.canvas.nativeElement.clientHeight;
-
-       var fontSize = (height / 250).toFixed(2);
-       ctx.font = fontSize + "em Verdana";
-       ctx.textBaseline = "middle";
-       ctx.fillStyle = "blue";
-
-       var text = "Pass Rate 82%",
-           textX = Math.round((width - ctx.measureText(text).width) / 2),
-           textY = height -10;
-
-       ctx.fillText(text, textX, textY);
-       ctx.restore();
-   }
-
-
   dataOfferings: number[] = [51, 498];
-  labelsOfferings: string[] = ['Satışa Kapalı', 'Satışa Açık'];
+  labelsOfferings: string[] = ['Closed', 'Available'];
 
   datasetsOfferings: any[] = [
     {
@@ -148,30 +276,21 @@ export class HomeComponent implements OnInit, OnDestroy {
       hoverBackgroundColor: this.hoverBackgroundColorOfferings
     }];
 
+  public barChartLegend2: boolean = true;
 
-
-
-  public barChartLegend: boolean = true;
-
-  public barChartData: any[] = [
+  public barChartData2: any[] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
     { data: [17, 67, 37, 27, 57, 37, 47], label: 'Series C' }
   ];
-  public barChartLabels: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+  public barChartLabels2: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
 
   public barChartDataSetsSingleLine: any[] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
   ];
   barChartLabelsSingleLine: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
 
-  public lineChartDataSet: Array<any> = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
-  ];
 
-  public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  public lineChartType: string = 'line';
 
   public chartClicked(e: any): void {
     console.log(e);
@@ -179,48 +298,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public chartHovered(e: any): void {
     console.log(e);
   }
-  public randomize(): void {
-    let data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      (Math.random() * 100),
-      56,
-      (Math.random() * 100),
-      40];
-    let clone = JSON.parse(JSON.stringify(this.barChartData));
-    clone[0].data = data;
-    this.barChartData = clone;
-  }
-
-  // dataOfferingsBar: number[] = [51, 498];
-  // labelsOfferingsBar: string[] = ['Satışa Kapalı', 'Satışa Açık'];
-  // typeOfferingsBar: string = 'bar';
-
-  // bar_demo: [{ "x": "2011 Q1", "y": 0 }, { "x": "2011 Q2", "y": 1 }, { "x": "2011 Q3", "y": 2 }, { "x": "2011 Q4", "y": 3 }, { "x": "2012 Q1", "y": 4 }, { "x": "2012 Q2", "y": 5 }, { "x": "2012 Q3", "y": 6 }, { "x": "2012 Q4", "y": 7 }, { "x": "2013 Q1", "y": 8 }];
-
-  // datasetsOfferingsBar: any[] = [
-  //   {
-  //     data: this.bar_demo,
-  //     backgroundColor: this.backgroundColorOfferings,
-  //     hoverBackgroundColor: this.hoverBackgroundColorOfferings
-  //   }];
-
-  // barColorsDemo(row, series, type) {
-  //   if (type === 'bar') {
-  //     var red = Math.ceil(150 * row.y / 8);
-  //     return 'rgb(' + red + ',0,0)';
-  //   } else {
-  //     return '#000';
-  //   }
-  // }
-  //colorsUndefined: Array<Color>;
-  //colorsEmpty: Array<Color> = [];
-  // colorsOverride: Array<Color> = [{
-  //   backgroundColor: 'green',
-  //   hoverBackgroundColor: 'purple'
-  // }];
-  // colorsEmptyObject: Array<Color> = [{}];
 
   private handleError(error: any) {
     let errMsg = (error.message) ? error.message :
@@ -228,5 +305,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     console.error(errMsg); // log to console instead
     return Observable.throw(errMsg);
   }
+
+
 
 }
