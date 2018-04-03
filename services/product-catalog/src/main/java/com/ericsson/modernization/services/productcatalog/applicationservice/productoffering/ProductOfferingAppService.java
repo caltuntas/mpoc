@@ -108,10 +108,6 @@ public class ProductOfferingAppService {
         saveCatalog(productOffering, detailModel);
         saveCategory(productOffering, detailModel);
 
-        //productOffering.setSalesChannels(detailModel.getSalesChannels());
-        //productOffering.setSegments(detailModel.getSegments());
-        //productOffering.setDocuments(detailModel.getDocuments());
-
         Integer productOfferingTypeId = 1;
         if (detailModel.getProductOfferingTypeId() > 0)
             productOfferingTypeId = detailModel.getProductOfferingTypeId();
@@ -152,7 +148,7 @@ public class ProductOfferingAppService {
         if (detailModel.getDocuments() != null) {
             for (int documentId : detailModel.getDocuments()) {
                 Document document = documentAppService.findById(documentId);
-                if (document != null && productOffering.getDocuments().contains(document)) {
+                if (document != null && !productOffering.getDocuments().contains(document)) {
                     productOffering.getDocuments().add(document);
                 }
             }
