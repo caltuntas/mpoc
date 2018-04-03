@@ -308,13 +308,13 @@ public class ProductOfferingAppService {
     }
 
     public List<IdNameDescriptionModel> getSimgpleOfferingsForSelect() {
-        return productOfferingRepository.findAllByProductOfferingTypeId(1).stream()
+        return productOfferingRepository.findAllByProductOfferingTypeIdAndIsDeletedIsFalse(1).stream()
                 .map(x -> new IdNameDescriptionModel(x.getId(), x.getName(), x.getDescription()))
                 .collect(Collectors.toList());
     }
 
     public List<ProductOfferingListModel> findAllByProductOfferingTypeId(int productOfferingTypeId) {
-        return productOfferingRepository.findAllByProductOfferingTypeId(productOfferingTypeId).stream()
+        return productOfferingRepository.findAllByProductOfferingTypeIdAndIsDeletedIsFalse(productOfferingTypeId).stream()
                 .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
                 .map(x -> new ProductOfferingListModel(x.getId(), x.getName(), x.getDescription(),
                         x.getProductSpecification() != null ? x.getProductSpecification().getCode() : null,

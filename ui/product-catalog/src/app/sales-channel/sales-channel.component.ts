@@ -53,12 +53,8 @@ export class SalesChannelComponent implements OnInit {
   constructor(private router: Router,private scService: SalesChannelService,private notificationComponent: NotificationComponent) { }
 
   ngOnInit() {
-    //this.getSalesChannels();
     
   }
-  
-
-  
   
   ngAfterViewInit() {
         document.querySelector('body').addEventListener('click', (event) => {
@@ -74,19 +70,10 @@ export class SalesChannelComponent implements OnInit {
     }
   
   onEditSalesCh(scid) {
-        console.log("edit sales ch:", scid);
-
-//        let navigationExtras: NavigationExtras = {
-//            queryParams: {
-//                "offeringId": scid
-//            }
-//        };
-
         this.router.navigate(['/sales-channel/detail/' + scid]);
     }
 
     onDeleteSalesCh(scid) {
-        console.log("Delete salesch", scid, "?");
       
         this.scService.deleteSalesChannel(scid).subscribe((data) => {
           

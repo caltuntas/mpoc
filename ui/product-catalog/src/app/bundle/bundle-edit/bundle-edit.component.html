@@ -1,6 +1,10 @@
 <div id="content">
     <div class="row">
-        <sa-big-breadcrumbs [items]="['BundleOffering', 'Edit']" icon="table"
+
+        <sa-big-breadcrumbs *ngIf="model.isNewbundle" [items]="['BundleOffering', 'New']" icon="table"
+                            class="col-xs-12 col-sm-9 col-md-9 col-lg-9"></sa-big-breadcrumbs>
+               
+                            <sa-big-breadcrumbs *ngIf="!model.isNewbundle" [items]="['BundleOffering', 'Ed,t']" icon="table"
                             class="col-xs-12 col-sm-9 col-md-9 col-lg-9"></sa-big-breadcrumbs>
 
     </div>
@@ -33,12 +37,10 @@
                                   
                                 </li>
                                 <li data-step="4">
-                                    <span class="badge">4</span>Documents<span class="chevron"></span>
+                                    <span class="badge">4</span>Detail<span class="chevron"></span>
                                 </li>
+                               
                                 <li data-step="5">
-                                    <span class="badge">5</span>asd<span class="chevron"></span>
-                                </li>
-                                <li data-step="6">
                                     <span class="badge">6</span>Save<span class="chevron"></span>
                                 </li>
                             </ul>
@@ -71,12 +73,10 @@
 
                             <div class="step-pane" data-step="4">
 
-                              <app-bundle-documents [model]="model"></app-bundle-documents>
+                              <app-bundle-detail [model]="model"></app-bundle-detail>
                             </div>
 
-                            <div class="step-pane" data-step="5">
-                                sdfsd
-                            </div>
+                           
 
                             <div class="step-pane" data-step="6">
                                 <h3><strong>Step 6 </strong> -Save</h3>

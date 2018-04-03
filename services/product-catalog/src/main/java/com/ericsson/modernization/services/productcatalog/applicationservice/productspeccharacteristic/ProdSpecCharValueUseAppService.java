@@ -40,6 +40,8 @@ public class ProdSpecCharValueUseAppService {
                 ProdSpecCharValueUseListModel charValueUseListModel = new ProdSpecCharValueUseListModel();
                 charValueUseListModel.setProdSpecCharId(specCharacteristic.getId());
                 charValueUseListModel.setProdSpecCharType(specCharacteristic.getValueType());
+                charValueUseListModel.setRequired(specCharacteristic.getisRequired());
+                charValueUseListModel.setConfigurable(specCharacteristic.getisConfigurable());
                 charValueUseListModel.setProdSpecCharUseId(productSpecCharUse.getId());
                 charValueUseListModel.setProdSpecCharDescription(specCharacteristic.getName());
 

@@ -1,6 +1,8 @@
 package com.ericsson.modernization.services.productcatalog.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ProductOfferingTerm extends EntityBase implements Description, ValidFor {
@@ -8,6 +10,8 @@ public class ProductOfferingTerm extends EntityBase implements Description, Vali
     private int term;
     private String desc;
     private String type;
+    @OneToOne(cascade = CascadeType.ALL)
+    private ProductOffering productOffering;
 
     public int getTerm() {
         return term;
@@ -51,6 +55,14 @@ public class ProductOfferingTerm extends EntityBase implements Description, Vali
     @Override
     public void setValidFor(TimePeriod validFor) {
 
+    }
+
+    public ProductOffering getProductOffering() {
+        return productOffering;
+    }
+
+    public void setProductOffering(ProductOffering productOffering) {
+        this.productOffering = productOffering;
     }
 }
 

@@ -8,6 +8,8 @@ public class ProdSpecCharValueUseListModel {
     private int prodSpecCharId;
     private int prodSpecCharType;
     private String prodSpecCharDescription;
+    private Boolean isRequired;
+    private Boolean isConfigurable;
     private List<ProdSpecCharValueListModel> prodSpecCharValueList;
 
     public ProdSpecCharValueUseListModel() {
@@ -52,5 +54,21 @@ public class ProdSpecCharValueUseListModel {
 
     public void setProdSpecCharType(int prodSpecCharType) {
         this.prodSpecCharType = prodSpecCharType;
+    }
+
+    public boolean isRequired() {
+        return isRequired;
+    }
+
+    public void setRequired(Boolean required) {
+        isRequired = required;
+    }
+
+    public Boolean isConfigurable() {
+        return isConfigurable;
+    }
+
+    public void setConfigurable(Boolean configurable) {
+        isConfigurable = configurable;
     }
 }

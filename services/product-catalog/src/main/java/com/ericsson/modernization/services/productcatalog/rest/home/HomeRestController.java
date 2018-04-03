@@ -3,6 +3,8 @@ package com.ericsson.modernization.services.productcatalog.rest.home;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.home.HomeAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsData;
+import com.ericsson.modernization.services.productcatalog.applicationservice.home.response.ProductOfferingProp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -47,4 +50,9 @@ public class HomeRestController {
         //yukardaki kod disable SerializationFeature.FAIL_ON_EMPTY_BEANS hatası aldı
     }
 
+    @RequestMapping(value = "/getOfferingSalesChannels", method = RequestMethod.GET)
+    public ResponseEntity<List<ProductOfferingProp>> getOfferingSalesChannels(){
+        return new ResponseEntity<List<ProductOfferingProp>>( homeAppService.getOfferingSalesChannels(), HttpStatus.OK);
+    }
+    
 }

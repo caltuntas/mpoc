@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from "../../../environments/environment";
 import { Observable } from "rxjs/Observable";
+import { IdNameDescriptionModel } from '../../bundle/model/idNameDescriptionModel';
 
 
 @Injectable()
@@ -11,6 +12,12 @@ export class HttpClientProvider {
 
     constructor(private http: HttpClient) {
     }
+
+
+    // get2(path: string, params?: any): Observable<IdNameDescriptionModel[]> {
+    //     let url = this.rootUrl + path;
+    //     return this.http.get<IdNameDescriptionModel[]>(url);
+    // }
 
     get(path: string, params?: any): Observable<any> {
         return this.request('GET', path, params);

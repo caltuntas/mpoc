@@ -19,8 +19,11 @@ export class BundleService {
         return this.http.get(`/productoffering/getOfferings/2`);
     }
 
-    getSimgpleOfferingsForSelect(): Observable<IdNameDescriptionModel[]> {
-        return this.http.get(`/productoffering/getSimgpleOfferingsForSelect`);
+    // getSimpleOfferingsForSelect2(): Observable<IdNameDescriptionModel[]> {
+    //     return  this.http.get2(`/productoffering/getSimgpleOfferingsForSelect`);
+    // }
+    getSimpleOfferingsForSelect(): Observable<IdNameDescriptionModel[]> {
+        return  this.http.get(`/productoffering/getSimgpleOfferingsForSelect`);
     }
     createOffering(model) {
         return this.http.post(`/productoffering/createoffering`, model);

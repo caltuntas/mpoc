@@ -15,7 +15,7 @@ export class BundleModel {
   public validForStartDate: string;
   public validForEndDate: string;
   // public prices: Array<number>;
-  public saleChannels: Array<number>;
+  public salesChannels: Array<number>;
   public segments: Array<number>;
   public documents: Array<number>;
   public simpleProductOfferingIds: Array<number>;

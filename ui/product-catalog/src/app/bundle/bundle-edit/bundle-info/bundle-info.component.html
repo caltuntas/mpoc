@@ -3,6 +3,7 @@
 <!-- wizard form starts here -->
 
 <div>
+
     <fieldset>
         <div class="form-group" [class.has-error]="bundleNameControl.invalid && bundleNameControl.touched ">
             <label class="col-xs-2 col-lg-3 control-label">Name</label>
@@ -29,11 +30,10 @@
         <div class="form-group" [class.has-error]="isSellableControl.invalid && isSellableControl.touched ">
             <label class="col-xs-2 col-lg-3 control-label"></label>
             <div class="col-xs-9 col-lg-6 ">
-                    <label class="toggle">
-                            <input type="checkbox" [(ngModel)]="model.isSellable"
-                                   name="checkbox-toggle" checked="checked" #isSellableControl="ngModel">
-                            <i data-swchon-text="YES" data-swchoff-text="NO"></i>Is
-                            Sellable</label>
+                <label class="toggle">
+                    <input type="checkbox" [(ngModel)]="model.isSellable" name="checkbox-toggle" checked="checked" #isSellableControl="ngModel">
+                    <i data-swchon-text="YES" data-swchoff-text="NO"></i>Is Sellable
+                </label>
                 <small *ngIf="isSellableControl.invalid && isSellableControl.touched " class="help-block">ıs Sellable is required</small>
             </div>
         </div>
@@ -45,7 +45,7 @@
         <div class="form-group" [class.has-error]="termControl.invalid && termControl.touched ">
             <label class="col-xs-2 col-lg-3 control-label">Term</label>
             <div class="col-xs-9 col-lg-6 ">
-                <select required class="form-control" id="termSelect" name="termsSelect" [(ngModel)]="model.description" #termControl="ngModel">
+                <select required class="form-control" id="termSelect" name="termsSelect" [(ngModel)]="model.term" #termControl="ngModel">
                     <option *ngFor="let term of termValues" [value]="term.id">
                         {{term.value}}
                     </option>
@@ -53,20 +53,7 @@
                 <small *ngIf="termControl.invalid && termControl.touched " class="help-block">Term is required</small>
             </div>
         </div>
-    </fieldset>
-    
-    <fieldset>
-        <div class="form-group" [class.has-error]="termControl.invalid && termControl.touched ">
-            <label class="col-xs-2 col-lg-3 control-label">Offerings</label>
-            <div class="col-xs-9 col-lg-6 ">
-                <select required class="form-control" id="termSelect" name="termsSelect" [(ngModel)]="model.description" #termControl="ngModel">
-                    <option *ngFor="let term of termValues" [value]="term.id">
-                        {{term.value}}
-                    </option>
-                </select>
-                <small *ngIf="termControl.invalid && termControl.touched " class="help-block">Offeringss required</small>
-            </div>
-        </div>
-    </fieldset>
+    </fieldset>   
 
 </div>
+

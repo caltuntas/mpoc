@@ -48,7 +48,7 @@ export class SpecificationEditComponent implements OnInit {
     forkJoin([chars, prod]).subscribe(results => {
       this.characteristics = <Array<productSpecCharModel>>results[0].json();
       this.productSpec = <productSpecEditModel>results[1].json();
-      console.log(this.productSpec);
+     
       this.productSpec.selectedCharacteristics.forEach(selectedChar => {
         this.characteristics.find(
           x => x.id == selectedChar.id
@@ -72,11 +72,7 @@ export class SpecificationEditComponent implements OnInit {
       });
   }
 
-  private extractData(res: Response) {
-    let body = res.json();
-    console.log(body);
-    return body;
-  }
+  
 
   filterNonSelectedChars(cars: Array<productSpecCharModel>) {
     return cars.filter(x => x.isSelected != true);
@@ -128,7 +124,7 @@ export class SpecificationEditComponent implements OnInit {
   }
 
   saveForm(productSpec: productSpecEditModel) {
-    console.log(this.productSpec);
+
     this.service.updateSpec(this.productSpec).subscribe(data => {});
     this.notificationComponent.showNotification(
       "Specification",
