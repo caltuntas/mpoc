@@ -57,6 +57,7 @@
 
                                 <br/>
                                 <br/>
+                                <br/>
 
                                 <div class="row">
 
@@ -119,6 +120,11 @@
                                 </div>
 
 
+                                <br/>
+                                <br/>
+                                <br/>
+
+
                             </div>
 
                             <div class="step-pane" data-step="2">
@@ -170,13 +176,15 @@
                                     </div>
 
                                     <div class="row" *ngIf="charValue.prodSpecCharType != 1">
-                                        <label class="control-label col-md-2"><strong>{{
-                                            charValue.prodSpecCharDescription }}</strong></label>
-                                        <div class="col-md-8">
-                                            <input class="form-control"
-                                                   id="charValueUseInput{{i}}"
-                                                   placeholder="Please type the value"
-                                                   type="text">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2"><strong>{{
+                                                charValue.prodSpecCharDescription }}</strong></label>
+                                            <div class="col-md-8">
+                                                <input class="form-control"
+                                                       id="charValueUseInput{{i}}"
+                                                       placeholder="Please type the value"
+                                                       type="text">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
