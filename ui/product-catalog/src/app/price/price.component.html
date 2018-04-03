@@ -212,7 +212,8 @@
                                                     {{item.periodType}}
                                                 </th>
                                                 <th>
-                                                    {{item.percentage}}
+                                                    <span class="fa fa-fw fa-check" *ngIf="item.percentage == true"></span>
+                                                    <span class="fa fa-fw fa-times" *ngIf="!item.percentage == true"></span>
                                                 </th>
                                                 <th>
                                                     {{item.amount}}
