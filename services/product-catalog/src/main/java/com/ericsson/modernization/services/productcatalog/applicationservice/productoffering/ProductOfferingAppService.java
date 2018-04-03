@@ -11,7 +11,6 @@ import com.ericsson.modernization.services.productcatalog.applicationservice.pro
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProductSpecCharacteristicAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.saleschannel.SalesChannelAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.segment.SegmentAppService;
-import com.ericsson.modernization.services.productcatalog.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,14 +64,11 @@ public class ProductOfferingAppService {
 
 		ProductOffering productOffering = new ProductOffering();
 		saveFields(productOffering, createRequest);// Simple or Bundle
-		System.out.println(createRequest.getProductOfferingTypeId());
-		System.out.println(productOffering.getId() + " nolu bundle");
 		if (createRequest.getProductOfferingTypeId() == 2)// Bundle
 		{
 			if (productOffering.getProductOfferings() == null)
 				productOffering.setProductOfferings(new ArrayList<ProductOffering>());
 			for (Integer id : createRequest.getSimpleProductOfferingIds()) {
-				System.out.println("id : " + id);
 				// BoChild kaydet
 				ProductOffering childproductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
 				// Klonla
@@ -192,22 +188,36 @@ public class ProductOfferingAppService {
 		clonedProductOffering.setIsReplicated(childproductOffering.getIsReplicated());
 		clonedProductOffering.setName(childproductOffering.getName());
 		// clonedProductOffering.setPrices(childproductOffering.getPrices());
-		// clonedProductOffering.setProductOfferingDetermineses(childproductOffering.getProductOfferingDetermineses());
-		// List<ProductOfferingCharValueModel> productOfferingCharValueModels =
-		// childproductOffering
-		// .getProductOfferingDetermineses().stream().map(x ->
-		// x.getProdSpecCharValueUse().getc) .collect(Collectors.toList());
-		// saveDetermines(clonedProductOffering, productOfferingCharValueModels);
+		List<ProductOfferingDetermines> productOfferingDetermineses = new ArrayList<ProductOfferingDetermines>();
+		if (childproductOffering.getProductOfferingDetermineses() != null) {
+			for (ProductOfferingDetermines item : childproductOffering.getProductOfferingDetermineses()) {
+				ProductOfferingDetermines newItem = new ProductOfferingDetermines();
+				newItem.setCreateUserId(item.getCreateUserId());
+				if (item.getProdSpecCharValueUse() != null) {
+					ProdSpecCharValueUse prodSpecCharValueUse = prodSpecCharValueUseAppService
+							.findById(item.getProdSpecCharValueUse().getId());
+					newItem.setProdSpecCharValueUse(prodSpecCharValueUse);
+				}
+				newItem.setProductOffering(clonedProductOffering);
+				ProductSpecCharacteristic productSpecCharacteristic = productSpecCharacteristicAppService
+						.findById(item.getProductSpecCharacteristic().getId());
+				newItem.setProductSpecCharacteristic(productSpecCharacteristic);
+				newItem.setTextValue(item.getTextValue());
+				newItem.setUpdateUserId(item.getUpdateUserId());
+				productOfferingDetermineses.add(newItem);
+			}
+		}
+		clonedProductOffering.setProductOfferingDetermineses(productOfferingDetermineses);
 		ProductOfferingType boChildProductOfferingType = productOfferingTypeRepository.findByIdAndIsDeletedIsFalse(3);// BoChild
 		clonedProductOffering.setProductOfferingType(boChildProductOfferingType);
 		clonedProductOffering.setProductSpecification(childproductOffering.getProductSpecification());
 		clonedProductOffering.setReturnPeriod(childproductOffering.getReturnPeriod());
 		List<Integer> saleChannelIds = childproductOffering.getSalesChannels().stream().map(x -> x.getId())
 				.collect(Collectors.toList());
-		saveSalesChannels(childproductOffering, saleChannelIds);
+		saveSalesChannels(clonedProductOffering, saleChannelIds);
 		List<Integer> segmentIds = childproductOffering.getSegments().stream().map(x -> x.getId())
 				.collect(Collectors.toList());
-		saveSegments(childproductOffering, segmentIds);
+		saveSegments(clonedProductOffering, segmentIds);
 		// clonedProductOffering.setUnsupportedProductSpecCharValueUseGroups(childproductOffering.getUnsupportedProductSpecCharValueUseGroups());
 		clonedProductOffering.setUpdateUserId(childproductOffering.getUpdateUserId());
 		clonedProductOffering.setValidFor(childproductOffering.getValidFor());
