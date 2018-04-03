@@ -2,7 +2,6 @@ package com.ericsson.modernization.services.productcatalog.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -85,7 +84,13 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "ProductOfferingDocuments", joinColumns = @JoinColumn(name = "productoffering_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id"))
 	private List<Document> documents;
-
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "ProductOfferingRelation", 
+	joinColumns = @JoinColumn(name = "productofferingId", referencedColumnName = "id", nullable = false), 
+	inverseJoinColumns = @JoinColumn(name = "relatedProductofferingId", referencedColumnName = "id", nullable = false))
+	private List<ProductOffering> productOfferings;
+	
 	public String getName() {
 		return name;
 	}
@@ -211,33 +216,16 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 		this.productOfferingType = productOfferingType;
 	}
 
-	@JoinTable(name = "ProductOfferingRelation", joinColumns = {
-	@JoinColumn(name = "productOfferingId", referencedColumnName = "id", nullable = false) }, inverseJoinColumns = {
-	@JoinColumn(name = "relatedProductOfferingId", referencedColumnName = "id", nullable = false) })
-	@ManyToMany
-	private Collection<ProductOffering> productOfferingCollection;
-	
-	@ManyToMany(mappedBy = "productOfferingCollection")
-	private Collection<ProductOffering> relatedProductOfferingCollection;
-
-	public Collection<ProductOffering> getProductOfferingCollection() {
-		return productOfferingCollection;
-	}
-
-	public void setProductOfferingCollection(Collection<ProductOffering> productOfferingCollection) {
-		this.productOfferingCollection = productOfferingCollection;
-	}
-
-	public Collection<ProductOffering> getRelatedProductOfferingCollection() {
-		return relatedProductOfferingCollection;
-	}
-
-	public void setRelatedProductOfferingCollection(Collection<ProductOffering> relatedProductOfferingCollection) {
-		this.relatedProductOfferingCollection = relatedProductOfferingCollection;
-	}
-
 	public Category getCategory() {
 		return category;
+	}
+
+	public List<ProductOffering> getProductOfferings() {
+		return productOfferings;
+	}
+
+	public void setProductOfferings(List<ProductOffering> productOfferings) {
+		this.productOfferings = productOfferings;
 	}
 
 	public void setCategory(Category category) {

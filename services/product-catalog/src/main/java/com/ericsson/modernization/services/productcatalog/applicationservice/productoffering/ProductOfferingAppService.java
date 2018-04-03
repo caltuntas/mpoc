@@ -73,17 +73,16 @@ public class ProductOfferingAppService {
         saveFields(productOffering, createRequest);// Simple or Bundle
         System.out.println(createRequest.getProductOfferingTypeId());
         if (createRequest.getProductOfferingTypeId() == 2)// Bundle
-        {
+        {                
+        	if (productOffering.getProductOfferings() == null)
+        		productOffering.setProductOfferings(new ArrayList<ProductOffering>());
             for (Integer id : createRequest.getSimpleProductOfferingIds()) {
                 System.out.println("id : " + id);
                 // BoChild kaydet
                 ProductOffering childproductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
-                cloneChildProductOfferingForBundle(productOffering, childproductOffering);
+                ProductOffering clonedProductOffering = cloneChildProductOfferingForBundle(productOffering, childproductOffering);
                 // Relation ata
-                if (productOffering.getRelatedProductOfferingCollection() == null)
-                	productOffering.setRelatedProductOfferingCollection(new ArrayList<ProductOffering>());
-                productOffering.getRelatedProductOfferingCollection().add(childproductOffering);
-                // TODO : BoChild'ın ilişkilerini kaydet
+                productOffering.getProductOfferings().add(clonedProductOffering);
             }
             // Relation kaydet
             productOfferingRepository.save(productOffering);
@@ -180,7 +179,7 @@ public class ProductOfferingAppService {
         productOffering.setProductSpecification(specification);
     }
 
-    private void cloneChildProductOfferingForBundle(ProductOffering mainProductOffering,
+    private ProductOffering cloneChildProductOfferingForBundle(ProductOffering mainProductOffering,
                                                     ProductOffering childproductOffering) {
         ProductOffering clonedProductOffering = new ProductOffering();
         // TODO : Clone ManyToMany
@@ -206,6 +205,7 @@ public class ProductOfferingAppService {
         clonedProductOffering.setValidFor(childproductOffering.getValidFor());
         clonedProductOffering.setWarrantyPeriod(childproductOffering.getWarrantyPeriod());
         productOfferingRepository.save(clonedProductOffering);
+        return clonedProductOffering;
     }
 
     private void saveCatalog(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
