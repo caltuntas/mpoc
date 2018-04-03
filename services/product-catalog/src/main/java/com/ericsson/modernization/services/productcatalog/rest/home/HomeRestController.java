@@ -3,6 +3,8 @@ package com.ericsson.modernization.services.productcatalog.rest.home;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.home.HomeAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsData;
+import com.ericsson.modernization.services.productcatalog.applicationservice.home.response.ProductOfferingProp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,8 +51,8 @@ public class HomeRestController {
     }
 
     @RequestMapping(value = "/getOfferingSalesChannels", method = RequestMethod.GET)
-    public ResponseEntity<Collection<Object>> getOfferingSalesChannels(){
-        return new ResponseEntity<Collection<Object>>( homeAppService.getOfferingSalesChannels(), HttpStatus.OK);
+    public ResponseEntity<List<ProductOfferingProp>> getOfferingSalesChannels(){
+        return new ResponseEntity<List<ProductOfferingProp>>( homeAppService.getOfferingSalesChannels(), HttpStatus.OK);
     }
     
 }

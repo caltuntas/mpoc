@@ -1,14 +1,17 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.home;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsData;
-import com.ericsson.modernization.services.productcatalog.repository.DocumentRepository;
+import com.ericsson.modernization.services.productcatalog.applicationservice.home.response.ProductOfferingProp;
 import com.ericsson.modernization.services.productcatalog.repository.HomeRepository;
+import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import javax.persistence.Persistence;
 
 @Service
 public class HomeAppService {
@@ -33,8 +36,10 @@ public class HomeAppService {
         return list;
     }
     
-    public Collection<Object> getOfferingSalesChannels() {
-    	Collection<Object> o = homeRepository.getOfferingSalesChannels();
+    public List<ProductOfferingProp> getOfferingSalesChannels() {
+    	List<ProductOfferingProp> o = homeRepository.getOfferingSalesChannels();
+    	
+    	
     	return o;
     }
 
