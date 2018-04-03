@@ -97,12 +97,12 @@ export class BundleListComponent implements OnInit, OnDestroy {
     }
 
     onEditOffering(offeringId) {
-        console.log("edit offering:", offeringId);
+       
         this.router.navigate(['/bundle/bundle-edit/' + offeringId]);
     }
 
     onDeleteOffering(offeringId) {
-        console.log("Delete offering", offeringId, "?");
+       
         this.bundleService.deleteOffering(offeringId).subscribe((data) => {
             this.reloadOfferingListTable();
         });

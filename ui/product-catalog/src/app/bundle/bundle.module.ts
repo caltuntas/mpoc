@@ -12,7 +12,10 @@ import { BundleEditComponent } from "./bundle-edit/bundle-edit.component";
 import { BundleInfoComponent } from "./bundle-edit/bundle-info/bundle-info.component";
 import { BundlePriceComponent } from "./bundle-edit/bundle-price/bundle-price.component";
 import { BundleOfferingsComponent } from "./bundle-edit/bundle-offerings/bundle-offerings.component";
-import { BundleDocumentsComponent } from "./bundle-edit/bundle-documents/bundle-documents.component";
+import { SalesChannelService } from "../sales-channel/sales-channel.service";
+import { SegmentService } from "../segment/segment.service";
+import { DocumentService } from "../document/document.service";
+import { BundleDetailComponent } from "./bundle-edit/bundle-detail/bundle-detail.component";
 
 @NgModule({
   imports: [
@@ -30,9 +33,9 @@ import { BundleDocumentsComponent } from "./bundle-edit/bundle-documents/bundle-
     BundleInfoComponent,
     BundleEditComponent,
     BundlePriceComponent,
-    BundleOfferingsComponent,
-    BundleDocumentsComponent
+    BundleOfferingsComponent,    
+    BundleDetailComponent
   ],
-  providers: []
+  providers: [SalesChannelService,SegmentService,DocumentService]
 })
 export class BundleModule {}

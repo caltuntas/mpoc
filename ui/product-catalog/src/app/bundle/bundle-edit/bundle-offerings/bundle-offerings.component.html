@@ -1,14 +1,18 @@
-<h3>
-    <strong>Step 2 </strong> - Simple Offerings</h3>
-<div class="row">
-    <sa-datatable [options]="dtOptions" paginationLength="true" tableClass="table table-striped table-bordered table-hover" width="100%" *ngIf="!reRenderTable">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>           
-            <th>Description</th>                      
-            <th></th>
-        </tr>
-        </thead>
-    </sa-datatable>
-</div>
+
+<div class="col-lg-12">
+     <h2> Select offering from list:</h2> 
+</div><br><br><br>
+    <article class="col-lg-12">
+        <sa-datatable [options]="dtOptions" paginationLength="true" tableClass="table table-striped table-bordered table-hover" width="100%"
+            *ngIf="!reRenderTable">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </sa-datatable>
+
+    </article>

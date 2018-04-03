@@ -21,6 +21,9 @@ export class BundleEditComponent implements OnInit {
       this.model.id = idParam;
       this.model.isNewbundle = false;
     }
+    else{
+      this.model.isNewbundle = true;
+    }
   }
 
   ngOnInit() {}
@@ -42,9 +45,9 @@ export class BundleEditComponent implements OnInit {
       //   }
       // }
 
-      console.log(data.direction);
-      console.log(data.step);
-      console.log(data);
+      // console.log(data.direction);
+      // console.log(data.step);
+      // console.log(data);
     });
     //Wizard Events
   }

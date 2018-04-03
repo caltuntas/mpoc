@@ -67,6 +67,10 @@ export class OfferingEditComponent implements OnInit {
                     this.setCharValues(this.model.productSpecificationId);
                 }
 
+                if (this.model.term) {
+                    jQuery("#termSelect").val(this.model.term).trigger('change');
+                }
+
                 if (this.model.catalogId) {
                     jQuery("#catalogSelect").val(this.model.catalogId).trigger('change');
                 }
@@ -75,20 +79,21 @@ export class OfferingEditComponent implements OnInit {
                     jQuery("#categorySelect").val(this.model.categoryId).trigger('change');
                 }
 
-                if(this.model.segments && this.model.segments.length > 0){
+                if (this.model.segments && this.model.segments.length > 0) {
                     jQuery("#segmentSelect").val(this.model.segments).trigger('change');
                 }
 
-                if(this.model.salesChannels && this.model.salesChannels.length > 0){
+                if (this.model.salesChannels && this.model.salesChannels.length > 0) {
                     jQuery("#salesChannelSelect").val(this.model.salesChannels).trigger('change');
                 }
 
-                if(this.model.documents && this.model.documents.length > 0){
+                if (this.model.documents && this.model.documents.length > 0) {
                     jQuery("#documentSelect").val(this.model.documents).trigger('change');
                 }
             })
         } else {
             this.model.productOfferingCharValues = [];
+
         }
 
         this.loadSpecs();
@@ -102,6 +107,13 @@ export class OfferingEditComponent implements OnInit {
 
     ngAfterViewInit() {
         var self = this;
+
+        //Term Select
+        jQuery('#termSelect').on('select2:select', function (e) {
+            var data = e.params.data;
+            self.model.term = jQuery("#termSelect").val();
+        });
+        //Term Select
 
         //Spesification Select
         jQuery('#specSelect').on('select2:select', function (e) {
@@ -129,7 +141,7 @@ export class OfferingEditComponent implements OnInit {
             var data = jQuery('#segmentSelect').select2('data');
             self.model.segments = [];
             for (let i = 0; i < data.length; i++) {
-              self.model.segments.push(data[i].id);
+                self.model.segments.push(data[i].id);
             }
         });
         //Segment Select
@@ -162,8 +174,6 @@ export class OfferingEditComponent implements OnInit {
                 if (!self.validateStep(data.step)) {
                     event.preventDefault();
                 }
-
-                console.log(self.model);
             }
         });
         //Wizard Events
@@ -233,7 +243,6 @@ export class OfferingEditComponent implements OnInit {
     loadTerms() {
         this.termValues =
             [
-                {"value": "Please Select", "id": 0},
                 {"value": 6, "id": 1},
                 {"value": 12, "id": 2},
                 {"value": 18, "id": 3},
@@ -241,6 +250,10 @@ export class OfferingEditComponent implements OnInit {
                 {"value": 30, "id": 5},
                 {"value": 36, "id": 6}
             ];
+
+        if (!this.model.term) {
+            jQuery("#termSelect").val(0).trigger('change');
+        }
     }
 
     setCharValues(specId) {

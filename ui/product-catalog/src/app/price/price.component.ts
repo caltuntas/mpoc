@@ -99,7 +99,7 @@ export class PriceComponent implements OnInit {
             priceType: this.priceInput.priceType,
             periodType: this.priceInput.periodType,
             currency: this.priceInput.currency,
-            percentage: this.priceInput.percentage,
+            percentage: (this.priceInput.priceType !== "Discount" || this.priceInput.percentage) ? this.priceInput.percentage : false,
             amount: this.priceInput.amount,
             chargePeriodFrom: this.priceInput.chargePeriodFrom,
             chargePeriodTo: this.priceInput.chargePeriodTo

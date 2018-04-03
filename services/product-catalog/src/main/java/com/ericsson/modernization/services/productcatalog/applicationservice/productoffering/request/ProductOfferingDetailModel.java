@@ -14,6 +14,7 @@ public class ProductOfferingDetailModel {
     private int productSpecificationId;
     private int catalogId;
     private int categoryId;
+    private int term;
     private Boolean isReplicated;
     private Boolean isSellable;
     private List<Integer> salesChannels;
@@ -33,6 +34,7 @@ public class ProductOfferingDetailModel {
              int catalogId,
              int categoryId,
              int productOfferingTypeId,
+             int term,
              List<Integer> simpleProductOfferingIds,
              List<ProductOfferingCharValueModel> productOfferingCharValues,
              List<Integer> salesChannels,
@@ -52,6 +54,7 @@ public class ProductOfferingDetailModel {
         setSalesChannels(salesChannels);
         setSegments(segments);
         setDocuments(documents);
+        setTerm(term);
     }
 
     public ProductOfferingDetailModel() {
@@ -200,5 +203,13 @@ public class ProductOfferingDetailModel {
 
     public void setDocuments(List<Integer> documents) {
         this.documents = documents;
+    }
+
+    public int getTerm() {
+        return term;
+    }
+
+    public void setTerm(int term) {
+        this.term = term;
     }
 }
