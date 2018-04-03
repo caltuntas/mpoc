@@ -50,7 +50,7 @@ export class DocumentComponent implements OnInit {
                             </div>`;
                 }
                 }],
-                "order": [[1, 'asc']]
+                "order": [[0, 'desc']]
   }
   
   constructor(private router: Router,private scService: DocumentService,private notificationComponent: NotificationComponent) { }
