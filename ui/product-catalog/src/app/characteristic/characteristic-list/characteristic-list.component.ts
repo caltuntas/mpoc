@@ -53,8 +53,8 @@ export class CharacteristicListComponent implements OnInit, OnDestroy {
                                 </li>
                             </ul>
                         </div>`;
-                }
-
+                },
+                'orderable': false
             }],
         order: [[0, "desc"]]
     };
