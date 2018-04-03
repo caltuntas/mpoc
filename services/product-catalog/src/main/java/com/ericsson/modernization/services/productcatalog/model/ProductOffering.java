@@ -45,8 +45,8 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	private String externalId;
 	@ManyToOne
 	private ProductSpecification productSpecification;
-	// @ManyToOne
-	// private ProductOfferingTerm productOfferingTerm;
+	 @ManyToOne
+	private ProductOfferingTerm productOfferingTerm;
 	@ManyToOne
 	private Category category;
 
@@ -255,4 +255,12 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	public void setDocuments(List<Document> documents) {
 		this.documents = documents;
 	}
+
+    public ProductOfferingTerm getProductOfferingTerm() {
+        return productOfferingTerm;
+    }
+
+    public void setProductOfferingTerm(ProductOfferingTerm productOfferingTerm) {
+        this.productOfferingTerm = productOfferingTerm;
+    }
 }
