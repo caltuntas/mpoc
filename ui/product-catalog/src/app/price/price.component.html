@@ -12,7 +12,6 @@
                     <div>
                         <div class="widget-body">
                             <form class="form-horizontal">
-                                <div class="col-sm-12 col-md-12 col-lg-12">
                                     <fieldset>
                                         <div class="form-group" disabled="true">
                                             <label class="col-sm-3 col-md-3 col-lg-3 control-label">Price Type</label>
@@ -24,12 +23,14 @@
                                                     <span>One-Time</span>
                                                 </label>
                                                 <label class="radio radio-inline">
-                                                    <input type="radio" class="radiobox" (click)="cleanFields('Recurring')" [disabled]="!screenStatus"
+                                                    <input type="radio" class="radiobox"
+                                                           (click)="cleanFields('Recurring')" [disabled]="!screenStatus"
                                                            value="Recurring" name="mode">
                                                     <span>Recurring</span>
                                                 </label>
                                                 <label class="radio radio-inline">
-                                                    <input type="radio" class="radiobox" (click)="cleanFields('Discount')" [disabled]="!screenStatus"
+                                                    <input type="radio" class="radiobox"
+                                                           (click)="cleanFields('Discount')" [disabled]="!screenStatus"
                                                            value="Discount" name="mode">
                                                     <span>Discount</span>
                                                 </label>
@@ -128,7 +129,7 @@
                                         </div>
                                     </fieldset>
 
-                                    <fieldset>
+<!--                                    <fieldset>
                                         <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 pull-right">
                                             <div class="pull-right">
                                                 <button class="btn btn-info btn-md header-btn hidden-mobile"
@@ -148,118 +149,30 @@
                                             </div>
 
                                         </div>
-                                    </fieldset>
+                                    </fieldset>-->
 
-                                </div>
-
-                                <legend>Price List
-                                </legend>
-
-                                <div>
-                                    <div class="widget-body no-padding">
-
-                                        <sa-datatable paginationLength="true"
-                                                      tableClass="table table-striped table-bordered table-hover"
-                                                      width="100%">
-                                            <thead>
-                                            <tr>
-                                               <!-- <th>
-                                                    <i class="fa fa-fw fa-key text-muted hidden-md hidden-sm hidden-xs"></i>
-                                                    ID
-                                                </th>-->
-                                                <th>
-                                                    <i class="fa fa-fw fa-tags text-muted hidden-md hidden-sm hidden-xs"></i>
-                                                    Price Type
-                                                </th>
-                                                <th>
-                                                    <i class="fa fa-fw fa-line-chart text-muted hidden-md hidden-sm hidden-xs"></i>
-                                                    Period Type
-                                                </th>
-                                                <th>
-                                                    <i class="fa fa-fw fa-percent text-muted hidden-md hidden-sm hidden-xs"></i>
-                                                    Is Percentage
-                                                </th>
-                                                <th>
-                                                    <i class="fa fa-fw fa-money text-muted hidden-md hidden-sm hidden-xs"></i>
-                                                    Amount
-                                                </th>
-                                                <th>
-                                                    <i class="fa fa-fw fa-exchange text-muted hidden-md hidden-sm hidden-xs"></i>
-                                                    Currency
-                                                </th>
-                                                <th>
-                                                    <i class="fa fa-fw fa-calendar-o text-muted hidden-md hidden-sm hidden-xs"></i>
-                                                    Charge Period From
-                                                </th>
-                                                <th>
-                                                    <i class="fa fa-fw fa-calendar-o text-muted hidden-md hidden-sm hidden-xs"></i>
-                                                    Charge Period To
-                                                </th>
-                                                <th data-orderable="false">
-
-                                                </th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr *ngFor="let item of priceList">
-                                                <!--<th>
-                                                    {{item.id}}
-                                                </th>-->
-                                                <th>
-                                                    {{item.priceType}}
-                                                </th>
-                                                <th>
-                                                    {{item.periodType}}
-                                                </th>
-                                                <th>
-                                                    <span class="fa fa-fw fa-check" *ngIf="item.percentage == true"></span>
-                                                    <span class="fa fa-fw fa-times" *ngIf="!item.percentage == true"></span>
-                                                </th>
-                                                <th>
-                                                    {{item.amount}}
-                                                </th>
-                                                <th>
-                                                    {{item.currency}}
-                                                </th>
-                                                <th>
-                                                    {{item.chargePeriodFrom}}
-                                                </th>
-                                                <th>
-                                                    {{item.chargePeriodTo}}
-                                                </th>
-                                                <th data-orderable="false">
-                                                    <div class='btn-group dropdown show pull-right'>
-                                                        <button class='btn btn-info btn-sm dropdown-toggle'
-                                                                data-toggle='dropdown' aria-haspopup='true'
-                                                                aria-expanded='false'>
-                                                            <i class='fa fa-gear fa-lg'></i></button>
-                                                        <ul class='dropdown-menu  ng-star-inserted'>
-                                                            <li>
-                                                                <a class='sa-datatables-edit-price'
-                                                                   (click)="onEditPrice(item)">
-                                                                    <i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs"
-                                                                       style="color:cornflowerblue"></i>
-                                                                    Edit
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class='sa-datatables-delete-price'
-                                                                   (click)="onDeletePrice(item)">
-                                                                    <i class="fa fa-fw fa-ban text-muted hidden-md hidden-sm hidden-xs"
-                                                                       style="color:red"></i>
-                                                                    Delete
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                            </tbody>
-                                        </sa-datatable>
-
-
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="pull-right">
+                                                    <button class="btn btn-info btn-md header-btn hidden-mobile"
+                                                            *ngIf="screenStatus" (click)="addPrice()">
+                                                        <span class="glyphicon glyphicon-plus"></span> Add
+                                                    </button>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <button class="btn btn-danger btn-md header-btn hidden-mobile"
+                                                            *ngIf="!screenStatus" (click)="onCancelUpdate()">
+                                                        <span class="glyphicon glyphicon-plus"></span> Cancel
+                                                    </button>
+                                                    <button class="btn btn-success btn-md header-btn hidden-mobile"
+                                                            *ngIf="!screenStatus" (click)="updatePrice(priceInput)">
+                                                        <span class="glyphicon glyphicon-plus"></span> Update
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
                             </form>
                         </div>
@@ -267,6 +180,133 @@
                 </div>
             </div>
         </div>
+    </sa-widgets-grid>
+
+    <sa-widgets-grid>
+
+
+        <div class="row">
+            <article class="col-sm-12">
+
+
+                <div sa-widget [editbutton]="false" [deletebutton]="false" color="vdf">
+                    <header>
+            <span class="widget-icon">
+              <i class="fa fa-table"></i>
+            </span>
+                        <h2>Characteristic List</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+
+                            <sa-datatable paginationLength="true"
+                                          tableClass="table table-striped table-bordered table-hover"
+                                          width="100%">
+                                <thead>
+                                <tr>
+                                    <!-- <th>
+                                         <i class="fa fa-fw fa-key text-muted hidden-md hidden-sm hidden-xs"></i>
+                                         ID
+                                     </th>-->
+                                    <th>
+                                        <i class="fa fa-fw fa-tags text-muted hidden-md hidden-sm hidden-xs"></i>
+                                        Price Type
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-fw fa-line-chart text-muted hidden-md hidden-sm hidden-xs"></i>
+                                        Period Type
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-fw fa-percent text-muted hidden-md hidden-sm hidden-xs"></i>
+                                        Is Percentage
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-fw fa-money text-muted hidden-md hidden-sm hidden-xs"></i>
+                                        Amount
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-fw fa-exchange text-muted hidden-md hidden-sm hidden-xs"></i>
+                                        Currency
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-fw fa-calendar-o text-muted hidden-md hidden-sm hidden-xs"></i>
+                                        Charge Period From
+                                    </th>
+                                    <th>
+                                        <i class="fa fa-fw fa-calendar-o text-muted hidden-md hidden-sm hidden-xs"></i>
+                                        Charge Period To
+                                    </th>
+                                    <th data-orderable="false">
+
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let item of priceList">
+                                    <!--<th>
+                                        {{item.id}}
+                                    </th>-->
+                                    <th>
+                                        {{item.priceType}}
+                                    </th>
+                                    <th>
+                                        {{item.periodType}}
+                                    </th>
+                                    <th>
+                                        <span class="fa fa-fw fa-check" *ngIf="item.percentage == true"></span>
+                                        <span class="fa fa-fw fa-times" *ngIf="!item.percentage == true"></span>
+                                    </th>
+                                    <th>
+                                        {{item.amount}}
+                                    </th>
+                                    <th>
+                                        {{item.currency}}
+                                    </th>
+                                    <th>
+                                        {{item.chargePeriodFrom}}
+                                    </th>
+                                    <th>
+                                        {{item.chargePeriodTo}}
+                                    </th>
+                                    <th data-orderable="false">
+                                        <div class='btn-group dropdown show pull-right'>
+                                            <button class='btn btn-info btn-sm dropdown-toggle'
+                                                    data-toggle='dropdown' aria-haspopup='true'
+                                                    aria-expanded='false'>
+                                                <i class='fa fa-gear fa-lg'></i></button>
+                                            <ul class='dropdown-menu  ng-star-inserted'>
+                                                <li>
+                                                    <a class='sa-datatables-edit-price'
+                                                       (click)="onEditPrice(item)">
+                                                        <i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs"
+                                                           style="color:cornflowerblue"></i>
+                                                        Edit
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class='sa-datatables-delete-price'
+                                                       (click)="onDeletePrice(item)">
+                                                        <i class="fa fa-fw fa-ban text-muted hidden-md hidden-sm hidden-xs"
+                                                           style="color:red"></i>
+                                                        Delete
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </th>
+                                </tr>
+                                </tbody>
+                            </sa-datatable>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </article>
+
+        </div>
+
     </sa-widgets-grid>
 
 </div>
