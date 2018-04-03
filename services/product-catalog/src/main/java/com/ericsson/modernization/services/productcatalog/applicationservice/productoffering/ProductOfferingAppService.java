@@ -73,9 +73,9 @@ public class ProductOfferingAppService {
         saveFields(productOffering, createRequest);// Simple or Bundle
         System.out.println(createRequest.getProductOfferingTypeId());
         if (createRequest.getProductOfferingTypeId() == 2)// Bundle
-        {                
-        	if (productOffering.getProductOfferings() == null)
-        		productOffering.setProductOfferings(new ArrayList<ProductOffering>());
+        {
+            if (productOffering.getProductOfferings() == null)
+                productOffering.setProductOfferings(new ArrayList<ProductOffering>());
             for (Integer id : createRequest.getSimpleProductOfferingIds()) {
                 System.out.println("id : " + id);
                 // BoChild kaydet
@@ -88,7 +88,7 @@ public class ProductOfferingAppService {
             productOfferingRepository.save(productOffering);
         }
 
-       
+
         return productOffering;
     }
 
@@ -132,30 +132,36 @@ public class ProductOfferingAppService {
         productOfferingRepository.save(productOffering);
     }
 
-    private void saveSalesChannels(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
-    	if (detailModel.getSalesChannels() == null)
-    		return;
-        for(int salesChannelId : detailModel.getSalesChannels()){
-            SalesChannel salesChannel = salesChannelAppService.findById(salesChannelId);
-            productOffering.getSalesChannels().add(salesChannel);
+    private void saveSalesChannels(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
+        if (detailModel.getSalesChannels() != null) {
+            for (int salesChannelId : detailModel.getSalesChannels()) {
+                SalesChannel salesChannel = salesChannelAppService.findById(salesChannelId);
+                if (salesChannel != null && !productOffering.getSalesChannels().contains(salesChannel)) {
+                    productOffering.getSalesChannels().add(salesChannel);
+                }
+            }
         }
     }
 
-    private void saveSegments(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
-    	if (detailModel.getSegments() == null)
-    		return;
-    	for(int segmentId : detailModel.getSegments()){
-            Segment segment = segmentAppService.findById(segmentId);
-            productOffering.getSegments().add(segment);
+    private void saveSegments(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
+        if (detailModel.getSegments() != null) {
+            for (int segmentId : detailModel.getSegments()) {
+                Segment segment = segmentAppService.findById(segmentId);
+                if (segment != null && !productOffering.getSegments().contains(segment)) {
+                    productOffering.getSegments().add(segment);
+                }
+            }
         }
     }
 
-    private void saveDocuments(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
-    	if (detailModel.getDocuments() == null)
-    		return;
-    	for(int documentId : detailModel.getDocuments()){
-            Document document = documentAppService.findById(documentId);
-            productOffering.getDocuments().add(document);
+    private void saveDocuments(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
+        if (detailModel.getDocuments() != null) {
+            for (int documentId : detailModel.getDocuments()) {
+                Document document = documentAppService.findById(documentId);
+                if (document != null && productOffering.getDocuments().contains(document)) {
+                    productOffering.getDocuments().add(document);
+                }
+            }
         }
     }
 
@@ -180,7 +186,7 @@ public class ProductOfferingAppService {
     }
 
     private ProductOffering cloneChildProductOfferingForBundle(ProductOffering mainProductOffering,
-                                                    ProductOffering childproductOffering) {
+                                                               ProductOffering childproductOffering) {
         ProductOffering clonedProductOffering = new ProductOffering();
         // TODO : Clone ManyToMany
         clonedProductOffering.setProductOfferingType(childproductOffering.getProductOfferingType());
@@ -219,27 +225,37 @@ public class ProductOfferingAppService {
     }
 
     private void saveDetermines(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
-        if (detailModel.getProductOfferingCharValues() == null)
-            return;
-        List<ProductOfferingDetermines> productOfferingDetermines = new ArrayList<>();
+        //TODO: refactoring
+        if (detailModel.getProductOfferingCharValues() != null) {
+            List<ProductOfferingDetermines> productOfferingDetermines = new ArrayList<>();
 
-        for (ProductOfferingCharValueModel model : detailModel.getProductOfferingCharValues()) {
-            ProductOfferingDetermines determines = new ProductOfferingDetermines();
+            for (ProductOfferingCharValueModel model : detailModel.getProductOfferingCharValues()) {
+                ProductOfferingDetermines determines = new ProductOfferingDetermines();
+                boolean determinesExists = false;
 
-            if (model.getCharValueType() == 1) {
-                ProdSpecCharValueUse prodSpecCharValueUse = prodSpecCharValueUseAppService.findById(model.getCharValueUseId());
-                determines.setProdSpecCharValueUse(prodSpecCharValueUse);
+                if (model.getCharValueType() == 1) {
+                    ProdSpecCharValueUse prodSpecCharValueUse = prodSpecCharValueUseAppService.findById(model.getCharValueUseId());
+                    determines.setProdSpecCharValueUse(prodSpecCharValueUse);
+
+                    for (ProductOfferingDetermines persistedDetermines : productOffering.getProductOfferingDetermineses()) {
+                        if (persistedDetermines.getProdSpecCharValueUse() != null
+                                && persistedDetermines.getProdSpecCharValueUse().getId() == prodSpecCharValueUse.getId()) {
+                            determinesExists = true;
+                            break;
+                        }
+                    }
+                }
+
+                ProductSpecCharacteristic productSpecCharacteristic = productSpecCharacteristicAppService.findById(model.getCharId());
+                determines.setProductSpecCharacteristic(productSpecCharacteristic);
+                determines.setTextValue(model.getCharValue());
+                determines.setProductOffering(productOffering);
+                productOfferingDetermines.add(determines);
+
+                if(!determinesExists){
+                    productOffering.getProductOfferingDetermineses().add(determines);
+                }
             }
-
-            ProductSpecCharacteristic productSpecCharacteristic = productSpecCharacteristicAppService.findById(model.getCharId());
-            determines.setProductSpecCharacteristic(productSpecCharacteristic);
-            determines.setTextValue(model.getCharValue());
-            determines.setProductOffering(productOffering);
-            productOfferingDetermines.add(determines);
-        }
-
-        if (productOfferingDetermines.size() > 0) {
-            productOffering.setProductOfferingDetermineses(productOfferingDetermines);
         }
     }
 
@@ -275,9 +291,9 @@ public class ProductOfferingAppService {
         );
     }
 
- public List<IdNameModel> getSimgpleOfferingsForSelect(){
-     return productOfferingRepository.findAllByProductOfferingTypeId(1).stream().map(x->new IdNameModel(x.getId(),x.getName())).collect(Collectors.toList());
- }
+    public List<IdNameModel> getSimgpleOfferingsForSelect() {
+        return productOfferingRepository.findAllByProductOfferingTypeId(1).stream().map(x -> new IdNameModel(x.getId(), x.getName())).collect(Collectors.toList());
+    }
 
     public List<ProductOfferingListModel> findAllByProductOfferingTypeId(int productOfferingTypeId) {
         return productOfferingRepository.findAllByProductOfferingTypeId(productOfferingTypeId).stream()
