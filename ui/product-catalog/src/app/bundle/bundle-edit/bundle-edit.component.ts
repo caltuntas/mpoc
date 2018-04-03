@@ -13,8 +13,7 @@ export class BundleEditComponent implements OnInit {
   charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private charService: CharacteristicService
+    private route: ActivatedRoute  
   ) {
     this.model = new BundleModel();
     const idParam = route.snapshot.params.offeringId;
@@ -29,20 +28,9 @@ export class BundleEditComponent implements OnInit {
   ngAfterViewInit() {
     var self = this;
 
-    //Catalog Select
-    jQuery("#catalogSelect").on("select2:select", function(e) {
-      var data = e.params.data;
-      console.log(data.id);
-      self.model.catalogId = jQuery("#catalogSelect").val();
-    });
-    //Catalog Select
+    
 
-    //Category Select
-    jQuery("#categorySelect").on("select2:select", function(e) {
-      var data = e.params.data;
-      console.log(data.id);
-      self.model.categoryId = jQuery("#categorySelect").val();
-    });
+  
     //Wizard Events
     jQuery("#offeringWizard").on("actionclicked.fu.wizard", function(
       event,
@@ -61,11 +49,6 @@ export class BundleEditComponent implements OnInit {
     //Wizard Events
   }
 
-  loadCharValueUses(specId) {
-    this.charService.getSpecCharValueUses(specId).subscribe(charValuUseList => {
-      this.charValueUseList = charValuUseList;
-    });
-  }
   onWizardComplete(data) {
     console.log("fuel-ux wizard complete", data);
     // this.model.salesChannels = this.selectedSalesChannels;
