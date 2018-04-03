@@ -67,6 +67,10 @@ export class OfferingEditComponent implements OnInit {
                     this.setCharValues(this.model.productSpecificationId);
                 }
 
+                if(this.model.term){
+                    jQuery("#termSelect").val(this.model.term).trigger('change');
+                }
+
                 if (this.model.catalogId) {
                     jQuery("#catalogSelect").val(this.model.catalogId).trigger('change');
                 }
@@ -102,6 +106,13 @@ export class OfferingEditComponent implements OnInit {
 
     ngAfterViewInit() {
         var self = this;
+
+        //Term Select
+        jQuery('#termSelect').on('select2:select', function (e) {
+            var data = e.params.data;
+            self.model.term = jQuery("#termSelect").val();
+        });
+        //Term Select
 
         //Spesification Select
         jQuery('#specSelect').on('select2:select', function (e) {
@@ -162,8 +173,6 @@ export class OfferingEditComponent implements OnInit {
                 if (!self.validateStep(data.step)) {
                     event.preventDefault();
                 }
-
-                console.log(self.model);
             }
         });
         //Wizard Events
@@ -233,7 +242,6 @@ export class OfferingEditComponent implements OnInit {
     loadTerms() {
         this.termValues =
             [
-                {"value": "Please Select", "id": 0},
                 {"value": 6, "id": 1},
                 {"value": 12, "id": 2},
                 {"value": 18, "id": 3},
@@ -241,6 +249,7 @@ export class OfferingEditComponent implements OnInit {
                 {"value": 30, "id": 5},
                 {"value": 36, "id": 6}
             ];
+        jQuery("#termSelect").val(0).trigger('change');
     }
 
     setCharValues(specId) {
