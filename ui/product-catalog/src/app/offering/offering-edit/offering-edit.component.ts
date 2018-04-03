@@ -275,6 +275,14 @@ export class OfferingEditComponent implements OnInit {
                         }
                     }
                 }
+                else{
+                    let offeringCharValues = this.model.productOfferingCharValues;
+                    for (let k = 0; k < offeringCharValues.length; k++) {
+                        if (offeringCharValues[k].charId ==  specCharValueUseList[i].prodSpecCharId){
+                            specCharValueUseList[i].prodSpecCharValue = offeringCharValues[k].charValue;
+                        }
+                    }
+                }
             }
 
             this.charValueUseList = specCharValueUseList;
@@ -282,6 +290,8 @@ export class OfferingEditComponent implements OnInit {
     }
 
     getCharValues() {
+
+        this.model.productOfferingCharValues = [];
         for (let i = 0; i < this.charValueUseList.length; i++) {
 
             let offeringCharValue = new OfferingCharValueModel();
@@ -298,6 +308,7 @@ export class OfferingEditComponent implements OnInit {
                 let selector = "#charValueUseInput" + i;
                 offeringCharValue.charValue = jQuery(selector).val();
             }
+
             this.model.productOfferingCharValues.push(offeringCharValue);
         }
     }
