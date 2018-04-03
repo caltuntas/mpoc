@@ -34,8 +34,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
 
-
-
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true
@@ -154,7 +152,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.offeringsSegmentLabels = ["EBU", "CBU"];
 
     this.dailyOfferingsChartData = [23, 43, 23, 43, 23, 43, 54];
-    this.dailyOfferingsChartLabels = ['27/03', '28/03', '29/03', '30/03', '31/03', '01/04', '01/04'];
+    this.dailyOfferingsChartLabels = ['27/03', '28/03', '29/03', '30/0  ', '11/04', '02/04', '03/04'];
     this.dailyOfferingsChartDataSets = [{ data: [23, 43, 23, 43, 23, 43, 54], label: "Offerings" }]
 
 
@@ -223,16 +221,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy() { }
-
-  //name: string;
+  ngOnDestroy() { }  
 
   doughnutChartType: string = 'doughnut';
   barChartType2: string = 'bar';
-
-  // asd = this.homeService.getChartsData()
-  //   .catch(this.handleError)
-  //   .subscribe((data) => {})
 
   donutdemo = [{ "value": 70, "label": "Internet" }, { "value": 15, "label": "İşOrtağım" }];
   donutLabels = ['Internet', 'İşOrtağım'];

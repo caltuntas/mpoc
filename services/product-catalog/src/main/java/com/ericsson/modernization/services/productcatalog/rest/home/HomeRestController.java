@@ -3,7 +3,7 @@ package com.ericsson.modernization.services.productcatalog.rest.home;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.home.HomeAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsData;
-import com.ericsson.modernization.services.productcatalog.applicationservice.home.response.ProductOfferingProp;
+import com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsDataProp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -42,17 +43,102 @@ public class HomeRestController {
                     (
                             productOffering.getName(),
                             productOffering.getData(),
-                            productOffering.getDatalabels(),
+                            productOffering.getDatalabel(),
                             productOffering.getLabels()));
         }
         return new ResponseEntity<>(homeChartsDataList, HttpStatus.OK);
-        //return new ResponseEntity<List<HomeChartsData>>( homeAppService.getChartsData(), HttpStatus.OK);
-        //yukardaki kod disable SerializationFeature.FAIL_ON_EMPTY_BEANS hatası aldı
+
     }
 
     @RequestMapping(value = "/getOfferingSalesChannels", method = RequestMethod.GET)
-    public ResponseEntity<List<ProductOfferingProp>> getOfferingSalesChannels(){
-        return new ResponseEntity<List<ProductOfferingProp>>( homeAppService.getOfferingSalesChannels(), HttpStatus.OK);
+    public ResponseEntity<List<HomeChartsData>> getOfferingOfSalesChannels(){
+        List<HomeChartsDataProp> homeChartsDataRaw = homeAppService.getOfferingOfSalesChannels();
+        List<HomeChartsData> homeChartsDataList = ConvertDoubleLayerData(homeChartsDataRaw, "OfferingSalesChannels");
+        return new ResponseEntity<List<HomeChartsData>>( homeChartsDataList, HttpStatus.OK);
     }
-    
+
+
+    @RequestMapping(value = "/getOfferingsCountOfCategories", method = RequestMethod.GET)
+    public ResponseEntity<List<HomeChartsData>> getOfferingsCountOfCategories(){
+        List<HomeChartsDataProp> homeChartsDataRaw = homeAppService.getOfferingsCountOfCategories();
+        List<HomeChartsData> homeChartsDataList = ConvertDoubleLayerData(homeChartsDataRaw,"OfferingsCountOfCategories");
+        return new ResponseEntity<List<HomeChartsData>>( homeChartsDataList, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/getOfferingSegments", method = RequestMethod.GET)
+    public ResponseEntity<List<HomeChartsData>> getOfferingSegments(){
+        List<HomeChartsDataProp> homeChartsDataRaw = homeAppService.getOfferingSegments();
+        List<HomeChartsData> homeChartsDataList = ConvertDoubleLayerData(homeChartsDataRaw, "OfferingSegments");
+        return new ResponseEntity<List<HomeChartsData>>( homeChartsDataList, HttpStatus.OK);
+    }
+
+    private List<HomeChartsData> ConvertDoubleLayerData( List<HomeChartsDataProp>  homeChartsDataRaw, String name){
+
+        List<String> dataLabels = new ArrayList<String>();
+        for (HomeChartsDataProp item : homeChartsDataRaw) {
+            if(!dataLabels.contains(item.getDataLabel())){
+                dataLabels.add(item.getDataLabel());
+            }
+        }
+        List<String> labels = new ArrayList<String>();
+        for (HomeChartsDataProp item : homeChartsDataRaw) {
+            if(!labels.contains(item.getLabel())){
+                labels.add(item.getLabel());
+            }
+        }
+        ArrayList<String> finalDataLabels = new ArrayList<String>();
+        ArrayList<String> finalLabels = new ArrayList<String>();
+        ArrayList<ArrayList<Long>> finaldata = new ArrayList<ArrayList<Long>>();
+        boolean isNotFirst = false;
+        for(String dataLabel : dataLabels){
+            ArrayList<Long> currentdata = new ArrayList<Long>();
+            //List<HomeChartsDataProp> currentHomeChartsDataRaw = homeChartsDataRaw.stream().filter((data) -> data.getDataLabel() == dataLabel).collect(Collectors.toList());
+            List<HomeChartsDataProp> currentHomeChartsDataRaw = new ArrayList();
+            for(HomeChartsDataProp filteredListItem : homeChartsDataRaw) {
+                if(filteredListItem.getDataLabel().toString().equals(dataLabel.toString())){
+                    currentHomeChartsDataRaw.add(filteredListItem);
+                }
+            }
+            for(HomeChartsDataProp filteredListItem : currentHomeChartsDataRaw){
+                if(!finalLabels.contains(filteredListItem.getLabel())){
+                    currentdata.add(filteredListItem.getData());
+                    finalLabels.add(filteredListItem.getLabel());
+                    if(isNotFirst){
+                        for(ArrayList<Long> updatedData : finaldata){
+                            updatedData.add(0L);
+                        }
+                    }
+                }
+                else{
+                    if(finalLabels.size() != currentdata.size()){
+                        currentdata.add(filteredListItem.getData());
+                    }else{
+                        for(int x = 0; x < finalLabels.size(); x = x + 1) {
+                            if(finalLabels.get(x).toString().equals(filteredListItem.getLabel().toString())){
+                                Long count = currentdata.get(x);
+                                currentdata.set(x,count+filteredListItem.getData());
+                            }
+                        }
+                    }
+                }
+            }
+            finalDataLabels.add(dataLabel);
+            finaldata.add(currentdata);
+            isNotFirst = true;
+        }
+        List<HomeChartsData> homeChartsDataList = new ArrayList<>();
+        for(int x = 0; x < finalDataLabels.size(); x = x + 1) {
+            homeChartsDataList.add(new HomeChartsData(
+                    name,
+                    finaldata.get(x),
+                    finalDataLabels.get(x),
+                    finalLabels));
+
+        }
+        return homeChartsDataList;
+    }
+
+
+
 }
