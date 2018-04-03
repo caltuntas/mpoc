@@ -3,9 +3,7 @@ package com.ericsson.modernization.services.productcatalog.model;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -28,9 +26,9 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 		setPrices(new ArrayList<>());
 		setProductOfferingDetermineses(new ArrayList<>());
 		setUnsupportedProductSpecCharValueUseGroups(new ArrayList<>());
-        setSalesChannels(new ArrayList<>());
-        setSegments(new ArrayList<>());
-        setDocuments(new ArrayList<>());
+		setSalesChannels(new ArrayList<>());
+		setSegments(new ArrayList<>());
+		setDocuments(new ArrayList<>());
 
 		TimePeriod validFor = new TimePeriod();
 		validFor.setValidForStartDate(new Date());
@@ -86,7 +84,13 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "ProductOfferingDocuments", joinColumns = @JoinColumn(name = "productoffering_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id"))
 	private List<Document> documents;
-
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "ProductOfferingRelation", 
+	joinColumns = @JoinColumn(name = "productofferingId", referencedColumnName = "id", nullable = false), 
+	inverseJoinColumns = @JoinColumn(name = "relatedProductofferingId", referencedColumnName = "id", nullable = false))
+	private List<ProductOffering> productOfferings;
+	
 	public String getName() {
 		return name;
 	}
@@ -211,33 +215,17 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 	public void setProductOfferingType(ProductOfferingType productOfferingType) {
 		this.productOfferingType = productOfferingType;
 	}
-/*
-	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "ProductOfferingRelation", joinColumns = {
-			@JoinColumn(name = "mainProductOfferingId") }, inverseJoinColumns = { @JoinColumn(name = "relatedProductOfferingId") })
-	private Set<ProductOffering> mainProductOfferings = new HashSet<ProductOffering>();
-
-	@ManyToMany(mappedBy = "mainProductOfferings")
-	private Set<ProductOffering> relatedProductOfferings = new HashSet<ProductOffering>();
-
-	public Set<ProductOffering> getRelatedProductOfferings() {
-		return relatedProductOfferings;
-	}
-
-	public void setRelatedProductOfferings(Set<ProductOffering> relatedProductOfferings) {
-		this.relatedProductOfferings = relatedProductOfferings;
-	}
-
-	public Set<ProductOffering> getMainProductOfferings() {
-		return mainProductOfferings;
-	}
-	
-	public void setMainProductOfferings(Set<ProductOffering> mainProductOfferings) {
-		this.mainProductOfferings = mainProductOfferings;
-	}*/
 
 	public Category getCategory() {
 		return category;
+	}
+
+	public List<ProductOffering> getProductOfferings() {
+		return productOfferings;
+	}
+
+	public void setProductOfferings(List<ProductOffering> productOfferings) {
+		this.productOfferings = productOfferings;
 	}
 
 	public void setCategory(Category category) {

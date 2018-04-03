@@ -1,14 +1,12 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.document.DocumentAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCharValueModel;
-import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.IdNameModel;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.IdNameDescriptionModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProdSpecCharValueUseAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProductSpecCharacteristicAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.saleschannel.SalesChannelAppService;
@@ -23,6 +21,18 @@ import com.ericsson.modernization.services.productcatalog.applicationservice.cat
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingDetailModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.ProductOfferingListModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.ProductSpecificationAppService;
+import com.ericsson.modernization.services.productcatalog.model.Catalog;
+import com.ericsson.modernization.services.productcatalog.model.Category;
+import com.ericsson.modernization.services.productcatalog.model.Document;
+import com.ericsson.modernization.services.productcatalog.model.Duration;
+import com.ericsson.modernization.services.productcatalog.model.ProdSpecCharValueUse;
+import com.ericsson.modernization.services.productcatalog.model.ProductOffering;
+import com.ericsson.modernization.services.productcatalog.model.ProductOfferingDetermines;
+import com.ericsson.modernization.services.productcatalog.model.ProductOfferingType;
+import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharacteristic;
+import com.ericsson.modernization.services.productcatalog.model.ProductSpecification;
+import com.ericsson.modernization.services.productcatalog.model.SalesChannel;
+import com.ericsson.modernization.services.productcatalog.model.Segment;
 import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingRepository;
 import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingTypeRepository;
 
@@ -58,20 +68,20 @@ public class ProductOfferingAppService {
         System.out.println(createRequest.getProductOfferingTypeId());
         if (createRequest.getProductOfferingTypeId() == 2)// Bundle
         {
-            Set<ProductOffering> relatedProductOfferings = new HashSet<ProductOffering>();
+            if (productOffering.getProductOfferings() == null)
+                productOffering.setProductOfferings(new ArrayList<ProductOffering>());
             for (Integer id : createRequest.getSimpleProductOfferingIds()) {
                 System.out.println("id : " + id);
                 // BoChild kaydet
                 ProductOffering childproductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
-                cloneChildProductOfferingForBundle(productOffering, childproductOffering);
+                ProductOffering clonedProductOffering = cloneChildProductOfferingForBundle(productOffering, childproductOffering);
                 // Relation ata
-                relatedProductOfferings.add(childproductOffering);
-                // TODO : BoChild'ın ilişkilerini kaydet
+                productOffering.getProductOfferings().add(clonedProductOffering);
             }
             // Relation kaydet
-            // productOffering.setRelatedProductOfferings(relatedProductOfferings);
             productOfferingRepository.save(productOffering);
         }
+
 
         return productOffering;
     }
@@ -98,10 +108,6 @@ public class ProductOfferingAppService {
         saveCatalog(productOffering, detailModel);
         saveCategory(productOffering, detailModel);
 
-        //productOffering.setSalesChannels(detailModel.getSalesChannels());
-        //productOffering.setSegments(detailModel.getSegments());
-        //productOffering.setDocuments(detailModel.getDocuments());
-
         Integer productOfferingTypeId = 1;
         if (detailModel.getProductOfferingTypeId() > 0)
             productOfferingTypeId = detailModel.getProductOfferingTypeId();
@@ -116,24 +122,36 @@ public class ProductOfferingAppService {
         productOfferingRepository.save(productOffering);
     }
 
-    private void saveSalesChannels(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
-        for(int salesChannelId : detailModel.getSalesChannels()){
-            SalesChannel salesChannel = salesChannelAppService.findById(salesChannelId);
-            productOffering.getSalesChannels().add(salesChannel);
+    private void saveSalesChannels(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
+        if (detailModel.getSalesChannels() != null) {
+            for (int salesChannelId : detailModel.getSalesChannels()) {
+                SalesChannel salesChannel = salesChannelAppService.findById(salesChannelId);
+                if (salesChannel != null && !productOffering.getSalesChannels().contains(salesChannel)) {
+                    productOffering.getSalesChannels().add(salesChannel);
+                }
+            }
         }
     }
 
-    private void saveSegments(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
-        for(int segmentId : detailModel.getSegments()){
-            Segment segment = segmentAppService.findById(segmentId);
-            productOffering.getSegments().add(segment);
+    private void saveSegments(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
+        if (detailModel.getSegments() != null) {
+            for (int segmentId : detailModel.getSegments()) {
+                Segment segment = segmentAppService.findById(segmentId);
+                if (segment != null && !productOffering.getSegments().contains(segment)) {
+                    productOffering.getSegments().add(segment);
+                }
+            }
         }
     }
 
-    private void saveDocuments(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
-        for(int documentId : detailModel.getDocuments()){
-            Document document = documentAppService.findById(documentId);
-            productOffering.getDocuments().add(document);
+    private void saveDocuments(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
+        if (detailModel.getDocuments() != null) {
+            for (int documentId : detailModel.getDocuments()) {
+                Document document = documentAppService.findById(documentId);
+                if (document != null && !productOffering.getDocuments().contains(document)) {
+                    productOffering.getDocuments().add(document);
+                }
+            }
         }
     }
 
@@ -157,8 +175,8 @@ public class ProductOfferingAppService {
         productOffering.setProductSpecification(specification);
     }
 
-    private void cloneChildProductOfferingForBundle(ProductOffering mainProductOffering,
-                                                    ProductOffering childproductOffering) {
+    private ProductOffering cloneChildProductOfferingForBundle(ProductOffering mainProductOffering,
+                                                               ProductOffering childproductOffering) {
         ProductOffering clonedProductOffering = new ProductOffering();
         // TODO : Clone ManyToMany
         clonedProductOffering.setProductOfferingType(childproductOffering.getProductOfferingType());
@@ -183,6 +201,7 @@ public class ProductOfferingAppService {
         clonedProductOffering.setValidFor(childproductOffering.getValidFor());
         clonedProductOffering.setWarrantyPeriod(childproductOffering.getWarrantyPeriod());
         productOfferingRepository.save(clonedProductOffering);
+        return clonedProductOffering;
     }
 
     private void saveCatalog(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
@@ -196,27 +215,37 @@ public class ProductOfferingAppService {
     }
 
     private void saveDetermines(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
-        if (detailModel.getProductOfferingCharValues() == null)
-            return;
-        List<ProductOfferingDetermines> productOfferingDetermines = new ArrayList<>();
+        //TODO: refactoring
+        if (detailModel.getProductOfferingCharValues() != null) {
+            List<ProductOfferingDetermines> productOfferingDetermines = new ArrayList<>();
 
-        for (ProductOfferingCharValueModel model : detailModel.getProductOfferingCharValues()) {
-            ProductOfferingDetermines determines = new ProductOfferingDetermines();
+            for (ProductOfferingCharValueModel model : detailModel.getProductOfferingCharValues()) {
+                ProductOfferingDetermines determines = new ProductOfferingDetermines();
+                boolean determinesExists = false;
 
-            if (model.getCharValueType() == 1) {
-                ProdSpecCharValueUse prodSpecCharValueUse = prodSpecCharValueUseAppService.findById(model.getCharValueUseId());
-                determines.setProdSpecCharValueUse(prodSpecCharValueUse);
+                if (model.getCharValueType() == 1) {
+                    ProdSpecCharValueUse prodSpecCharValueUse = prodSpecCharValueUseAppService.findById(model.getCharValueUseId());
+                    determines.setProdSpecCharValueUse(prodSpecCharValueUse);
+
+                    for (ProductOfferingDetermines persistedDetermines : productOffering.getProductOfferingDetermineses()) {
+                        if (persistedDetermines.getProdSpecCharValueUse() != null
+                                && persistedDetermines.getProdSpecCharValueUse().getId() == prodSpecCharValueUse.getId()) {
+                            determinesExists = true;
+                            break;
+                        }
+                    }
+                }
+
+                ProductSpecCharacteristic productSpecCharacteristic = productSpecCharacteristicAppService.findById(model.getCharId());
+                determines.setProductSpecCharacteristic(productSpecCharacteristic);
+                determines.setTextValue(model.getCharValue());
+                determines.setProductOffering(productOffering);
+                productOfferingDetermines.add(determines);
+
+                if(!determinesExists){
+                    productOffering.getProductOfferingDetermineses().add(determines);
+                }
             }
-
-            ProductSpecCharacteristic productSpecCharacteristic = productSpecCharacteristicAppService.findById(model.getCharId());
-            determines.setProductSpecCharacteristic(productSpecCharacteristic);
-            determines.setTextValue(model.getCharValue());
-            determines.setProductOffering(productOffering);
-            productOfferingDetermines.add(determines);
-        }
-
-        if (productOfferingDetermines.size() > 0) {
-            productOffering.setProductOfferingDetermineses(productOfferingDetermines);
         }
     }
 
@@ -252,9 +281,9 @@ public class ProductOfferingAppService {
         );
     }
 
- public List<IdNameModel> getSimgpleOfferingsForSelect(){
-     return productOfferingRepository.findAllByProductOfferingTypeId(1).stream().map(x->new IdNameModel(x.getId(),x.getName())).collect(Collectors.toList());
- }
+    public List<IdNameDescriptionModel> getSimgpleOfferingsForSelect(){
+        return productOfferingRepository.findAllByProductOfferingTypeId(1).stream().map(x->new IdNameDescriptionModel(x.getId(),x.getName(),x.getDescription())).collect(Collectors.toList());
+    }
 
     public List<ProductOfferingListModel> findAllByProductOfferingTypeId(int productOfferingTypeId) {
         return productOfferingRepository.findAllByProductOfferingTypeId(productOfferingTypeId).stream()

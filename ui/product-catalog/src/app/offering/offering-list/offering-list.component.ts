@@ -31,7 +31,7 @@ export class OfferingListComponent implements OnInit, OnDestroy {
             {
                 "data": "isSellable",
                 "render": function (data, type, full, meta) {
-                    return data == true ? "<span class=\"fa fa-fw fa-check\"></span>" : "<span class=\"fa fa-fw fa-times-circle\"></span>";
+                    return data == true ? "<span class=\"fa fa-fw fa-check\"></span>" : "<span class=\"fa fa-fw fa-times\"></span>";
                 }
             },
             { "data": "productSpesificationCode" },

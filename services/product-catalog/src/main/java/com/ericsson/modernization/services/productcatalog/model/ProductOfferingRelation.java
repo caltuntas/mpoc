@@ -1,31 +1,28 @@
 package com.ericsson.modernization.services.productcatalog.model;
-
+/*
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
-public class ProductOfferingRelation extends EntityBase {
-    private int mainProductOfferingId;
+public class ProductOfferingRelation {
+    private int productOfferingId;
 	private int relatedProductOfferingId;
 
 	public ProductOfferingRelation() {
 		super();
 	}
 
-	public ProductOfferingRelation(int mainProductOfferingId, int relatedProductOfferingId) {
+	public ProductOfferingRelation(int productOfferingId, int relatedProductOfferingId) {
 		super();
-		this.mainProductOfferingId = mainProductOfferingId;
+		this.productOfferingId = productOfferingId;
 		this.relatedProductOfferingId = relatedProductOfferingId;
 	}
 
 	public int getMainProductOfferingId() {
-		return mainProductOfferingId;
+		return productOfferingId;
 	}
 
 	public void setMainProductOfferingId(int mainProductOfferingId) {
-		this.mainProductOfferingId = mainProductOfferingId;
+		this.productOfferingId = mainProductOfferingId;
 	}
 
 	public int getRelatedProductOfferingId() {
@@ -37,3 +34,4 @@ public class ProductOfferingRelation extends EntityBase {
 	}
 
 }
+*/

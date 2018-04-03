@@ -1,4 +1,5 @@
 package com.ericsson.modernization.services.productcatalog.repository;
+/*
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,3 +13,4 @@ public interface ProductOfferingRelationRepository extends JpaRepository<Product
 	ProductOfferingRelation findByIdAndIsDeletedIsFalse(int id);
     List<ProductOfferingRelation> findAllByIsDeletedIsFalse();
 }
+*/
