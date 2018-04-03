@@ -1,13 +1,34 @@
-language: java
-jdk:
- - oraclejdk8
+sudo: required
+dist: trusty
+group: deprecated-2017Q4
 
-before_install: 
- - cd services/product-catalog
- - chmod +x mvnw
+matrix:
+  include:
+  - language: java
+    jdk: oraclejdk8
 
-after_success:
-   - docker login -u $DOCKER_USER -p $DOCKER_PASS
-   - docker build -t caltuntas/product-catalog-service .
-   - docker push caltuntas/product-catalog-service
+    before_install:
+      - cd services/product-catalog
+      - chmod +x mvnw
+
+    after_success:
+      - docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - docker build -t caltuntas/product-catalog-service .
+      - docker push caltuntas/product-catalog-service
+
+  - language: node_js
+    node_js:
+      - node
+
+    before_install:
+      - cd ui/product-catalog
+      - npm install
+
+    script:
+      - npm run build
+
+    after_success:
+      - docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - docker build -t caltuntas/product-catalog-ui .
+      - docker push caltuntas/product-catalog-ui
 

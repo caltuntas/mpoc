@@ -41,7 +41,11 @@ export class CharacteristicCreateComponent implements OnInit {
         } else {
             this.model.charValueString = "";
         }
-        this.model.validForStartDate = Date.now().toString();
+/*        var d = new Date(Date.now());
+        this.model.validForStartDate = d.toString();
+        d.setMonth(d.getMonth()+1);
+        this.model.validForEndDate = d.toString();*/
+        //this.model.validForStartDate = Date.now().toString();
         this.characteristicService.createCharacteristic(this.model).subscribe(data => {
             console.log("deneme",this.model);
             this.router.navigate(['/characteristic/characteristic-list']);

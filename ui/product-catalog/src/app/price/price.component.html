@@ -163,24 +163,28 @@
                                                       width="100%">
                                             <thead>
                                             <tr>
-                                                <th>
+                                               <!-- <th>
                                                     <i class="fa fa-fw fa-key text-muted hidden-md hidden-sm hidden-xs"></i>
                                                     ID
+                                                </th>-->
+                                                <th>
+                                                    <i class="fa fa-fw fa-tags text-muted hidden-md hidden-sm hidden-xs"></i>
+                                                    Price Type
                                                 </th>
                                                 <th>
-                                                    <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>
+                                                    <i class="fa fa-fw fa-line-chart text-muted hidden-md hidden-sm hidden-xs"></i>
                                                     Period Type
                                                 </th>
                                                 <th>
-                                                    <i class="fa fa-fw fa-pencil text-muted hidden-md hidden-sm hidden-xs"></i>
+                                                    <i class="fa fa-fw fa-percent text-muted hidden-md hidden-sm hidden-xs"></i>
                                                     Is Percentage
                                                 </th>
                                                 <th>
-                                                    <i class="fa fa-fw fa-calendar-o text-muted hidden-md hidden-sm hidden-xs"></i>
+                                                    <i class="fa fa-fw fa-money text-muted hidden-md hidden-sm hidden-xs"></i>
                                                     Amount
                                                 </th>
                                                 <th>
-                                                    <i class="fa fa-fw fa-calendar-o text-muted hidden-md hidden-sm hidden-xs"></i>
+                                                    <i class="fa fa-fw fa-exchange text-muted hidden-md hidden-sm hidden-xs"></i>
                                                     Currency
                                                 </th>
                                                 <th>
@@ -191,15 +195,18 @@
                                                     <i class="fa fa-fw fa-calendar-o text-muted hidden-md hidden-sm hidden-xs"></i>
                                                     Charge Period To
                                                 </th>
-                                                <th>
+                                                <th data-orderable="false">
 
                                                 </th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr *ngFor="let item of priceList">
-                                                <th>
+                                                <!--<th>
                                                     {{item.id}}
+                                                </th>-->
+                                                <th>
+                                                    {{item.priceType}}
                                                 </th>
                                                 <th>
                                                     {{item.periodType}}
@@ -219,7 +226,7 @@
                                                 <th>
                                                     {{item.chargePeriodTo}}
                                                 </th>
-                                                <th>
+                                                <th data-orderable="false">
                                                     <div class='btn-group dropdown show pull-right'>
                                                         <button class='btn btn-info btn-sm dropdown-toggle'
                                                                 data-toggle='dropdown' aria-haspopup='true'

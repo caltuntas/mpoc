@@ -10,10 +10,7 @@ import com.ericsson.modernization.services.productcatalog.repository.ProductSpec
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ProductSpecCharacteristicAppService {
@@ -31,9 +28,11 @@ public class ProductSpecCharacteristicAppService {
         productSpecCharacteristic.setisRequired(productSpecCharacteristicCreateRequest.getisRequired());
         productSpecCharacteristic.setisConfigurable(productSpecCharacteristicCreateRequest.getisConfigurable());
 
+        Calendar c = Calendar.getInstance();
         TimePeriod validFor = new TimePeriod();
-        validFor.setValidForStartDate(productSpecCharacteristicCreateRequest.getValidForStartDate());
-        validFor.setValidForEndDate(productSpecCharacteristicCreateRequest.getValidForEndDate());
+        validFor.setValidForStartDate(c.getTime());
+        c.add(Calendar.MONTH,1);
+        validFor.setValidForEndDate(c.getTime());
         productSpecCharacteristic.setValidFor(validFor);
 
         productSpecCharacteristicRepository.save(productSpecCharacteristic);
@@ -57,8 +56,8 @@ public class ProductSpecCharacteristicAppService {
     public void delete(int productSpecCharacteristicID){
         ProductSpecCharacteristic productSpecCharacteristic = productSpecCharacteristicRepository.findById(productSpecCharacteristicID).get();
         if(productSpecCharacteristic != null) {
-            Date _date = new Date();
-            productSpecCharacteristic.getValidFor().setValidForEndDate(_date);
+/*            Date _date = new Date();
+            productSpecCharacteristic.getValidFor().setValidForEndDate(_date);*/
             productSpecCharacteristic.setDeleted(true);
             productSpecCharacteristicRepository.save(productSpecCharacteristic);
         }
