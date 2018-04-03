@@ -11,7 +11,7 @@ export class OfferingService {
     }
 
     getOfferings(): Observable<OfferingListModel[]> {
-        return this.http.get(`/productoffering/getallofferings`);
+        return this.http.get(`/productoffering/getOfferings/1`);
     }
 
     createOffering(model) {

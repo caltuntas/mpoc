@@ -4,6 +4,7 @@ import com.ericsson.modernization.services.productcatalog.applicationservice.pro
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCharValueModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingDetailModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.CommonServiceResponse;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.IdNameModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.ProductOfferingListModel;
 import com.ericsson.modernization.services.productcatalog.model.ProductOffering;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,6 @@ public class ProductOfferingRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getallofferings", method = RequestMethod.GET)
-    public ResponseEntity<List<ProductOfferingListModel>> getAllOfferings() {
-        return new ResponseEntity<>(productOfferingAppService.findAll(), HttpStatus.OK);
-    }
 
     @RequestMapping(value = "/deleteoffering/{offeringId}", method = RequestMethod.GET)
     public ResponseEntity<CommonServiceResponse> deleteOffering(@PathVariable int offeringId) {
@@ -54,9 +51,14 @@ public class ProductOfferingRestController {
         return new ResponseEntity<>(detailModel, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/productOfferingTypeId={productOfferingTypeId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getOfferings/{productOfferingTypeId}", method = RequestMethod.GET)
     public ResponseEntity<List<ProductOfferingListModel>> getAllOfferingsByProductOfferingTypeId(@PathVariable int productOfferingTypeId) {
         return new ResponseEntity<>(productOfferingAppService.findAllByProductOfferingTypeId(productOfferingTypeId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getSimgpleOfferingsForSelect", method = RequestMethod.GET)
+    public List<IdNameModel> getOfferingsForSelect(@PathVariable int productOfferingTypeId) {
+        return productOfferingAppService.getSimgpleOfferingsForSelect(productOfferingTypeId);
     }
 
 }
