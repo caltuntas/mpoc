@@ -1,4 +1,6 @@
 export class BundleModel {
+
+
   public id: number;
   public name: string;
   public description: string;
@@ -16,8 +18,11 @@ export class BundleModel {
   public saleChannels: Array<number>;
   public segments: Array<number>;
   public documents: Array<number>;
-  public offerings: Array<number>;
+  public simpleProductOfferingIds: Array<number>;
   public isNewbundle:boolean;
+  public isReplicated:boolean;
+  public productOfferingTypeId:number;
+
 
   constructor() {
     this.segments = [];

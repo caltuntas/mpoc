@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.document.DocumentAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCharValueModel;
-import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.IdNameModel;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.IdNameDescriptionModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProdSpecCharValueUseAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProductSpecCharacteristicAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.saleschannel.SalesChannelAppService;
@@ -275,8 +275,8 @@ public class ProductOfferingAppService {
         );
     }
 
- public List<IdNameModel> getSimgpleOfferingsForSelect(){
-     return productOfferingRepository.findAllByProductOfferingTypeId(1).stream().map(x->new IdNameModel(x.getId(),x.getName())).collect(Collectors.toList());
+ public List<IdNameDescriptionModel> getSimgpleOfferingsForSelect(){
+     return productOfferingRepository.findAllByProductOfferingTypeId(1).stream().map(x->new IdNameDescriptionModel(x.getId(),x.getName(),x.getDescription())).collect(Collectors.toList());
  }
 
     public List<ProductOfferingListModel> findAllByProductOfferingTypeId(int productOfferingTypeId) {
