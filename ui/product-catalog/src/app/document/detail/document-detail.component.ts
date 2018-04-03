@@ -47,7 +47,6 @@ export class DocumentDetailComponent implements OnInit {
           
           this.routeToSClist();
         } );
-        console.log("new service called");
       }else
       {
         this.docService.updateDocument(detail.DocumentInstance).subscribe(data => {

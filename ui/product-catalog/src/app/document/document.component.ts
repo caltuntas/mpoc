@@ -77,19 +77,10 @@ export class DocumentComponent implements OnInit {
     }
   
   onEditDocument(scid) {
-        console.log("edit document ch:", scid);
-
-//        let navigationExtras: NavigationExtras = {
-//            queryParams: {
-//                "offeringId": scid
-//            }
-//        };
-
         this.router.navigate(['/document/detail/' + scid]);
     }
 
     onDeleteDocument(scid) {
-        console.log("Delete Document", scid, "?");
       
         this.scService.deleteDocument(scid).subscribe((data) => {
           
