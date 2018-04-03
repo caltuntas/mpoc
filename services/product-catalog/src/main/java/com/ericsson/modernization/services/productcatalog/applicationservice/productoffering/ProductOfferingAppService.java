@@ -1,9 +1,7 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.document.DocumentAppService;
@@ -20,9 +18,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.catalog.CatalogAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.category.CategoryService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.document.DocumentAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCharValueModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingDetailModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.ProductOfferingListModel;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProdSpecCharValueUseAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProductSpecCharacteristicAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.ProductSpecificationAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.saleschannel.SalesChannelAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.segment.SegmentAppService;
+import com.ericsson.modernization.services.productcatalog.model.Catalog;
+import com.ericsson.modernization.services.productcatalog.model.Category;
+import com.ericsson.modernization.services.productcatalog.model.Document;
+import com.ericsson.modernization.services.productcatalog.model.Duration;
+import com.ericsson.modernization.services.productcatalog.model.ProdSpecCharValueUse;
+import com.ericsson.modernization.services.productcatalog.model.ProductOffering;
+import com.ericsson.modernization.services.productcatalog.model.ProductOfferingDetermines;
+import com.ericsson.modernization.services.productcatalog.model.ProductOfferingType;
+import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharacteristic;
+import com.ericsson.modernization.services.productcatalog.model.ProductSpecification;
+import com.ericsson.modernization.services.productcatalog.model.SalesChannel;
+import com.ericsson.modernization.services.productcatalog.model.Segment;
 import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingRepository;
 import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingTypeRepository;
 
@@ -58,21 +74,22 @@ public class ProductOfferingAppService {
         System.out.println(createRequest.getProductOfferingTypeId());
         if (createRequest.getProductOfferingTypeId() == 2)// Bundle
         {
-            Set<ProductOffering> relatedProductOfferings = new HashSet<ProductOffering>();
             for (Integer id : createRequest.getSimpleProductOfferingIds()) {
                 System.out.println("id : " + id);
                 // BoChild kaydet
                 ProductOffering childproductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
                 cloneChildProductOfferingForBundle(productOffering, childproductOffering);
                 // Relation ata
-                relatedProductOfferings.add(childproductOffering);
+                if (productOffering.getRelatedProductOfferingCollection() == null)
+                	productOffering.setRelatedProductOfferingCollection(new ArrayList<ProductOffering>());
+                productOffering.getRelatedProductOfferingCollection().add(childproductOffering);
                 // TODO : BoChild'ın ilişkilerini kaydet
             }
             // Relation kaydet
-            // productOffering.setRelatedProductOfferings(relatedProductOfferings);
             productOfferingRepository.save(productOffering);
         }
 
+       
         return productOffering;
     }
 
@@ -117,6 +134,8 @@ public class ProductOfferingAppService {
     }
 
     private void saveSalesChannels(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
+    	if (detailModel.getSalesChannels() == null)
+    		return;
         for(int salesChannelId : detailModel.getSalesChannels()){
             SalesChannel salesChannel = salesChannelAppService.findById(salesChannelId);
             productOffering.getSalesChannels().add(salesChannel);
@@ -124,14 +143,18 @@ public class ProductOfferingAppService {
     }
 
     private void saveSegments(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
-        for(int segmentId : detailModel.getSegments()){
+    	if (detailModel.getSegments() == null)
+    		return;
+    	for(int segmentId : detailModel.getSegments()){
             Segment segment = segmentAppService.findById(segmentId);
             productOffering.getSegments().add(segment);
         }
     }
 
     private void saveDocuments(ProductOffering productOffering, ProductOfferingDetailModel detailModel){
-        for(int documentId : detailModel.getDocuments()){
+    	if (detailModel.getDocuments() == null)
+    		return;
+    	for(int documentId : detailModel.getDocuments()){
             Document document = documentAppService.findById(documentId);
             productOffering.getDocuments().add(document);
         }
