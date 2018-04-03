@@ -67,7 +67,7 @@ export class OfferingEditComponent implements OnInit {
                     this.setCharValues(this.model.productSpecificationId);
                 }
 
-                if(this.model.term){
+                if (this.model.term) {
                     jQuery("#termSelect").val(this.model.term).trigger('change');
                 }
 
@@ -79,20 +79,21 @@ export class OfferingEditComponent implements OnInit {
                     jQuery("#categorySelect").val(this.model.categoryId).trigger('change');
                 }
 
-                if(this.model.segments && this.model.segments.length > 0){
+                if (this.model.segments && this.model.segments.length > 0) {
                     jQuery("#segmentSelect").val(this.model.segments).trigger('change');
                 }
 
-                if(this.model.salesChannels && this.model.salesChannels.length > 0){
+                if (this.model.salesChannels && this.model.salesChannels.length > 0) {
                     jQuery("#salesChannelSelect").val(this.model.salesChannels).trigger('change');
                 }
 
-                if(this.model.documents && this.model.documents.length > 0){
+                if (this.model.documents && this.model.documents.length > 0) {
                     jQuery("#documentSelect").val(this.model.documents).trigger('change');
                 }
             })
         } else {
             this.model.productOfferingCharValues = [];
+
         }
 
         this.loadSpecs();
@@ -140,7 +141,7 @@ export class OfferingEditComponent implements OnInit {
             var data = jQuery('#segmentSelect').select2('data');
             self.model.segments = [];
             for (let i = 0; i < data.length; i++) {
-              self.model.segments.push(data[i].id);
+                self.model.segments.push(data[i].id);
             }
         });
         //Segment Select
@@ -249,7 +250,10 @@ export class OfferingEditComponent implements OnInit {
                 {"value": 30, "id": 5},
                 {"value": 36, "id": 6}
             ];
-        jQuery("#termSelect").val(0).trigger('change');
+
+        if (!this.model.term) {
+            jQuery("#termSelect").val(0).trigger('change');
+        }
     }
 
     setCharValues(specId) {
