@@ -5,5 +5,7 @@ export class ProdSpecCharValueUseListModel {
     public prodSpecCharId: number;
     public prodSpecCharDescription: string;
     public prodSpecCharType : number;
+    public required : boolean;
+    public configurable: boolean;
     public prodSpecCharValueList: Array<ProdSpecCharValueListModel>;
 }
