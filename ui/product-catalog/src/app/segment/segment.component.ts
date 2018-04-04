@@ -78,11 +78,16 @@ export class SegmentComponent implements OnInit {
 
     onDeleteSalesCh(scid) {
       
-        this.scService.deleteSegment(scid).subscribe((data) => {
+      this.notificationComponent.showMessage("Delete","Do you want to delete Segment?",
+        () => {
+            this.scService.deleteSegment(scid).subscribe((data) => {
           
             this.reloadPage();
-          this.notificationComponent.showNotification("Segment","Deleted successfully");
-        });
+            this.notificationComponent.showNotification("Segment","Deleted successfully");
+          });
+        },null);
+      
+        
     }
   
   

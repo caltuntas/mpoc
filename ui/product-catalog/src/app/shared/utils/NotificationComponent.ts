@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class NotificationComponent {
   constructor(private notificationService: NotificationService) {
-    }
+}
   
   showNotification(title: string,content: string, icon = "fa fa-bell" )
   {
@@ -18,4 +18,25 @@ export class NotificationComponent {
     }); 
   }
   
+  
+  showMessage(title: string,content: string, yesCallback: () => any, noCallback: () => any) {
+    this.notificationService.smartMessageBox({
+      title: title,
+      content: content,
+      buttons: "[No][Yes]"
+    }, (ButtonPressed) => {
+      if (ButtonPressed === "Yes") {
+        if(yesCallback != null && yesCallback !== undefined){
+          yesCallback();
+        }
+      }
+      if (ButtonPressed === "No") {
+       if(noCallback != null && noCallback !== undefined){
+          noCallback();
+        }
+      }
+
+    });
   }
+  
+}

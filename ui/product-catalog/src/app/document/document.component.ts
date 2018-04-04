@@ -82,12 +82,18 @@ export class DocumentComponent implements OnInit {
 
     onDeleteDocument(scid) {
       
-        this.scService.deleteDocument(scid).subscribe((data) => {
+      this.notificationComponent.showMessage("Delete","Do you want to delete Document?",
+        () => {
+            this.scService.deleteDocument(scid).subscribe((data) => {
           
-          this.notificationComponent.showNotification("Document","Deleted successfully");
+            this.notificationComponent.showNotification("Document","Deleted successfully");
           
             this.reloadPage();
-        });
+          });
+        
+        },null);
+      
+        
     }
   
   

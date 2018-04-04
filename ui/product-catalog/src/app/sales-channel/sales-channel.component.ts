@@ -74,13 +74,16 @@ export class SalesChannelComponent implements OnInit {
     }
 
     onDeleteSalesCh(scid) {
+      this.notificationComponent.showMessage("Delete","Do you want to delete Sales Channel?",
+        () => {
       
-        this.scService.deleteSalesChannel(scid).subscribe((data) => {
+          this.scService.deleteSalesChannel(scid).subscribe((data) => {
           
-          this.notificationComponent.showNotification("Sale Channel","Deleted successfully");
+            this.notificationComponent.showNotification("Sales Channel","Deleted successfully");
           
             this.reloadPage();
-        });
+          });
+        },null);
     }
   
   
