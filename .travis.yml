@@ -24,7 +24,7 @@ matrix:
       - node
 
     before_install:
-      - sed -i "s/$LOCAL_BACKEND/$BACKEND_URL/g" ui/product-catalog/src/environments/environment.ts
+      - sed -i 's/$LOCAL_BACKEND/$BACKEND_URL/g' ui/product-catalog/src/environments/environment.ts
       - cd ui/product-catalog
       - npm install
 
