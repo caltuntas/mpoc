@@ -71,11 +71,13 @@ public class PriceAppService {
 
     public void savePrices(List<PriceRequest> priceRequestList, ProductOffering productOffering) {
         List<ProductOfferingPrice> productOfferingPriceList = productOfferingPriceRepository.findAllByProductOfferingAndIsDeletedIsFalse(productOffering);
-
+        if(productOfferingPriceList == null)
+        	return;
         for (ProductOfferingPrice por: productOfferingPriceList) {
             por.setDeleted(true);
         }
-
+		if(priceRequestList== null)
+			return;
         for (PriceRequest pr: priceRequestList) {
             ProductOfferingPrice por = productOfferingPriceRepository.findByIdAndProductOffering(pr.getId(), productOffering);
             if(por != null) {
