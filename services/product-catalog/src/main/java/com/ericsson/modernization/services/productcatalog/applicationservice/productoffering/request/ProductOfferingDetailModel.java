@@ -1,5 +1,7 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request;
 
+import com.ericsson.modernization.services.productcatalog.applicationservice.price.request.PriceRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class ProductOfferingDetailModel {
     private int productOfferingTypeId;
     private List<Integer> simpleProductOfferingIds = new ArrayList<Integer>();
     private List<ProductOfferingCharValueModel> productOfferingCharValues;
+    private List<PriceRequest> priceRequestList;
 
     public ProductOfferingDetailModel
             (int id,
@@ -39,7 +42,8 @@ public class ProductOfferingDetailModel {
              List<ProductOfferingCharValueModel> productOfferingCharValues,
              List<Integer> salesChannels,
              List<Integer> segments,
-             List<Integer> documents) {
+             List<Integer> documents,
+             List<PriceRequest> priceRequestList) {
         setId(id);
         setName(name);
         setDescription(description);
@@ -55,6 +59,7 @@ public class ProductOfferingDetailModel {
         setSegments(segments);
         setDocuments(documents);
         setTerm(term);
+        setPriceRequestList(priceRequestList);
     }
 
     public ProductOfferingDetailModel() {
@@ -211,5 +216,13 @@ public class ProductOfferingDetailModel {
 
     public void setTerm(int term) {
         this.term = term;
+    }
+
+    public List<PriceRequest> getPriceRequestList() {
+        return priceRequestList;
+    }
+
+    public void setPriceRequestList(List<PriceRequest> priceRequestList) {
+        this.priceRequestList = priceRequestList;
     }
 }

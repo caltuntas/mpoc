@@ -16,7 +16,7 @@ export class PriceComponent implements OnInit {
     screenStatus: boolean;
 
     priceInput: PriceModel = new PriceModel();
-    priceList: PriceModel[] = [];
+    public priceList: PriceModel[] = [];
 
     constructor() {
         this.priceInput.priceType = "OneTime";
@@ -30,28 +30,6 @@ export class PriceComponent implements OnInit {
         } else {
             this.counter = 1;
         }
-
-        this.priceList.push({
-            id: this.counter++,
-            priceType: 'OneTime',
-            periodType: 'monthly',
-            currency: 'TRY',
-            percentage: true,
-            amount: 150,
-            chargePeriodFrom: 2,
-            chargePeriodTo: 5
-        });
-
-        this.priceList.push({
-            id: this.counter++,
-            priceType: 'OneTime',
-            periodType: 'monthly',
-            currency: 'TRY',
-            percentage: true,
-            amount: 230,
-            chargePeriodFrom: 2,
-            chargePeriodTo: 5
-        });
     }
 
     ngOnInit() {

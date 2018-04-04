@@ -81,7 +81,7 @@
         <div class="form-group">
             <label class="col-xs-2 col-lg-3 control-label">Documents</label>
             <div class="col-xs-9 col-lg-6 ">
-                <select select2 multiple id="documentSelect" name="bundleDocumentSelect" style="width:100%" class="select2">
+                <select select2 multiple id="bundleDocumentSelect" name="bundleDocumentSelect" style="width:100%" class="select2">
                     <option *ngFor="let document of documentList" [value]="document.id">
                         {{document.name}}
                     </option>

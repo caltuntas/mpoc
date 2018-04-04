@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Catalog} from "../../catalog/model/catalog.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {OfferingService} from "../offering.service";
@@ -17,6 +17,7 @@ import {DocumentService} from '../../document/document.service';
 import {OfferingEditModel} from "../model/offering-edit-model";
 import {OfferingCharValueModel} from "../model/offering-char-value-model";
 import {OfferingSegmentModel} from "../model/offering-segment-model";
+import {PriceComponent} from "../../price/price.component";
 
 @Component({
     selector: 'app-offering-edit',
@@ -35,6 +36,8 @@ export class OfferingEditComponent implements OnInit {
     salesChannelList: SalesChannel[];
     segmentList: Segment[];
     documentList: Document[];
+
+    @ViewChild(PriceComponent) priceComponent: PriceComponent;
 
 
     constructor(private router: Router,
@@ -89,6 +92,10 @@ export class OfferingEditComponent implements OnInit {
 
                 if (this.model.documents && this.model.documents.length > 0) {
                     jQuery("#documentSelect").val(this.model.documents).trigger('change');
+                }
+
+                if(this.model.priceRequestList && this.model.priceRequestList.length > 0){
+                    this.priceComponent.priceList = this.model.priceRequestList;
                 }
             })
         } else {
@@ -316,6 +323,8 @@ export class OfferingEditComponent implements OnInit {
     onWizardComplete(data) {
 
         this.getCharValues();
+        this.model.priceRequestList = this.priceComponent.priceList;
+
         if (this.isNewOffering) {
             this.offeringService.createOffering(this.model).subscribe(data => {
                 this.router.navigate(['/offering/offering-list']);
