@@ -12,6 +12,7 @@ import {SmartadminFormsModule} from "../shared/forms/smartadmin-forms.module";
 import { SalesChannelService } from '../sales-channel/sales-channel.service';
 import { SegmentService } from '../segment/segment.service';
 import { DocumentService } from '../document/document.service';
+import {PriceComponent} from "../price/price.component";
 
 @NgModule({
     imports: [
@@ -23,7 +24,7 @@ import { DocumentService } from '../document/document.service';
         SmartadminInputModule,
         SmartadminFormsModule
     ],
-    declarations: [OfferingListComponent, OfferingEditComponent],
+    declarations: [OfferingListComponent, OfferingEditComponent, PriceComponent],
     providers: [SalesChannelService,SegmentService,DocumentService]
 })
 export class OfferingModule {
