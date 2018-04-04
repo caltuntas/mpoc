@@ -43,7 +43,7 @@ public class ProdSpecCharValueUseAppService {
                 charValueUseListModel.setRequired(specCharacteristic.getisRequired());
                 charValueUseListModel.setConfigurable(specCharacteristic.getisConfigurable());
                 charValueUseListModel.setProdSpecCharUseId(productSpecCharUse.getId());
-                charValueUseListModel.setProdSpecCharDescription(specCharacteristic.getName());
+                charValueUseListModel.setProdSpecCharDescription(specCharacteristic.getDescription());
 
                 List<ProdSpecCharValueUse> prodSpecCharValueUseList = productSpecCharUse.getProductSpecCharValueUses();
                 if (prodSpecCharValueUseList.size() > 0) {
