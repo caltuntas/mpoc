@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.document.DocumentAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.price.PriceAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.price.request.PriceRequest;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCharValueModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.IdNameDescriptionModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProdSpecCharValueUseAppService;
@@ -46,6 +48,8 @@ public class ProductOfferingAppService {
     private SegmentAppService segmentAppService;
     @Autowired
     private DocumentAppService documentAppService;
+    @Autowired
+    private PriceAppService priceAppService;
     @Autowired
     private ProductOfferingTypeRepository productOfferingTypeRepository;
 
@@ -107,7 +111,12 @@ public class ProductOfferingAppService {
         saveSegments(productOffering, detailModel.getSegments());
         saveDocuments(productOffering, detailModel.getDocuments());
         saveTerm(productOffering, detailModel.getTerm());
+        savePrices(productOffering, detailModel.getPriceRequestList());
         productOfferingRepository.save(productOffering);
+    }
+
+    private void savePrices(ProductOffering productOffering, List<PriceRequest> priceRequestList){
+        priceAppService.create(priceRequestList, productOffering);
     }
 
     private void saveTerm(ProductOffering productOffering, int term) {
@@ -303,7 +312,8 @@ public class ProductOfferingAppService {
                 findOfferingCharValues(id),
                 getSalesChannelsIds(productOffering),
                 getSegmentIds(productOffering),
-                getDocumentIds(productOffering));
+                getDocumentIds(productOffering),
+                findOfferingPrices(productOffering));
     }
 
     public List<IdNameDescriptionModel> getSimgpleOfferingsForSelect() {
@@ -357,6 +367,10 @@ public class ProductOfferingAppService {
         }
 
         return valueModelList;
+    }
+
+    private List<PriceRequest> findOfferingPrices(ProductOffering productOffering){
+        return priceAppService.getAllPrices(productOffering);
     }
 
     private List<Integer> getSegmentIds(ProductOffering productOffering) {
