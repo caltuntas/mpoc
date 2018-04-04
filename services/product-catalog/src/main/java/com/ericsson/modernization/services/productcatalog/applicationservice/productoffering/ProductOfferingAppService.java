@@ -54,26 +54,8 @@ public class ProductOfferingAppService {
     private ProductOfferingTypeRepository productOfferingTypeRepository;
 
     public ProductOffering create(ProductOfferingDetailModel createRequest) {
-
         ProductOffering productOffering = new ProductOffering();
         saveFields(productOffering, createRequest);// Simple or Bundle
-        if (createRequest.getProductOfferingTypeId() == 2)// Bundle
-        {
-            if (productOffering.getProductOfferings() == null)
-                productOffering.setProductOfferings(new ArrayList<ProductOffering>());
-            for (Integer id : createRequest.getSimpleProductOfferingIds()) {
-                // BoChild kaydet
-                ProductOffering childproductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
-                // Klonla
-                ProductOffering clonedProductOffering = cloneChildProductOfferingForBundle(productOffering,
-                        childproductOffering);
-                // Relation ata
-                productOffering.getProductOfferings().add(clonedProductOffering);
-            }
-            // Relation kaydet
-            productOfferingRepository.save(productOffering);
-        }
-
         return productOffering;
     }
 
@@ -82,11 +64,10 @@ public class ProductOfferingAppService {
         if (productOffering != null) {
             saveFields(productOffering, editRequest);
         }
-        return productOffering;
+        return productOffering;        
     }
 
     private void saveFields(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
-
         productOffering.setName(detailModel.getName());
         productOffering.setIsSellable(detailModel.getIsSellable());
         productOffering.setDescription(detailModel.getDescription());
@@ -99,12 +80,10 @@ public class ProductOfferingAppService {
         saveCatalog(productOffering, detailModel);
         saveCategory(productOffering, detailModel);
 
-        Integer productOfferingTypeId = 1;
-        if (detailModel.getProductOfferingTypeId() > 0)
-            productOfferingTypeId = detailModel.getProductOfferingTypeId();
-        ProductOfferingType productOfferingType = productOfferingTypeRepository.findById(productOfferingTypeId).get();
+        ProductOfferingType productOfferingType = productOfferingTypeRepository.findById(detailModel.getProductOfferingTypeId()).get();
         productOffering.setProductOfferingType(productOfferingType);
-        productOfferingRepository.save(productOffering);
+        
+        //productOfferingRepository.save(productOffering);
 
         saveDetermines(productOffering, detailModel.getProductOfferingCharValues());
         saveSalesChannels(productOffering, detailModel.getSalesChannels());
@@ -112,6 +91,23 @@ public class ProductOfferingAppService {
         saveDocuments(productOffering, detailModel.getDocuments());
         saveTerm(productOffering, detailModel.getTerm());
         savePrices(productOffering, detailModel.getPriceRequestList());
+        
+        if (detailModel.getProductOfferingTypeId() == 2)// Bundle
+        {
+            if (productOffering.getProductOfferings() == null)
+                productOffering.setProductOfferings(new ArrayList<ProductOffering>());
+            for (Integer id : detailModel.getSimpleProductOfferingIds()) {
+                // BoChild kaydet
+                ProductOffering childproductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
+                // Klonla
+                ProductOffering clonedProductOffering = cloneChildProductOfferingForBundle(productOffering,
+                        childproductOffering);
+                // Relation ata
+                productOffering.getProductOfferings().add(clonedProductOffering);
+            }
+            // Relation kaydet
+            //productOfferingRepository.save(productOffering);
+        }    
         productOfferingRepository.save(productOffering);
     }
 
@@ -234,7 +230,7 @@ public class ProductOfferingAppService {
         clonedProductOffering.setValidFor(childproductOffering.getValidFor());
         clonedProductOffering.setWarrantyPeriod(childproductOffering.getWarrantyPeriod());
 
-        productOfferingRepository.save(clonedProductOffering);
+        //productOfferingRepository.save(clonedProductOffering);
         return clonedProductOffering;
     }
 
