@@ -14,10 +14,10 @@ export class HttpClientProvider {
     }
 
 
-    // get2(path: string, params?: any): Observable<IdNameDescriptionModel[]> {
-    //     let url = this.rootUrl + path;
-    //     return this.http.get<IdNameDescriptionModel[]>(url);
-    // }
+    getAsync(path: string, params?: any): Observable<IdNameDescriptionModel[]> {
+        let url = this.rootUrl + path;
+        return this.http.get<IdNameDescriptionModel[]>(url);
+    }
 
     get(path: string, params?: any): Observable<any> {
         return this.request('GET', path, params);
