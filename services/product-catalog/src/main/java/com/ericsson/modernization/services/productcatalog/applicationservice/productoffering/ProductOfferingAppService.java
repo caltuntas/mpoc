@@ -84,7 +84,7 @@ public class ProductOfferingAppService {
 				.findById(detailModel.getProductOfferingTypeId()).get();
 		productOffering.setProductOfferingType(productOfferingType);
 
-		// productOfferingRepository.save(productOffering);
+		productOfferingRepository.save(productOffering);
 
 		saveDetermines(productOffering, detailModel.getProductOfferingCharValues());
 		saveSalesChannels(productOffering, detailModel.getSalesChannels());
