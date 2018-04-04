@@ -192,7 +192,7 @@ export class OfferingEditComponent implements OnInit {
         let isValid = false;
         switch (step) {
             case 1:
-                isValid = !!(this.model.name && this.model.description && this.model.term);
+                isValid = !!(this.model.name && this.model.description && (this.model.term && this.model.term != 0));
                 break;
             case 2:
                 isValid = !!(this.model.productSpecificationId);
