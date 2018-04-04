@@ -41,7 +41,10 @@ public class HomeAppService {
     	return o;
     }
 
-
+    public List<HomeChartsDataProp> getLast7DayscreatedOfferings() {
+    	List<HomeChartsDataProp> o = homeRepository.getLast7DayscreatedOfferings();
+    	return o;
+    }
 
     public List<HomeChartsDataProp> getOfferingOfCategories() {
         List<HomeChartsDataProp> o = homeRepository.getOfferingOfCategories();

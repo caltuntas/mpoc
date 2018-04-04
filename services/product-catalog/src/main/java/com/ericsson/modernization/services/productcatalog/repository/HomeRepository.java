@@ -39,10 +39,10 @@ public interface HomeRepository extends JpaRepository<ProductOffering, Integer> 
 
 
 	String Q_DAILY_OFFERINGS =
-			"select new com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsDataProp( count(po), psc.name,   case when po.isSellable = 0 then 'Closed' when po.isSellable = 1 then 'Available' else 'Closed'  end )\r\n" +
+			"select new com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsDataProp( count(po), cast(DAY(po.createUserDate) as string)+'/'+cast(MONTH(po.createUserDate) as string), '' )\r\n" +
 					"from ProductOffering po \r\n" +
-					"join po.salesChannels psc \r\n" +
-					" group by psc.name,po.isSellable";
+					"where po.createUserDate > current_date() - 7 "+
+					"group by po.createUserDate,cast(DAY(po.createUserDate) as string)+'/'+cast(MONTH(po.createUserDate) as string)";
 	@Query(/*nativeQuery=true,*/ value = Q_DAILY_OFFERINGS)
 	List<HomeChartsDataProp> getLast7DayscreatedOfferings();
 

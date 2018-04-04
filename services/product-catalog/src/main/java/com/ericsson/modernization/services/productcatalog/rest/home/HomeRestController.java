@@ -57,7 +57,13 @@ public class HomeRestController {
         return new ResponseEntity<List<HomeChartsData>>( homeChartsDataList, HttpStatus.OK);
     }
 
-
+    @RequestMapping(value = "/getLast7DayscreatedOfferings", method = RequestMethod.GET)
+    public ResponseEntity<List<HomeChartsData>> getLast7DayscreatedOfferings(){
+        List<HomeChartsDataProp> homeChartsDataRaw = homeAppService.getLast7DayscreatedOfferings();
+        List<HomeChartsData> homeChartsDataList = ConvertDoubleLayerData(homeChartsDataRaw,"GetLast7DayscreatedOfferings");
+        return new ResponseEntity<List<HomeChartsData>>( homeChartsDataList, HttpStatus.OK);
+    }
+    
     @RequestMapping(value = "/getOfferingsCountOfCategories", method = RequestMethod.GET)
     public ResponseEntity<List<HomeChartsData>> getOfferingsCountOfCategories(){
         List<HomeChartsDataProp> homeChartsDataRaw = homeAppService.getOfferingsCountOfCategories();
