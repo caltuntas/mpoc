@@ -64,45 +64,60 @@
 
 
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label">Name</label>
-                                            <div class="col-md-4">
+                                            <label class="col-md-2 control-label"><strong>Offering Name</strong></label>
+                                            <div class="col-md-4"  [class.has-error]="offeringNameControl.invalid && offeringNameControl.touched">
                                                 <input
                                                         class="form-control"
                                                         name="offeringName"
+                                                        required
                                                         type="text"
                                                         [(ngModel)]="model.name"
                                                         #offeringNameControl="ngModel"
                                                 >
+                                                <small *ngIf="offeringNameControl.invalid
+                                                            && offeringNameControl.touched"
+                                                       class="help-block">Offering name is required
+                                                </small>
                                             </div>
-                                            <label class="col-md-2 control-label">Description</label>
-                                            <div class="col-md-4">
+                                            <label class="col-md-2 control-label"><strong>Description</strong></label>
+                                            <div class="col-md-4" [class.has-error]="offeringDescControl.invalid && offeringDescControl.touched">
                                                 <input class="form-control"
                                                        type="text"
+                                                       required
                                                        name="offeringDescription"
                                                        [(ngModel)]="model.description"
                                                        #offeringDescControl="ngModel"
                                                 >
+                                                <small *ngIf="offeringDescControl.invalid
+                                                            && offeringDescControl.touched"
+                                                       class="help-block">Offering description is required
+                                                </small>
                                             </div>
                                         </div>
                                         <div class="form-group">
 
-                                            <label class="col-md-2 control-label">Term(Month)</label>
-                                            <div class="col-md-4">
+                                            <label class="col-md-2 control-label"><strong>Term (Month)</strong></label>
+                                            <div class="col-md-4" [class.has-error]="(!model.term || model.term == 0) && termSelected">
                                                 <select select2
+                                                        required
                                                         class="col-md-5 select-2"
                                                         style="width:100%"
                                                         id="termSelect"
                                                         name="termSelect"
                                                         data-select-search="true"
-                                                        [(ngModel)]="model.term">
+                                                        [(ngModel)]="model.term"
+                                                        #offeringTermControl="ngModel">
                                                     <option [value]="0" [selected]="true">Please Select</option>
                                                     <option *ngFor="let term of termValues" [value]="term.value">
                                                         {{term.value}}
                                                     </option>
                                                 </select>
+                                                <small *ngIf="(!model.term || model.term == 0) && termSelected"
+                                                       class="help-block">Term is required
+                                                </small>
                                             </div>
 
-                                            <label class="col-md-2 control-label">Sellable?</label>
+                                            <label class="col-md-2 control-label"><strong>Sellable?</strong></label>
                                             <div class="col-md-4">
                                                 <div class="smart-form col-md-1">
                                                     <label class="toggle">

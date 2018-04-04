@@ -32,10 +32,12 @@ export class OfferingEditComponent implements OnInit {
     catalogs: Array<Catalog> = [];
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
     termValues;
+    termSelected : boolean = false;
     categoryLeaves: Array<Category> = [];
     salesChannelList: SalesChannel[];
     segmentList: Segment[];
     documentList: Document[];
+
 
     @ViewChild(PriceComponent) priceComponent: PriceComponent;
 
@@ -117,7 +119,7 @@ export class OfferingEditComponent implements OnInit {
 
         //Term Select
         jQuery('#termSelect').on('select2:select', function (e) {
-            var data = e.params.data;
+            self.termSelected = true;
             self.model.term = jQuery("#termSelect").val();
         });
         //Term Select
@@ -138,7 +140,6 @@ export class OfferingEditComponent implements OnInit {
 
         //Category Select
         jQuery('#categorySelect').on('select2:select', function (e) {
-
             self.model.categoryId = jQuery("#categorySelect").val();
         });
         //Catalog Select
@@ -191,7 +192,7 @@ export class OfferingEditComponent implements OnInit {
         let isValid = false;
         switch (step) {
             case 1:
-                isValid = !!(this.model.name && this.model.description);
+                isValid = !!(this.model.name && this.model.description && this.model.term);
                 break;
             case 2:
                 isValid = !!(this.model.productSpecificationId);
