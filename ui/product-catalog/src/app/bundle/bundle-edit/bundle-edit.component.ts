@@ -58,7 +58,7 @@ export class BundleEditComponent implements OnInit {
     // this.model.simpleProductOfferingIds = [];
     // this.model.simpleProductOfferingIds.push(336);
     // this.model.simpleProductOfferingIds.push(337);
-    console.log(this.model);
+    //console.log(this.model);
 
     if (this.model.isNewbundle) {
       this.bundleService.createOffering(this.model).subscribe(data => {
