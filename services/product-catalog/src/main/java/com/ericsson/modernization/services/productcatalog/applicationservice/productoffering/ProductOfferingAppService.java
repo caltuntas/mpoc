@@ -91,17 +91,25 @@ public class ProductOfferingAppService {
 		saveSegments(productOffering, detailModel.getSegments());
 		saveDocuments(productOffering, detailModel.getDocuments());
 		saveTerm(productOffering, detailModel.getTerm());
-
+/*
 		if (detailModel.getProductOfferingTypeId() == 2)// Bundle
 		{
 			if (productOffering.getProductOfferings() == null)
 				productOffering.setProductOfferings(new ArrayList<ProductOffering>());
+			List<ProductOffering> savedSimpleOfferingProductOfferings =	productOfferingRepository.			findByBundleAndSimpleRelation(productOffering.getId());
+			
 			for (Integer simpleProductOfferingId : detailModel.getSimpleProductOfferingIds()) {
 				// BoChild kaydet
 				ProductOffering simpleProductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(simpleProductOfferingId);
 				if (simpleProductOffering != null) {
 					//Klonlanmış mı?
 					ProductOffering clonned = productOfferingRepository.findByIdAndClonnedProductOfferingIdAndIsDeletedIsFalse(productOffering.getId(), simpleProductOfferingId);
+					
+					String param = "foo";
+					//Object[] objectArray = productOfferingRepository.myCustomQuery();
+					List<ProductOffering> customerlist = productOfferingRepository.findByBundleAndSimpleRelation(param);
+					
+					
 					if (clonned == null) {
 						// Klonla
 						ProductOffering clonedProductOffering = cloneChildProductOfferingForBundle(productOffering,
@@ -129,7 +137,7 @@ public class ProductOfferingAppService {
 			}
 			// Relation kaydet
 			// productOfferingRepository.save(productOffering);
-		}
+		}*/
 		productOfferingRepository.save(productOffering);
 		savePrices(productOffering, detailModel.getPriceRequestList());
 	}
