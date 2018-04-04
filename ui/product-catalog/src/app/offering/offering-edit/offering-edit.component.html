@@ -150,10 +150,10 @@
                                 <br>
                                 <br>
 
-                                <div class="col-md-10 col-md-offset-2">
+                                <div class="col-md-10 col-md-offset-1">
                                     <div class="row">
                                         <div class="form-group">
-                                            <label class="control-label col-md-2"><strong>Spec</strong></label>
+                                            <label class="control-label col-md-3"><strong>Spec</strong></label>
 
                                             <div class="col-md-7">
                                                 <select [disabled]="!isNewOffering" select2 style="width:100%"
@@ -176,7 +176,7 @@
 
                                         <div class="row" *ngIf="charValue.prodSpecCharType == 1">
                                             <div class="form-group">
-                                                <label class="control-label col-md-2">
+                                                <label class="control-label col-md-3">
                                                     <strong *ngIf="charValue.required">
                                                         {{charValue.prodSpecCharDescription}}
                                                     </strong>
@@ -201,7 +201,7 @@
 
                                         <div class="row" *ngIf="charValue.prodSpecCharType != 1">
                                             <div class="form-group">
-                                                <label class="control-label col-md-2">
+                                                <label class="control-label col-md-3">
                                                     <strong *ngIf="charValue.required">
                                                         {{charValue.prodSpecCharDescription}}
                                                     </strong>
