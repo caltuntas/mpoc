@@ -26,9 +26,10 @@ export class OfferingEditModel {
     public documents:Array<number>;
     public productOfferingCharValues: Array<OfferingCharValueModel>;
     public priceRequestList: Array<PriceModel>;
-
+    public productOfferingTypeId: number;
 
     constructor() {
+        this.productOfferingTypeId = 1;
         this.productOfferingCharValues = [];
         this.segments = [];
         this.salesChannels = [];
