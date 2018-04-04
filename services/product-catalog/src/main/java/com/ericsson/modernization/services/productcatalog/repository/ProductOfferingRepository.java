@@ -11,4 +11,5 @@ public interface ProductOfferingRepository extends JpaRepository<ProductOffering
     ProductOffering findByIdAndIsDeletedIsFalse(int id);
     List<ProductOffering> findAllByIsDeletedIsFalse();
     List<ProductOffering> findAllByProductOfferingTypeIdAndIsDeletedIsFalse(int productOfferingTypeId);
+	ProductOffering findByIdAndClonnedProductOfferingIdAndIsDeletedIsFalse(Integer bundleProductOfferingId, Integer simpleOfferingId);
 }

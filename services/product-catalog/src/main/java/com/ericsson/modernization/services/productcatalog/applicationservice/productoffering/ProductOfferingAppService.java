@@ -91,27 +91,47 @@ public class ProductOfferingAppService {
 		saveSegments(productOffering, detailModel.getSegments());
 		saveDocuments(productOffering, detailModel.getDocuments());
 		saveTerm(productOffering, detailModel.getTerm());
-		savePrices(productOffering, detailModel.getPriceRequestList());
 
 		if (detailModel.getProductOfferingTypeId() == 2)// Bundle
 		{
 			if (productOffering.getProductOfferings() == null)
 				productOffering.setProductOfferings(new ArrayList<ProductOffering>());
-			for (Integer id : detailModel.getSimpleProductOfferingIds()) {
+			for (Integer simpleProductOfferingId : detailModel.getSimpleProductOfferingIds()) {
 				// BoChild kaydet
-				ProductOffering childproductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
-				if (childproductOffering != null) {
-					// Klonla
-					ProductOffering clonedProductOffering = cloneChildProductOfferingForBundle(productOffering,
-							childproductOffering);
-					// Relation ata
-					productOffering.getProductOfferings().add(clonedProductOffering);
+				ProductOffering simpleProductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(simpleProductOfferingId);
+				if (simpleProductOffering != null) {
+					//Klonlanmış mı?
+					ProductOffering clonned = productOfferingRepository.findByIdAndClonnedProductOfferingIdAndIsDeletedIsFalse(productOffering.getId(), simpleProductOfferingId);
+					if (clonned == null) {
+						// Klonla
+						ProductOffering clonedProductOffering = cloneChildProductOfferingForBundle(productOffering,
+								simpleProductOffering);
+						// Relation ata
+						productOffering.getProductOfferings().add(clonedProductOffering);
+					}
+				}
+			}
+			for (ProductOffering item : productOffering.getProductOfferings())
+			{
+				boolean doesExist = false; 
+				for (Integer id : detailModel.getSimpleProductOfferingIds()) {
+					if (item.getId() == id) {
+						doesExist = true;
+						break;
+					}
+				}
+				if (!doesExist) {
+					ProductOffering removeProductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(item.getId());
+					if (removeProductOffering != null) {
+						productOffering.getProductOfferings().remove(removeProductOffering);
+					}
 				}
 			}
 			// Relation kaydet
 			// productOfferingRepository.save(productOffering);
 		}
 		productOfferingRepository.save(productOffering);
+		savePrices(productOffering, detailModel.getPriceRequestList());
 	}
 
     private void savePrices(ProductOffering productOffering, List<PriceRequest> priceRequestList){
@@ -186,6 +206,7 @@ public class ProductOfferingAppService {
 	private ProductOffering cloneChildProductOfferingForBundle(ProductOffering mainProductOffering,
 			ProductOffering childproductOffering) {
 		ProductOffering clonedProductOffering = new ProductOffering();
+		clonedProductOffering.setClonnedProductOffering(childproductOffering);
 		clonedProductOffering.setProductOfferingType(childproductOffering.getProductOfferingType());
 		clonedProductOffering.setCatalog(childproductOffering.getCatalog());
 		clonedProductOffering.setCategory(childproductOffering.getCategory());
@@ -230,7 +251,7 @@ public class ProductOfferingAppService {
 		saveSegments(clonedProductOffering, segmentIds);
 		// clonedProductOffering.setUnsupportedProductSpecCharValueUseGroups(childproductOffering.getUnsupportedProductSpecCharValueUseGroups());
 		clonedProductOffering.setUpdateUserId(childproductOffering.getUpdateUserId());
-		clonedProductOffering.setValidFor(childproductOffering.getValidFor());
+		//clonedProductOffering.setValidFor(childproductOffering.getValidFor());ctor'da geliyor zaten
 		clonedProductOffering.setWarrantyPeriod(childproductOffering.getWarrantyPeriod());
 
 		// productOfferingRepository.save(clonedProductOffering);

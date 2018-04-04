@@ -25,6 +25,8 @@ public class PriceAppService {
     private ProductOfferingPriceRepository productOfferingPriceRepository;
 
     public void create(List<PriceRequest> priceRequestList, ProductOffering productOffering) {
+    	if (priceRequestList == null)
+    		return;
         for (PriceRequest pr: priceRequestList) {
             createMappinng(pr, productOffering);
         }
