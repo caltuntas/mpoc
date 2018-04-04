@@ -2,6 +2,7 @@ import {SalesChannel} from '../../sales-channel/detail/sales-channel';
 import {Segment} from '../../segment/detail/segment';
 import {Document} from '../../document/detail/document';
 import {OfferingCharValueModel} from "./offering-char-value-model";
+import {PriceModel} from "../../price/model/priceModel";
 
 export class OfferingEditModel {
 
@@ -24,12 +25,15 @@ export class OfferingEditModel {
     public segments: Array<number>;
     public documents:Array<number>;
     public productOfferingCharValues: Array<OfferingCharValueModel>;
+    public priceRequestList: Array<PriceModel>;
+
 
     constructor() {
         this.productOfferingCharValues = [];
         this.segments = [];
         this.salesChannels = [];
         this.documents = [];
+        this.priceRequestList = [];
     }
 
 
