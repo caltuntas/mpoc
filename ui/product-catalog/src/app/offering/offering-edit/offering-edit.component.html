@@ -248,7 +248,6 @@
                                                         id="catalogSelect"
                                                         name="catalogSelect"
                                                         required [(ngModel)]="model.catalogId"
-                                                        (ngModelChange)="onCatalogChanged($event)"
                                                         #selectCatalogControl="ngModel">
                                                     <option [value]="0">Please Select</option>
                                                     <option *ngFor="let catalog of catalogs" [value]="catalog.id">
