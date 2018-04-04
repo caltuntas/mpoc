@@ -24,10 +24,11 @@ public interface HomeRepository extends JpaRepository<ProductOffering, Integer> 
 
 
 	String Q_OFFERING_CATEGORY =
-			"select new com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsDataProp( count(po), psc.name,   case when po.isSellable = 0 then 'Closed' when po.isSellable = 1 then 'Available' else 'Closed'  end )\r\n" +
-					"from ProductOffering po \r\n" +
-					"join po.salesChannels psc \r\n" +
-					" group by psc.name,po.isSellable";
+			"select new com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsDataProp( count(po), psc.name,   case when po.isSellable = 0 then 'Closed' when po.isSellable = 1 then 'Available' else 'Closed'  end )\r\n" + 
+			"					from ProductOffering po\r\n" + 
+			"					join po.category psc \r\n" + 
+			"					where psc.id not in (select inCt.parentId from Category as inCt )\r\n" + 
+			"					 group by psc.name,po.isSellable";
 
 	//	select ct.name, count(*), 'Label' = case when po.isSellable = 0 then 'Closed' when po.isSellable = 1 then 'Available' else 'Closed'  end
 	//	from ProductOffering as po
@@ -47,10 +48,11 @@ public interface HomeRepository extends JpaRepository<ProductOffering, Integer> 
 
 
 	String Q_OFFERINGS_PARENT_CATEGORIES =
-			"select new com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsDataProp( count(po), psc.name,   case when po.isSellable = 0 then 'Closed' when po.isSellable = 1 then 'Available' else 'Closed'  end )\r\n" +
-					"from ProductOffering po \r\n" +
-					"join po.salesChannels psc \r\n" +
-					" group by psc.name,po.isSellable";
+			"select new com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsDataProp( count(po), psc.name, '1' )\r\n" + 
+			"					from ProductOffering po\r\n" + 
+			"					join po.category psc \r\n" + 
+			"					where psc.id in (select inCt.parentId from Category as inCt )\r\n" + 
+			"					 group by psc.name,po.isSellable";
 	//	select ct.name, count(*)
 	//	from ProductOffering as po
 	//	join Category as ct on  ct.id  = po.category_id where ct.id in (select inCt.parentId from Category as inCt) group by ct.name

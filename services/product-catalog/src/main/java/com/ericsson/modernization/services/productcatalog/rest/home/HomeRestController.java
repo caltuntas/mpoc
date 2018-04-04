@@ -64,6 +64,13 @@ public class HomeRestController {
         List<HomeChartsData> homeChartsDataList = ConvertDoubleLayerData(homeChartsDataRaw,"OfferingsCountOfCategories");
         return new ResponseEntity<List<HomeChartsData>>( homeChartsDataList, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/getOfferingOfCategories", method = RequestMethod.GET)
+    public ResponseEntity<List<HomeChartsData>> getOfferingOfCategories(){
+        List<HomeChartsDataProp> homeChartsDataRaw = homeAppService.getOfferingOfCategories();
+        List<HomeChartsData> homeChartsDataList = ConvertDoubleLayerData(homeChartsDataRaw,"OfferingOfCategories");
+        return new ResponseEntity<List<HomeChartsData>>( homeChartsDataList, HttpStatus.OK);
+    }
 
 
     @RequestMapping(value = "/getOfferingSegments", method = RequestMethod.GET)
