@@ -63,7 +63,7 @@ export class PriceComponent implements OnInit {
 
     onChangeIsPercentage() {
 
-        if (this.priceInput.percentage) {
+        if (this.priceInput.isPercentage) {
             this.isPercentageStyle = "fa-percent";
         }
         else {
@@ -77,7 +77,7 @@ export class PriceComponent implements OnInit {
             priceType: this.priceInput.priceType,
             periodType: this.priceInput.periodType,
             currency: this.priceInput.currency,
-            percentage: (this.priceInput.priceType !== "Discount" || this.priceInput.percentage) ? this.priceInput.percentage : false,
+            isPercentage: (this.priceInput.priceType !== "Discount" || this.priceInput.isPercentage) ? this.priceInput.isPercentage : false,
             amount: this.priceInput.amount,
             chargePeriodFrom: this.priceInput.chargePeriodFrom,
             chargePeriodTo: this.priceInput.chargePeriodTo
@@ -88,7 +88,7 @@ export class PriceComponent implements OnInit {
 
     updatePrice(priceInp) {
         var ind = this.priceList.findIndex(item => item.id === priceInp.id);
-        this.priceList[ind] = Object.create(priceInp);
+        this.priceList[ind] = this.copyObject(priceInp);
         this.screenStatus = true; // change to add
         this.cleanFields("OneTime");
     }
@@ -103,12 +103,26 @@ export class PriceComponent implements OnInit {
     }
 
     onEditPrice(priceItem) {
-        this.priceInput = Object.create(priceItem);
+        this.priceInput = this.copyObject(priceItem);
         this.screenStatus = false; // change to update
     }
 
     onCancelUpdate() {
         this.screenStatus = true; // change to add
         this.cleanFields("OneTime");
+    }
+
+    copyObject(priceInp) {
+        let pInput = new PriceModel();
+        pInput.id = priceInp.id;
+        pInput.priceType = priceInp.priceType;
+        pInput.periodType = priceInp.periodType;
+        pInput.isPercentage = priceInp.isPercentage;
+        pInput.amount = priceInp.amount;
+        pInput.currency = priceInp.currency;
+        pInput.chargePeriodFrom = priceInp.chargePeriodFrom;
+        pInput.chargePeriodTo = priceInp.chargePeriodTo;
+
+        return pInput;
     }
 }

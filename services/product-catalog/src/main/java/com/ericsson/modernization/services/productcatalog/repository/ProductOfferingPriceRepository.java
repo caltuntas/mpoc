@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface ProductOfferingPriceRepository extends JpaRepository<ProductOfferingPrice, Integer> {
     List<ProductOfferingPrice> findAllByProductOfferingAndIsDeletedIsFalse(ProductOffering productOffering);
+    ProductOfferingPrice findByIdAndProductOffering(int id, ProductOffering productOffering);
 
 }

@@ -28,7 +28,13 @@ public class PriceAppService {
     	if (priceRequestList == null)
     		return;
         for (PriceRequest pr: priceRequestList) {
-            createMappinng(pr, productOffering);
+           // ProductOfferingPrice productOfferingPrice = productOfferingPriceRepository.findByIdAndProductOfferingAndIsDeletedIsFalse(pr.getId(), productOffering);
+           /*if(productOfferingPrice != null) {
+                createMappinng(pr, productOffering);
+            } else {
+
+            }*/
+
         }
     }
 
@@ -54,6 +60,7 @@ public class PriceAppService {
                 //TO-DO: exceptional cases must be considered
             }
 
+            pr.setId(por.getId());
             pr.setAmount(((ComponentProductOfferPrice) por).getAmount());
             pr.setCurrency(((ComponentProductOfferPrice) por).getCurrency());
 
@@ -62,7 +69,7 @@ public class PriceAppService {
         return priceRequestsList;
     }
 
-    public void updatePrices(List<PriceRequest> priceRequestList, ProductOffering productOffering) {
+    public void savePrices(List<PriceRequest> priceRequestList, ProductOffering productOffering) {
         List<ProductOfferingPrice> productOfferingPriceList = productOfferingPriceRepository.findAllByProductOfferingAndIsDeletedIsFalse(productOffering);
 
         for (ProductOfferingPrice por: productOfferingPriceList) {
@@ -70,22 +77,22 @@ public class PriceAppService {
         }
 
         for (PriceRequest pr: priceRequestList) {
-            ProductOfferingPrice por = productOfferingPriceRepository.findById(pr.getId()).get();
+            ProductOfferingPrice por = productOfferingPriceRepository.findByIdAndProductOffering(pr.getId(), productOffering);
             if(por != null) {
                 por.setDeleted(false);
                 if(pr.getPriceType().equals("OneTime")) {
-                    OneTimeProdOfferPriceCharge oneTimeProdOfferPriceCharge = new OneTimeProdOfferPriceCharge();
+                    OneTimeProdOfferPriceCharge oneTimeProdOfferPriceCharge = (OneTimeProdOfferPriceCharge) por;
                     oneTimeProdOfferPriceCharge.setAmount(pr.getAmount());
                     oneTimeProdOfferPriceCharge.setCurrency(pr.getCurrency());
                     oneTimeProdOfferPriceChargeRepository.save(oneTimeProdOfferPriceCharge);
                 } else if(pr.getPriceType().equals("Recurring")) {
-                    RecurringProdOfferPriceCharge recurringProdOfferPriceCharge = new RecurringProdOfferPriceCharge();
+                    RecurringProdOfferPriceCharge recurringProdOfferPriceCharge = (RecurringProdOfferPriceCharge) por;
                     recurringProdOfferPriceCharge.setPeriodType(pr.getPeriodType());
                     recurringProdOfferPriceCharge.setAmount(pr.getAmount());
                     recurringProdOfferPriceCharge.setCurrency(pr.getCurrency());
                     recurringProdOfferPriceChargeRepository.save(recurringProdOfferPriceCharge);
                 } else if(pr.getPriceType().equals("Discount")) {
-                    DiscountProdOfferPriceAlteration discountProdOfferPriceAlteration = new DiscountProdOfferPriceAlteration();
+                    DiscountProdOfferPriceAlteration discountProdOfferPriceAlteration = (DiscountProdOfferPriceAlteration) por;
                     discountProdOfferPriceAlteration.setPeriodType(pr.getPeriodType());
                     discountProdOfferPriceAlteration.setisPercentage(pr.getisPercentage());
                     discountProdOfferPriceAlteration.setAmount(pr.getAmount());

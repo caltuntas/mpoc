@@ -135,7 +135,7 @@ public class ProductOfferingAppService {
 	}
 
     private void savePrices(ProductOffering productOffering, List<PriceRequest> priceRequestList){
-        priceAppService.create(priceRequestList, productOffering);
+        priceAppService.savePrices(priceRequestList, productOffering);
     }
 
 	private void saveTerm(ProductOffering productOffering, int term) {
