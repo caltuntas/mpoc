@@ -1,17 +1,18 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.home.response;
 
 
+import java.util.ArrayList;
 
 public class HomeChartsData {
     private String name;
-    private int[] data;
-    private String[] datalabels;
-    private String[] labels;
+    private ArrayList<Long> data;
+    private String dataLabel;
+    private ArrayList<String> labels;
 
-    public HomeChartsData(String name, int[] data, String[] datalabels, String[] labels) {
+    public HomeChartsData(String name, ArrayList<Long> data, String dataLabel, ArrayList<String>  labels) {
         this.name = name;
         this.data = data;
-        this.datalabels = datalabels;
+        this.dataLabel = dataLabel;
         this.labels = labels;
     }
 
@@ -19,15 +20,15 @@ public class HomeChartsData {
         return name;
     }
 
-    public int[] getData() {
+    public ArrayList<Long> getData() {
         return data;
     }
 
-    public String[] getDatalabels() {
-        return datalabels;
+    public String getDatalabel() {
+        return dataLabel;
     }
 
-    public String[] getLabels() {
+    public ArrayList<String>  getLabels() {
         return labels;
     }
 }

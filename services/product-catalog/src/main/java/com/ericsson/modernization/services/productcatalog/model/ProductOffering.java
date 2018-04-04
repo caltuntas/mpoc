@@ -22,9 +22,6 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 
 		TimePeriod validFor = new TimePeriod();
 		validFor.setValidForStartDate(new Date());
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.MONTH, 1);
-		validFor.setValidForEndDate(cal.getTime());
 		setValidFor(validFor);
 	}
 

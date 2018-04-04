@@ -17,9 +17,7 @@ import { Document } from "../../../document/detail/document";
   templateUrl: "./bundle-detail.component.html"
 })
 export class BundleDetailComponent implements OnInit {
- 
   @Input() model: BundleModel;
-
 
   catalogs: Array<Catalog> = [];
   termValues;
@@ -43,46 +41,50 @@ export class BundleDetailComponent implements OnInit {
       this.bundleService.getOffering(this.model.id).subscribe(offering => {
         this.model = offering;
 
+        if (this.model.term) {
+          jQuery("#termSelect")
+            .val(this.model.term)
+            .trigger("change");
+        }
+
         if (this.model.catalogId) {
-          jQuery("#catalogSelect")
+          jQuery("#bundleCatalogSelect")
             .val(this.model.catalogId)
             .trigger("change");
         }
 
         if (this.model.categoryId) {
-          jQuery("#categorySelect")
+          jQuery("#bundleCategorySelect")
             .val(this.model.categoryId)
             .trigger("change");
         }
 
         if (this.model.segments && this.model.segments.length > 0) {
-          jQuery("#segmentSelect")
+          jQuery("#bundleSegmentSelect")
             .val(this.model.segments)
             .trigger("change");
         }
 
         if (this.model.salesChannels && this.model.salesChannels.length > 0) {
-          jQuery("#salesChannelSelect")
+          jQuery("#bundleSalesChannelSelect")
             .val(this.model.salesChannels)
             .trigger("change");
         }
 
         if (this.model.documents && this.model.documents.length > 0) {
-          jQuery("#documentSelect")
+          jQuery("#bundleDocumentSelect")
             .val(this.model.documents)
             .trigger("change");
         }
       });
     }
 
-  
     this.loadCatalogs();
     this.loadCategories();
     this.loadSalesChannels();
     this.loadSegments();
+    this.loadDocuments();
   }
-
-  
 
   loadCatalogs() {
     this.catalogService.getCatalogs().subscribe(catalogs => {
@@ -113,6 +115,4 @@ export class BundleDetailComponent implements OnInit {
       .getDocuments()
       .subscribe(data => (this.documentList = data));
   }
-
-
 }

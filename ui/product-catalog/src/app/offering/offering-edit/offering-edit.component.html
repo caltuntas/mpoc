@@ -55,14 +55,14 @@
                             <div class="step-pane active" data-step="1">
 
 
-                                <br/>
-                                <br/>
-                                <br/>
+                                <br>
+                                <br>
+                                <br>
 
-                                <div class="row">
+                                <div class="col-md-9 col-md-offset-1">
+                                    <div class="row">
 
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-10">
+
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Name</label>
                                             <div class="col-md-4">
@@ -85,16 +85,6 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label">Sellable?</label>
-                                            <div class="col-md-4">
-                                                <div class="smart-form col-md-1">
-                                                    <label class="toggle">
-                                                        <input type="checkbox" [(ngModel)]="model.isSellable"
-                                                               name="checkbox-toggle" checked="checked">
-                                                        <i data-swchon-text="YES" data-swchoff-text="NO"></i>
-                                                    </label>
-                                                </div>
-                                            </div>
 
                                             <label class="col-md-2 control-label">Term(Month)</label>
                                             <div class="col-md-4">
@@ -112,17 +102,28 @@
                                                 </select>
                                             </div>
 
+                                            <label class="col-md-2 control-label">Sellable?</label>
+                                            <div class="col-md-4">
+                                                <div class="smart-form col-md-1">
+                                                    <label class="toggle">
+                                                        <input type="checkbox" [(ngModel)]="model.isSellable"
+                                                               name="checkbox-toggle" checked="checked">
+                                                        <i data-swchon-text="YES" data-swchoff-text="NO"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-1"></div>
-
-
                                 </div>
 
 
-                                <br/>
-                                <br/>
-                                <br/>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
 
 
                             </div>
@@ -131,69 +132,95 @@
 
                                 <br>
                                 <br>
+                                <br>
+                                <br>
 
-
-                                <div class="row">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-2"><strong>Spec</strong></label>
-
-                                        <div class="col-md-8">
-                                            <select [disabled]="!isNewOffering" select2 style="width:100%"
-                                                    data-select-search="true"
-                                                    id="specSelect"
-                                                    name="specSelect">
-                                                <option [value]="0">Please Select</option>
-                                                <option *ngFor="let spec of spesifications" [value]="spec.id">
-                                                    {{spec.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <legend *ngIf="charValueUseList.length > 0"></legend>
-
-
-                                <div *ngFor="let charValue of charValueUseList; let i = index">
-
-                                    <div class="row" *ngIf="charValue.prodSpecCharType == 1">
+                                <div class="col-md-10 col-md-offset-2">
+                                    <div class="row">
                                         <div class="form-group">
-                                            <label class="control-label col-md-2"><strong>{{
-                                                charValue.prodSpecCharDescription }}</strong></label>
-                                            <div class="col-md-8">
-                                                <select select2
-                                                        id="charValueUseSelect{{i}}"
-                                                        style="width:100%" data-select-search="true">
+                                            <label class="control-label col-md-2"><strong>Spec</strong></label>
+
+                                            <div class="col-md-7">
+                                                <select [disabled]="!isNewOffering" select2 style="width:100%"
+                                                        data-select-search="true"
+                                                        id="specSelect"
+                                                        name="specSelect">
                                                     <option [value]="0">Please Select</option>
-                                                    <option *ngFor="let charValueUse of charValue.prodSpecCharValueList"
-                                                            [value]="charValueUse.prodSpecCharValueUseId"
-                                                            [selected]="charValueUse.isSelected">
-                                                        {{charValueUse.prodSpecCharValue}}
+                                                    <option *ngFor="let spec of spesifications" [value]="spec.id">
+                                                        {{spec.name}}
                                                     </option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row" *ngIf="charValue.prodSpecCharType != 1">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2"><strong>{{
-                                                charValue.prodSpecCharDescription }}</strong></label>
-                                            <div class="col-md-8">
-                                                <input class="form-control"
-                                                       id="charValueUseInput{{i}}"
-                                                       placeholder="Please type the value"
-                                                       type="text">
+                                    <legend *ngIf="charValueUseList.length > 0"></legend>
+
+
+                                    <div *ngFor="let charValue of charValueUseList; let i = index">
+
+                                        <div class="row" *ngIf="charValue.prodSpecCharType == 1">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">
+                                                    <strong *ngIf="charValue.required">
+                                                        {{charValue.prodSpecCharDescription}}
+                                                    </strong>
+                                                    <p *ngIf="!charValue.required">
+                                                        {{charValue.prodSpecCharDescription}}
+                                                    </p>
+                                                </label>
+                                                <div class="col-md-7">
+                                                    <select select2
+                                                            id="charValueUseSelect{{i}}"
+                                                            style="width:100%" data-select-search="true">
+                                                        <option [value]="0">Please Select</option>
+                                                        <option *ngFor="let charValueUse of charValue.prodSpecCharValueList"
+                                                                [value]="charValueUse.prodSpecCharValueUseId"
+                                                                [selected]="charValueUse.isSelected">
+                                                            {{charValueUse.prodSpecCharValue}}
+                                                        </option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
+
+                                        <div class="row" *ngIf="charValue.prodSpecCharType != 1">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">
+                                                    <strong *ngIf="charValue.required">
+                                                        {{charValue.prodSpecCharDescription}}
+                                                    </strong>
+                                                    <p *ngIf="!charValue.required">
+                                                        {{charValue.prodSpecCharDescription}}
+                                                    </p>
+                                                </label>
+                                                <div class="col-md-7">
+                                                    <input class="form-control"
+                                                           id="charValueUseInput{{i}}"
+                                                           placeholder="Please type the value"
+                                                           type="text"
+                                                           [value]="charValue.prodSpecCharValue"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="i == (charValueUseList.length - 1)">
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                        </div>
+
                                     </div>
                                 </div>
 
+                                <br>
+                                <br>
+                                <br>
+                                <br>
 
-                                <br>
-                                <br>
-                                <br>
-                                <br>
+
                             </div>
 
                             <div class="step-pane" data-step="3">
@@ -212,107 +239,109 @@
 
                                 <br>
                                 <br>
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2"><strong>Catalog</strong></label>
 
-                                <div class="row">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-2"><strong>Catalog</strong></label>
-
-                                        <div class="col-md-8">
-                                            <select select2 style="width:100%" data-select-search="true"
-                                                    id="catalogSelect"
-                                                    name="catalogSelect"
-                                                    required [(ngModel)]="model.catalogId"
-                                                    (ngModelChange)="onCatalogChanged($event)"
-                                                    #selectCatalogControl="ngModel">
-                                                <option [value]="0">Please Select</option>
-                                                <option *ngFor="let catalog of catalogs" [value]="catalog.id">
-                                                    {{catalog.name}}
-                                                </option>
-                                            </select>
+                                            <div class="col-md-8">
+                                                <select select2 style="width:100%" data-select-search="true"
+                                                        id="catalogSelect"
+                                                        name="catalogSelect"
+                                                        required [(ngModel)]="model.catalogId"
+                                                        (ngModelChange)="onCatalogChanged($event)"
+                                                        #selectCatalogControl="ngModel">
+                                                    <option [value]="0">Please Select</option>
+                                                    <option *ngFor="let catalog of catalogs" [value]="catalog.id">
+                                                        {{catalog.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-2"><strong>Category</strong></label>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2"><strong>Category</strong></label>
 
-                                        <div class="col-md-8">
-                                            <select select2 style="width:100%" data-select-search="true"
-                                                    id="categorySelect"
-                                                    name="categorySelect"
-                                                    required [(ngModel)]="model.categoryId"
-                                                    (ngModelChange)="onCategoryChanged($event)"
-                                                    #selectCategoryControl="ngModel">
-                                                <option *ngFor="let category of categoryLeaves"
-                                                        [value]="category.id">
-                                                    {{category.name}}
-                                                </option>
-                                            </select>
+                                            <div class="col-md-8">
+                                                <select select2 style="width:100%" data-select-search="true"
+                                                        id="categorySelect"
+                                                        name="categorySelect"
+                                                        required [(ngModel)]="model.categoryId"
+                                                        #selectCategoryControl="ngModel">
+                                                    <option *ngFor="let category of categoryLeaves"
+                                                            [value]="category.id">
+                                                        {{category.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-2"><strong>Segment</strong></label>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2"><strong>Segment</strong></label>
 
-                                        <div class="col-md-8">
-                                            <select select2 multiple
-                                                    id="segmentSelect"
-                                                    name="segmentSelect"
-                                                    style="width:100%"
-                                                    class="select2">
-                                                <option *ngFor="let segment of segmentList" [value]="segment.id">
-                                                    {{segment.name}}
-                                                </option>
-                                            </select>
+                                            <div class="col-md-8">
+                                                <select select2 multiple
+                                                        id="segmentSelect"
+                                                        name="segmentSelect"
+                                                        style="width:100%"
+                                                        class="select2">
+                                                    <option *ngFor="let segment of segmentList" [value]="segment.id">
+                                                        {{segment.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
 
-                                <div class="row">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-2"><strong>Sales Channel</strong></label>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2"><strong>Sales Channel</strong></label>
 
-                                        <div class="col-md-8">
-                                            <select select2 multiple
-                                                    id="salesChannelSelect"
-                                                    name="salesChannelSelect"
-                                                    style="width:100%"
-                                                    class="select2">
-                                                <option *ngFor="let salesChannel of salesChannelList"
-                                                        [value]="salesChannel.id">
-                                                    {{salesChannel.name}}
-                                                </option>
-                                            </select>
+                                            <div class="col-md-8">
+                                                <select select2 multiple
+                                                        id="salesChannelSelect"
+                                                        name="salesChannelSelect"
+                                                        style="width:100%"
+                                                        class="select2">
+                                                    <option *ngFor="let salesChannel of salesChannelList"
+                                                            [value]="salesChannel.id">
+                                                        {{salesChannel.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <br>
-                                <br>
+                                    <br>
+                                    <br>
+                                </div>
                             </div>
 
                             <div class="step-pane" data-step="5">
-                                <h3><strong>Step 5 </strong> -Documents</h3>
+
                                 <br>
                                 <br>
 
-                                <div class="row">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-2"><strong>Documents</strong></label>
-                                        <div class="col-md-8">
-                                            <select select2 multiple
-                                                    id="documentSelect"
-                                                    name="documentSelect"
-                                                    style="width:100%"
-                                                    class="select2">
-                                                <option *ngFor="let document of documentList" [value]="document.id">
-                                                    {{document.name}}
-                                                </option>
-                                            </select>
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2"><strong>Documents</strong></label>
+                                            <div class="col-md-8">
+                                                <select select2 multiple
+                                                        id="documentSelect"
+                                                        name="documentSelect"
+                                                        style="width:100%"
+                                                        class="select2">
+                                                    <option *ngFor="let document of documentList" [value]="document.id">
+                                                        {{document.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

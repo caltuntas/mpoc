@@ -4,15 +4,15 @@
 
 <div>
 
-  
+
 
     <fieldset>
         <div class="form-group" [class.has-error]="selectCatalogControl.invalid && selectCatalogControl.touched ">
             <label class="col-xs-2 col-lg-3 control-label">Catalog</label>
             <div class="col-xs-9 col-lg-6 ">
 
-                <select select2  style="width:100%" data-select-search="true" id="catalogSelect" name="catalogSelect" required
-                    [(ngModel)]="model.catalogId" (ngModelChange)="onCatalogChanged($event)" #selectCatalogControl="ngModel">
+                <select select2 style="width:100%" data-select-search="true" id="bundleCatalogSelect" name="catalogId" required [(ngModel)]="model.catalogId"
+                    #selectCatalogControl="ngModel">
                     <option [value]="0">Please Select </option>
                     <option *ngFor="let catalog of catalogs" [value]="catalog.id">
                         {{catalog.name}}
@@ -31,8 +31,8 @@
             <label class="col-xs-2 col-lg-3 control-label">Category</label>
             <div class="col-xs-9 col-lg-6 ">
 
-                <select select2  style="width:100%" data-select-search="true" class="form-control" id="categorySelect" name="categorySelect" required
-                    [(ngModel)]="model.categoryId" (ngModelChange)="onCategoryChanged($event)" #selectCategoryControl="ngModel">
+                <select select2 style="width:100%" data-select-search="true" class="form-control" id="bundleCategorySelect" name="categoryId"
+                    required [(ngModel)]="model.categoryId" #selectCategoryControl="ngModel">
                     <option [value]="0">Please Select </option>
                     <option *ngFor="let category of categoryLeaves" [value]="category.id">
                         {{category.name}}
@@ -51,8 +51,8 @@
             <label class="col-xs-2 col-lg-3 control-label">Segment</label>
             <div class="col-xs-9 col-lg-6 ">
 
-                <select select2  style="width:100%" multiple class="form-control" id="segmentSelect" name="segmentSelect">
-                    
+                <select select2 style="width:100%" multiple class="form-control" id="bundleSegmentSelect" name="segmentSelect">
+
                     <option *ngFor="let segment of segmentList" [value]="segment.id">
                         {{segment.name}}
                     </option>
@@ -62,11 +62,11 @@
     </fieldset>
 
     <fieldset>
-        <div class="form-group" >
+        <div class="form-group">
             <label class="col-xs-2 col-lg-3 control-label">Sales Channel</label>
             <div class="col-xs-9 col-lg-6 ">
 
-                <select select2 multiple  class="select2" id="salesChannelSelect"  style="width:100%" name="salesChannelSelect">
+                <select select2 multiple class="select2" id="bundleSalesChannelSelect" style="width:100%" name="salesChannelSelect">
                     <option *ngFor="let salesChannel of salesChannelList" [value]="salesChannel.id">
                         {{salesChannel.name}}
                     </option>
@@ -78,21 +78,16 @@
         </div>
     </fieldset>
     <fieldset>
-            <div class="form-group">
-                    <label class="col-xs-2 col-lg-3 control-label">Documents</label>
-                    <div class="col-xs-9 col-lg-6 ">
-                        <select select2 multiple
-                                id="documentSelect"
-                                name="documentSelect"
-                                style="width:100%"
-                                class="select2">
-                            <option *ngFor="let document of documentList"  [value]="document.id" >
-                                {{document.name}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
+        <div class="form-group">
+            <label class="col-xs-2 col-lg-3 control-label">Documents</label>
+            <div class="col-xs-9 col-lg-6 ">
+                <select select2 multiple id="documentSelect" name="bundleDocumentSelect" style="width:100%" class="select2">
+                    <option *ngFor="let document of documentList" [value]="document.id">
+                        {{document.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
     </fieldset>
 
 </div>
-

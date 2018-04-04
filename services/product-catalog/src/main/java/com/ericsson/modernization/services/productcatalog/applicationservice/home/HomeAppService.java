@@ -1,7 +1,7 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.home;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsData;
-import com.ericsson.modernization.services.productcatalog.applicationservice.home.response.ProductOfferingProp;
+import com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsDataProp;
 import com.ericsson.modernization.services.productcatalog.repository.HomeRepository;
 import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingRepository;
 
@@ -31,17 +31,36 @@ public class HomeAppService {
         String labels[] = {"EBN", "CBN"};
         String name = "dataOfferingsSegment";
 
-        list.add(new HomeChartsData(name,a1,labels,labels));
+        //list.add(new HomeChartsData(name,a1,labels,labels));
 
         return list;
     }
     
-    public List<ProductOfferingProp> getOfferingSalesChannels() {
-    	List<ProductOfferingProp> o = homeRepository.getOfferingSalesChannels();
-    	
-    	
+    public List<HomeChartsDataProp> getOfferingOfSalesChannels() {
+    	List<HomeChartsDataProp> o = homeRepository.getOfferingOfSalesChannels();
     	return o;
     }
+
+
+
+    public List<HomeChartsDataProp> getOfferingOfCategories() {
+        List<HomeChartsDataProp> o = homeRepository.getOfferingOfCategories();
+        return o;
+    }
+
+
+
+    public List<HomeChartsDataProp> getOfferingsCountOfCategories() {
+        List<HomeChartsDataProp> o = homeRepository.getOfferingsCountOfCategories();
+        return o;
+    }
+
+    public List<HomeChartsDataProp> getOfferingSegments() {
+        List<HomeChartsDataProp> o = homeRepository.getOfferingSegments();
+        return o;
+    }
+
+
 
 }
 

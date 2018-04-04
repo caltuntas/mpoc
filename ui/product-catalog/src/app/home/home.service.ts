@@ -12,4 +12,8 @@ export class HomeService {
         return this.http.get(`/home/getChartsData`);
     }
 
+    getOfferingSegments(): Observable<HomeChartsData[]> {
+        return this.http.get(`/home/getOfferingSegments`);
+    }
+
 }

@@ -23,7 +23,10 @@ export class BundleOfferingsComponent implements OnInit {
   constructor(
     private bundleService: BundleService,
     private cdRef: ChangeDetectorRef
-  ) {}
+  ) {
+
+    
+  }
 
   async ngOnInit() {
     this.model.simpleProductOfferingIds = [];
@@ -75,7 +78,7 @@ export class BundleOfferingsComponent implements OnInit {
 
   onAddOffering(offeringId) {
     var element = jQuery("a[offering-id='" + offeringId + "']");
-
+console.log(offeringId);
     if (element.hasClass("btn-success")) {
       element.removeClass("btn-success");
       element.addClass("btn-danger");

@@ -117,6 +117,7 @@ public class ProductOfferingAppService {
         } else {
             ProductOfferingTerm productOfferingTerm = new ProductOfferingTerm();
             productOfferingTerm.setTerm(term);
+            productOfferingTerm.setProductOffering(productOffering);
             productOffering.setProductOfferingTerm(productOfferingTerm);
         }
     }
@@ -238,40 +239,38 @@ public class ProductOfferingAppService {
         productOffering.setCategory(category);
     }
 
-    private void saveDetermines(ProductOffering productOffering, List<ProductOfferingCharValueModel> list) {
-        // TODO: refactoring
-        if (list != null) {
-            List<ProductOfferingDetermines> productOfferingDetermines = new ArrayList<>();
+    private void saveDetermines(ProductOffering productOffering, List<ProductOfferingCharValueModel> offeringCharValueModelList) {
 
-            for (ProductOfferingCharValueModel model : list) {
+        if (offeringCharValueModelList.size() > 0) {
+
+            for (ProductOfferingCharValueModel model : offeringCharValueModelList) {
+
                 ProductOfferingDetermines determines = new ProductOfferingDetermines();
+                ProductOfferingDetermines existingDetermines = new ProductOfferingDetermines();
                 boolean determinesExists = false;
 
-                if (model.getCharValueType() == 1) {
-                    ProdSpecCharValueUse prodSpecCharValueUse = prodSpecCharValueUseAppService
-                            .findById(model.getCharValueUseId());
-                    determines.setProdSpecCharValueUse(prodSpecCharValueUse);
-
-                    for (ProductOfferingDetermines persistedDetermines : productOffering
-                            .getProductOfferingDetermineses()) {
-                        if (persistedDetermines.getProdSpecCharValueUse() != null && persistedDetermines
-                                .getProdSpecCharValueUse().getId() == prodSpecCharValueUse.getId()) {
-                            determinesExists = true;
-                            break;
-                        }
+                for (ProductOfferingDetermines persistedDetermines : productOffering.getProductOfferingDetermineses()) {
+                    if (persistedDetermines.getProductSpecCharacteristic().getId() == model.getCharId()) {
+                        determinesExists = true;
+                        existingDetermines = persistedDetermines;
+                        break;
                     }
                 }
 
+                ProdSpecCharValueUse prodSpecCharValueUse = prodSpecCharValueUseAppService
+                        .findById(model.getCharValueUseId());
+                determines.setProdSpecCharValueUse(prodSpecCharValueUse);
                 ProductSpecCharacteristic productSpecCharacteristic = productSpecCharacteristicAppService
                         .findById(model.getCharId());
                 determines.setProductSpecCharacteristic(productSpecCharacteristic);
                 determines.setTextValue(model.getCharValue());
                 determines.setProductOffering(productOffering);
-                productOfferingDetermines.add(determines);
 
-                if (!determinesExists) {
-                    productOffering.getProductOfferingDetermineses().add(determines);
+                if (determinesExists) {
+                    productOffering.getProductOfferingDetermineses().remove(existingDetermines);
                 }
+
+                productOffering.getProductOfferingDetermineses().add(determines);
             }
         }
     }
