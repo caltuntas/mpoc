@@ -15,6 +15,9 @@ matrix:
       - docker login -u $DOCKER_USER -p $DOCKER_PASS
       - docker build -t caltuntas/product-catalog-service .
       - docker push caltuntas/product-catalog-service
+      - docker login -u _ -p "$HEROKU_KEY"  registry.heroku.com
+      - docker tag caltuntas/product-catalog-service:latest registry.heroku.com/product-catalog-service/web
+      - docker push registry.heroku.com/product-catalog-service/web
 
   - language: node_js
     node_js:
@@ -32,4 +35,7 @@ matrix:
       - docker login -u $DOCKER_USER -p $DOCKER_PASS
       - docker build -t caltuntas/product-catalog-ui .
       - docker push caltuntas/product-catalog-ui
+      - docker login -u _ -p "$HEROKU_KEY"  registry.heroku.com
+      - docker tag caltuntas/product-catalog-ui:latest registry.heroku.com/product-catalog-ui/web
+      - docker push registry.heroku.com/product-catalog-ui/web
 
