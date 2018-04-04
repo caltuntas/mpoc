@@ -250,7 +250,7 @@ public class ProductOfferingAppService {
 
     private void saveDetermines(ProductOffering productOffering, List<ProductOfferingCharValueModel> offeringCharValueModelList) {
 
-        if (offeringCharValueModelList.size() > 0) {
+        if (offeringCharValueModelList != null && offeringCharValueModelList.size() > 0) {
 
             for (ProductOfferingCharValueModel model : offeringCharValueModelList) {
 

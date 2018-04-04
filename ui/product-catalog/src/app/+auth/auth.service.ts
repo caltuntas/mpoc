@@ -18,16 +18,8 @@ export class AuthService {
 
   constructor(public router: Router, private http: HttpClientProvider) { }
 
-  public login(model): boolean {
-    this.http.post(`/auth/login`, model).subscribe((user) => {
-      if (user) {
-        this.user = user;
-        this.isLoggedIn = true;
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.router.navigate(this.redirectUrl ? [this.redirectUrl] : ['/home']);
-      }
-    });
-    return this.isLoggedIn;
+  public login(model): Observable<SystemUser> {
+    return this.http.post(`/auth/login`, model);
   }
 
   logout(): void {
