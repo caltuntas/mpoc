@@ -214,7 +214,7 @@
                                                            id="charValueUseInput{{i}}"
                                                            placeholder="Please type the value"
                                                            type="text"
-                                                           [value]="charValue.prodSpecCharValue"
+                                                           [value]="charValue.prodSpecCharValue ? charValue.prodSpecCharValue : null"
                                                     >
                                                 </div>
                                             </div>
