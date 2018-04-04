@@ -28,6 +28,11 @@ public interface HomeRepository extends JpaRepository<ProductOffering, Integer> 
 					"from ProductOffering po \r\n" +
 					"join po.salesChannels psc \r\n" +
 					" group by psc.name,po.isSellable";
+
+	//	select ct.name, count(*), 'Label' = case when po.isSellable = 0 then 'Closed' when po.isSellable = 1 then 'Available' else 'Closed'  end
+	//	from ProductOffering as po
+	//	join Category as ct on  ct.id  = po.category_id where ct.id not in (select inCt.parentId from Category as inCt) group by ct.name,po.isSellable
+
 	@Query(/*nativeQuery=true,*/ value = Q_OFFERING_CATEGORY)
 	List<HomeChartsDataProp> getOfferingOfCategories();
 
@@ -46,6 +51,9 @@ public interface HomeRepository extends JpaRepository<ProductOffering, Integer> 
 					"from ProductOffering po \r\n" +
 					"join po.salesChannels psc \r\n" +
 					" group by psc.name,po.isSellable";
+	//	select ct.name, count(*)
+	//	from ProductOffering as po
+	//	join Category as ct on  ct.id  = po.category_id where ct.id in (select inCt.parentId from Category as inCt) group by ct.name
 	@Query(/*nativeQuery=true,*/ value = Q_OFFERINGS_PARENT_CATEGORIES)
 	List<HomeChartsDataProp> getOfferingsCountOfCategories();
 
@@ -57,6 +65,7 @@ public interface HomeRepository extends JpaRepository<ProductOffering, Integer> 
 					"from ProductOffering po \r\n" +
 					"join po.segments psc \r\n" +
 					" group by psc.name";
+	
 	@Query(/*nativeQuery=true,*/ value = Q_OFFERINGS_SEGMENTS)
 	List<HomeChartsDataProp> getOfferingSegments();
 
