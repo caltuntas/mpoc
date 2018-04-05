@@ -3,6 +3,8 @@ import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 import { DatatableComponent } from "../../shared/ui/datatable/datatable.component";
 import { OfferingService } from "../offering.service";
+import {NotificationComponent} from "../../shared/utils/NotificationComponent";
+import {NotificationService} from "../../shared/utils/notification.service";
 
 @Component({
     selector: 'app-offering-list',
@@ -79,12 +81,14 @@ export class OfferingListComponent implements OnInit, OnDestroy {
     };
 
     constructor(private router: Router,
-        private offeringService: OfferingService,
-        private cdRef: ChangeDetectorRef) {
+                private offeringService: OfferingService,
+                private cdRef: ChangeDetectorRef,
+                private notificationComponent: NotificationComponent,
+                private notificationService: NotificationService) {
     }
 
     ngAfterViewInit() {
-        document.querySelector('body').addEventListener('click', (event) => {
+        document.querySelector('sa-datatable').addEventListener('click', (event) => {
             let target = <Element>event.target;
 
             if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit-offering')) {
@@ -102,10 +106,8 @@ export class OfferingListComponent implements OnInit, OnDestroy {
     }
 
     onDeleteOffering(offeringId) {
-        console.log("Delete offering", offeringId, "?");
-        this.offeringService.deleteOffering(offeringId).subscribe((data) => {
-            this.reloadOfferingListTable();
-        });
+        //console.log("Delete offering", offeringId, "?");
+        this.smartModEg1(offeringId);
     }
 
     reloadOfferingListTable() {
@@ -129,5 +131,23 @@ export class OfferingListComponent implements OnInit, OnDestroy {
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg); // log to console instead
         return Observable.throw(errMsg);
+    }
+
+    smartModEg1(offeringId) {
+        this.notificationService.smartMessageBox({
+            title: "Warning!",
+            content: "Are you sure to delete this offering?",
+            buttons: '[No][Yes]'
+        }, (ButtonPressed) => {
+            if (ButtonPressed === "Yes") {
+                this.offeringService.deleteOffering(offeringId).subscribe((data) => {
+                    this.reloadOfferingListTable();
+                    this.notificationComponent.showNotification(
+                        "Offering",
+                        "Deleted successfully"
+                    );
+                });
+            }
+        });
     }
 }

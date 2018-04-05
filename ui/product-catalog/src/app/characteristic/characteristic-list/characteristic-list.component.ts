@@ -23,7 +23,6 @@ export class CharacteristicListComponent implements OnInit, OnDestroy {
             this.characteristicListService.getAllCharacteristics()
             //.catch(this.handleError)
                 .subscribe((data) => {
-                    //console.log("deneme",data);
                     callback({
                         aaData: data
                     });
@@ -77,7 +76,6 @@ export class CharacteristicListComponent implements OnInit, OnDestroy {
 
 
     onEditCharacteristic(characteristicId) {
-        //console.log("Edit characteristic:", characteristicId);
         this.router.navigate(['/characteristic/characteristic-edit/' + characteristicId]);
     }
 
@@ -98,16 +96,6 @@ export class CharacteristicListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.cdRef.detach();
-        /*document.querySelector('body').removeEventListener('click', (event) => {
-            let target = <Element>event.target;
-
-            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit-characteristic')) {
-                this.onEditCharacteristic(target.getAttribute('characteristic-id'));
-            }
-            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete-characteristic')) {
-                this.onDeleteCharacteristic(target.getAttribute('characteristic-id'));
-            }
-        });*/
     }
 
     constructor(private router: Router,
