@@ -17,21 +17,21 @@
 
               <form (ngSubmit)="onSubmit()" #characteristicForm="ngForm" class="form-horizontal">
                 <fieldset>
-                  <div class="form-group" [class.has-error]="nameControl.invalid && nameControl.submitted ">
-                    <label class="col-xs-2 col-lg-3 control-label">Name</label>
+                  <div class="form-group" [class.has-error]="nameControl.invalid && nameControl.touched ">
+                    <label class="col-xs-2 col-lg-3 control-label"><strong>Name</strong></label>
                     <div class="col-xs-9 col-lg-6 ">
                       <input id="name" required type="text" class="form-control" name="name" [(ngModel)]="model.name" #nameControl="ngModel" />
-                      <small *ngIf="nameControl.invalid && nameControl.submitted " class="help-block">Name is required</small>
+                      <small *ngIf="nameControl.invalid && nameControl.touched " class="help-block">Name is required</small>
                     </div>
                   </div>
                 </fieldset>
                 <fieldset>
-                  <div class="form-group" [class.has-error]="descriptionControl.invalid && descriptionControl.submitted ">
-                    <label class="col-xs-2 col-lg-3 control-label">Description</label>
+                  <div class="form-group" [class.has-error]="descriptionControl.invalid && descriptionControl.touched ">
+                    <label class="col-xs-2 col-lg-3 control-label"><strong>Description</strong></label>
                     <div class="col-xs-9 col-lg-6 ">
                       <input id="description" required type="text" class="form-control" name="description" [(ngModel)]="model.description" #descriptionControl="ngModel"
                       />
-                      <small *ngIf="descriptionControl.invalid && descriptionControl.submitted " class="help-block">Description is required</small>
+                      <small *ngIf="descriptionControl.invalid && descriptionControl.touched " class="help-block">Description is required</small>
                     </div>
                   </div>
                 </fieldset>

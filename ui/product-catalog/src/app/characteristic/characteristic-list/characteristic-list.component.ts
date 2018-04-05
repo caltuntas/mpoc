@@ -3,6 +3,8 @@ import {Observable} from "rxjs/Observable";
 import {CharacteristicService} from '../characteristic.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {DatatableComponent} from '../../shared/ui/datatable/datatable.component';
+import {NotificationComponent} from "../../shared/utils/NotificationComponent";
+import {NotificationService} from "../../shared/utils/notification.service";
 
 
 @Component({
@@ -60,7 +62,7 @@ export class CharacteristicListComponent implements OnInit, OnDestroy {
     };
 
     ngAfterViewInit() {
-        document.querySelector('body').addEventListener('click', (event) => {
+        document.querySelector('sa-datatable').addEventListener('click', (event) => {
             let target = <Element>event.target;
 
             if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit-characteristic')) {
@@ -80,10 +82,9 @@ export class CharacteristicListComponent implements OnInit, OnDestroy {
     }
 
     onDeleteCharacteristic(characteristicId) {
-        //console.log("Delete characteristic", characteristicId, "?");
-        this.characteristicListService.deleteCharacteristic(characteristicId).subscribe((data) => {
-            this.reloadOfferingListTable();
-        });
+
+        this.smartModEg1(characteristicId);
+
     }
 
     reloadOfferingListTable() {
@@ -97,9 +98,23 @@ export class CharacteristicListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.cdRef.detach();
+        /*document.querySelector('body').removeEventListener('click', (event) => {
+            let target = <Element>event.target;
+
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit-characteristic')) {
+                this.onEditCharacteristic(target.getAttribute('characteristic-id'));
+            }
+            if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete-characteristic')) {
+                this.onDeleteCharacteristic(target.getAttribute('characteristic-id'));
+            }
+        });*/
     }
 
-    constructor(private router: Router, private characteristicListService: CharacteristicService, private cdRef: ChangeDetectorRef) {
+    constructor(private router: Router,
+                private characteristicListService: CharacteristicService,
+                private cdRef: ChangeDetectorRef,
+                private notificationComponent: NotificationComponent,
+                private notificationService: NotificationService) {
     }
 
     /*private handleError(error: any) {
@@ -109,6 +124,23 @@ export class CharacteristicListComponent implements OnInit, OnDestroy {
       return Observable.throw(errMsg);
     }*/
 
+    smartModEg1(characteristicId) {
+        this.notificationService.smartMessageBox({
+            title: "Warning!",
+            content: "Are you sure to delete this characteristic?",
+            buttons: '[No][Yes]'
+        }, (ButtonPressed) => {
+            if (ButtonPressed === "Yes") {
+                this.characteristicListService.deleteCharacteristic(characteristicId).subscribe((data) => {
+                    this.reloadOfferingListTable();
+                    this.notificationComponent.showNotification(
+                        "Characteristic",
+                        "Deleted successfully"
+                    );
+                });
+            }
+        });
+    }
 
 }
 
