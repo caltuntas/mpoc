@@ -55,8 +55,8 @@ public class ProductOfferingRestController {
         return new ResponseEntity<>(productOfferingAppService.findAllByProductOfferingTypeId(productOfferingTypeId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getSimgpleOfferingsForSelect", method = RequestMethod.GET)
-    public List<IdNameDescriptionModel> getOfferingsForSelect() {
+    @RequestMapping(value = "/getSimpleOfferingsForSelect", method = RequestMethod.GET)
+    public List<IdNameDescriptionModel> getSimpleOfferingsForSelect() {
         return productOfferingAppService.getSimpleOfferingsForSelect();
     }
 
