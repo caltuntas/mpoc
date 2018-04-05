@@ -1,29 +1,41 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.ericsson.modernization.services.productcatalog.applicationservice.document.DocumentAppService;
-import com.ericsson.modernization.services.productcatalog.applicationservice.price.PriceAppService;
-import com.ericsson.modernization.services.productcatalog.applicationservice.price.request.PriceRequest;
-import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCharValueModel;
-import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.IdNameDescriptionModel;
-import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProdSpecCharValueUseAppService;
-import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProductSpecCharacteristicAppService;
-import com.ericsson.modernization.services.productcatalog.applicationservice.saleschannel.SalesChannelAppService;
-import com.ericsson.modernization.services.productcatalog.applicationservice.segment.SegmentAppService;
-import com.ericsson.modernization.services.productcatalog.model.*;
-import jdk.nashorn.internal.ir.IfNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ericsson.modernization.services.productcatalog.applicationservice.catalog.CatalogAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.category.CategoryService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.document.DocumentAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.price.PriceAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.price.request.PriceRequest;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingCharValueModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.request.ProductOfferingDetailModel;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.IdNameDescriptionModel;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productoffering.response.ProductOfferingListModel;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProdSpecCharValueUseAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.productspeccharacteristic.ProductSpecCharacteristicAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.ProductSpecificationAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.saleschannel.SalesChannelAppService;
+import com.ericsson.modernization.services.productcatalog.applicationservice.segment.SegmentAppService;
+import com.ericsson.modernization.services.productcatalog.model.Catalog;
+import com.ericsson.modernization.services.productcatalog.model.Category;
+import com.ericsson.modernization.services.productcatalog.model.Document;
+import com.ericsson.modernization.services.productcatalog.model.Duration;
+import com.ericsson.modernization.services.productcatalog.model.ProdSpecCharValueUse;
+import com.ericsson.modernization.services.productcatalog.model.ProductOffering;
+import com.ericsson.modernization.services.productcatalog.model.ProductOfferingDetermines;
+import com.ericsson.modernization.services.productcatalog.model.ProductOfferingTerm;
+import com.ericsson.modernization.services.productcatalog.model.ProductOfferingType;
+import com.ericsson.modernization.services.productcatalog.model.ProductSpecCharacteristic;
+import com.ericsson.modernization.services.productcatalog.model.ProductSpecification;
+import com.ericsson.modernization.services.productcatalog.model.SalesChannel;
+import com.ericsson.modernization.services.productcatalog.model.Segment;
 import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingRepository;
 import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingTypeRepository;
 import com.ericsson.modernization.services.productcatalog.repository.util.QueryExecuter;
@@ -327,17 +339,18 @@ public class ProductOfferingAppService {
 
     public ProductOfferingDetailModel findByIdForEditing(int id) {
         ProductOffering productOffering = findById(id);
+        List<Integer> simpleProductOfferingIds = productOffering.getProductOfferings().stream().map(x ->x.getId()).collect(Collectors.toList());
         return new ProductOfferingDetailModel(productOffering.getId(),
                 productOffering.getName(),
                 productOffering.getDescription(),
                 productOffering.getIsReplicated(),
                 productOffering.getIsSellable(),
 				productOffering.getProductSpecification()!=null? productOffering.getProductSpecification().getId():0,
-                productOffering.getCatalog().getId(),
-                productOffering.getCategory().getId(),
-                productOffering.getProductOfferingType().getId(),
+				productOffering.getCatalog() != null ? productOffering.getCatalog().getId():0,
+				productOffering.getCategory() != null ? productOffering.getCategory().getId():0,
+				productOffering.getProductOfferingType() != null ? productOffering.getProductOfferingType().getId():0,
                 productOffering.getProductOfferingTerm() != null ? productOffering.getProductOfferingTerm().getTerm() : 0,
-                new ArrayList<Integer>(),
+                simpleProductOfferingIds != null ? simpleProductOfferingIds: new ArrayList<Integer>(),
                 findOfferingCharValues(id),
                 getSalesChannelsIds(productOffering),
                 getSegmentIds(productOffering),
@@ -353,7 +366,6 @@ public class ProductOfferingAppService {
 
 	public List<ProductOfferingListModel> findAllByProductOfferingTypeId(int productOfferingTypeId) {
         return productOfferingRepository.findAllByProductOfferingTypeIdAndIsDeletedIsFalse(productOfferingTypeId).stream()
-                .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
 				.map(x -> new ProductOfferingListModel(x.getId(), x.getName(), x.getDescription(),
 						x.getProductSpecification() != null ? x.getProductSpecification().getCode() : null,
 						x.getCatalog() != null ? x.getCatalog().getName() : null,
