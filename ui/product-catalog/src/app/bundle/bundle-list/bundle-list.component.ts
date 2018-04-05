@@ -34,7 +34,7 @@ export class BundleListComponent implements OnInit, OnDestroy {
                     return data == true ? "<span class=\"fa fa-fw fa-check\"></span>" : "<span class=\"fa fa-fw fa-times-circle\"></span>";
                 }
             },
-            {"data": "productSpesificationCode"},
+           
             {"data": "catalogCode"},
             {"data": "categoryCode"},
             {"data": "productOfferingType"},
