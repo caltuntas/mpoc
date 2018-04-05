@@ -18,6 +18,7 @@ import { SmartadminInputModule } from "../shared/forms/input/smartadmin-input.mo
         SmartadminValidationModule,
         SmartadminInputModule
     ],
-    declarations: [PriceComponent]
+    declarations: [PriceComponent],
+    exports:[PriceComponent]
 })
 export class PriceModule { }

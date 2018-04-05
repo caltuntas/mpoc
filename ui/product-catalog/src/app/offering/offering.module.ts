@@ -13,6 +13,7 @@ import { SalesChannelService } from '../sales-channel/sales-channel.service';
 import { SegmentService } from '../segment/segment.service';
 import { DocumentService } from '../document/document.service';
 import {PriceComponent} from "../price/price.component";
+import { PriceModule } from '../price/price.module';
 
 @NgModule({
     imports: [
@@ -22,9 +23,9 @@ import {PriceComponent} from "../price/price.component";
         SmartadminDatatableModule,
         SmartadminValidationModule,
         SmartadminInputModule,
-        SmartadminFormsModule
+        SmartadminFormsModule,PriceModule
     ],
-    declarations: [OfferingListComponent, OfferingEditComponent, PriceComponent],
+    declarations: [OfferingListComponent, OfferingEditComponent],
     providers: [SalesChannelService,SegmentService,DocumentService]
 })
 export class OfferingModule {
