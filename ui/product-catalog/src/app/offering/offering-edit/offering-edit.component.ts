@@ -31,8 +31,9 @@ export class OfferingEditComponent implements OnInit {
     spesifications: Array<specificationListModel> = [];
     catalogs: Array<Catalog> = [];
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
+    emptyCharValues : Array<number> = [];
     termValues;
-    termSelected : boolean = false;
+    termSelected: boolean = false;
     categoryLeaves: Array<Category> = [];
     salesChannelList: SalesChannel[];
     segmentList: Segment[];
@@ -96,7 +97,7 @@ export class OfferingEditComponent implements OnInit {
                     jQuery("#documentSelect").val(this.model.documents).trigger('change');
                 }
 
-                if(this.model.priceRequestList && this.model.priceRequestList.length > 0){
+                if (this.model.priceRequestList && this.model.priceRequestList.length > 0) {
                     this.priceComponent.priceList = this.model.priceRequestList;
                 }
             })
@@ -195,7 +196,7 @@ export class OfferingEditComponent implements OnInit {
                 isValid = !!(this.model.name && this.model.description && (this.model.term && this.model.term != 0));
                 break;
             case 2:
-                isValid = !!(this.model.productSpecificationId);
+                isValid = !!(this.model.productSpecificationId &&  this.validateRequiredCharValues());
                 break;
             case 3:
             case 4:
@@ -283,10 +284,10 @@ export class OfferingEditComponent implements OnInit {
                         }
                     }
                 }
-                else{
+                else {
                     let offeringCharValues = this.model.productOfferingCharValues;
                     for (let k = 0; k < offeringCharValues.length; k++) {
-                        if (offeringCharValues[k].charId ==  specCharValueUseList[i].prodSpecCharId){
+                        if (offeringCharValues[k].charId == specCharValueUseList[i].prodSpecCharId) {
                             specCharValueUseList[i].prodSpecCharValue = offeringCharValues[k].charValue;
                         }
                     }
@@ -295,6 +296,34 @@ export class OfferingEditComponent implements OnInit {
 
             this.charValueUseList = specCharValueUseList;
         })
+    }
+
+    validateRequiredCharValues() : boolean {
+
+        let hasEmptyRequiredCharValue = false;
+        this.getCharValues();
+
+        for (let i = 0; i < this.charValueUseList.length; i++) {
+            if (this.charValueUseList[i].required){
+                if (this.charValueUseList[i].prodSpecCharType == 1) {
+                    let selector = "#charValueUseSelect" + i;
+                    var data = jQuery(selector).select2('data');
+                    if(data[0].id == 0){
+                        console.log("empty char value use");
+                        hasEmptyRequiredCharValue = true;
+                    }
+                }else{
+                    let selector = "#charValueUseInput" + i;
+                    let charTextValue = jQuery(selector).val();
+                    if(!charTextValue){
+                        console.log("empty text");
+                        hasEmptyRequiredCharValue = true;
+                    }
+                }
+            }
+        }
+
+        return !hasEmptyRequiredCharValue;
     }
 
     getCharValues() {
