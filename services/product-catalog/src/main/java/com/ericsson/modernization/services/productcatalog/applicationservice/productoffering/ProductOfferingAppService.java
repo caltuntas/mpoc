@@ -1,7 +1,6 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,7 +63,7 @@ public class ProductOfferingAppService {
 	private DocumentAppService documentAppService;
 	@Autowired
 	private PriceAppService priceAppService;
-    @Autowired
+	@Autowired
 	private ProductOfferingTypeRepository productOfferingTypeRepository;
 
 	public ProductOffering create(ProductOfferingDetailModel createRequest) {
@@ -106,57 +105,60 @@ public class ProductOfferingAppService {
 		saveDocuments(productOffering, detailModel.getDocuments());
 		saveTerm(productOffering, detailModel.getTerm());
 
-		if (detailModel.getProductOfferingTypeId() == 2)// Bundle
-		{	
-			List<Integer> bundleRelatedSimpleOfferingIds = new ArrayList<Integer>();		
-			bundleRelatedSimpleOfferingIds = QueryExecuter.GetBundleRelatedSimpleOfferingIds(550);
-			if (productOffering.getId() > 0)
-				bundleRelatedSimpleOfferingIds = QueryExecuter.GetBundleRelatedSimpleOfferingIds(productOffering.getId());
-			if (productOffering.getProductOfferings() == null)
-				productOffering.setProductOfferings(new ArrayList<ProductOffering>());
-			
-			for (Integer simpleProductOfferingId : detailModel.getSimpleProductOfferingIds()) {
-				// BoChild kaydet
-				ProductOffering simpleProductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(simpleProductOfferingId);
-				if (simpleProductOffering != null) {
-					//Klonlanmış mı?
-					boolean isClonned = false;					
-					if (!isClonned) {
-						// Klonla
-						ProductOffering clonedProductOffering = cloneChildProductOfferingForBundle(productOffering,
-								simpleProductOffering);
-						// Relation ata
-						productOffering.getProductOfferings().add(clonedProductOffering);
-					}
-				}
-			}/*
-			for (ProductOffering item : productOffering.getProductOfferings())
-			{
-				boolean doesExist = false; 
-				for (Integer id : detailModel.getSimpleProductOfferingIds()) {
-					if (item.getId() == id) {
-						doesExist = true;
-						break;
-					}
-				}
-				if (!doesExist) {
-					ProductOffering removeProductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(item.getId());
-					if (removeProductOffering != null) {
-						productOffering.getProductOfferings().remove(removeProductOffering);
-					}
-				}
-			}*/
-			// Relation kaydet
-			// productOfferingRepository.save(productOffering);
-		}
-		
+		saveFieldsForBundle(productOffering, detailModel);
+
 		productOfferingRepository.save(productOffering);
 		savePrices(productOffering, detailModel.getPriceRequestList());
 	}
 
-    private void savePrices(ProductOffering productOffering, List<PriceRequest> priceRequestList){
-        priceAppService.savePrices(priceRequestList, productOffering);
-    }
+	private void saveFieldsForBundle(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
+		if (detailModel.getProductOfferingTypeId() != 2)// Bundle
+			return;
+		List<Integer> oldList = new ArrayList<Integer>();
+		if (productOffering.getId() > 0)
+			oldList = QueryExecuter.GetBundleRelatedSimpleOfferingIds(productOffering.getId());
+		List<Integer> newList = detailModel.getSimpleProductOfferingIds().stream().distinct()
+				.collect(Collectors.toList());
+		if (productOffering.getProductOfferings() == null)
+			productOffering.setProductOfferings(new ArrayList<ProductOffering>());
+
+		List<Integer> removed = new ArrayList<Integer>(oldList);
+		removed.removeAll(newList);
+
+		List<Integer> same = new ArrayList<Integer>(oldList);
+		same.retainAll(newList);
+
+		List<Integer> added = new ArrayList<Integer>(newList);
+		added.removeAll(oldList);
+
+		for (Integer id : added) {
+			// BoChild kaydet
+			ProductOffering simpleProductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
+			if (simpleProductOffering != null) {
+				// Klonla
+				ProductOffering clonedProductOffering = cloneChildProductOfferingForBundle(productOffering,
+						simpleProductOffering);
+				// Relation ata
+				productOffering.getProductOfferings().add(clonedProductOffering);
+			}
+		}
+		for (Integer id : removed) {
+			ProductOffering simpleProductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
+			if (simpleProductOffering != null) {
+				// Klonlanmış kaydı bul, sil, ilişkisini koparma.
+				ProductOffering clonedProductOffering = simpleProductOffering.getClonnedProductOffering();
+				clonedProductOffering.setDeleted(true);
+				productOfferingRepository.save(clonedProductOffering);
+				//productOffering.getProductOfferings().remove(clonedProductOffering);
+			}
+		}
+		// Relation kaydet
+		// productOfferingRepository.save(productOffering);
+	}
+
+	private void savePrices(ProductOffering productOffering, List<PriceRequest> priceRequestList) {
+		priceAppService.savePrices(priceRequestList, productOffering);
+	}
 
 	private void saveTerm(ProductOffering productOffering, int term) {
 
@@ -271,7 +273,8 @@ public class ProductOfferingAppService {
 		saveSegments(clonedProductOffering, segmentIds);
 		// clonedProductOffering.setUnsupportedProductSpecCharValueUseGroups(childproductOffering.getUnsupportedProductSpecCharValueUseGroups());
 		clonedProductOffering.setUpdateUserId(childproductOffering.getUpdateUserId());
-		//clonedProductOffering.setValidFor(childproductOffering.getValidFor());ctor'da geliyor zaten
+		// clonedProductOffering.setValidFor(childproductOffering.getValidFor());ctor'da
+		// geliyor zaten
 		clonedProductOffering.setWarrantyPeriod(childproductOffering.getWarrantyPeriod());
 
 		// productOfferingRepository.save(clonedProductOffering);
@@ -337,26 +340,23 @@ public class ProductOfferingAppService {
 		return productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
 	}
 
-    public ProductOfferingDetailModel findByIdForEditing(int id) {
-        ProductOffering productOffering = findById(id);
-        List<Integer> simpleProductOfferingIds = productOffering.getProductOfferings().stream().map(x ->x.getId()).collect(Collectors.toList());
-        return new ProductOfferingDetailModel(productOffering.getId(),
-                productOffering.getName(),
-                productOffering.getDescription(),
-                productOffering.getIsReplicated(),
-                productOffering.getIsSellable(),
-				productOffering.getProductSpecification()!=null? productOffering.getProductSpecification().getId():0,
-				productOffering.getCatalog() != null ? productOffering.getCatalog().getId():0,
-				productOffering.getCategory() != null ? productOffering.getCategory().getId():0,
-				productOffering.getProductOfferingType() != null ? productOffering.getProductOfferingType().getId():0,
-                productOffering.getProductOfferingTerm() != null ? productOffering.getProductOfferingTerm().getTerm() : 0,
-                simpleProductOfferingIds != null ? simpleProductOfferingIds: new ArrayList<Integer>(),
-                findOfferingCharValues(id),
-                getSalesChannelsIds(productOffering),
-                getSegmentIds(productOffering),
-                getDocumentIds(productOffering),
-                findOfferingPrices(productOffering));
-    }
+	public ProductOfferingDetailModel findByIdForEditing(int id) {
+		ProductOffering productOffering = findById(id);
+		List<Integer> simpleProductOfferingIds = productOffering.getProductOfferings().stream().map(x -> x.getId())
+				.collect(Collectors.toList());
+		return new ProductOfferingDetailModel(productOffering.getId(), productOffering.getName(),
+				productOffering.getDescription(), productOffering.getIsReplicated(), productOffering.getIsSellable(),
+				productOffering.getProductSpecification() != null ? productOffering.getProductSpecification().getId()
+						: 0,
+				productOffering.getCatalog() != null ? productOffering.getCatalog().getId() : 0,
+				productOffering.getCategory() != null ? productOffering.getCategory().getId() : 0,
+				productOffering.getProductOfferingType() != null ? productOffering.getProductOfferingType().getId() : 0,
+				productOffering.getProductOfferingTerm() != null ? productOffering.getProductOfferingTerm().getTerm()
+						: 0,
+				simpleProductOfferingIds != null ? simpleProductOfferingIds : new ArrayList<Integer>(),
+				findOfferingCharValues(id), getSalesChannelsIds(productOffering), getSegmentIds(productOffering),
+				getDocumentIds(productOffering), findOfferingPrices(productOffering));
+	}
 
 	public List<IdNameDescriptionModel> getSimpleOfferingsForSelect() {
 		return productOfferingRepository.findAllByProductOfferingTypeIdAndIsDeletedIsFalse(1).stream()
@@ -365,7 +365,8 @@ public class ProductOfferingAppService {
 	}
 
 	public List<ProductOfferingListModel> findAllByProductOfferingTypeId(int productOfferingTypeId) {
-        return productOfferingRepository.findAllByProductOfferingTypeIdAndIsDeletedIsFalse(productOfferingTypeId).stream()
+		return productOfferingRepository.findAllByProductOfferingTypeIdAndIsDeletedIsFalse(productOfferingTypeId)
+				.stream()
 				.map(x -> new ProductOfferingListModel(x.getId(), x.getName(), x.getDescription(),
 						x.getProductSpecification() != null ? x.getProductSpecification().getCode() : null,
 						x.getCatalog() != null ? x.getCatalog().getName() : null,
@@ -410,9 +411,9 @@ public class ProductOfferingAppService {
 		return valueModelList;
 	}
 
-	private List<PriceRequest> findOfferingPrices(ProductOffering productOffering){
-        return priceAppService.getAllPrices(productOffering);
-    }
+	private List<PriceRequest> findOfferingPrices(ProductOffering productOffering) {
+		return priceAppService.getAllPrices(productOffering);
+	}
 
 	private List<Integer> getSegmentIds(ProductOffering productOffering) {
 		// TODO: foreign keys will be persisted for performance

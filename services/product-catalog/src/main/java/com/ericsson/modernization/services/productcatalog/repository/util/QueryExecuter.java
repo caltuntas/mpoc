@@ -17,7 +17,7 @@ public class QueryExecuter {
 			Connection conn = DriverManager.getConnection(url, "sa", "K852tig684");
 			Statement stmt = conn.createStatement();
 			ResultSet rs;
-			String query = "select id from ProductOffering (NOLOCK)\r\n"
+			String query = "select clonnedProductOffering_id from ProductOffering (NOLOCK)\r\n"
 					+ "where id IN (select relatedProductOfferingId from ProductOfferingRelation (NOLOCK) where productOfferingId = "
 					+ bundleOfferingId + ")\r\n" 
 					+ "AND productOfferingType_id = 3\r\n" + "AND isDeleted = 0";
@@ -25,7 +25,7 @@ public class QueryExecuter {
 			rs = stmt.executeQuery(query);
 
 			while (rs.next()) {
-				Integer id = rs.getInt("id");
+				Integer id = rs.getInt("clonnedProductOffering_id");
 				System.out.println(id);
 				bundleRelatedSimpleOfferingIds.add(id);
 			}
