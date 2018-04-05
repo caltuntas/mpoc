@@ -54,7 +54,7 @@ export class CategoryListComponent implements OnInit {
                     </div>`;
                 }
             }],
-            order: [[ 0, "desc" ]]
+            order: [[ 1, "desc" ]]
     };
 
     ngAfterViewInit() {
