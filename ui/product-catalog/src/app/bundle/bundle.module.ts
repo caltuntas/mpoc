@@ -16,6 +16,7 @@ import { SegmentService } from "../segment/segment.service";
 import { DocumentService } from "../document/document.service";
 import { BundleDetailComponent } from "./bundle-edit/bundle-detail/bundle-detail.component";
 import { PriceComponent } from "../price/price.component";
+import { PriceModule } from "../price/price.module";
 
 @NgModule({
   imports: [
@@ -25,7 +26,9 @@ import { PriceComponent } from "../price/price.component";
     SmartadminDatatableModule,
     SmartadminValidationModule,
     SmartadminInputModule,
-    SmartadminFormsModule
+    SmartadminFormsModule,
+    PriceModule
+
   ],
   declarations: [
     BundleListComponent,
@@ -35,7 +38,6 @@ import { PriceComponent } from "../price/price.component";
     
     BundleOfferingsComponent,    
     BundleDetailComponent,
-    PriceComponent
   ],
   providers: [SalesChannelService,SegmentService,DocumentService]
 })

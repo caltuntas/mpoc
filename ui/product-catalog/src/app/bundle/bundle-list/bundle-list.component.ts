@@ -3,6 +3,8 @@ import {Observable} from "rxjs/Observable";
 import {Router} from "@angular/router";
 import {DatatableComponent} from "../../shared/ui/datatable/datatable.component";
 import {BundleService} from "../bundle.service";
+import { NotificationComponent } from '../../shared/utils/NotificationComponent';
+import { NotificationService } from '../../shared/utils/notification.service';
 
 @Component({
     selector: 'app-bundle-list',
@@ -33,8 +35,7 @@ export class BundleListComponent implements OnInit, OnDestroy {
                 "render": function (data, type, full, meta) {
                     return data == true ? "<span class=\"fa fa-fw fa-check\"></span>" : "<span class=\"fa fa-fw fa-times-circle\"></span>";
                 }
-            },
-            {"data": "productSpesificationCode"},
+            },           
             {"data": "catalogCode"},
             {"data": "categoryCode"},
             {"data": "productOfferingType"},
@@ -80,7 +81,9 @@ export class BundleListComponent implements OnInit, OnDestroy {
 
     constructor(private router: Router,
                 private bundleService: BundleService,
-                private cdRef: ChangeDetectorRef) {
+                private cdRef: ChangeDetectorRef,
+                private notificationComponent: NotificationComponent,
+                private notificationService: NotificationService) {
     }
 
     ngAfterViewInit() {
@@ -103,10 +106,28 @@ export class BundleListComponent implements OnInit, OnDestroy {
 
     onDeleteOffering(offeringId) {
        
-        this.bundleService.deleteOffering(offeringId).subscribe((data) => {
-            this.reloadOfferingListTable();
+        this.notificationService.smartMessageBox({
+            title: "Warning!",
+            content: "Are you sure to delete this bundle?",
+            buttons: '[No][Yes]'
+        }, (ButtonPressed) => {
+            if (ButtonPressed === "Yes") {
+                this.bundleService.deleteOffering(offeringId).subscribe(data => {
+                    this.reloadOfferingListTable();
+                    this.notificationComponent.showNotification(
+                        "Bundle",
+                        "Deleted successfully"
+                    );
+                });
+            }
         });
     }
+
+
+    
+    
+
+       
 
     reloadOfferingListTable() {
         this.reRenderTable = true;

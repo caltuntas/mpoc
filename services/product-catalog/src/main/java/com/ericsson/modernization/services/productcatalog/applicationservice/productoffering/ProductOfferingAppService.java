@@ -123,7 +123,7 @@ public class ProductOfferingAppService {
 			// QueryExecuter.GetBundleRelatedSimpleOfferingIds(productOffering.getId());
 			childOfferingIdAndClonnedOfferingMap = QueryExecuter
 					.GetBundleRelatedSimpleAndChildOfferingIdsHash(productOffering.getId());
-			oldList = new ArrayList<>(childOfferingIdAndClonnedOfferingMap.keySet());
+			oldList = new ArrayList<>(childOfferingIdAndClonnedOfferingMap.values());
 		}
 		List<Integer> newList = detailModel.getSimpleProductOfferingIds().stream().distinct()
 				.collect(Collectors.toList());
@@ -155,8 +155,8 @@ public class ProductOfferingAppService {
 			if (simpleProductOffering != null) {
 				// Klonlanmış kaydı bul, sil, ilişkisini koparma.
 				System.out.println("simpleProductOfferingId:" + simpleProductOffering.getId());
-				Integer clonedProductOfferingId = childOfferingIdAndClonnedOfferingMap
-						.get(simpleProductOffering.getId());
+				Integer clonedProductOfferingId = (Integer) getKeyFromValue(childOfferingIdAndClonnedOfferingMap,
+						simpleProductOffering.getId());
 				System.out.println("clonedProductOfferingId:" + clonedProductOfferingId);
 				ProductOffering clonedProductOffering = productOfferingRepository
 						.findByIdAndIsDeletedIsFalse(clonedProductOfferingId);
@@ -167,6 +167,15 @@ public class ProductOfferingAppService {
 		}
 		// Relation kaydet
 		// productOfferingRepository.save(productOffering);
+	}
+
+	public static Object getKeyFromValue(Map hm, Object value) {
+		for (Object o : hm.keySet()) {
+			if (hm.get(o).equals(value)) {
+				return o;
+			}
+		}
+		return null;
 	}
 
 	private void savePrices(ProductOffering productOffering, List<PriceRequest> priceRequestList) {
