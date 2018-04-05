@@ -57,7 +57,7 @@ public class ProductOfferingRestController {
 
     @RequestMapping(value = "/getSimgpleOfferingsForSelect", method = RequestMethod.GET)
     public List<IdNameDescriptionModel> getOfferingsForSelect() {
-        return productOfferingAppService.getSimgpleOfferingsForSelect();
+        return productOfferingAppService.getSimpleOfferingsForSelect();
     }
 
 }

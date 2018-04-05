@@ -25,6 +25,7 @@ import com.ericsson.modernization.services.productcatalog.applicationservice.pro
 import com.ericsson.modernization.services.productcatalog.applicationservice.productspecification.ProductSpecificationAppService;
 import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingRepository;
 import com.ericsson.modernization.services.productcatalog.repository.ProductOfferingTypeRepository;
+import com.ericsson.modernization.services.productcatalog.repository.util.QueryExecuter;
 
 @Transactional
 @Service
@@ -91,26 +92,23 @@ public class ProductOfferingAppService {
 		saveSegments(productOffering, detailModel.getSegments());
 		saveDocuments(productOffering, detailModel.getDocuments());
 		saveTerm(productOffering, detailModel.getTerm());
-/*
+
 		if (detailModel.getProductOfferingTypeId() == 2)// Bundle
-		{
+		{	
+			List<Integer> bundleRelatedSimpleOfferingIds = new ArrayList<Integer>();		
+			bundleRelatedSimpleOfferingIds = QueryExecuter.GetBundleRelatedSimpleOfferingIds(550);
+			if (productOffering.getId() > 0)
+				bundleRelatedSimpleOfferingIds = QueryExecuter.GetBundleRelatedSimpleOfferingIds(productOffering.getId());
 			if (productOffering.getProductOfferings() == null)
 				productOffering.setProductOfferings(new ArrayList<ProductOffering>());
-			List<ProductOffering> savedSimpleOfferingProductOfferings =	productOfferingRepository.			findByBundleAndSimpleRelation(productOffering.getId());
 			
 			for (Integer simpleProductOfferingId : detailModel.getSimpleProductOfferingIds()) {
 				// BoChild kaydet
 				ProductOffering simpleProductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(simpleProductOfferingId);
 				if (simpleProductOffering != null) {
 					//Klonlanmış mı?
-					ProductOffering clonned = productOfferingRepository.findByIdAndClonnedProductOfferingIdAndIsDeletedIsFalse(productOffering.getId(), simpleProductOfferingId);
-					
-					String param = "foo";
-					//Object[] objectArray = productOfferingRepository.myCustomQuery();
-					List<ProductOffering> customerlist = productOfferingRepository.findByBundleAndSimpleRelation(param);
-					
-					
-					if (clonned == null) {
+					boolean isClonned = false;					
+					if (!isClonned) {
 						// Klonla
 						ProductOffering clonedProductOffering = cloneChildProductOfferingForBundle(productOffering,
 								simpleProductOffering);
@@ -118,7 +116,7 @@ public class ProductOfferingAppService {
 						productOffering.getProductOfferings().add(clonedProductOffering);
 					}
 				}
-			}
+			}/*
 			for (ProductOffering item : productOffering.getProductOfferings())
 			{
 				boolean doesExist = false; 
@@ -134,10 +132,11 @@ public class ProductOfferingAppService {
 						productOffering.getProductOfferings().remove(removeProductOffering);
 					}
 				}
-			}
+			}*/
 			// Relation kaydet
 			// productOfferingRepository.save(productOffering);
-		}*/
+		}
+		
 		productOfferingRepository.save(productOffering);
 		savePrices(productOffering, detailModel.getPriceRequestList());
 	}
@@ -345,7 +344,7 @@ public class ProductOfferingAppService {
                 findOfferingPrices(productOffering));
     }
 
-	public List<IdNameDescriptionModel> getSimgpleOfferingsForSelect() {
+	public List<IdNameDescriptionModel> getSimpleOfferingsForSelect() {
 		return productOfferingRepository.findAllByProductOfferingTypeIdAndIsDeletedIsFalse(1).stream()
 				.map(x -> new IdNameDescriptionModel(x.getId(), x.getName(), x.getDescription()))
 				.collect(Collectors.toList());
