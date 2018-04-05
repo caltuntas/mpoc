@@ -25,6 +25,8 @@ export class BundleModel {
     this.productOfferingTypeId = 2;
     this.segments = [];
     this.documents = [];
+    this.simpleProductOfferingIds=[];
+    this.salesChannels=[];
   }
 
 }

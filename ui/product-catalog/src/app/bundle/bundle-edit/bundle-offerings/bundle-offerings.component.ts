@@ -15,11 +15,11 @@ import { Response } from "@angular/http";
   templateUrl: "./bundle-offerings.component.html"
 })
 export class BundleOfferingsComponent implements OnInit {
-  offerings: IdNameDescriptionModel[]=[];
-  reRenderTable = false;
-  selectedOfferings:number[]=[];
-
   @Input() model: BundleModel;
+
+  offerings: IdNameDescriptionModel[] = [];
+  reRenderTable = false;
+  selectedOfferings: number[] = [];
 
   constructor(
     private bundleService: BundleService,
@@ -27,10 +27,13 @@ export class BundleOfferingsComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.model.simpleProductOfferingIds = [];
-    let data = await this.bundleService.getSimpleOfferingsForSelectAsync().toPromise<IdNameDescriptionModel[]>();
-   this.offerings=data;
-   console.log(this.offerings);
+
+    let data = await this.bundleService
+      .getSimpleOfferingsForSelectAsync()
+      .toPromise<IdNameDescriptionModel[]>();
+    this.offerings = data;
+    this.selectedOfferings = this.model.simpleProductOfferingIds;
+
   }
 
   dtOptions = {
@@ -72,29 +75,32 @@ export class BundleOfferingsComponent implements OnInit {
   }
 
   onAddOffering(offeringId) {
-    
     var addButton = jQuery("a[simple-offering-id='" + offeringId + "']");
-   
-      this.model.simpleProductOfferingIds.push(offeringId);
-      this.selectedOfferings.push(offeringId);
-      addButton.parent().parent().hide();
-   
+
+    this.model.simpleProductOfferingIds.push(offeringId);
+    this.selectedOfferings.push(offeringId);
+    addButton
+      .parent()
+      .parent()
+      .hide();
   }
 
-  removeOffering(offeringId){
+  removeOffering(offeringId) {
     var addButton = jQuery("a[simple-offering-id='" + offeringId + "']");
-   
-      
+
     this.model.simpleProductOfferingIds = this.model.simpleProductOfferingIds.filter(
       x => x != offeringId
     );
-    this.selectedOfferings=this.selectedOfferings.filter(x=>x!=offeringId);
-    addButton.parent().parent().show();
-
+    this.selectedOfferings = this.selectedOfferings.filter(
+      x => x != offeringId
+    );
+    addButton
+      .parent()
+      .parent()
+      .show();
   }
 
-  getNameOfOffering(offeringId):string{
-    return this.offerings.filter(x=>x.id==offeringId)[0].name;
+  getNameOfOffering(offeringId): string {
+    return this.offerings.filter(x => x.id == offeringId)[0].name;
   }
-  
 }

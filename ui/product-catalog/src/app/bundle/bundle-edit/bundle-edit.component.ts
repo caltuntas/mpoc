@@ -22,6 +22,10 @@ export class BundleEditComponent implements OnInit {
     if (idParam) {
       this.model.id = idParam;
       this.model.isNewbundle = false;
+      bundleService.getOffering(idParam).subscribe(data => {
+        this.model = data;
+        console.log(this.model);
+      });
     } else {
       this.model.isNewbundle = true;
     }
@@ -42,9 +46,7 @@ export class BundleEditComponent implements OnInit {
       //     event.preventDefault();
       //   }
       // }
-      // console.log(data.direction);
-      // console.log(data.step);
-      // console.log(data);
+  
     });
     //Wizard Events
   }
