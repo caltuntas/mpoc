@@ -18,6 +18,7 @@ import {OfferingEditModel} from "../model/offering-edit-model";
 import {OfferingCharValueModel} from "../model/offering-char-value-model";
 import {OfferingSegmentModel} from "../model/offering-segment-model";
 import {PriceComponent} from "../../price/price.component";
+import {NotificationComponent} from "../../shared/utils/NotificationComponent";
 
 @Component({
     selector: 'app-offering-edit',
@@ -52,7 +53,8 @@ export class OfferingEditComponent implements OnInit {
                 private categoryService: CategoryService,
                 private saleChannelService: SalesChannelService,
                 private segmentService: SegmentService,
-                private documentService: DocumentService) {
+                private documentService: DocumentService,
+                private notificationComponent: NotificationComponent) {
         this.model = new OfferingEditModel();
         const idParam = route.snapshot.params.offeringId;
         if (idParam) {
@@ -358,10 +360,18 @@ export class OfferingEditComponent implements OnInit {
         if (this.isNewOffering) {
             this.offeringService.createOffering(this.model).subscribe(data => {
                 this.router.navigate(['/offering/offering-list']);
+                this.notificationComponent.showNotification(
+                    "Offering",
+                    "Created successfully"
+                );
             });
         } else {
             this.offeringService.updateOffering(this.model).subscribe(data => {
                 this.router.navigate(['/offering/offering-list']);
+                this.notificationComponent.showNotification(
+                    "Offering",
+                    "Updated successfully"
+                );
             });
         }
     }
