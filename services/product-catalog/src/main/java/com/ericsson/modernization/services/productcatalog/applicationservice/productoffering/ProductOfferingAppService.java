@@ -1,7 +1,9 @@
 package com.ericsson.modernization.services.productcatalog.applicationservice.productoffering;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,9 +116,15 @@ public class ProductOfferingAppService {
 	private void saveFieldsForBundle(ProductOffering productOffering, ProductOfferingDetailModel detailModel) {
 		if (detailModel.getProductOfferingTypeId() != 2)// Bundle
 			return;
+		Map<Integer, Integer> childOfferingIdAndClonnedOfferingMap = new HashMap<Integer, Integer>();
 		List<Integer> oldList = new ArrayList<Integer>();
-		if (productOffering.getId() > 0)
-			oldList = QueryExecuter.GetBundleRelatedSimpleOfferingIds(productOffering.getId());
+		if (productOffering.getId() > 0) {
+			// oldList =
+			// QueryExecuter.GetBundleRelatedSimpleOfferingIds(productOffering.getId());
+			childOfferingIdAndClonnedOfferingMap = QueryExecuter
+					.GetBundleRelatedSimpleAndChildOfferingIdsHash(productOffering.getId());
+			oldList = new ArrayList<>(childOfferingIdAndClonnedOfferingMap.keySet());
+		}
 		List<Integer> newList = detailModel.getSimpleProductOfferingIds().stream().distinct()
 				.collect(Collectors.toList());
 		if (productOffering.getProductOfferings() == null)
@@ -146,10 +154,15 @@ public class ProductOfferingAppService {
 			ProductOffering simpleProductOffering = productOfferingRepository.findByIdAndIsDeletedIsFalse(id);
 			if (simpleProductOffering != null) {
 				// Klonlanmış kaydı bul, sil, ilişkisini koparma.
-				ProductOffering clonedProductOffering = simpleProductOffering.getClonnedProductOffering();
+				System.out.println("simpleProductOfferingId:" + simpleProductOffering.getId());
+				Integer clonedProductOfferingId = childOfferingIdAndClonnedOfferingMap
+						.get(simpleProductOffering.getId());
+				System.out.println("clonedProductOfferingId:" + clonedProductOfferingId);
+				ProductOffering clonedProductOffering = productOfferingRepository
+						.findByIdAndIsDeletedIsFalse(clonedProductOfferingId);
 				clonedProductOffering.setDeleted(true);
 				productOfferingRepository.save(clonedProductOffering);
-				//productOffering.getProductOfferings().remove(clonedProductOffering);
+				// productOffering.getProductOfferings().remove(clonedProductOffering);
 			}
 		}
 		// Relation kaydet

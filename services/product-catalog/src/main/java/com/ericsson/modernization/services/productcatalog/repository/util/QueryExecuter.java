@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class QueryExecuter {
 
@@ -35,5 +37,34 @@ public class QueryExecuter {
 			System.err.println(e.getMessage());
 		}
 		return bundleRelatedSimpleOfferingIds;
+	}
+	
+	public static Map<Integer, Integer> GetBundleRelatedSimpleAndChildOfferingIdsHash(int bundleOfferingId) {
+		Map<Integer, Integer> childOfferingIdAndClonnedOfferingId = new HashMap<Integer, Integer>();
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			String url = "jdbc:sqlserver://77.75.32.147:34251;databaseName=modernization;";
+			Connection conn = DriverManager.getConnection(url, "sa", "K852tig684");
+			Statement stmt = conn.createStatement();
+			ResultSet rs;
+			String query = "select id, clonnedProductOffering_id from ProductOffering (NOLOCK)\r\n"
+					+ "where id IN (select relatedProductOfferingId from ProductOfferingRelation (NOLOCK) where productOfferingId = "
+					+ bundleOfferingId + ")\r\n" 
+					+ "AND productOfferingType_id = 3\r\n" + "AND isDeleted = 0";
+			System.out.println(query);
+			rs = stmt.executeQuery(query);
+
+			while (rs.next()) {
+				Integer id = rs.getInt("id");
+				Integer clonnedProductOffering_id = rs.getInt("clonnedProductOffering_id");
+				childOfferingIdAndClonnedOfferingId.put(id, clonnedProductOffering_id);
+				System.out.println(id + "-"+ clonnedProductOffering_id);
+			}
+			conn.close();
+		} catch (Exception e) {
+			System.err.println("Got an exception! ");
+			System.err.println(e.getMessage());
+		}
+		return childOfferingIdAndClonnedOfferingId;
 	}
 }
