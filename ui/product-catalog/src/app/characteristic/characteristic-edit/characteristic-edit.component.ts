@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CharacteristicEditModel} from '../model/characteristicEditModel';
 import {CharacteristicService} from '../characteristic.service';
-import {moment} from 'ngx-bootstrap/chronos/test/chain';
+import {NotificationComponent} from "../../shared/utils/NotificationComponent";
+import {NotificationService} from "../../shared/utils/notification.service";
 
 @Component({
     selector: 'app-characteristic-edit',
@@ -14,7 +15,11 @@ export class CharacteristicEditComponent implements OnInit {
     model: CharacteristicEditModel;
     showCharacteristicField: boolean;
 
-    constructor(private route: ActivatedRoute, private router: Router, private characteristicService: CharacteristicService) {
+    constructor(private route: ActivatedRoute,
+                private router: Router,
+                private characteristicService: CharacteristicService,
+                private notificationComponent: NotificationComponent,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit() {
@@ -41,16 +46,40 @@ export class CharacteristicEditComponent implements OnInit {
     }
 
     public onSubmit() {
-        if(this.model.valueType == 1)
+
+        if (this.validateFields())
         {
-            this.model.charValueString = jQuery('#charValueString').val();
-        } else {
-            this.model.charValueString = "";
+            if(this.model.valueType == 1)
+            {
+                this.model.charValueString = jQuery('#charValueString').val();
+            } else {
+                this.model.charValueString = "";
+            }
+            this.characteristicService.updateCharacteristic(this.model).subscribe(data => {
+                this.router.navigate(['/characteristic/characteristic-list']);
+                this.notificationComponent.showNotification(
+                    "Characteristic",
+                    "Updated successfully"
+                );
+            });
         }
-        this.characteristicService.updateCharacteristic(this.model).subscribe(data => {
-            console.log("deneme",this.model);
-            this.router.navigate(['/characteristic/characteristic-list']);
-        });
+        else {
+            this.notificationService.bigBox({
+                title: "Required Fields",
+                content: "Please fill the required fields",
+                color: "#C46A69",
+                icon: "fa fa-warning shake animated",
+                timeout: 3000
+            });
+        }
+
+    }
+
+    validateFields(): boolean {
+
+        let isValid: boolean = false;
+        isValid = !!( (this.model.name && this.model.description) && (this.model.name.trim() && this.model.description.trim()));
+        return isValid;
     }
 
 }

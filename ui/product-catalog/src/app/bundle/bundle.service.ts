@@ -20,10 +20,10 @@ export class BundleService {
     }
 
      getSimpleOfferingsForSelectAsync(): Observable<IdNameDescriptionModel[]> {
-         return  this.http.getAsync(`/productoffering/getSimgpleOfferingsForSelect`);
+         return  this.http.getAsync(`/productoffering/getSimpleOfferingsForSelect`);
      }
     getSimpleOfferingsForSelect(): Observable<IdNameDescriptionModel[]> {
-        return  this.http.get(`/productoffering/getSimgpleOfferingsForSelect`);
+        return  this.http.get(`/productoffering/getSimpleOfferingsForSelect`);
     }
     createOffering(model) {
         return this.http.post(`/productoffering/createoffering`, model);

@@ -36,6 +36,10 @@ public class ProdSpecCharValueUseAppService {
 
             for (ProductSpecCharUse productSpecCharUse : prodSpecCharUseList) {
 
+                if(productSpecCharUse.isDeleted()){
+                    continue;
+                }
+
                 ProductSpecCharacteristic specCharacteristic = productSpecCharUse.getProductSpecCharacteristic();
                 ProdSpecCharValueUseListModel charValueUseListModel = new ProdSpecCharValueUseListModel();
                 charValueUseListModel.setProdSpecCharId(specCharacteristic.getId());
@@ -49,7 +53,9 @@ public class ProdSpecCharValueUseAppService {
                 if (prodSpecCharValueUseList.size() > 0) {
 
                     for (ProdSpecCharValueUse prodSpecCharValueUse : prodSpecCharValueUseList) {
-                        charValueUseListModel.getProdSpecCharValueList().add(createCharValueListModel(prodSpecCharValueUse));
+                        if(!prodSpecCharValueUse.isDeleted()){
+                            charValueUseListModel.getProdSpecCharValueList().add(createCharValueListModel(prodSpecCharValueUse));
+                        }
                     }
                 }
 

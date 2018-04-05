@@ -11,6 +11,7 @@ import { specificationService } from "../specification.service";
 import { DatatableComponent } from "../../shared/ui/datatable/datatable.component";
 import { productSpecCharModel } from "../model/productSpecCharModel";
 import { NotificationComponent } from "../../shared/utils/NotificationComponent";
+import {NotificationService} from "../../shared/utils/notification.service";
 
 @Component({
   selector: "app-specification-list",
@@ -26,7 +27,8 @@ export class SpecificationListComponent implements OnInit {
     private router: Router,
     private service: specificationService,
     private cdRef: ChangeDetectorRef,
-    private notificationComponent: NotificationComponent
+    private notificationComponent: NotificationComponent,
+    private notificationService: NotificationService
   ) {}
 
   options = {
@@ -87,19 +89,7 @@ export class SpecificationListComponent implements OnInit {
   }
 
   onDeleteSpec(specId) {
-    var r = confirm("Are you sure you want to delete this specification?");
-    if (r == true) {
-      this.service.deleteSpec(specId).subscribe(data => {
-        this.reloadSpecListTable();
-        this.notificationComponent.showNotification(
-          "Specification",
-          "Deleted successfully"
-        );
-      });
-
-      this.service.deleteSpec(specId);
-      this.reloadSpecListTable();
-    }
+      this.smartModEg1(specId);
   }
 
   reloadSpecListTable() {
@@ -112,7 +102,7 @@ export class SpecificationListComponent implements OnInit {
 
 
   ngAfterViewInit() {
-    document.querySelector('body').addEventListener('click', (event) => {
+    document.querySelector('sa-datatable').addEventListener('click', (event) => {
       let target = <Element>event.target;
 
       if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit-specification')) {
@@ -123,6 +113,24 @@ export class SpecificationListComponent implements OnInit {
       }
   });
   }
+
+    smartModEg1(specId) {
+        this.notificationService.smartMessageBox({
+            title: "Warning!",
+            content: "Are you sure to delete this specification?",
+            buttons: '[No][Yes]'
+        }, (ButtonPressed) => {
+            if (ButtonPressed === "Yes") {
+                this.service.deleteSpec(specId).subscribe(data => {
+                    this.reloadSpecListTable();
+                    this.notificationComponent.showNotification(
+                        "Specification",
+                        "Deleted successfully"
+                    );
+                });
+            }
+        });
+    }
 
  
 }

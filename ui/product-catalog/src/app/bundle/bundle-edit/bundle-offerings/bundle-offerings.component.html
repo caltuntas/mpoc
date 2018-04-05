@@ -37,7 +37,7 @@
 
             <table class="table">
                 <tbody>
-                    <tr *ngFor="let offer of this.selectedOfferings">
+                    <tr *ngFor="let offer of this.model.simpleProductOfferingIds">
                         <td>
                             {{getNameOfOffering(offer)}}
                         </td>
