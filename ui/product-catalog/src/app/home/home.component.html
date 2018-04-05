@@ -2,6 +2,23 @@
     <div class="row">
         <sa-big-breadcrumbs [items]="['Home']" icon="home" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
     </div>
+
+
+    <!-- <article class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div sa-widget [editbutton]="false">
+          <header>
+            <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+            <h2>Bar Chart</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <sa-chart-js type="bar" [data]="customDataSet"   ></sa-chart-js>
+            </div>
+          </div>
+        </div>
+    </article> -->
+
+
     <article class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
         <div sa-widget>
             <header>
@@ -28,7 +45,9 @@
             </header>
             <div>
                 <div style="display: block">
-                    <canvas width="100%"  baseChart [datasets]="offeringsOfSegmentsChartData" [labels]="offeringsOfSegmentsLabels"
+                    <canvas #OfferingsOfSaleChannels width="100%"  baseChart 
+                        [datasets]="offeringsOfSaleChannelsChartDataSet"
+                        [labels]="offeringsOfSaleChannelsLabels"
                         [options]="barChartOptions" 
                         [legend]="barChartLegend"
                         [colors]="newBarChartColors"
@@ -56,7 +75,7 @@
                 <!-- <canvas baseChart [labels]="labelsOfferings" [datasets]="datasetsOfferings" [colors]="colorsUndefined" [chartType]="typeOfferings">
                 </canvas>    (chartHover)="chartHovered($event)"
                 (chartClick)="chartClicked($event)"-->
-                <canvas baseChart [datasets]="datasetsOfferings" [labels]="labelsOfferings" [chartType]="doughnutChartType" 
+                <canvas baseChart [datasets]="offeringsStatusDatasets" [labels]="offeringsStatusLabels" [chartType]="doughnutChartType" 
                 [colors] = "newPieChartColors">
                 </canvas>
             </div>
@@ -71,7 +90,7 @@
                 <h2>Offerings of Catagories</h2>
             </header>
             <div class="widget-body" style="display: block">
-                <canvas baseChart [datasets]="offeringsOfCategoriesChartData" [labels]="offeringsOfCategoriesLabels" 
+                <canvas baseChart [datasets]="offeringOfCategoriesChartDataSet" [labels]="offeringOfCategoriesLabels" 
                     [options]="barChartOptions" 
                     [legend]="barChartLegend"
                     [colors]="newBarChartColors"
@@ -91,7 +110,7 @@
             </header>
             <div class="widget-body" style="display: block">
                 <!-- <canvas  baseChart [labels]="labelsOfferingsSegment" [datasets]="datasetsOfferingsSegment" [colors]="colorsUndefined" [chartType]="doughnutChartType"> -->
-                <canvas baseChart [labels]="offeringsSegmentLabels" [data]="offeringsSegmentData" [colors]="newPieChartColors" [chartType]="doughnutChartType">
+                <canvas #Segments baseChart [labels]="offeringsSegmentLabels" [data]="offeringsSegmentData" [colors]="newPieChartColors" [chartType]="doughnutChartType">
                 </canvas>
             </div>
         </div>

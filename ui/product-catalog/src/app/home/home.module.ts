@@ -7,13 +7,17 @@ import { ChartsModule } from 'ng2-charts';
 import { MorrisGraphModule } from "../shared/graphs/morris-graph/morris-graph.module";
 
 
+import { ChartJsModule } from "../shared/graphs/chart-js/chart-js.module";
+
+
 @NgModule({
   imports: [
     CommonModule,
     homeRouting,
     SmartadminModule,
-    ChartsModule, 
-    MorrisGraphModule
+    ChartsModule,
+    MorrisGraphModule,
+    ChartJsModule    
   ],
   declarations: [HomeComponent]
 })

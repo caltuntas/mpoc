@@ -16,4 +16,21 @@ export class HomeService {
         return this.http.get(`/home/getOfferingSegments`);
     }
 
+    getOfferingSalesChannels(): Observable<HomeChartsData[]> {
+        return this.http.get(`/home/getOfferingSalesChannels`);
+    }
+
+    getOfferingOfCategories(): Observable<HomeChartsData[]> {
+        return this.http.get(`/home/getOfferingOfCategories`);
+    }
+
+    getOfferingsStatus(): Observable<HomeChartsData[]> {
+        return this.http.get(`/home/getOfferingsStatus`);
+    }
+
+    getLast7DaysOfferings(): Observable<HomeChartsData[]> {
+        return this.http.get(`/home/getLast7DayscreatedOfferings`);
+    }
+
+
 }

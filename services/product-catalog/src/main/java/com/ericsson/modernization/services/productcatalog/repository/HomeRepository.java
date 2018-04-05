@@ -17,6 +17,7 @@ public interface HomeRepository extends JpaRepository<ProductOffering, Integer> 
     		"select new com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsDataProp(  count(po), psc.name, case when po.isSellable = 0 then 'Closed' when po.isSellable = 1 then 'Available' else 'Closed'  end )\r\n" +
 			"from ProductOffering po \r\n" +
 			"join po.salesChannels psc \r\n" +
+					"					where po.isDeleted = 0 \r\n" +
 			" group by psc.name,po.isSellable";
 
 	@Query(/*nativeQuery=true,*/ value = Q_OFFERING_SALESCHANNELS)
@@ -27,7 +28,8 @@ public interface HomeRepository extends JpaRepository<ProductOffering, Integer> 
 			"select new com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsDataProp( count(po), psc.name,   case when po.isSellable = 0 then 'Closed' when po.isSellable = 1 then 'Available' else 'Closed'  end )\r\n" + 
 			"					from ProductOffering po\r\n" + 
 			"					join po.category psc \r\n" + 
-			"					where psc.id not in (select inCt.parentId from Category as inCt )\r\n" + 
+			"					where psc.id not in (select inCt.parentId from Category as inCt )\r\n" +
+					"					and po.isDeleted = 0 \r\n" +
 			"					 group by psc.name,po.isSellable";
 
 	//	select ct.name, count(*), 'Label' = case when po.isSellable = 0 then 'Closed' when po.isSellable = 1 then 'Available' else 'Closed'  end
@@ -51,8 +53,9 @@ public interface HomeRepository extends JpaRepository<ProductOffering, Integer> 
 			"select new com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsDataProp( count(po), psc.name, '1' )\r\n" + 
 			"					from ProductOffering po\r\n" + 
 			"					join po.category psc \r\n" + 
-			"					where psc.id in (select inCt.parentId from Category as inCt )\r\n" + 
-			"					 group by psc.name,po.isSellable";
+			"					where psc.id in (select inCt.parentId from Category as inCt )\r\n" +
+			"					and po.isDeleted = 0 \r\n" +
+			"					group by psc.name,po.isSellable";
 	//	select ct.name, count(*)
 	//	from ProductOffering as po
 	//	join Category as ct on  ct.id  = po.category_id where ct.id in (select inCt.parentId from Category as inCt) group by ct.name
@@ -65,11 +68,31 @@ public interface HomeRepository extends JpaRepository<ProductOffering, Integer> 
 	String Q_OFFERINGS_SEGMENTS =
 			"select new com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsDataProp( count(po), psc.name, 'Segmets')\r\n" +
 					"from ProductOffering po \r\n" +
-					"join po.segments psc \r\n" +
+					" join po.segments psc \r\n" +
+					" where po.isDeleted = 0 \r\n" +
 					" group by psc.name";
 	
 	@Query(/*nativeQuery=true,*/ value = Q_OFFERINGS_SEGMENTS)
 	List<HomeChartsDataProp> getOfferingSegments();
+
+
+
+
+
+	String Q_OFFERING_STATUS =
+			"select new com.ericsson.modernization.services.productcatalog.applicationservice.home.response.HomeChartsDataProp( count(po), case when po.isSellable = 0 then 'Closed' when po.isSellable = 1 then 'Available' else 'Closed' end, '' )\r\n" +
+					"					from ProductOffering po\r\n" +
+					"					where po.isDeleted = 0 \r\n" +
+					"					 group by po.isSellable";
+
+	//	select ct.name, count(*), 'Label' = case when po.isSellable = 0 then 'Closed' when po.isSellable = 1 then 'Available' else 'Closed'  end
+	//	from ProductOffering as po
+	//	join Category as ct on  ct.id  = po.category_id where ct.id not in (select inCt.parentId from Category as inCt) group by ct.name,po.isSellable
+
+	@Query(/*nativeQuery=true,*/ value = Q_OFFERING_STATUS)
+	List<HomeChartsDataProp> getOfferingsStatus();
+
+
 
 
 

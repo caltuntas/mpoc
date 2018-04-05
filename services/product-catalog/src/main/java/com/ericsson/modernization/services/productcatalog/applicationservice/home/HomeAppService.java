@@ -65,6 +65,11 @@ public class HomeAppService {
 
 
 
+    public List<HomeChartsDataProp> getOfferingsStatus() {
+        List<HomeChartsDataProp> o = homeRepository.getOfferingsStatus();
+        return o;
+    }
+
 }
 
 

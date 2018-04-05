@@ -86,6 +86,18 @@ public class HomeRestController {
         return new ResponseEntity<List<HomeChartsData>>( homeChartsDataList, HttpStatus.OK);
     }
 
+
+
+
+
+    @RequestMapping(value = "/getOfferingsStatus", method = RequestMethod.GET)
+    public ResponseEntity<List<HomeChartsData>> getOfferingsStatus(){
+        List<HomeChartsDataProp> homeChartsDataRaw = homeAppService.getOfferingsStatus();
+        List<HomeChartsData> homeChartsDataList = ConvertDoubleLayerData(homeChartsDataRaw, "OfferingsStatus");
+        return new ResponseEntity<List<HomeChartsData>>( homeChartsDataList, HttpStatus.OK);
+    }
+
+
     private List<HomeChartsData> ConvertDoubleLayerData( List<HomeChartsDataProp>  homeChartsDataRaw, String name){
 
         List<String> dataLabels = new ArrayList<String>();
