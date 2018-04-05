@@ -26,14 +26,13 @@ export class BundleOfferingsComponent implements OnInit {
     private cdRef: ChangeDetectorRef
   ) {}
 
-  async ngOnInit() {
-
-    let data = await this.bundleService
+  ngOnInit() {
+    let data = this.bundleService
       .getSimpleOfferingsForSelectAsync()
-      .toPromise<IdNameDescriptionModel[]>();
-    this.offerings = data;
+      .toPromise<IdNameDescriptionModel[]>()
+      .then(x => (this.offerings = x));
     this.selectedOfferings = this.model.simpleProductOfferingIds;
-
+    console.log(this.selectedOfferings);
   }
 
   dtOptions = {
@@ -76,7 +75,6 @@ export class BundleOfferingsComponent implements OnInit {
 
   onAddOffering(offeringId) {
     var addButton = jQuery("a[simple-offering-id='" + offeringId + "']");
-
     this.model.simpleProductOfferingIds.push(offeringId);
     this.selectedOfferings.push(offeringId);
     addButton

@@ -1,10 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SalesChannel } from "../../sales-channel/detail/sales-channel";
 import { BundleModel } from "../model/bundle-model";
 import { CharacteristicService } from "../../characteristic/characteristic.service";
 import { ProdSpecCharValueUseListModel } from "../../characteristic/model/prod-spec-char-value-use-list.model";
 import { BundleService } from "../bundle.service";
+import { PriceComponent } from "../../price/price.component";
 @Component({
   selector: "app-bundle-edit",
   templateUrl: "./bundle-edit.component.html"
@@ -12,6 +13,8 @@ import { BundleService } from "../bundle.service";
 export class BundleEditComponent implements OnInit {
   model: BundleModel;
   charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
+  @ViewChild(PriceComponent) priceComponent: PriceComponent;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -61,7 +64,9 @@ export class BundleEditComponent implements OnInit {
     // this.model.simpleProductOfferingIds.push(336);
     // this.model.simpleProductOfferingIds.push(337);
     //console.log(this.model);
-
+    console.log(this.priceComponent.priceList);
+    this.model.priceRequestList = this.priceComponent.priceList;
+    console.log(this.model.priceRequestList);
     if (this.model.isNewbundle) {
       this.bundleService.createOffering(this.model).subscribe(data => {
         this.router.navigate(["/bundle/bundle-list"]);

@@ -10,12 +10,12 @@ import { SmartadminFormsModule } from "../shared/forms/smartadmin-forms.module";
 import { BundleListComponent } from "./bundle-list/bundle-list.component";
 import { BundleEditComponent } from "./bundle-edit/bundle-edit.component";
 import { BundleInfoComponent } from "./bundle-edit/bundle-info/bundle-info.component";
-import { BundlePriceComponent } from "./bundle-edit/bundle-price/bundle-price.component";
 import { BundleOfferingsComponent } from "./bundle-edit/bundle-offerings/bundle-offerings.component";
 import { SalesChannelService } from "../sales-channel/sales-channel.service";
 import { SegmentService } from "../segment/segment.service";
 import { DocumentService } from "../document/document.service";
 import { BundleDetailComponent } from "./bundle-edit/bundle-detail/bundle-detail.component";
+import { PriceComponent } from "../price/price.component";
 
 @NgModule({
   imports: [
@@ -32,9 +32,10 @@ import { BundleDetailComponent } from "./bundle-edit/bundle-detail/bundle-detail
     BundleEditComponent,
     BundleInfoComponent,
     BundleEditComponent,
-    BundlePriceComponent,
+    
     BundleOfferingsComponent,    
-    BundleDetailComponent
+    BundleDetailComponent,
+    PriceComponent
   ],
   providers: [SalesChannelService,SegmentService,DocumentService]
 })

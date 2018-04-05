@@ -14,6 +14,7 @@ import com.ericsson.modernization.services.productcatalog.applicationservice.pro
 import com.ericsson.modernization.services.productcatalog.applicationservice.saleschannel.SalesChannelAppService;
 import com.ericsson.modernization.services.productcatalog.applicationservice.segment.SegmentAppService;
 import com.ericsson.modernization.services.productcatalog.model.*;
+import jdk.nashorn.internal.ir.IfNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -331,7 +332,7 @@ public class ProductOfferingAppService {
                 productOffering.getDescription(),
                 productOffering.getIsReplicated(),
                 productOffering.getIsSellable(),
-                productOffering.getProductSpecification().getId(),
+				productOffering.getProductSpecification()!=null? productOffering.getProductSpecification().getId():0,
                 productOffering.getCatalog().getId(),
                 productOffering.getCategory().getId(),
                 productOffering.getProductOfferingType().getId(),

@@ -1,3 +1,5 @@
+import { PriceModel } from "../../price/model/priceModel";
+
 export class BundleModel {
   public id: number;
   public name: string;
@@ -12,7 +14,7 @@ export class BundleModel {
   public isSellable: boolean;
   public validForStartDate: string;
   public validForEndDate: string;
-  // public prices: Array<number>;
+   public priceRequestList: Array<PriceModel>;
   public salesChannels: Array<number>;
   public segments: Array<number>;
   public documents: Array<number>;
