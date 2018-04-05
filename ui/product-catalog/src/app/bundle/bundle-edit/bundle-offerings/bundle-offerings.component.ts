@@ -19,7 +19,7 @@ export class BundleOfferingsComponent implements OnInit {
 
   offerings: IdNameDescriptionModel[] = [];
   reRenderTable = false;
-  selectedOfferings: number[] = [];
+  
 
   constructor(
     private bundleService: BundleService,
@@ -31,8 +31,8 @@ export class BundleOfferingsComponent implements OnInit {
       .getSimpleOfferingsForSelectAsync()
       .toPromise<IdNameDescriptionModel[]>()
       .then(x => (this.offerings = x));
-    this.selectedOfferings = this.model.simpleProductOfferingIds;
-    console.log(this.selectedOfferings);
+   this.model.simpleProductOfferingIds;
+   
   }
 
   dtOptions = {
@@ -60,7 +60,7 @@ export class BundleOfferingsComponent implements OnInit {
   };
 
   ngAfterViewInit() {
-    document.querySelector("body").addEventListener("click", event => {
+    document.querySelector("sa-datatable").addEventListener("click", event => {
       let target = <Element>event.target;
 
       if (
@@ -76,7 +76,6 @@ export class BundleOfferingsComponent implements OnInit {
   onAddOffering(offeringId) {
     var addButton = jQuery("a[simple-offering-id='" + offeringId + "']");
     this.model.simpleProductOfferingIds.push(offeringId);
-    this.selectedOfferings.push(offeringId);
     addButton
       .parent()
       .parent()
@@ -89,7 +88,7 @@ export class BundleOfferingsComponent implements OnInit {
     this.model.simpleProductOfferingIds = this.model.simpleProductOfferingIds.filter(
       x => x != offeringId
     );
-    this.selectedOfferings = this.selectedOfferings.filter(
+    this.model.simpleProductOfferingIds = this.model.simpleProductOfferingIds.filter(
       x => x != offeringId
     );
     addButton
