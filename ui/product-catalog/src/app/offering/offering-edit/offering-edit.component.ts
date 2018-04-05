@@ -201,12 +201,16 @@ export class OfferingEditComponent implements OnInit {
                 isValid = !!(this.model.productSpecificationId &&  this.validateRequiredCharValues());
                 break;
             case 3:
+                isValid = true;
+                break
             case 4:
+                isValid = !!(this.model.catalogId && this.model.categoryId && this.model.segments.length >0 && this.model.salesChannels.length > 0);
+                break;
             case 5:
+                isValid = !!(this.model.documents.length > 0);
+                break;
             case 6:
             case 7:
-            case 8:
-            case 9:
                 isValid = true;
                 break;
 
