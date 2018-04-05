@@ -29,16 +29,23 @@ export class OfferingEditComponent implements OnInit {
 
     model: OfferingEditModel;
     isNewOffering: boolean = true;
+    specSelected : boolean = false;
+    catalogSelected: boolean = false;
+    termSelected: boolean = false;
+    categorySelected : boolean = false;
+    salesChannelSelected: boolean = false;
+    segmentSelected : boolean = false;
+    documentSelected : boolean = false;
     spesifications: Array<specificationListModel> = [];
     catalogs: Array<Catalog> = [];
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
     emptyCharValues : Array<number> = [];
-    termValues;
-    termSelected: boolean = false;
     categoryLeaves: Array<Category> = [];
     salesChannelList: SalesChannel[];
     segmentList: Segment[];
     documentList: Document[];
+    termValues;
+
 
 
     @ViewChild(PriceComponent) priceComponent: PriceComponent;
@@ -132,18 +139,21 @@ export class OfferingEditComponent implements OnInit {
             var data = e.params.data;
             self.model.productSpecificationId = jQuery("#specSelect").val();
             self.loadCharValueUses(data.id);
+            self.specSelected = true;
         });
         //Spesification Select
 
         //Catalog Select
         jQuery('#catalogSelect').on('select2:select', function (e) {
             self.model.catalogId = jQuery("#catalogSelect").val();
+            self.catalogSelected = true;
         });
         //Catalog Select
 
         //Category Select
         jQuery('#categorySelect').on('select2:select', function (e) {
             self.model.categoryId = jQuery("#categorySelect").val();
+            self.categorySelected = true;
         });
         //Catalog Select
 
@@ -154,6 +164,12 @@ export class OfferingEditComponent implements OnInit {
             for (let i = 0; i < data.length; i++) {
                 self.model.segments.push(data[i].id);
             }
+            self.segmentSelected = true;
+        });
+
+        jQuery('#segmentSelect').on('select2:unselecting', function (e) {
+            self.model.segments = [];
+            self.segmentSelected = true;
         });
         //Segment Select
 
@@ -164,7 +180,14 @@ export class OfferingEditComponent implements OnInit {
             for (let i = 0; i < data.length; i++) {
                 self.model.salesChannels.push(data[i].id);
             }
+            self.salesChannelSelected = true;
         });
+
+        jQuery('#salesChannelSelect').on('select2:unselecting', function (e) {
+            self.model.salesChannels = [];
+            self.salesChannelSelected = true;
+        });
+
         //Sales Channel Select
 
         //Documents Select
@@ -174,7 +197,14 @@ export class OfferingEditComponent implements OnInit {
             for (let i = 0; i < data.length; i++) {
                 self.model.documents.push(data[i].id);
             }
+            self.documentSelected = true;
         });
+
+        jQuery('#documentSelect').on('select2:unselecting', function (e) {
+            self.model.documents = [];
+            self.documentSelected = true;
+        });
+
         //Documents Select
 
         //Wizard Events

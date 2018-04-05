@@ -155,7 +155,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-3"><strong>Spesification</strong></label>
 
-                                            <div class="col-md-7">
+                                            <div class="col-md-7" [class.has-error]="(!model.productSpecificationId || model.productSpecificationId == 0) && specSelected">
                                                 <select [disabled]="!isNewOffering" select2 style="width:100%"
                                                         data-select-search="true"
                                                         id="specSelect"
@@ -165,6 +165,9 @@
                                                         {{spec.name}}
                                                     </option>
                                                 </select>
+                                                <small *ngIf="(!model.productSpecificationId || model.productSpecificationId == 0) && specSelected"
+                                                       class="help-block">Spesification is required
+                                                </small>
                                             </div>
                                         </div>
                                     </div>
@@ -255,7 +258,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-2"><strong>Catalog</strong></label>
 
-                                            <div class="col-md-8">
+                                            <div class="col-md-8" [class.has-error]="(!model.catalogId || model.catalogId == 0) && catalogSelected">
                                                 <select select2 style="width:100%" data-select-search="true"
                                                         id="catalogSelect"
                                                         name="catalogSelect"
@@ -266,6 +269,9 @@
                                                         {{catalog.name}}
                                                     </option>
                                                 </select>
+                                                <small *ngIf="(!model.catalogId || model.catalogId == 0) && catalogSelected"
+                                                       class="help-block">Catalog is required
+                                                </small>
                                             </div>
                                         </div>
                                     </div>
@@ -274,17 +280,21 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-2"><strong>Category</strong></label>
 
-                                            <div class="col-md-8">
+                                            <div class="col-md-8" [class.has-error]="(!model.categoryId || model.categoryId == 0) && categorySelected">
                                                 <select select2 style="width:100%" data-select-search="true"
                                                         id="categorySelect"
                                                         name="categorySelect"
                                                         required [(ngModel)]="model.categoryId"
                                                         #selectCategoryControl="ngModel">
+                                                    <option [value]="0">Please Select</option>
                                                     <option *ngFor="let category of categoryLeaves"
                                                             [value]="category.id">
                                                         {{category.name}}
                                                     </option>
                                                 </select>
+                                                <small *ngIf="(!model.categoryId || model.categoryId == 0) && categorySelected"
+                                                       class="help-block">Category is required
+                                                </small>
                                             </div>
                                         </div>
                                     </div>
@@ -293,7 +303,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-2"><strong>Segment</strong></label>
 
-                                            <div class="col-md-8">
+                                            <div class="col-md-8" [class.has-error]="(model.segments.length === 0) && segmentSelected">
                                                 <select select2 multiple
                                                         id="segmentSelect"
                                                         name="segmentSelect"
@@ -303,6 +313,9 @@
                                                         {{segment.name}}
                                                     </option>
                                                 </select>
+                                                <small *ngIf="(model.segments.length === 0) && segmentSelected"
+                                                       class="help-block">At least 1 segment is required
+                                                </small>
                                             </div>
                                         </div>
                                     </div>
@@ -312,7 +325,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-2"><strong>Sales Channel</strong></label>
 
-                                            <div class="col-md-8">
+                                            <div class="col-md-8" [class.has-error]="(model.salesChannels.length === 0) && salesChannelSelected">
                                                 <select select2 multiple
                                                         id="salesChannelSelect"
                                                         name="salesChannelSelect"
@@ -323,6 +336,9 @@
                                                         {{salesChannel.name}}
                                                     </option>
                                                 </select>
+                                                <small *ngIf="(model.salesChannels.length === 0) && salesChannelSelected"
+                                                       class="help-block">At least 1 sales channel is required
+                                                </small>
                                             </div>
                                         </div>
                                     </div>
@@ -341,7 +357,7 @@
                                     <div class="row">
                                         <div class="form-group">
                                             <label class="control-label col-md-2"><strong>Documents</strong></label>
-                                            <div class="col-md-8">
+                                            <div class="col-md-8" [class.has-error]="(model.documents.length === 0) && documentSelected">
                                                 <select select2 multiple
                                                         id="documentSelect"
                                                         name="documentSelect"
@@ -351,6 +367,9 @@
                                                         {{document.name}}
                                                     </option>
                                                 </select>
+                                                <small *ngIf="(model.documents.length === 0) && documentSelected"
+                                                       class="help-block">At least 1 document is required
+                                                </small>
                                             </div>
                                         </div>
                                     </div>
