@@ -121,17 +121,17 @@
             <div class="form-group">
                 <div class="col-md-9 col-lg-9 col-sm-9">
                     <div class="pull-right">
-                        <button class="btn btn-info btn-md header-btn hidden-mobile"
+                        <button class="btn btn-info btn-md header-btn  "
                                 *ngIf="screenStatus" (click)="addPrice()">
                             <span class="glyphicon glyphicon-plus"></span> Add
                         </button>
                     </div>
                     <div class="pull-right">
-                        <button class="btn btn-danger btn-md header-btn hidden-mobile"
+                        <button class="btn btn-danger btn-md header-btn  "
                                 *ngIf="!screenStatus" (click)="onCancelUpdate()">
                             <span class="glyphicon glyphicon-plus"></span> Cancel
                         </button>
-                        <button class="btn btn-success btn-md header-btn hidden-mobile"
+                        <button class="btn btn-success btn-md header-btn  "
                                 *ngIf="!screenStatus" (click)="updatePrice(priceInput)">
                             <span class="glyphicon glyphicon-plus"></span> Update
                         </button>

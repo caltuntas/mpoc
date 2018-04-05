@@ -3,7 +3,7 @@
         <sa-big-breadcrumbs [items]="['Bundle', 'List']" icon="table" class="col-xs-12 col-sm-9 col-md-9 col-lg-9"></sa-big-breadcrumbs>
         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
             <a routerLink="/bundle/bundle-edit">
-                <button type="button" class="btn btn-info btn-lg pull-right header-btn hidden-mobile">
+                <button type="button" class="btn btn-info btn-lg pull-right header-btn  ">
                     <span class="glyphicon glyphicon-plus"></span> New
                 </button>
             </a>
@@ -23,7 +23,7 @@
                         </header>
                         <div>
                             <div class="widget-body no-padding">
-                                <sa-datatable [options]="options" paginationLength="true"
+                                <sa-datatable [options]="options" paginationLength="true" []
                                               tableClass="table table-striped table-bordered table-hover" width="100%"
                                               *ngIf="!reRenderTable">
                                     <thead>
