@@ -24,7 +24,8 @@ matrix:
       - node
 
     before_install:
-      - sed -i 's|http://localhost:8080|https://product-catalog-service.herokuapp.com|' ui/product-catalog/src/environments/environment.ts
+      #- sed -i 's|http://localhost:8080|https://product-catalog-service.herokuapp.com|' ui/product-catalog/src/environments/environment.ts
+      - sed -i 's|http://localhost:8080|http://product-catalog-service-vodafone-pc.apps.129.192.64.65.nip.io|' ui/product-catalog/src/environments/environment.ts
       - cat ui/product-catalog/src/environments/environment.ts
       - cd ui/product-catalog
       - npm install
