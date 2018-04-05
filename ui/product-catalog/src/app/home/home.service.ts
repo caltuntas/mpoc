@@ -31,6 +31,9 @@ export class HomeService {
     getLast7DaysOfferings(): Observable<HomeChartsData[]> {
         return this.http.get(`/home/getLast7DayscreatedOfferings`);
     }
-
+    
+    getOfferingsCountOfCategories(): Observable<HomeChartsData[]> {
+        return this.http.get(`/home/getOfferingsCountOfCategories`);
+    }
 
 }

@@ -94,6 +94,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   private getOfferingOfCategoriesResponse: any[];
   private getOfferingsStatusResponse: any[];
   private getLast7DaysOfferingsResponse: any[];
+  private getOfferingsCountOfCategoriesResponse: any[];
+
+
+  public offeringsCountOfCategoriesDatasets: any[] = [
+    { data: [0, 0, 0, 0] }];
+  public offeringsCountOfCategoriesData: any[] = [];
+  public offeringsCountOfCategoriesLabels: string[] = ["ADSL", "Vodafone.Net", "İşOrtağım", "Tel"];
+
+  public donutdemo = [
+                      { "value": 4, "label": "ADSL" }, 
+                      { "value": 4, "label": "Vodafone.Net" }, 
+                      { "value": 1, "label": "İşOrtağım" }, 
+                      { "value": 1, "label": "Tel" }
+                    ];
+  public donutLabels = ["ADSL", "Vodafone.Net",  "İşOrtağım", "Tel"];
 
 
   public offeringsSegmentData: number[];
@@ -175,6 +190,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   public dailyOfferingsChartLabels_: string[] = [];
 
 
+
+
   barColorsDemo(row, series, type) {
     if (type === 'donut') {
       var red = Math.ceil(150 * row.y / 8);
@@ -185,37 +202,36 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   @ViewChild("OfferingsOfSaleChannels") offeringsOfSaleChannelsChart: BaseChartDirective;
+  //@ViewChild("OfferingsOfParent") OfferingsOfParent: Morris.Donut;
 
   constructor(private router: Router, private homeService: HomeService, private jsonApiService: JsonApiService) {
 
     var now = moment();
     var dateNow1 = moment(now);
-    var dateNow2 = moment(now.add(-1, 'days')); 
-    var dateNow3 = moment(now.add(-1, 'days')); 
-    var dateNow4 = moment(now.add(-1, 'days')); 
-    var dateNow5 = moment(now.add(-1, 'days')); 
-    var dateNow6 = moment(now.add(-1, 'days')); 
-    var dateNow7 = moment(now.add(-1, 'days')); 
+    var dateNow2 = moment(now.add(-1, 'days'));
+    var dateNow3 = moment(now.add(-1, 'days'));
+    var dateNow4 = moment(now.add(-1, 'days'));
+    var dateNow5 = moment(now.add(-1, 'days'));
+    var dateNow6 = moment(now.add(-1, 'days'));
+    var dateNow7 = moment(now.add(-1, 'days'));
 
 
     this.offeringsSegmentData = [12, 17];
     this.offeringsSegmentLabels = ["EBU", "CBU"];
 
     this.dailyOfferingsChartData = [0, 0, 0, 0, 0, 0, 0];
-    this.dailyOfferingsChartLabels = [dateNow7.toDate().getDate() + "/" + (dateNow7.toDate().getMonth() + 1), 
-                                      dateNow6.toDate().getDate() + "/" + (dateNow6.toDate().getMonth() + 1),
-                                      dateNow5.toDate().getDate() + "/" + (dateNow5.toDate().getMonth() + 1),
-                                      dateNow4.toDate().getDate() + "/" + (dateNow4.toDate().getMonth() + 1),
-                                      dateNow3.toDate().getDate() + "/" + (dateNow3.toDate().getMonth() + 1),
-                                      dateNow2.toDate().getDate() + "/" + (dateNow2.toDate().getMonth() + 1), 
-                                      dateNow1.toDate().getDate() + "/" + (dateNow1.toDate().getMonth() + 1)];
+    this.dailyOfferingsChartLabels = [dateNow7.toDate().getDate() + "/" + (dateNow7.toDate().getMonth() + 1),
+    dateNow6.toDate().getDate() + "/" + (dateNow6.toDate().getMonth() + 1),
+    dateNow5.toDate().getDate() + "/" + (dateNow5.toDate().getMonth() + 1),
+    dateNow4.toDate().getDate() + "/" + (dateNow4.toDate().getMonth() + 1),
+    dateNow3.toDate().getDate() + "/" + (dateNow3.toDate().getMonth() + 1),
+    dateNow2.toDate().getDate() + "/" + (dateNow2.toDate().getMonth() + 1),
+    dateNow1.toDate().getDate() + "/" + (dateNow1.toDate().getMonth() + 1)];
     this.dailyOfferingsChartDataSets = [{ data: [0, 0, 0, 0, 0, 0, 0], label: "Offerings" }]
 
-    console.log("constructor girildi");
 
     this.homeService.getOfferingSegments().subscribe(
       (data) => {
-        console.log("getOfferingSegments girildi");
         this.getOfferingSegmentsResponse = data;
       },
       error => console.log("Error: ", error),
@@ -257,7 +273,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
 
-    
+
     this.homeService.getOfferingSalesChannels().subscribe(
       (data) => {
         this.getOfferingSalesChannelsResponse = data;
@@ -281,27 +297,24 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.homeService.getLast7DaysOfferings().subscribe(
       (data) => {
-        console.log("getLast7DaysOfferings");
         this.getLast7DaysOfferingsResponse = data;
-        console.log(this.getLast7DaysOfferingsResponse);
       },
       error => console.log("Error: ", error),
       () => {
-        let i=0;
-        let x=0;
+        let i = 0;
+        let x = 0;
         for (let uiLabel of this.dailyOfferingsChartLabels) {
           i = 0;
           for (let serviceLabel of this.getLast7DaysOfferingsResponse[0].labels) {
-              if(uiLabel.toString() == serviceLabel.toString())
-              {
-                this.dailyOfferingsChartData[x] = this.getLast7DaysOfferingsResponse[0].data[i];
-              }              
-              i = i + 1;
-          } 
-          x = x + 1;  
+            if (uiLabel.toString() == serviceLabel.toString()) {
+              this.dailyOfferingsChartData[x] = this.getLast7DaysOfferingsResponse[0].data[i];
+            }
+            i = i + 1;
+          }
+          x = x + 1;
         }
         //this.offeringsOfSaleChannelsLabels = this.getOfferingSalesChannelsResponse[0].labels;
-        this.dailyOfferingsChartDataSets = [{ data: this.dailyOfferingsChartData, label: "Offerings" }]        
+        this.dailyOfferingsChartDataSets = [{ data: this.dailyOfferingsChartData, label: "Offerings" }]
       }
     );
 
@@ -319,6 +332,50 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.offeringOfCategoriesChartDataSet.push({ data: item.data, label: item.datalabel });
         }
         this.offeringOfCategoriesLabels = this.getOfferingOfCategoriesResponse[0].labels;
+      }
+    );
+
+
+
+    this.homeService.getOfferingsCountOfCategories().subscribe(
+      (data) => {
+        this.getOfferingsCountOfCategoriesResponse = data;
+      },
+      error => console.log("Error: ", error),
+      () => {
+        this.offeringsCountOfCategoriesData = this.getOfferingsCountOfCategoriesResponse[0].data;
+        this.offeringsCountOfCategoriesLabels = this.getOfferingsCountOfCategoriesResponse[0].labels;
+        this.offeringsCountOfCategoriesDatasets = [
+          {
+            labels: this.offeringsCountOfCategoriesLabels,
+            data: this.offeringsCountOfCategoriesData,
+            backgroundColor: this.backgroundColorOfferings,
+            hoverBackgroundColor: this.hoverBackgroundColorOfferings
+          }];
+
+        let i = 0;
+
+        // public donutdemo = [{ "value": 70, "label": "Internet" }, { "value": 15, "label": "İşOrtağım" }];
+        // public donutLabels = ["ADSL", "Vodafone.Net (Residential", "Internet", "İşOrtağım", "Tel"];
+
+        
+        console.log(this.donutdemo);
+        var currentData:any[] = [];
+        for (let item of this.getOfferingsCountOfCategoriesResponse[0].data) {
+
+          currentData.push({ "value": item, "label": this.getOfferingsCountOfCategoriesResponse[0].labels[i] });
+
+          i = i + 1;
+
+        }
+
+        this.donutdemo = currentData;
+        //this.OfferingsOfParent.setData(currentData);
+        this.donutLabels = this.getOfferingsCountOfCategoriesResponse[0].labels;
+
+        console.log(this.donutdemo);
+        console.log("donutdemo");
+
       }
     );
 
@@ -381,8 +438,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   doughnutChartType: string = 'doughnut';
   barChartType2: string = 'bar';
 
-  donutdemo = [{ "value": 70, "label": "Internet" }, { "value": 15, "label": "İşOrtağım" }];
-  donutLabels = ['Internet', 'İşOrtağım'];
+
 
   backgroundColorOfferings: string[] = ["#FF6384", "#36A2EB", "#FFCE56"];
   hoverBackgroundColorOfferings: string[] = ["#FF6384", "#36A2EB", "#FFCE56"];
@@ -440,13 +496,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   public chartClicked(e: any): void {
-    console.log(e);
     this.offeringsOfSaleChannelsLabels = this.getOfferingSalesChannelsResponse[0].labels;
-    console.log("this.osdfasdfasdff");
-    console.log(this.offeringsOfSaleChannelsLabels);
   }
   public chartHovered(e: any): void {
-    console.log(e);
   }
 
   private handleError(error: any) {
