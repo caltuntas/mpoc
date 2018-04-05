@@ -11,71 +11,67 @@
         </div>
     </div>
 
-        <sa-widgets-grid>
-            <div class="row">
-                <article class="col-sm-12">
-                    <div sa-widget [editbutton]="false" [deletebutton]="false" color="vdf">
-                        <header>
+    <sa-widgets-grid>
+        <div class="row">
+            <article class="col-sm-12">
+                <div sa-widget [editbutton]="false" [deletebutton]="false" color="vdf">
+                    <header>
                         <span class="widget-icon">
-                        <i class="fa fa-table"></i>
+                            <i class="fa fa-table"></i>
                         </span>
-                            <h2>Bundle Offering List</h2>
-                        </header>
-                        <div>
-                            <div class="widget-body no-padding">
-                                <sa-datatable [options]="options" paginationLength="true"
-                                              tableClass="table table-striped table-bordered table-hover" width="100%"
-                                              *ngIf="!reRenderTable">
-                                    <thead>
+                        <h2>Bundle Offering List</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+                            <sa-datatable [options]="options" paginationLength="true" tableClass="table table-striped table-bordered table-hover" width="100%"
+                                *ngIf="!reRenderTable">
+                                <thead>
                                     <tr>
                                         <th>
-                                            <i class="fa fa-fw fa-key text-muted hidden-md hiden-sm hidden-xs"></i>
+
                                             Id
                                         </th>
                                         <th>
-                                            <i class="fa fa-fw fa-newspaper-o text-muted hidden-md hidden-sm hidden-xs"></i>
+
                                             Name
                                         </th>
                                         <th>
-                                            <i class="fa fa-fw fa-comment text-muted hidden-md hidden-sm hidden-xs"></i>
+
                                             Description
                                         </th>
                                         <th>
-                                            <i class="fa fa-fw fa-unlock-alt text-muted hidden-md hiden-sm hidden-xs"></i>
+
                                             Sellable
                                         </th>
+
                                         <th>
-                                            <i class="fa fa-fw fa-wrench text-muted hidden-md hiden-sm hidden-xs"></i>
-                                            Specification
-                                        </th>
-                                        <th>
-                                            <i class="fa fa-fw fa-wrench text-muted hidden-md hiden-sm hidden-xs"></i>
+
                                             Catalog
                                         </th>
                                         <th>
-                                            <i class="fa fa-fw fa-wrench text-muted hidden-md hiden-sm hidden-xs"></i>
+
                                             Category
                                         </th>
                                         <th>
-                                            <i class="fa fa-fw fa-wrench text-muted hidden-md hiden-sm hidden-xs"></i>
+
                                             Type
                                         </th>
                                         <th>
-                                            <i class="fa fa-fw fa-calendar-o text-muted hidden-md hiden-sm hidden-xs"></i>
+
                                             First Valid Date
                                         </th>
                                         <th>
-                                            <i class="fa fa-fw fa-calendar-o text-muted hidden-md hiden-sm hidden-xs"></i>
+
                                             Last Valid Date
                                         </th>
                                         <th></th>
                                     </tr>
-                                    </thead>
-                                </sa-datatable>
-                            </div>
+                                </thead>
+                            </sa-datatable>
                         </div>
                     </div>
-                </article>
-            </div>
-        </sa-widgets-grid>
+                </div>
+            </article>
+        </div>
+    </sa-widgets-grid>
 </div>
