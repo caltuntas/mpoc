@@ -76,10 +76,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   public offeringsOfCategoriesChartData: any[] = [
-    { data: [65, 59, 80, 65, 59, 80, 65, 59, 80], label: 'Available' },
-    { data: [28, 48, 40, 28, 48, 40, 28, 48, 40], label: 'Closed' }
+    { data: [65, 59, 80, 65], label: 'Available' },
+    { data: [28, 48, 40, 28], label: 'Closed' }
   ];
-  public offeringsOfCategoriesLabels: string[] = ['THK', 'FTTH', 'TSOL', 'Fiber', 'ADSL', 'Adsl+Internet', 'Tel', 'OzelKampanyalar', 'Internet'];
+  public offeringsOfCategoriesLabels: string[] = ['Fiber', 'FTTH', 'Internet + Phon', 'TSOL'];
 
   // public customDataSetdatasets:  any[] = [
   //   { data: [65, 59, 80, 65, 59], label: 'Available' },
@@ -98,17 +98,18 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   public offeringsCountOfCategoriesDatasets: any[] = [
-    { data: [0, 0, 0, 0] }];
+    { data: [0, 0] }];
   public offeringsCountOfCategoriesData: any[] = [];
-  public offeringsCountOfCategoriesLabels: string[] = ["ADSL", "Vodafone.Net", "İşOrtağım", "Tel"];
+  public offeringsCountOfCategoriesLabels: string[] = ["ADSL", "Tel"];
 
-  public donutdemo = [
-                      { "value": 4, "label": "ADSL" }, 
-                      { "value": 4, "label": "Vodafone.Net" }, 
-                      { "value": 1, "label": "İşOrtağım" }, 
-                      { "value": 1, "label": "Tel" }
-                    ];
-  public donutLabels = ["ADSL", "Vodafone.Net",  "İşOrtağım", "Tel"];
+  public donutdemo = [];
+  //  [
+  //                     { "value": 4, "label": "ADSL" }, 
+  //                     { "value": 4, "label": "Vodafone.Net" }, 
+  //                     { "value": 1, "label": "İşOrtağım" }, 
+  //                     { "value": 1, "label": "Tel" }
+  //                   ];
+  public donutLabels =  ["ADSL", "Vodafone.Net",  "İşOrtağım", "Tel"];
 
 
   public offeringsSegmentData: number[];
@@ -120,7 +121,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     { data: [0], label: '0' },
     { data: [0], label: '1' }
   ];
-  public offeringsOfSaleChannelsLabels: string[] = ["IVR", "MCare", "SMS", "WEB"];
+  public offeringsOfSaleChannelsLabels: string[] = ["IVR", "MCare", "SMS", "WEB", "CC"];
 
   public dailyOfferingsServiceResponse: any;
   public dailyOfferingsChartData: number[];
@@ -133,14 +134,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   public offeringsStatusDatasets: any[] = [
     { data: [0, 0] }];
   public offeringsStatusData: any[] = [];
-  public offeringsStatusLabels: string[] = ["Closed", "Available"];
+  public offeringsStatusLabels: string[] = ["Available", "Closed"];
 
 
   public offeringOfCategoriesChartDataSet: any[] = [
-    { data: [0], label: '0' },
-    { data: [0], label: '1' }
+    { data: [0], label: 'Available' },
+    { data: [0], label: 'Closed' }
   ];
-  public offeringOfCategoriesLabels: string[] = ["Adsl+Internet", "FTTH", "THK", "TSOL", "Fiber"];
+  public offeringOfCategoriesLabels: string[] = ["Fiber", "FTTH", "Internet + Phone", "TSOL"];
 
 
 
@@ -469,7 +470,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   dataOfferings: number[] = [51, 498];
-  labelsOfferings: string[] = ['Closed', 'Available'];
+  labelsOfferings: string[] = ['Available', 'Closed'];
 
   datasetsOfferings: any[] = [
     {

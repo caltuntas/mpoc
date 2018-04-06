@@ -30,6 +30,7 @@ public class ProductOffering extends EntityBase implements Description, ValidFor
 		setSalesChannels(new ArrayList<>());
 		setSegments(new ArrayList<>());
 		setDocuments(new ArrayList<>());
+		setCreateUserDate(new Date());
 
 		TimePeriod validFor = new TimePeriod();
 		validFor.setValidForStartDate(new Date());
