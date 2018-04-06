@@ -22,6 +22,8 @@ export class CharacteristicCreateComponent implements OnInit {
         this.model = new CharacteristicCreateModel();
         this.model.valueType = 3;
         this.showCharacteristicField = false;
+        this.model.isRequired = false;
+        this.model.isConfigurable = false;
     }
 
     onChange($event) {
