@@ -98,9 +98,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   public offeringsCountOfCategoriesDatasets: any[] = [
-    { data: [0, 0] }];
+    { data: [0, 0, 0, 0] }];
   public offeringsCountOfCategoriesData: any[] = [];
-  public offeringsCountOfCategoriesLabels: string[] = ["ADSL", "Tel"];
+  public offeringsCountOfCategoriesLabels: string[] = ["ADSL", "Internet + Phone", 'İşOrtağım', 'Tel'];
 
   public donutdemo = [];
   //  [
@@ -141,7 +141,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     { data: [0], label: 'Available' },
     { data: [0], label: 'Closed' }
   ];
-  public offeringOfCategoriesLabels: string[] = ["Fiber", "FTTH", "Internet + Phone", "TSOL"];
+  public offeringOfCategoriesLabels: string[] = ["Fiber", "FTTH", "TSOL"];
 
 
 
@@ -185,8 +185,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     pointHoverBackgroundColor: '#000'
   }];
 
-  public morrisDonutChartColors: string[] = ['rgba(255,0,0,0.6)', 'rgba(255,26,26,0.6)', 'rgba(255,51,51,0.6)', 'rgba(255,77,77,0.6)', 'rgba(255,100,100,0.6)'];
-
+  public morrisDonutChartColors: Array<any> = [{
+    backgroundColor: ['rgba(255,0,0,0.6)', 'rgba(255,26,26,0.6)', 'rgba(255,51,51,0.6)', 'rgba(255,77,77,0.6)', 'rgba(255,100,100,0.6)', 'rgba(255,100,100,0.6)'],
+    pointHoverBackgroundColor: '#000'
+  }];
 
   public dailyOfferingsChartLabels_: string[] = [];
 
@@ -327,11 +329,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       },
       error => console.log("Error: ", error),
       () => {
-        this.offeringOfCategoriesChartDataSet = [];
+        var currentOfferingOfCategoriesChartDataSet = [];
         this.offeringOfCategoriesLabels = [];
         for (let item of this.getOfferingOfCategoriesResponse) {
-          this.offeringOfCategoriesChartDataSet.push({ data: item.data, label: item.datalabel });
+          currentOfferingOfCategoriesChartDataSet.push({ data: item.data, label: item.datalabel });
         }
+
+        this.offeringOfCategoriesChartDataSet = currentOfferingOfCategoriesChartDataSet;
         this.offeringOfCategoriesLabels = this.getOfferingOfCategoriesResponse[0].labels;
       }
     );
