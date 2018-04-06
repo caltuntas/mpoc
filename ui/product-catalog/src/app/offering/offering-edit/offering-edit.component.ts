@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Catalog} from "../../catalog/model/catalog.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {OfferingService} from "../offering.service";
@@ -29,17 +29,24 @@ export class OfferingEditComponent implements OnInit {
 
     model: OfferingEditModel;
     isNewOffering: boolean = true;
+    specSelected: boolean = false;
+    catalogSelected: boolean = false;
+    termSelected: boolean = false;
+    categorySelected: boolean = false;
+    salesChannelSelected: boolean = false;
+    segmentSelected: boolean = false;
+    documentSelected: boolean = false;
+    shouldValidateFields: boolean = false;
     spesifications: Array<specificationListModel> = [];
     catalogs: Array<Catalog> = [];
     charValueUseList: Array<ProdSpecCharValueUseListModel> = [];
-    emptyCharValues : Array<number> = [];
-    termValues;
-    termSelected: boolean = false;
+    emptyCharValues: Array<number> = [];
     categoryLeaves: Array<Category> = [];
     salesChannelList: SalesChannel[];
     segmentList: Segment[];
     documentList: Document[];
-
+    emptyCharValueTextList: Array<boolean> = [];
+    termValues;
 
     @ViewChild(PriceComponent) priceComponent: PriceComponent;
 
@@ -132,18 +139,21 @@ export class OfferingEditComponent implements OnInit {
             var data = e.params.data;
             self.model.productSpecificationId = jQuery("#specSelect").val();
             self.loadCharValueUses(data.id);
+            self.specSelected = true;
         });
         //Spesification Select
 
         //Catalog Select
         jQuery('#catalogSelect').on('select2:select', function (e) {
             self.model.catalogId = jQuery("#catalogSelect").val();
+            self.catalogSelected = true;
         });
         //Catalog Select
 
         //Category Select
         jQuery('#categorySelect').on('select2:select', function (e) {
             self.model.categoryId = jQuery("#categorySelect").val();
+            self.categorySelected = true;
         });
         //Catalog Select
 
@@ -154,6 +164,12 @@ export class OfferingEditComponent implements OnInit {
             for (let i = 0; i < data.length; i++) {
                 self.model.segments.push(data[i].id);
             }
+            self.segmentSelected = true;
+        });
+
+        jQuery('#segmentSelect').on('select2:unselecting', function (e) {
+            self.model.segments = [];
+            self.segmentSelected = true;
         });
         //Segment Select
 
@@ -164,7 +180,14 @@ export class OfferingEditComponent implements OnInit {
             for (let i = 0; i < data.length; i++) {
                 self.model.salesChannels.push(data[i].id);
             }
+            self.salesChannelSelected = true;
         });
+
+        jQuery('#salesChannelSelect').on('select2:unselecting', function (e) {
+            self.model.salesChannels = [];
+            self.salesChannelSelected = true;
+        });
+
         //Sales Channel Select
 
         //Documents Select
@@ -174,7 +197,14 @@ export class OfferingEditComponent implements OnInit {
             for (let i = 0; i < data.length; i++) {
                 self.model.documents.push(data[i].id);
             }
+            self.documentSelected = true;
         });
+
+        jQuery('#documentSelect').on('select2:unselecting', function (e) {
+            self.model.documents = [];
+            self.documentSelected = true;
+        });
+
         //Documents Select
 
         //Wizard Events
@@ -184,11 +214,15 @@ export class OfferingEditComponent implements OnInit {
 
                 if (!self.validateStep(data.step)) {
                     event.preventDefault();
+                    self.shouldValidateFields = true
+                } else {
+                    self.shouldValidateFields = false;
                 }
             }
         });
         //Wizard Events
     }
+
 
     validateStep(step): boolean {
 
@@ -198,15 +232,19 @@ export class OfferingEditComponent implements OnInit {
                 isValid = !!(this.model.name && this.model.description && (this.model.term && this.model.term != 0));
                 break;
             case 2:
-                isValid = !!(this.model.productSpecificationId &&  this.validateRequiredCharValues());
+                isValid = !!(this.model.productSpecificationId && this.validateRequiredCharValues());
                 break;
             case 3:
+                isValid = true;
+                break
             case 4:
+                isValid = !!(this.model.catalogId && this.model.catalogId != 0 && this.model.categoryId && this.model.categoryId != 0 && this.model.segments.length > 0 && this.model.salesChannels.length > 0);
+                break;
             case 5:
+                isValid = !!(this.model.documents.length > 0);
+                break;
             case 6:
             case 7:
-            case 8:
-            case 9:
                 isValid = true;
                 break;
 
@@ -230,6 +268,7 @@ export class OfferingEditComponent implements OnInit {
     loadCharValueUses(specId) {
         this.charService.getSpecCharValueUses(specId).subscribe((charValuUseList) => {
             this.charValueUseList = charValuUseList;
+            this.bindCharValueEvents();
         })
     }
 
@@ -297,27 +336,44 @@ export class OfferingEditComponent implements OnInit {
             }
 
             this.charValueUseList = specCharValueUseList;
+            this.bindCharValueEvents();
         })
     }
 
-    validateRequiredCharValues() : boolean {
+    bindCharValueEvents(){
+
+        setTimeout(() => {
+                var self = this;
+                for (let i = 0; i < this.charValueUseList.length; i++) {
+                    if (this.charValueUseList[i].prodSpecCharType == 1) {
+                        let selector = "#charValueUseSelect" + i;
+                        jQuery(selector).on('select2:select', function (e) {
+                            self.getCharValues();
+                        });
+                    }
+                }
+            },
+            750);
+    }
+
+    validateRequiredCharValues(): boolean {
 
         let hasEmptyRequiredCharValue = false;
         this.getCharValues();
 
         for (let i = 0; i < this.charValueUseList.length; i++) {
-            if (this.charValueUseList[i].required){
+            if (this.charValueUseList[i].required) {
                 if (this.charValueUseList[i].prodSpecCharType == 1) {
                     let selector = "#charValueUseSelect" + i;
                     var data = jQuery(selector).select2('data');
-                    if(data[0].id == 0){
+                    if (data[0].id == 0) {
                         console.log("empty char value use");
                         hasEmptyRequiredCharValue = true;
                     }
-                }else{
+                } else {
                     let selector = "#charValueUseInput" + i;
                     let charTextValue = jQuery(selector).val();
-                    if(!charTextValue){
+                    if (!charTextValue) {
                         console.log("empty text");
                         hasEmptyRequiredCharValue = true;
                     }
@@ -330,6 +386,7 @@ export class OfferingEditComponent implements OnInit {
 
     getCharValues() {
 
+        this.emptyCharValueTextList = [];
         this.model.productOfferingCharValues = [];
         for (let i = 0; i < this.charValueUseList.length; i++) {
 
@@ -342,10 +399,12 @@ export class OfferingEditComponent implements OnInit {
                 var data = jQuery(selector).select2('data');
                 offeringCharValue.charValue = data[0].text;
                 offeringCharValue.charValueUseId = data[0].id;
+                this.emptyCharValueTextList.push(data[0].id == 0 && this.charValueUseList[i].required === true)
             }
             else {
                 let selector = "#charValueUseInput" + i;
                 offeringCharValue.charValue = jQuery(selector).val();
+                this.emptyCharValueTextList.push(!offeringCharValue.charValue && this.charValueUseList[i].required === true);
             }
 
             this.model.productOfferingCharValues.push(offeringCharValue);

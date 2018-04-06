@@ -3,7 +3,8 @@ import {
   Component,
   ComponentFactoryResolver,
   OnInit,
-  ViewChild
+  ViewChild,
+  OnDestroy
 } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
@@ -11,7 +12,7 @@ import { specificationService } from "../specification.service";
 import { DatatableComponent } from "../../shared/ui/datatable/datatable.component";
 import { productSpecCharModel } from "../model/productSpecCharModel";
 import { NotificationComponent } from "../../shared/utils/NotificationComponent";
-import {NotificationService} from "../../shared/utils/notification.service";
+import { NotificationService } from "../../shared/utils/notification.service";
 
 @Component({
   selector: "app-specification-list",
@@ -19,7 +20,7 @@ import {NotificationService} from "../../shared/utils/notification.service";
 })
 export class SpecificationListComponent implements OnInit {
   speces: Array<productSpecCharModel> = [];
-  reRenderTable = false;
+  reRenderTable: boolean;
 
   @ViewChild(DatatableComponent) specTable: DatatableComponent;
 
@@ -34,13 +35,11 @@ export class SpecificationListComponent implements OnInit {
   options = {
     dom: "Bfrtip",
     ajax: (data, callback, settings) => {
-      this.service
-        .getSpecifications()       
-        .subscribe(data => {
-          callback({
-            aaData: data
-          });
+      this.service.getSpecifications().subscribe(data => {
+        callback({
+          aaData: data
         });
+      });
     },
     columns: [
       { data: "id" },
@@ -75,10 +74,7 @@ export class SpecificationListComponent implements OnInit {
     order: [[0, "desc"]]
   };
 
-  ngOnInit() {
-
-   
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.cdRef.detach();
@@ -89,48 +85,52 @@ export class SpecificationListComponent implements OnInit {
   }
 
   onDeleteSpec(specId) {
-      this.smartModEg1(specId);
+    this.smartModEg1(specId);
+  }
+
+  ngAfterViewInit() {
+    document.querySelector("sa-datatable").addEventListener("click",(event) => {
+      let target = <Element>event.target;
+
+      if (
+        target.tagName.toLowerCase() === "a" &&
+        jQuery(target).hasClass("sa-datatables-edit-specification")
+      ) {
+        this.onEditSpec(target.getAttribute("spec-id"));
+      }
+      if (
+        target.tagName.toLowerCase() === "a" &&
+        jQuery(target).hasClass("sa-datatables-delete-specification")
+      ) {
+        this.onDeleteSpec(target.getAttribute("spec-id"));
+      }
+    });
+  }
+
+  smartModEg1(specId) {
+    this.notificationService.smartMessageBox(
+      {
+        title: "Warning!",
+        content: "Are you sure to delete this specification?",
+        buttons: "[No][Yes]"
+      },
+      ButtonPressed => {
+        if (ButtonPressed === "Yes") {
+          this.service.deleteSpec(specId).subscribe(data => {
+            this.reloadSpecListTable();
+            this.notificationComponent.showNotification(
+              "Specification",
+              "Deleted successfully"
+            );
+          });
+        }
+      }
+    );
   }
 
   reloadSpecListTable() {
     this.reRenderTable = true;
-    if (!this.cdRef['destroyed']) {
-        this.cdRef.detectChanges();
-    }
+    this.cdRef.detectChanges();
     this.reRenderTable = false;
-}
-
-
-  ngAfterViewInit() {
-    document.querySelector('sa-datatable').addEventListener('click', (event) => {
-      let target = <Element>event.target;
-
-      if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-edit-specification')) {
-          this.onEditSpec(target.getAttribute('spec-id'));
-      }
-      if (target.tagName.toLowerCase() === 'a' && jQuery(target).hasClass('sa-datatables-delete-specification')) {
-          this.onDeleteSpec(target.getAttribute('spec-id'));
-      }
-  });
   }
-
-    smartModEg1(specId) {
-        this.notificationService.smartMessageBox({
-            title: "Warning!",
-            content: "Are you sure to delete this specification?",
-            buttons: '[No][Yes]'
-        }, (ButtonPressed) => {
-            if (ButtonPressed === "Yes") {
-                this.service.deleteSpec(specId).subscribe(data => {
-                    this.reloadSpecListTable();
-                    this.notificationComponent.showNotification(
-                        "Specification",
-                        "Deleted successfully"
-                    );
-                });
-            }
-        });
-    }
-
- 
 }
